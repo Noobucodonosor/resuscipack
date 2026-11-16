@@ -748,6 +748,72 @@ def test_block_extraction_log_prevents_rebilling_paratext_and_supports_retry_and
         p05_bridges = get_bridges_for_node(conn2, "P0.5")
         assert len(p05_bridges) == 1
         assert p05_bridges[0]["block_pk"] == pk_exp
+
+        # Verifica che i candidati rifiutati siano cachati come 'rejected_decorative' e saltati al 2° giro
+        rej_cnt = conn2.execute(
+            "SELECT COUNT(*) FROM curiosity_bridges WHERE status = 'rejected_decorative'"
+        ).fetchone()[0]
+        assert rej_cnt >= 1
+        b_stats2 = discover_and_validate_bridges(
+            conn2,
+            fake_bridge_llm,
+            top_k_per_node=3,
+        )
+        assert b_stats2["candidates_checked"] == 0
+
+        # Verifica anche rifiuto automatico se score < 0.88 nonostante is_valid=True
+        bpk_low, buid_low = _insert_book_and_block(
+            conn2,
+            title="Acustica Deboli",
+            surface_domain="musica_acustica",
+            content="Vibrazione sonora con ampiezza limitata e controllo analogico continuo.",
+            page=50,
+        )
+        persist_block_extraction(
+            conn2,
+            block_pk=bpk_low,
+            block_uid=buid_low,
+            extraction=validate_block_extraction(
+                {
+                    "yield": "medium",
+                    "units": [
+                        {
+                            "kind": "claim",
+                            "mode": "applies",
+                            "stmt": "Il segnale sonoro subisce una limitazione d'ampiezza tramite controllo analogico.",
+                            "quote": "Vibrazione sonora con ampiezza limitata",
+                            "who": [],
+                            "vs": None,
+                            "concepts": ["ampiezza limitata"],
+                        }
+                    ],
+                    "sig": {
+                        "op_tags": ["BOUNDED_TOLERANCE"],
+                        "role": "embodied_intuition",
+                        "mech": "Limitazione simmetrica dell'escursione di un oscillatore tramite retroazione continua.",
+                    },
+                },
+                block_content="Vibrazione sonora con ampiezza limitata e controllo analogico continuo.",
+            ),
+        )
+        conn2.commit()
+        b_stats3 = discover_and_validate_bridges(
+            conn2,
+            lambda _p: {
+                "is_valid": True,
+                "mapping": {"Oscillazione": "x", "Fascia": "delta"},
+                "chain_steps": ["1. Primo passaggio inferenziale.", "2. Secondo passaggio.", "3. Terzo passaggio."],
+                "score": 0.72,
+            },
+            top_k_per_node=5,
+        )
+        assert b_stats3["bridges_validated"] == 0
+        assert (
+            conn2.execute(
+                "SELECT status FROM curiosity_bridges WHERE block_pk = ?", (bpk_low,)
+            ).fetchone()[0]
+            == "rejected_decorative"
+        )
         conn2.close()
 
 

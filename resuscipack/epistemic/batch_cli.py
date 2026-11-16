@@ -27,7 +27,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
-from collections import defaultdict, deque
+from collections import Counter, defaultdict, deque
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from itertools import islice
@@ -89,6 +89,13 @@ _NUCLEO_AUREO_KEYWORDS: tuple[str, ...] = (
     "etica per le ict",
     "ohm",
     "utet",
+)
+
+_META_MECH_BOILERPLATE_RE = re.compile(
+    r"^\s*(?:il\s+(?:testo|brano|meccanismo|sistema|passo|capitolo|paragrafo)"
+    r"|questo\s+(?:testo|brano|meccanismo)|l'autore|la\s+sezione)\s+"
+    r"(?:descrive|presenta|illustra|mostra|analizza|introduce|traccia|opera|consiste)\b",
+    flags=re.IGNORECASE,
 )
 
 
@@ -191,12 +198,15 @@ def build_block_extraction_prompt(
         "3. CITAZIONE VERBATIM BREVE: `units[i].quote` deve essere una sottostringa ESATTA di 6–22 parole "
         "copiata letteralmente dal BRANO (stesse parole nello stesso ordine). "
         "Se `kind='dispute'`, valorizza obbligatoriamente `vs` (Con chi in disaccordo).\n"
-        "4. FIRMA STRUTTURALE `sig` OPZIONALE: se il brano è già un enunciato matematico/informatico "
-        "astratto puro (es. manuale di analisi o algoritmi), DEVI impostare `\"sig\": null`.\n"
-        "5. DOMAIN STRIPPING CONCISO (quando `sig` non è null): `sig.mech` deve essere UNA sola frase densa "
-        f"di 80–240 caratteri; è VIETATO usare sostantivi aneddotici di superficie (es. {forbidden_csv}) o "
-        "iniettare formule con modulo assenti dal testo; descrivi solo l'azione geometrico-operativa astratta "
-        "e scegli 1..3 `op_tags` SOLO tra:\n"
+        "4. FIRMA STRUTTURALE `sig` STRETTAMENTE SELETTIVA: imposta `\"sig\": null` sui manuali astratti "
+        "(matematica/informatica) E ANCHE su biografie pure, libretti d'opera, riassunti storici generici "
+        "o saggi musicologici privi di un meccanismo fisico, acustico, geometrico, sperimentale o procedurale concreto.\n"
+        "5. DOMAIN STRIPPING CONCISO (solo quando `sig` è concreto e non null): `sig.mech` deve essere UNA "
+        "sola frase densa di 80–240 caratteri; è VIETATO iniziare con formule meta come 'Il meccanismo descrive...', "
+        "'Il testo descrive...', 'Il sistema...', 'Il brano...' (inizia direttamente dal sostantivo d'azione o "
+        f"relazione, es. 'Concentrazione direzionale di onde...', 'Suddivisione di una corda vibrante...'); è VIETATO "
+        f"usare sostantivi aneddotici di superficie (es. {forbidden_csv}) o iniettare formule con modulo assenti "
+        "dal testo; scegli 1..3 `op_tags` SOLO tra:\n"
         f"[{tags_csv}]\n\n"
         f"METADATI CONTESTO: titolo={book_title!r} | dominio={surface_domain!r} | "
         f"sezione={section_title!r} | pag={page_start}\n"
@@ -423,6 +433,7 @@ def _vertex_generate_json(
     *,
     project_id: Optional[str] = None,
     model: Optional[str] = None,
+    thinking_budget: int = 0,
 ) -> Tuple[Mapping[str, Any], int, int]:
     """Chiama Vertex AI `gemini-2.5-flash` sui crediti Google Cloud con refresh token e retry 429/503."""
     proj = project_id or os.environ.get("GCP_PROJECT_ID", DEFAULT_GCP_PROJECT)
@@ -438,7 +449,7 @@ def _vertex_generate_json(
                 "temperature": 0.1,
                 "maxOutputTokens": 2048,
                 "responseMimeType": "application/json",
-                "thinkingConfig": {"thinkingBudget": 0},
+                "thinkingConfig": {"thinkingBudget": int(thinking_budget)},
             },
         }
     ).encode("utf-8")
@@ -496,9 +507,12 @@ def _default_cloud_call(
     *,
     project_id: Optional[str] = None,
     model: Optional[str] = None,
+    thinking_budget: int = 0,
 ) -> Tuple[Mapping[str, Any], int, int]:
     if provider == "vertex":
-        return _vertex_generate_json(prompt, project_id=project_id, model=model)
+        return _vertex_generate_json(
+            prompt, project_id=project_id, model=model, thinking_budget=thinking_budget
+        )
 
     if provider == "gemini":
         url = (
@@ -639,6 +653,10 @@ def _extract_single_row(
                 raw_payload,
                 block_content=str(row["content"]),
             )
+            if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
+                raise SchemaValidationError(
+                    "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...' o 'Il testo descrive...'"
+                )
             return row, ext, total_in, total_out, None
         except (SchemaValidationError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
             if attempt == 0:
@@ -741,15 +759,23 @@ def run_batch_extraction(
                 },
             )
 
+        token_lock = threading.Lock()
+
         def _bridge_llm_adapter(prompt: str) -> Mapping[str, Any]:
             if llm_fn is not None:
                 return llm_fn(prompt, pending[0])  # type: ignore[arg-type]
             parsed, b_in, b_out = _default_cloud_call(
-                provider, api_key, prompt, project_id=project_id, model=model
+                provider,
+                api_key,
+                prompt,
+                project_id=project_id,
+                model=model,
+                thinking_budget=512,
             )
             nonlocal in_tokens_used, out_tokens_used
-            in_tokens_used += b_in
-            out_tokens_used += b_out
+            with token_lock:
+                in_tokens_used += b_in
+                out_tokens_used += b_out
             return parsed
 
         _emit_status("running")
@@ -758,78 +784,113 @@ def run_batch_extraction(
         chunk_sz = max(1, int(batch_size))
         blocks_since_bridge = 0
 
-        for start in range(0, len(pending), chunk_sz):
-            chunk = pending[start : start + chunk_sz]
-            if n_workers > 1 and len(chunk) > 1:
-                with ThreadPoolExecutor(max_workers=n_workers) as pool:
-                    results = list(
-                        pool.map(
-                            lambda r: _extract_single_row(
-                                r,
-                                provider=provider,
-                                api_key=api_key,
-                                project_id=project_id,
-                                model=model,
-                                llm_fn=llm_fn,
-                            ),
-                            chunk,
+        try:
+            for start in range(0, len(pending), chunk_sz):
+                chunk = pending[start : start + chunk_sz]
+                if n_workers > 1 and len(chunk) > 1:
+                    with ThreadPoolExecutor(max_workers=n_workers) as pool:
+                        results = list(
+                            pool.map(
+                                lambda r: _extract_single_row(
+                                    r,
+                                    provider=provider,
+                                    api_key=api_key,
+                                    project_id=project_id,
+                                    model=model,
+                                    llm_fn=llm_fn,
+                                ),
+                                chunk,
+                            )
                         )
-                    )
-            else:
-                results = [
-                    _extract_single_row(
-                        r,
-                        provider=provider,
-                        api_key=api_key,
-                        project_id=project_id,
-                        model=model,
-                        llm_fn=llm_fn,
-                    )
-                    for r in chunk
-                ]
-
-            valid_exts: List[BlockExtractionV21] = []
-            valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
-            for row, ext, tok_in, tok_out, err in results:
-                in_tokens_used += tok_in
-                out_tokens_used += tok_out
-                if ext is None:
-                    blocks_rejected += 1
-                    rejected.append({"block_pk": int(row["block_pk"]), "error": err or "errore"})
                 else:
-                    valid_exts.append(ext)
-                    valid_pairs.append((row, ext))
+                    results = [
+                        _extract_single_row(
+                            r,
+                            provider=provider,
+                            api_key=api_key,
+                            project_id=project_id,
+                            model=model,
+                            llm_fn=llm_fn,
+                        )
+                        for r in chunk
+                    ]
 
-            if valid_exts:
-                validate_batch_anti_template(valid_exts)
+                valid_exts: List[BlockExtractionV21] = []
+                valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
+                for row, ext, tok_in, tok_out, err in results:
+                    in_tokens_used += tok_in
+                    out_tokens_used += tok_out
+                    if ext is None:
+                        blocks_rejected += 1
+                        rejected.append({"block_pk": int(row["block_pk"]), "error": err or "errore"})
+                    else:
+                        valid_exts.append(ext)
+                        valid_pairs.append((row, ext))
 
-            for row, ext in valid_pairs:
-                bpk = int(row["block_pk"])
-                buid = str(row["block_uid"])
-                n_u = persist_block_extraction(
-                    conn,
-                    block_pk=bpk,
-                    block_uid=buid,
-                    extraction=ext,
-                )
-                _log_block_extraction(
-                    conn,
-                    block_pk=bpk,
-                    block_uid=buid,
-                    extraction=ext,
-                    provider_model=provider_label,
-                )
-                units_written += n_u
-                if ext.units == ():
-                    paratext_logged += 1
-                if ext.sig is not None:
-                    sigs_written += 1
-                blocks_completed += 1
-                blocks_since_bridge += 1
+                if valid_exts:
+                    try:
+                        validate_batch_anti_template(valid_exts)
+                    except SchemaValidationError as batch_err:
+                        # Scarta dal commit solo i blocchi del chunk col prefisso ripetuto, senza fermare l'intera Wave
+                        prefixes = [
+                            " ".join(ext.sig.mech.casefold().split()[:4])
+                            for _, ext in valid_pairs
+                            if ext.sig is not None
+                        ]
+                        bad_prefix = Counter(prefixes).most_common(1)[0][0] if prefixes else ""
+                        filtered_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
+                        for row, ext in valid_pairs:
+                            if (
+                                ext.sig is not None
+                                and bad_prefix
+                                and " ".join(ext.sig.mech.casefold().split()[:4]) == bad_prefix
+                            ):
+                                blocks_rejected += 1
+                                rejected.append({"block_pk": int(row["block_pk"]), "error": str(batch_err)})
+                            else:
+                                filtered_pairs.append((row, ext))
+                        valid_pairs = filtered_pairs
 
-            conn.commit()
+                for row, ext in valid_pairs:
+                    bpk = int(row["block_pk"])
+                    buid = str(row["block_uid"])
+                    n_u = persist_block_extraction(
+                        conn,
+                        block_pk=bpk,
+                        block_uid=buid,
+                        extraction=ext,
+                    )
+                    _log_block_extraction(
+                        conn,
+                        block_pk=bpk,
+                        block_uid=buid,
+                        extraction=ext,
+                        provider_model=provider_label,
+                    )
+                    units_written += n_u
+                    if ext.units == ():
+                        paratext_logged += 1
+                    if ext.sig is not None:
+                        sigs_written += 1
+                    blocks_completed += 1
+                    blocks_since_bridge += 1
 
-            if discover_bridges and blocks_since_bridge >= 200:
+                conn.commit()
+
+                if discover_bridges and blocks_since_bridge >= 200:
+                    b_res = discover_and_validate_bridges(
+                        conn,
+                        _bridge_llm_adapter,
+                        top_k_per_node=5,
+                        archetypes=DEFAULT_NODE_ARCHETYPES,
+                        max_workers=min(4, n_workers),
+                    )
+                    bridges_validated_total += int(b_res.get("bridges_validated") or 0)
+                    blocks_since_bridge = 0
+
+                _emit_status("running")
+
+            if discover_bridges and (blocks_since_bridge > 0 or len(pending) == 0):
                 b_res = discover_and_validate_bridges(
                     conn,
                     _bridge_llm_adapter,
@@ -838,21 +899,11 @@ def run_batch_extraction(
                     max_workers=min(4, n_workers),
                 )
                 bridges_validated_total += int(b_res.get("bridges_validated") or 0)
-                blocks_since_bridge = 0
 
-            _emit_status("running")
-
-        if discover_bridges and (blocks_since_bridge > 0 or len(pending) == 0):
-            b_res = discover_and_validate_bridges(
-                conn,
-                _bridge_llm_adapter,
-                top_k_per_node=5,
-                archetypes=DEFAULT_NODE_ARCHETYPES,
-                max_workers=min(4, n_workers),
-            )
-            bridges_validated_total += int(b_res.get("bridges_validated") or 0)
-
-        _emit_status("completed")
+            _emit_status("completed")
+        except Exception:
+            _emit_status("failed")
+            raise
 
         return {
             "mode": "executed",

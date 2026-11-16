@@ -880,19 +880,27 @@ def build_bridge_validation_prompt(
     archetype: GeneratorArchetype,
     cand: WrongBookCandidate,
 ) -> str:
-    """Costruisce il prompt per verificare se un candidato ha un vero isomorfismo 1-a-1."""
+    """Costruisce il prompt rigoroso (anti-metafora) per verificare un isomorfismo 1-a-1."""
     excerpt = cand.content[:1800]
     return (
-        "Sei il validatore epistemico di `resuscipack` per i ponti «Il Libro Sbagliato».\n"
-        "Devi decidere se il seguente brano estratto da un dominio NON canonico costituisce un "
-        "VERO isomorfismo strutturale (non una metafora vaga o decorativa!) per il nodo didattico.\n"
+        "Sei il validatore epistemico severo di `resuscipack` per i ponti «Il Libro Sbagliato».\n"
+        "Devi decidere se questo brano estratto da un dominio NON canonico costituisce un "
+        "VERO isomorfismo causale, quantitativo o procedurale per il nodo didattico.\n"
+        "REGOLA ANTI-METAFORA (OBBLIGATORIA): RIFIUTA (`is_valid: false`) qualsiasi analogia poetica, "
+        "letteraria, teatrale, biografica o sociologica vaga (es. 'influenza stilistica ↔ onda', "
+        "'trama drammatica ↔ cifrario', 'storia di una disciplina ↔ sistema in guasto', "
+        "'talento musicale ↔ isolamento variabili').\n"
+        "Accetta (`is_valid: true`, `score >= 0.88`) SOLO se nel brano compaiono grandezze o operazioni "
+        "concrete e misurabili (fisiche, acustiche, geometriche, meccaniche, sperimentali o algoritmiche) "
+        "la cui relazione rispetta esattamente la stessa struttura formale del nodo (come le boe a 50 m di "
+        "Marconi ↔ |x - x0| < 25, i conduttori in serie di Galvani ↔ AND, i rapporti di quinta (3/2)^n ↔ potenze).\n"
         "Rispondi SOLO con un oggetto JSON valido.\n"
-        "Se il collegamento è superficiale o vago, rispondi: "
+        "Se il collegamento è metaforico, superficiale o privo di meccanismo misurabile, rispondi: "
         '{"is_valid": false, "reason": "motivo sintetico"}.\n'
-        "Se invece esiste una corrispondenza rigorosa e utile a sbloccare il senso formale:\n"
-        '{"is_valid": true, "mapping": {"grandezza fisica/storica nel brano": "oggetto formale del nodo", ...}, '
-        '"chain_steps": ["1. ...", "2. ...", "3. ..."], "score": 0.0_to_1.0}\n'
-        "VINCOLI OBBLIGATORI se is_valid=true: almeno 2 coppie distinte in `mapping` e almeno 3 passi "
+        "Se invece esiste una corrispondenza rigorosa:\n"
+        '{"is_valid": true, "mapping": {"grandezza concreta nel brano": "oggetto formale del nodo", ...}, '
+        '"chain_steps": ["1. ...", "2. ...", "3. ..."], "score": 0.88_to_1.0}\n'
+        "VINCOLI se is_valid=true: almeno 2 coppie distinte in `mapping` e almeno 3 passi "
         "inferenziali numerati in `chain_steps` (ciascuno >= 20 caratteri) ancorati ai fatti reali del brano.\n\n"
         f"NODO TARGET: {archetype.node_id}\n"
         f"ARCHETIPO FORMALE DEL NODO: {archetype.generator_query}\n"
@@ -903,6 +911,31 @@ def build_bridge_validation_prompt(
     )
 
 
+def _record_rejected_bridge(
+    conn: sqlite3.Connection,
+    node_id: str,
+    block_pk: int,
+    target_op_tags: Sequence[OpTag],
+) -> None:
+    """Registra in cache un candidato rifiutato come decorativo per evitare di ripagarlo nelle Wave successive."""
+    resolved_tags = [t.value for t in validate_op_tags(target_op_tags)]
+    conn.execute(
+        """
+        INSERT INTO curiosity_bridges (
+            node_id, block_pk, target_op_tags_json, mapping_json,
+            chain_steps_json, score, status
+        ) VALUES (?, ?, ?, '{}', '[]', 0.0, 'rejected_decorative')
+        ON CONFLICT(node_id, block_pk) DO UPDATE SET
+            target_op_tags_json = excluded.target_op_tags_json,
+            mapping_json = '{}',
+            chain_steps_json = '[]',
+            score = 0.0,
+            status = 'rejected_decorative'
+        """,
+        (node_id, int(block_pk), json.dumps(resolved_tags, ensure_ascii=False)),
+    )
+
+
 def discover_and_validate_bridges(
     conn: sqlite3.Connection,
     call_llm_fn: Any,
@@ -910,6 +943,7 @@ def discover_and_validate_bridges(
     top_k_per_node: int = 5,
     archetypes: Sequence[GeneratorArchetype] = DEFAULT_NODE_ARCHETYPES,
     max_workers: int = 1,
+    min_score: float = 0.88,
 ) -> Dict[str, Any]:
     """Scopre e valida nuovi ponti 'Libro Sbagliato' dai blocchi con `structural_signatures`."""
     from concurrent.futures import ThreadPoolExecutor
@@ -953,13 +987,14 @@ def discover_and_validate_bridges(
         outcomes = [_eval_one(t) for t in pending_tasks]
 
     for arch, cand, raw_resp, err in outcomes:
-        if err is not None or not isinstance(raw_resp, Mapping):
+        if err is not None:
+            # Errore di rete/transitorio: non cachiamo come rejected_decorative così potrà riprovare
             stats["bridges_rejected"] += 1
-            if err:
-                stats["errors"].append(f"{arch.node_id}/{cand.block_pk}: {err}")
+            stats["errors"].append(f"{arch.node_id}/{cand.block_pk}: {err}")
             continue
 
-        if not bool(raw_resp.get("is_valid", False)):
+        if not isinstance(raw_resp, Mapping) or not bool(raw_resp.get("is_valid", False)):
+            _record_rejected_bridge(conn, arch.node_id, cand.block_pk, arch.target_op_tags)
             stats["bridges_rejected"] += 1
             continue
 
@@ -968,6 +1003,10 @@ def discover_and_validate_bridges(
             chain_steps = raw_resp.get("chain_steps") or []
             raw_score = float(raw_resp.get("score", cand.score))
             clamped_score = max(0.0, min(1.0, raw_score))
+            if clamped_score < min_score:
+                _record_rejected_bridge(conn, arch.node_id, cand.block_pk, arch.target_op_tags)
+                stats["bridges_rejected"] += 1
+                continue
             validate_and_upsert_bridge(
                 conn,
                 node_id=arch.node_id,
@@ -980,6 +1019,7 @@ def discover_and_validate_bridges(
             )
             stats["bridges_validated"] += 1
         except (ValueError, KeyError, TypeError) as exc:
+            _record_rejected_bridge(conn, arch.node_id, cand.block_pk, arch.target_op_tags)
             stats["bridges_rejected"] += 1
             stats["errors"].append(f"{arch.node_id}/{cand.block_pk}: {exc}")
 
