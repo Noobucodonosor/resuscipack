@@ -21,9 +21,11 @@ from resuscipack.corpus.normalizer import make_block_uid, make_book_uid, normali
 from resuscipack.corpus.schema import init_corpus_db, supersede_block
 from resuscipack.epistemic import (
     ALL_OP_TAGS,
+    DEFAULT_NODE_ARCHETYPES,
     GeneratorArchetype,
     OpTag,
     SchemaValidationError,
+    discover_and_validate_bridges,
     find_wrong_book_candidates,
     get_bridges_for_node,
     persist_block_extraction,
@@ -35,7 +37,12 @@ from resuscipack.epistemic import (
     verifica_scheda,
     verifica_scheda_report,
 )
-from resuscipack.epistemic.batch_cli import MissingCredentialsError, run_batch_extraction
+from resuscipack.epistemic.batch_cli import (
+    MissingCredentialsError,
+    _VERTEX_TOKEN_CACHE,
+    run_batch_extraction,
+    select_nucleo_aureo_book_pks,
+)
 
 HISTORICAL_FTS5_DB = Path("/Users/dany/from_baidu/atomic_iceberg/data/biblioteca_fts5.db")
 
@@ -557,12 +564,22 @@ def test_batch_cli_fail_honest_without_env_key_and_idempotent_with_injected_llm(
         assert dry["pending_blocks"] == 1
         assert dry["estimated_input_tokens"] > 0
 
-        # 2. Senza API key fallisce esplicitamente senza scrivere alcun mock!
+        # 2. Senza API key (gemini) e senza gcloud (vertex) fallisce esplicitamente senza scrivere alcun mock!
         with pytest.raises(MissingCredentialsError):
-            run_batch_extraction(db_path, wave=3, dry_run=False)
+            run_batch_extraction(db_path, wave=3, provider="gemini", dry_run=False)
+
+        _VERTEX_TOKEN_CACHE.invalidate()
+        monkeypatch.setattr(
+            "resuscipack.epistemic.batch_cli._fetch_gcloud_access_token",
+            lambda: (_ for _ in ()).throw(MissingCredentialsError("gcloud mock assente")),
+        )
+        with pytest.raises(MissingCredentialsError):
+            run_batch_extraction(db_path, wave=3, provider="vertex", dry_run=False)
+        _VERTEX_TOKEN_CACHE.invalidate()
 
         conn_check = sqlite3.connect(str(db_path))
         assert conn_check.execute("SELECT count(*) FROM epistemic_units").fetchone()[0] == 0
+        assert conn_check.execute("SELECT count(*) FROM block_extraction_log").fetchone()[0] == 0
         conn_check.close()
 
         # 3. Con callable iniettato scrive l'unità valida ed è idempotente al secondo lancio
@@ -595,6 +612,143 @@ def test_batch_cli_fail_honest_without_env_key_and_idempotent_with_injected_llm(
         res2 = run_batch_extraction(db_path, wave=3, llm_fn=fake_llm)
         assert res2["blocks_processed"] == 0
         assert len(calls) == 1
+
+
+def test_block_extraction_log_prevents_rebilling_paratext_and_supports_retry_and_bridge_discovery() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = Path(tmp) / "pack_corpus.db"
+        status_path = Path(tmp) / "wave1_status.json"
+        conn = init_corpus_db(db_path)
+
+        # Inseriamo 2 libri in dominio storia_della_scienza / musica_acustica
+        pk_paratext, _ = _insert_book_and_block(
+            conn,
+            title="Giancarlo Masini - Guglielmo Marconi (UTET)",
+            surface_domain="storia_della_scienza",
+            content="Indice analitico generale dei nomi e delle illustrazioni fuori testo.",
+            page=5,
+        )
+        pk_exp, _ = _insert_book_and_block(
+            conn,
+            title="Alvise Vidolin - Musica Elettronica",
+            surface_domain="musica_acustica",
+            content=(
+                "Regolando la distanza della sorgente sonora rispetto al microfono entro una fascia simmetrica "
+                "attorno al punto di equilibrio, il segnale d'errore guida il rientro automatico al centro."
+            ),
+            page=42,
+        )
+        # Verifica select_nucleo_aureo_book_pks
+        selected_pks = select_nucleo_aureo_book_pks(conn)
+        assert len(selected_pks) == 2
+        conn.close()
+
+        attempts: Dict[int, int] = {}
+
+        def fake_llm_with_retry(prompt: str, row: sqlite3.Row) -> dict:
+            bpk = int(row["block_pk"])
+            attempts[bpk] = attempts.get(bpk, 0) + 1
+            if bpk == pk_paratext:
+                # Restituisce yield low_or_paratext con 0 unità
+                return {"yield": "low_or_paratext", "units": [], "sig": None}
+            if attempts[bpk] == 1:
+                # Primo tentativo fallisce Gate verbatim per testare 1-shot self-repair
+                return {
+                    "yield": "high",
+                    "units": [
+                        {
+                            "kind": "exp",
+                            "mode": "applies",
+                            "stmt": "Il controllo acustico corregge la posizione usando un errore con segno.",
+                            "quote": "frase inventata non presente nel testo",
+                            "who": ["Alvise Vidolin"],
+                            "vs": None,
+                            "concepts": ["feedback acustico"],
+                        }
+                    ],
+                    "sig": None,
+                }
+            # Secondo tentativo dopo prompt di correzione passa!
+            assert "ATTENZIONE CORREZIONE OBBLIGATORIA" in prompt
+            return {
+                "yield": "high",
+                "units": [
+                    {
+                        "kind": "exp",
+                        "mode": "applies",
+                        "stmt": "Alvise Vidolin descrive il controllo della sorgente dentro una fascia simmetrica tramite segnale d'errore.",
+                        "quote": "il segnale d'errore guida il rientro automatico al centro",
+                        "who": ["Alvise Vidolin"],
+                        "vs": None,
+                        "concepts": ["fascia simmetrica", "controllo feedback"],
+                    }
+                ],
+                "sig": {
+                    "op_tags": ["BOUNDED_TOLERANCE", "SIGNED_DEVIATION_FEEDBACK"],
+                    "role": "embodied_intuition",
+                    "mech": "Mantenimento di un punto mobile dentro una fascia simmetrica attorno all'equilibrio tramite feedback continuo.",
+                },
+            }
+
+        res1 = run_batch_extraction(
+            db_path,
+            wave=1,
+            limit=10,
+            workers=1,
+            status_file=status_path,
+            llm_fn=fake_llm_with_retry,
+        )
+        assert res1["blocks_processed"] == 2
+        assert res1["paratext_logged"] == 1
+        assert res1["units_written"] == 1
+        assert res1["signatures_written"] == 1
+        assert status_path.exists()
+
+        # Secondo run: NEANCHE il blocco low_or_paratext viene ri-chiamato!
+        res2 = run_batch_extraction(
+            db_path,
+            wave=1,
+            limit=10,
+            workers=1,
+            llm_fn=fake_llm_with_retry,
+        )
+        assert res2["blocks_processed"] == 0
+        assert attempts[pk_paratext] == 1
+        assert attempts[pk_exp] == 2
+
+        # Verifica discovery automatico su DEFAULT_NODE_ARCHETYPES
+        assert len(DEFAULT_NODE_ARCHETYPES) >= 14
+        conn2 = sqlite3.connect(str(db_path))
+        conn2.row_factory = sqlite3.Row
+
+        def fake_bridge_llm(prompt: str) -> dict:
+            if "NODO TARGET: P0.5" in prompt:
+                return {
+                    "is_valid": True,
+                    "mapping": {
+                        "Punto di equilibrio acustico": "Centro di riferimento x0",
+                        "Fascia simmetrica attorno al centro": "Intorno |x - x0| < delta",
+                    },
+                    "chain_steps": [
+                        "1. La distanza della sorgente definisce uno scostamento rispetto al punto d'equilibrio.",
+                        "2. Il segnale d'errore con segno riporta il sistema nella fascia simmetrica ammessa.",
+                        "3. Questa dinamica coincide con la disequazione a valore assoluto |x - x0| < delta.",
+                    ],
+                    "score": 0.91,
+                }
+            return {"is_valid": False, "reason": "Non pertinente per questo nodo."}
+
+        b_stats = discover_and_validate_bridges(
+            conn2,
+            fake_bridge_llm,
+            top_k_per_node=3,
+        )
+        assert b_stats["bridges_validated"] == 1
+        assert b_stats["bridges_rejected"] >= 1
+        p05_bridges = get_bridges_for_node(conn2, "P0.5")
+        assert len(p05_bridges) == 1
+        assert p05_bridges[0]["block_pk"] == pk_exp
+        conn2.close()
 
 
 @pytest.mark.skipif(

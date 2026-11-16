@@ -1,6 +1,8 @@
 (() => {
   const state = {
     overview: null,
+    extractionStatus: null,
+    statusTimerId: null,
     activeFilter: "frontier",
     currentNodeData: null,
     activeMode: "card",
@@ -42,13 +44,43 @@
     await selectNode(targetId);
   }
 
+  async function loadExtractionStatus() {
+    if (state.statusTimerId) {
+      clearTimeout(state.statusTimerId);
+      state.statusTimerId = null;
+    }
+    try {
+      const data = await fetchJson("/api/extraction_status");
+      state.extractionStatus = data;
+      updateGlobalStats();
+      if (data.state === "running") {
+        state.statusTimerId = setTimeout(loadExtractionStatus, 10000);
+      }
+    } catch (_err) {
+      // Mantiene la UI operativa anche se lo stato live non è ancora disponibile
+    }
+  }
+
   function updateGlobalStats() {
     if (!state.overview) return;
     const masteredCount = state.overview.mastered_ids.length;
     const totalCount = state.overview.metadata.total_nodes;
     const ofa = state.overview.ofa_readiness;
     const statsEl = document.getElementById("compassStats");
-    statsEl.textContent = `Padronanza: ${masteredCount}/${totalCount} · Gate OFA G00: ${ofa.ready_count}/${ofa.total_count} pronti`;
+    let text = `Padronanza: ${masteredCount}/${totalCount} · Gate OFA G00: ${ofa.ready_count}/${ofa.total_count}`;
+    if (state.extractionStatus) {
+      const es = state.extractionStatus;
+      const booksStr = Number(es.books_active || 0).toLocaleString("it-IT");
+      const extStr = Number(es.blocks_extracted || 0).toLocaleString("it-IT");
+      const brStr = Number(es.validated_bridges || 0).toLocaleString("it-IT");
+      text = `📚 ${booksStr} libri · Letti AI: ${extStr} · Ponti: ${brStr}`;
+      if (es.state === "running" && es.live_wave) {
+        const lw = es.live_wave;
+        text += ` (⏳ Wave ${lw.wave || 1}: ${lw.blocks_completed || 0}/${lw.blocks_total_in_wave || 0})`;
+      }
+      text += ` · Padronanza: ${masteredCount}/${totalCount} · OFA: ${ofa.ready_count}/${ofa.total_count}`;
+    }
+    statsEl.textContent = text;
   }
 
   function renderNodeStrip() {
@@ -432,5 +464,6 @@
     });
 
     loadOverview();
+    loadExtractionStatus();
   });
 })();

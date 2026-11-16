@@ -139,11 +139,22 @@ CREATE TABLE IF NOT EXISTS legacy_rowid_map (
     match_method TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS block_extraction_log (
+    block_pk INTEGER PRIMARY KEY REFERENCES blocks(block_pk),
+    block_uid TEXT NOT NULL,
+    yield TEXT NOT NULL,
+    provider_model TEXT NOT NULL,
+    units_count INTEGER NOT NULL,
+    has_sig INTEGER NOT NULL,
+    processed_at TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
 CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
 CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
 CREATE INDEX IF NOT EXISTS idx_epistemic_units_block ON epistemic_units(block_pk);
 CREATE INDEX IF NOT EXISTS idx_curiosity_bridges_node ON curiosity_bridges(node_id, status);
+CREATE INDEX IF NOT EXISTS idx_extraction_log_yield ON block_extraction_log(yield);
 """
 
 
@@ -157,6 +168,7 @@ def connect_corpus_db(db_path: Path | str = DEFAULT_DB_PATH, read_only: bool = F
         conn = sqlite3.connect(str(path))
         conn.execute("PRAGMA journal_mode = WAL;")
         conn.execute("PRAGMA synchronous = NORMAL;")
+    conn.execute("PRAGMA busy_timeout = 15000;")
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
@@ -166,6 +178,26 @@ def init_corpus_db(db_path: Path | str = DEFAULT_DB_PATH) -> sqlite3.Connection:
     """Inizializza idempotentemente lo schema completo di `pack_corpus.db`."""
     conn = connect_corpus_db(db_path=db_path, read_only=False)
     conn.executescript(SCHEMA_DDL)
+    conn.execute(
+        """
+        INSERT OR IGNORE INTO block_extraction_log (
+            block_pk, block_uid, yield, provider_model, units_count, has_sig, processed_at
+        )
+        SELECT
+            bl.block_pk,
+            bl.block_uid,
+            'high',
+            'legacy-seed',
+            COUNT(eu.unit_pk),
+            CASE WHEN EXISTS (
+                SELECT 1 FROM structural_signatures ss WHERE ss.block_pk = bl.block_pk
+            ) THEN 1 ELSE 0 END,
+            COALESCE(MIN(eu.created_at), datetime('now'))
+        FROM blocks bl
+        JOIN epistemic_units eu ON eu.block_pk = bl.block_pk
+        GROUP BY bl.block_pk, bl.block_uid
+        """
+    )
     conn.commit()
     return conn
 

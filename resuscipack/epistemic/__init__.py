@@ -7,8 +7,10 @@
 """
 
 from .bridge import (
+    DEFAULT_NODE_ARCHETYPES,
     GeneratorArchetype,
     WrongBookCandidate,
+    discover_and_validate_bridges,
     find_wrong_book_candidates,
     get_bridges_for_node,
     seed_verified_empirical_bridges,
@@ -43,6 +45,7 @@ __all__ = [
     "AtomicEpistemicUnit",
     "BlockExtractionV21",
     "BlockYield",
+    "DEFAULT_NODE_ARCHETYPES",
     "GeneratorArchetype",
     "OP_TAG_DESCRIPTIONS",
     "OpTag",
@@ -53,6 +56,7 @@ __all__ = [
     "UnitMode",
     "ValidationReport",
     "WrongBookCandidate",
+    "discover_and_validate_bridges",
     "find_wrong_book_candidates",
     "get_bridges_for_node",
     "normalizza",

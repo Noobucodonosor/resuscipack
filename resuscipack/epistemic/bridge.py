@@ -774,3 +774,214 @@ def seed_verified_empirical_bridges(db_or_conn: Path | str | sqlite3.Connection 
             conn.close()
 
     return summary
+
+
+DEFAULT_NODE_ARCHETYPES: Tuple[GeneratorArchetype, ...] = (
+    GeneratorArchetype(
+        node_id="numeri.quantita",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.BIJECTION_EQUINUMEROSITY, OpTag.INVARIANT_PRESERVATION),
+        generator_query="accoppiamento uno a uno senza contare e invarianza della numerosita rispetto a disposizione o ordine",
+    ),
+    GeneratorArchetype(
+        node_id="numeri.posizionale",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.MODULAR_PERIODICITY, OpTag.PROPORTIONAL_SCALING),
+        generator_query="codifica posizionale mediante raggruppamento periodico e cambio di scala tra ordini di grandezza",
+    ),
+    GeneratorArchetype(
+        node_id="numeri.relativi",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.SIGNED_DEVIATION_FEEDBACK, OpTag.INVARIANT_PRESERVATION),
+        generator_query="scostamento dotato di verso positivo o negativo rispetto a uno zero di riferimento centrale",
+    ),
+    GeneratorArchetype(
+        node_id="frazioni.denominatore-comune",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.PROPORTIONAL_SCALING, OpTag.INVARIANT_PRESERVATION),
+        generator_query="riduzione di misure eterogenee a una suddivisione unitaria comune preservando la quantita",
+    ),
+    GeneratorArchetype(
+        node_id="P0.1",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.CONTRADICTION_REDUCTIO, OpTag.INVARIANT_PRESERVATION),
+        generator_query="confutazione rigorosa per assurdo o riduzione di un enunciato a premesse incompatibili",
+    ),
+    GeneratorArchetype(
+        node_id="P0.2",
+        canonical_domains=("matematica", "informatica"),
+        target_op_tags=(OpTag.SERIES_CONJUNCTION_GATE, OpTag.PARALLEL_DISJUNCTION_PATH),
+        generator_query="congiunzione in serie tutto o niente e disgiunzione in parallelo con rami alternativi",
+    ),
+    GeneratorArchetype(
+        node_id="P0.3",
+        canonical_domains=("matematica", "informatica"),
+        target_op_tags=(OpTag.BIJECTION_EQUINUMEROSITY, OpTag.COMBINATORIAL_GRID_PATTERN),
+        generator_query="corrispondenza biunivoca tra collezioni, relazioni d'ordine e associazione funzionale",
+    ),
+    GeneratorArchetype(
+        node_id="P0.4",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.CONTRADICTION_REDUCTIO, OpTag.ACCUMULATION_INTEGRATION),
+        generator_query="incommensurabilita tra grandezze discrete e continue e approssimazione per accumulo",
+    ),
+    GeneratorArchetype(
+        node_id="P0.5",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.BOUNDED_TOLERANCE, OpTag.SIGNED_DEVIATION_FEEDBACK),
+        generator_query="mantenere un punto mobile entro un varco simmetrico azzerando lo scostamento scalare",
+    ),
+    GeneratorArchetype(
+        node_id="P0.6",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.ANGULAR_GEOMETRY_PROJECTION, OpTag.RATE_OF_CHANGE, OpTag.THRESHOLD_PHASE_TRANSITION),
+        generator_query="trasformazione funzionale tra ingresso e uscita, pendenza locale, asintoti e cambio di regime",
+    ),
+    GeneratorArchetype(
+        node_id="P0.7",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.ANGULAR_GEOMETRY_PROJECTION, OpTag.SIGNAL_TRANSDUCTION_ECHO, OpTag.MODULAR_PERIODICITY),
+        generator_query="proiezioni angolari, fasci direzionali, fenomeni ondulatori periodici e misura indiretta",
+    ),
+    GeneratorArchetype(
+        node_id="P0.8",
+        canonical_domains=("matematica",),
+        target_op_tags=(OpTag.ORDER_OF_MAGNITUDE_BOUND, OpTag.BOTTLENECK_CAPACITY),
+        generator_query="stima di fattibilita fisica o energetica per ordini di grandezza e limiti di flusso",
+    ),
+    GeneratorArchetype(
+        node_id="P2.2",
+        canonical_domains=("matematica", "informatica"),
+        target_op_tags=(OpTag.COMBINATORIAL_GRID_PATTERN, OpTag.RECURSIVE_SELF_SIMILARITY, OpTag.MODULAR_PERIODICITY),
+        generator_query="strutture discrete, pattern combinatori su griglia, ricorsione autosimile e aritmetica modulare",
+    ),
+    GeneratorArchetype(
+        node_id="P3.2",
+        canonical_domains=("matematica", "informatica"),
+        target_op_tags=(OpTag.PROBABILITY_BAYESIAN_UPDATE, OpTag.HIDDEN_CONFOUNDER),
+        generator_query="aggiornamento di fiducia su ipotesi incerte con segnali rumorosi e variabili confondenti",
+    ),
+    GeneratorArchetype(
+        node_id="P4.1",
+        canonical_domains=("matematica", "informatica"),
+        target_op_tags=(OpTag.CONSTRAINED_SEARCH_DECODING, OpTag.ADVERSARIAL_DECEPTION, OpTag.MODULAR_PERIODICITY),
+        generator_query="decodifica di simboli ignoti tramite enumerazione ordinata, inganno avversario e periodicita",
+    ),
+    GeneratorArchetype(
+        node_id="P5.2",
+        canonical_domains=("informatica",),
+        target_op_tags=(OpTag.VARIABLE_ISOLATION_CONTROL, OpTag.HIDDEN_CONFOUNDER),
+        generator_query="ripristino della baseline funzionante e isolamento controllato di un singolo componente guasto",
+    ),
+)
+
+
+def build_bridge_validation_prompt(
+    archetype: GeneratorArchetype,
+    cand: WrongBookCandidate,
+) -> str:
+    """Costruisce il prompt per verificare se un candidato ha un vero isomorfismo 1-a-1."""
+    excerpt = cand.content[:1800]
+    return (
+        "Sei il validatore epistemico di `resuscipack` per i ponti «Il Libro Sbagliato».\n"
+        "Devi decidere se il seguente brano estratto da un dominio NON canonico costituisce un "
+        "VERO isomorfismo strutturale (non una metafora vaga o decorativa!) per il nodo didattico.\n"
+        "Rispondi SOLO con un oggetto JSON valido.\n"
+        "Se il collegamento è superficiale o vago, rispondi: "
+        '{"is_valid": false, "reason": "motivo sintetico"}.\n'
+        "Se invece esiste una corrispondenza rigorosa e utile a sbloccare il senso formale:\n"
+        '{"is_valid": true, "mapping": {"grandezza fisica/storica nel brano": "oggetto formale del nodo", ...}, '
+        '"chain_steps": ["1. ...", "2. ...", "3. ..."], "score": 0.0_to_1.0}\n'
+        "VINCOLI OBBLIGATORI se is_valid=true: almeno 2 coppie distinte in `mapping` e almeno 3 passi "
+        "inferenziali numerati in `chain_steps` (ciascuno >= 20 caratteri) ancorati ai fatti reali del brano.\n\n"
+        f"NODO TARGET: {archetype.node_id}\n"
+        f"ARCHETIPO FORMALE DEL NODO: {archetype.generator_query}\n"
+        f"OP_TAGS TARGET: {[t.value for t in archetype.target_op_tags]}\n\n"
+        f"LIBRO CANDIDATO: {cand.book_title!r} (dominio={cand.surface_domain!r}, p.{cand.page_start})\n"
+        f"FIRMA ESTRATTA: {cand.mech}\n"
+        f"BRANO ORIGINALE:\n{excerpt}\n"
+    )
+
+
+def discover_and_validate_bridges(
+    conn: sqlite3.Connection,
+    call_llm_fn: Any,
+    *,
+    top_k_per_node: int = 5,
+    archetypes: Sequence[GeneratorArchetype] = DEFAULT_NODE_ARCHETYPES,
+    max_workers: int = 1,
+) -> Dict[str, Any]:
+    """Scopre e valida nuovi ponti 'Libro Sbagliato' dai blocchi con `structural_signatures`."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    existing_pairs = {
+        (str(r[0]), int(r[1]))
+        for r in conn.execute("SELECT node_id, block_pk FROM curiosity_bridges").fetchall()
+    }
+
+    pending_tasks: List[Tuple[GeneratorArchetype, WrongBookCandidate, str]] = []
+    seen_in_run: set[Tuple[str, int]] = set()
+    for arch in archetypes:
+        cands = find_wrong_book_candidates(conn, arch, limit=top_k_per_node)
+        for cand in cands:
+            key = (arch.node_id, cand.block_pk)
+            if key in existing_pairs or key in seen_in_run:
+                continue
+            seen_in_run.add(key)
+            pending_tasks.append((arch, cand, build_bridge_validation_prompt(arch, cand)))
+
+    stats: Dict[str, Any] = {
+        "candidates_checked": len(pending_tasks),
+        "bridges_validated": 0,
+        "bridges_rejected": 0,
+        "errors": [],
+    }
+    if not pending_tasks:
+        return stats
+
+    def _eval_one(task: Tuple[GeneratorArchetype, WrongBookCandidate, str]) -> Tuple[GeneratorArchetype, WrongBookCandidate, Any, Optional[str]]:
+        arch, cand, prompt = task
+        try:
+            return arch, cand, call_llm_fn(prompt), None
+        except Exception as exc:
+            return arch, cand, None, str(exc)
+
+    if max_workers > 1 and len(pending_tasks) > 1:
+        with ThreadPoolExecutor(max_workers=min(max_workers, len(pending_tasks))) as pool:
+            outcomes = list(pool.map(_eval_one, pending_tasks))
+    else:
+        outcomes = [_eval_one(t) for t in pending_tasks]
+
+    for arch, cand, raw_resp, err in outcomes:
+        if err is not None or not isinstance(raw_resp, Mapping):
+            stats["bridges_rejected"] += 1
+            if err:
+                stats["errors"].append(f"{arch.node_id}/{cand.block_pk}: {err}")
+            continue
+
+        if not bool(raw_resp.get("is_valid", False)):
+            stats["bridges_rejected"] += 1
+            continue
+
+        try:
+            mapping = raw_resp.get("mapping") or {}
+            chain_steps = raw_resp.get("chain_steps") or []
+            raw_score = float(raw_resp.get("score", cand.score))
+            clamped_score = max(0.0, min(1.0, raw_score))
+            validate_and_upsert_bridge(
+                conn,
+                node_id=arch.node_id,
+                block_pk=cand.block_pk,
+                target_op_tags=arch.target_op_tags,
+                mapping=mapping,
+                chain_steps=chain_steps,
+                score=clamped_score,
+                status="validated",
+            )
+            stats["bridges_validated"] += 1
+        except (ValueError, KeyError, TypeError) as exc:
+            stats["bridges_rejected"] += 1
+            stats["errors"].append(f"{arch.node_id}/{cand.block_pk}: {exc}")
+
+    conn.commit()
+    return stats

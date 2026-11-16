@@ -74,3 +74,7 @@ Adottiamo un'architettura epistemica a **zero mock, zero leakage e diritto al si
   - *File coinvolti*: `resuscipack/epistemic/bridge.py`, `resuscipack/epistemic/batch_cli.py`, `tests/test_epistemic_v21.py`
   - *Acceptance Criteria*: Query di inversione disciplinare funzionante, seed verificato sul corpus reale per Marconi (Santa Margherita), Galvani (Rialpo/stanza chiusa) e Cartesio (Regola X), CLI batch idempotente che legge chiavi solo da env e rifiuta mock.
   - *Verification Step*: `.venv/bin/pytest tests/test_epistemic_v21.py -v`
+- [x] **TASK-EPIST-04**: **Runner Vertex AI (Crediti Google Cloud), Log Idempotenza `block_extraction_log`, Selettore Nucleo Aureo Wave 1 & Discovery Ponti**
+  - *File coinvolti*: `resuscipack/corpus/schema.py`, `resuscipack/epistemic/batch_cli.py`, `resuscipack/epistemic/bridge.py`, `resuscipack/workbench/app.py`, `resuscipack/workbench/static/app.js`
+  - *Acceptance Criteria*: Supporto nativo Vertex AI (`macro-authority-492722-u7`) sui crediti GCP attivi senza segreti su disco, tabella append/idempotente `block_extraction_log` (per non ri-fatturare blocchi `low_or_paratext`), selettore Wave 1 *Nucleo Aureo* (~50–62 volumi), micro-batch concorrente con 1 auto-riparazione su `SchemaValidationError`, discovery automatica `curiosity_bridges` su `DEFAULT_NODE_ARCHETYPES`, ed endpoint `/api/extraction_status` esposto nel Tavolo di Studio.
+  - *Verification Step*: `.venv/bin/pytest -v && python3 ~/.gemini/config/skills/adr-github-methodology/scripts/pre_release_check.py`

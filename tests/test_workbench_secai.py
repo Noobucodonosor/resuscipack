@@ -220,11 +220,30 @@ def test_student_state_fast_forward_and_2day_consolidation(tmp_path: Path) -> No
 
 
 def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
+    import json
+
+    status_file = tmp_path / "wave1_status.json"
+    status_file.write_text(
+        json.dumps({"state": "running", "wave": 1, "blocks_completed": 40, "blocks_total_in_wave": 5000}),
+        encoding="utf-8",
+    )
     app = create_app(
         corpus_db_path=CORPUS_DB,
         state_db_path=tmp_path / "workbench_state.db",
+        status_file_path=status_file,
     )
     client = app.test_client()
+
+    # 0. Endpoint /api/extraction_status
+    r_st = client.get("/api/extraction_status")
+    assert r_st.status_code == 200
+    st = r_st.get_json()
+    assert st["books_active"] >= 1370
+    assert st["blocks_active"] >= 100000
+    assert st["blocks_extracted"] >= 5
+    assert st["validated_bridges"] >= 9
+    assert st["state"] == "running"
+    assert st["live_wave"]["blocks_completed"] == 40
 
     # 1. Pagina principale HTML + Bussola Hero
     r_index = client.get("/")

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import re
 from pathlib import Path
 from typing import Any
@@ -110,6 +111,7 @@ def create_app(
     dag_path: Path | str = DEFAULT_DAG_PATH,
     open_access_path: Path | str = DEFAULT_OPEN_ACCESS_PATH,
     cards_dir: Path | str = DEFAULT_CARDS_DIR,
+    status_file_path: Path | str | None = None,
 ) -> Flask:
     here = Path(__file__).resolve().parent
     app = Flask(
@@ -122,6 +124,11 @@ def create_app(
     app.config["DAG_PATH"] = Path(dag_path)
     app.config["OPEN_ACCESS_PATH"] = Path(open_access_path)
     app.config["CARDS_DIR"] = Path(cards_dir)
+    app.config["STATUS_FILE_PATH"] = (
+        Path(status_file_path)
+        if status_file_path is not None
+        else Path(__file__).resolve().parents[2] / "data" / "wave1_status.json"
+    )
 
     dag_payload = load_unified_dag(app.config["DAG_PATH"])
     oa_registry = load_open_access_registry(app.config["OPEN_ACCESS_PATH"])
@@ -455,6 +462,68 @@ def create_app(
             return jsonify({"query": raw_q, "sanitized_query": fts_q, "count": len(results), "results": results})
         finally:
             cconn.close()
+
+    @app.get("/api/extraction_status")
+    def api_extraction_status():
+        payload: dict[str, Any] = {
+            "books_active": 0,
+            "blocks_active": 0,
+            "blocks_extracted": 0,
+            "epistemic_units": 0,
+            "structural_signatures": 0,
+            "validated_bridges": 0,
+            "state": "idle",
+            "live_wave": None,
+        }
+        cconn = _corpus_ro_conn()
+        if cconn is not None:
+            try:
+                payload["books_active"] = int(
+                    cconn.execute("SELECT COUNT(*) FROM books WHERE is_active = 1").fetchone()[0]
+                )
+                payload["blocks_active"] = int(
+                    cconn.execute(
+                        "SELECT COUNT(*) FROM blocks WHERE is_active = 1 AND block_role != 'paratext'"
+                    ).fetchone()[0]
+                )
+                has_log = (
+                    cconn.execute(
+                        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='block_extraction_log'"
+                    ).fetchone()
+                    is not None
+                )
+                if has_log:
+                    payload["blocks_extracted"] = int(
+                        cconn.execute("SELECT COUNT(*) FROM block_extraction_log").fetchone()[0]
+                    )
+                else:
+                    payload["blocks_extracted"] = int(
+                        cconn.execute("SELECT COUNT(DISTINCT block_pk) FROM epistemic_units").fetchone()[0]
+                    )
+                payload["epistemic_units"] = int(
+                    cconn.execute("SELECT COUNT(*) FROM epistemic_units").fetchone()[0]
+                )
+                payload["structural_signatures"] = int(
+                    cconn.execute("SELECT COUNT(*) FROM structural_signatures").fetchone()[0]
+                )
+                payload["validated_bridges"] = int(
+                    cconn.execute(
+                        "SELECT COUNT(*) FROM curiosity_bridges WHERE status = 'validated'"
+                    ).fetchone()[0]
+                )
+            finally:
+                cconn.close()
+
+        st_path: Path = app.config["STATUS_FILE_PATH"]
+        if st_path.exists():
+            try:
+                live = json.loads(st_path.read_text(encoding="utf-8"))
+                payload["live_wave"] = live
+                if isinstance(live, dict) and live.get("state"):
+                    payload["state"] = str(live["state"])
+            except (OSError, json.JSONDecodeError):
+                pass
+        return jsonify(payload)
 
     return app
 

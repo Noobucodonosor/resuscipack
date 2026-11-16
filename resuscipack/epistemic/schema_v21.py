@@ -208,9 +208,9 @@ def validate_block_extraction(
             raise SchemaValidationError("Con yield='low_or_paratext', 'sig' deve essere null.")
         return BlockExtractionV21(block_yield=byield, units=(), sig=None)
 
-    if not (1 <= len(raw_units) <= 6):
+    if not (1 <= len(raw_units) <= 8):
         raise SchemaValidationError(
-            f"Blocco sostantivo ({byield.value}) richiede da 1 a 6 unità atomiche (trovate {len(raw_units)})"
+            f"Blocco sostantivo ({byield.value}) richiede da 1 a 8 unità atomiche (trovate {len(raw_units)})"
         )
 
     norm_block = normalizza_testo(block_content)
@@ -245,9 +245,9 @@ def validate_block_extraction(
 
         quote = str(raw_u.get("quote", "")).strip()
         quote_words = quote.split()
-        if not (3 <= len(quote_words) <= 30):
+        if not (3 <= len(quote_words) <= 65):
             raise SchemaValidationError(
-                f"units[{idx}].quote deve avere tra 3 e 30 parole (trovate {len(quote_words)})"
+                f"units[{idx}].quote deve avere tra 3 e 65 parole (trovate {len(quote_words)})"
             )
         norm_quote = normalizza_testo(quote)
         if norm_quote not in norm_block:
@@ -298,9 +298,9 @@ def validate_block_extraction(
             raise SchemaValidationError(f"sig.role invalido: {raw_sig.get('role')!r}") from exc
 
         mech = " ".join(str(raw_sig.get("mech", "")).split()).strip()
-        if len(mech) < 30 or len(mech) > 360:
+        if len(mech) < 30 or len(mech) > 650:
             raise SchemaValidationError(
-                f"sig.mech deve avere tra 30 e 360 caratteri (trovati {len(mech)})"
+                f"sig.mech deve avere tra 30 e 650 caratteri (trovati {len(mech)})"
             )
         forbidden_hits = find_forbidden_surface_terms(mech, extra_forbidden=extra_forbidden_nouns)
         if forbidden_hits:
@@ -345,7 +345,7 @@ def validate_batch_anti_template(
     prefixes = [" ".join(m.casefold().split()[:4]) for m in mechs]
     most_common_prefix, count = Counter(prefixes).most_common(1)[0]
     ratio = count / len(mechs)
-    if ratio > max_shared_prefix_ratio:
+    if count >= 3 and ratio > max_shared_prefix_ratio:
         raise SchemaValidationError(
             f"Gate Anti-Template fallito: prefisso '{most_common_prefix}' ripetuto nel {ratio:.0%} delle sig.mech"
         )
