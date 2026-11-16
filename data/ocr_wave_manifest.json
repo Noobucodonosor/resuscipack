@@ -1,0 +1,951 @@
+{
+  "generated_at": "2026-11-16T02:23:52.979151+00:00",
+  "total_documents_needing_ocr": 83,
+  "total_pages_needing_ocr": 18502,
+  "estimates_total": {
+    "kaggle_t4_gpu_hours": 71.16,
+    "cloud_4x4090_spot_usd": 4.8,
+    "gemini_25_flash_vision_batch_usd": 17.02
+  },
+  "by_defect_category": {
+    "buco_b_cultura_in_ita5_or_silent_blank": {
+      "documents": 20,
+      "pages_needed": 3951
+    },
+    "buco_c_ocr_priority_manifest": {
+      "documents": 21,
+      "pages_needed": 9095
+    },
+    "buco_d_djvu": {
+      "documents": 7,
+      "pages_needed": 2684
+    },
+    "buco_c_partial_ocr_tail": {
+      "documents": 3,
+      "pages_needed": 333
+    },
+    "buco_c_under_extracted_pdf": {
+      "documents": 32,
+      "pages_needed": 2439
+    }
+  },
+  "waves": {
+    "wave_1": {
+      "documents_count": 14,
+      "pages_needed": 6994,
+      "kaggle_single_t4_gpu_hours_est": 26.9,
+      "cloud_4x4090_wall_hours_est": 1.3,
+      "gemini_25_flash_vision_batch_usd_est": 6.43,
+      "documents": [
+        {
+          "title": "Euclide, a cura di Attilio Frajese e Lamberto Maccioni - Elementi (1970, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Euclide, a cura di Attilio Frajese e Lamberto Maccioni - Elementi (1970, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 1066,
+          "pages_needed": 1066,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Galileo Galilei - Opere Vol. 1(1964, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Galileo Galilei - Opere Vol. 1(1964, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 1010,
+          "pages_needed": 1010,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Isaac Newton, a cura di Alberto Pala - Principi matematici della Filosofia naturale (1965, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Isaac Newton, a cura di Alberto Pala - Principi matematici della Filosofia naturale (1965, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 820,
+          "pages_needed": 798,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Luigi Amerio - Analisi matematica, Vol I 1(1990, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Luigi Amerio - Analisi matematica, Vol I 1(1990, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 671,
+          "pages_needed": 666,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Archimede, a cura di Attilio Frajese - Opere (1974, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Archimede, a cura di Attilio Frajese - Opere (1974, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 650,
+          "pages_needed": 650,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "William Collins - Algoritmi e strutture dati-Apogeo Education (2013)",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/William Collins - Algoritmi e strutture dati-Apogeo Education (2013).djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 645,
+          "pages_needed": 645,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Berzolari Luigi, Vivanti Giulio, Gigli Duilio (eds.) - Enciclopedia delle matematiche elementari II parte I(1937, Ulrico Hoepli) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Berzolari Luigi, Vivanti Giulio, Gigli Duilio (eds.) - Enciclopedia delle matematiche elementari II parte I(1937, Ulrico Hoepli) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 538,
+          "pages_needed": 538,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "[Universale Bollati Boringhieri-S. scient.] L. Wittgenstein - Lezioni Sui Fondamenti Della Matematica (2002, Bollati Boringhieri) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[Universale Bollati Boringhieri-S. scient.] L. Wittgenstein - Lezioni Sui Fondamenti Della Matematica (2002, Bollati Boringhieri) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 290,
+          "pages_needed": 290,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Isaac Newton, a cura di Alberto Pala - Scritti di ottica (1978, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Isaac Newton, a cura di Alberto Pala - Scritti di ottica (1978, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_partial_ocr_tail",
+          "total_pages": 621,
+          "pages_needed": 284,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Tom Apostol - Calcolo - Analisi 1. 1-Bollati Boringhieri (1987)",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Tom Apostol - Calcolo - Analisi 1. 1-Bollati Boringhieri (1987).pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 280,
+          "pages_needed": 280,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Tom Apostol - Calcolo - Analisi 2. 3-Bollati Boringhieri (1987)",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Tom Apostol - Calcolo - Analisi 2. 3-Bollati Boringhieri (1987).pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 246,
+          "pages_needed": 246,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Mordechai Ben-Ari - Logica matematica per l'informatica (1998, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Mordechai Ben-Ari - Logica matematica per l'informatica (1998, UTET) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 241,
+          "pages_needed": 241,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Tom Apostol - Calcolo - Geometria 2(1987, Bollati Boringhieri) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Tom Apostol - Calcolo - Geometria 2(1987, Bollati Boringhieri) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 143,
+          "pages_needed": 143,
+          "specific_pages": [],
+          "wave": "wave_1"
+        },
+        {
+          "title": "Rudolph Carnap, a cura di Giulio Preti - Fondamenti di logica e matematica (1956, Paravia) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Rudolph Carnap, a cura di Giulio Preti - Fondamenti di logica e matematica (1956, Paravia) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 142,
+          "pages_needed": 137,
+          "specific_pages": [],
+          "wave": "wave_1"
+        }
+      ]
+    },
+    "wave_2": {
+      "documents_count": 21,
+      "pages_needed": 6841,
+      "kaggle_single_t4_gpu_hours_est": 26.31,
+      "cloud_4x4090_wall_hours_est": 1.27,
+      "gemini_25_flash_vision_batch_usd_est": 6.29,
+      "documents": [
+        {
+          "title": "[Classici UTET] Robert Boyle, Clelia Pighetti (ed.) - Opere (1977, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[Classici UTET] Robert Boyle, Clelia Pighetti (ed.) - Opere (1977, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 957,
+          "pages_needed": 957,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "Robert Boyle - Opere (1977, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Robert Boyle - Opere (1977, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 956,
+          "pages_needed": 956,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "James Clerk Maxwell, a cura di Evandro Agazzi - Trattato di elettricità e magnetismo Vol. 1(1973, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/James Clerk Maxwell, a cura di Evandro Agazzi - Trattato di elettricità e magnetismo Vol. 1(1973, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 837,
+          "pages_needed": 803,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "Pierre Simon Laplace, Orietta Pesenti Cambursano - Opere (1967, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Pierre Simon Laplace, Orietta Pesenti Cambursano - Opere (1967, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 747,
+          "pages_needed": 725,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "James Clerk Maxwell, a cura di Evandro Agazzi - Trattato di elettricità e magnetismo Vol. 2(1973, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/James Clerk Maxwell, a cura di Evandro Agazzi - Trattato di elettricità e magnetismo Vol. 2(1973, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 691,
+          "pages_needed": 655,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "[Classici UTET] Alessandro Volta, Mario Gliozzi (ed.) - Opere scelte (1967, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[Classici UTET] Alessandro Volta, Mario Gliozzi (ed.) - Opere scelte (1967, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 676,
+          "pages_needed": 645,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "[Classici UTET] André-Marie Ampère, Mario Berolini (ed.) - Opere (1969, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[Classici UTET] André-Marie Ampère, Mario Berolini (ed.) - Opere (1969, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 624,
+          "pages_needed": 600,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "[Classici della scienza 24] Nicola Copernico - Opere (1979, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[Classici della scienza 24] Nicola Copernico - Opere (1979, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 444,
+          "pages_needed": 444,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "The_Galvanic_Circuit_Investigated_Mathem",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/The_Galvanic_Circuit_Investigated_Mathem.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 281,
+          "pages_needed": 281,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "Leonardo da vinci - treasury",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Leonardo da vinci - treasury.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 202,
+          "pages_needed": 202,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Diapositiva 1 - asso",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Diapositiva 1 - asso.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 107,
+          "pages_needed": 107,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Ceramica e artiginato minoico",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Ceramica e artiginato minoico.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 74,
+          "pages_needed": 74,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Lezione15_micenei2",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Lezione15_micenei2.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 63,
+          "pages_needed": 63,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Lezione 03 - antico cicladico",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Lezione 03 - antico cicladico.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 62,
+          "pages_needed": 62,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Lezione02",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Lezione02.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 57,
+          "pages_needed": 57,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Illustrazioni numerate",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Illustrazioni numerate.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 51,
+          "pages_needed": 51,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Lezione12_scritture",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Lezione12_scritture.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 51,
+          "pages_needed": 51,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Tombe a fossa",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Tombe a fossa.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 47,
+          "pages_needed": 47,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Antico Elladico",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Antico Elladico.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 34,
+          "pages_needed": 34,
+          "specific_pages": [],
+          "wave": "wave_2"
+        },
+        {
+          "title": "James Clerk Maxwell - An Elementary Treatise on Electricity (1881) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/James Clerk Maxwell - An Elementary Treatise on Electricity (1881) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_partial_ocr_tail",
+          "total_pages": 250,
+          "pages_needed": 17,
+          "specific_pages": [
+            1,
+            3,
+            4,
+            8,
+            100,
+            231,
+            232,
+            234,
+            236,
+            238,
+            240,
+            242,
+            244,
+            245,
+            246,
+            247,
+            250
+          ],
+          "wave": "wave_2"
+        },
+        {
+          "title": "scuola di scienze umanistiche-Cicladi Grecia MBA",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/scuola di scienze umanistiche-Cicladi Grecia MBA.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 10,
+          "pages_needed": 10,
+          "specific_pages": [],
+          "wave": "wave_2"
+        }
+      ]
+    },
+    "wave_3": {
+      "documents_count": 11,
+      "pages_needed": 3353,
+      "kaggle_single_t4_gpu_hours_est": 12.9,
+      "cloud_4x4090_wall_hours_est": 0.62,
+      "gemini_25_flash_vision_batch_usd_est": 3.08,
+      "documents": [
+        {
+          "title": "Paola Spoletini Dino Mandrioli - Informatica teorica (2011, CittàStudi) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Paola Spoletini Dino Mandrioli - Informatica teorica (2011, CittàStudi) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 481,
+          "pages_needed": 481,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "D.E.Ravalico - Radio elementi (1958, Ulrico hoepli Milano) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/D.E.Ravalico - Radio elementi (1958, Ulrico hoepli Milano) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 473,
+          "pages_needed": 473,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Gianni Conte, Antonino Mazzeo, Nicola Mazzocca, Paolo Prinetto - Architettura dei calcolatori (2015, CittàStudi) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Gianni Conte, Antonino Mazzeo, Nicola Mazzocca, Paolo Prinetto - Architettura dei calcolatori (2015, CittàStudi) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 444,
+          "pages_needed": 444,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Jacob Millman, Christos C. Halkias - Electronic Devices & Circuits-McGraw-Hill (1967)",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Jacob Millman, Christos C. Halkias - Electronic Devices & Circuits-McGraw-Hill (1967).pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 386,
+          "pages_needed": 386,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Giorgio Franceschetti - Campi elettromagnetici (1983, Bollati Boringhieri) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Giorgio Franceschetti - Campi elettromagnetici (1983, Bollati Boringhieri) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 344,
+          "pages_needed": 344,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Massimo Nigro, Cesare Voci - Problemi di fisica generale. Elettromagnetismo e ottica (1995, Cortina (Padova)) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Massimo Nigro, Cesare Voci - Problemi di fisica generale. Elettromagnetismo e ottica (1995, Cortina (Padova)) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 319,
+          "pages_needed": 319,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Harvey M Dietel, Paul J Dietel - C - Corso completo di programmazione    - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Harvey M Dietel, Paul J Dietel - C - Corso completo di programmazione    - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 296,
+          "pages_needed": 296,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "[8] Andrea Domenici, Graziano Frosini - Introduzione alla programmazione ed elementi di strutture dati con il linguaggio C++ (2013, Franco Angeli) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[8] Andrea Domenici, Graziano Frosini - Introduzione alla programmazione ed elementi di strutture dati con il linguaggio C++ (2013, Franco Angeli) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 235,
+          "pages_needed": 235,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Roberto Benato, Lorenzo Fellin - Impianti Elettrici-UTET Scienze Tecniche (2011)",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Roberto Benato, Lorenzo Fellin - Impianti Elettrici-UTET Scienze Tecniche (2011).pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 190,
+          "pages_needed": 190,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "[The advanced book program] Julian Schwinger, Lester L. Deraad Jr., Kimball A. Milton, Wu-yang Tsai, Joyce Norton - Classical electrodynamics (1998, Perseus Books) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/[The advanced book program] Julian Schwinger, Lester L. Deraad Jr., Kimball A. Milton, Wu-yang Tsai, Joyce Norton - Classical electrodynamics (1998, Perseus Books) - libgen.lc.djvu",
+          "format": "djvu",
+          "defect_category": "buco_d_djvu",
+          "total_pages": 153,
+          "pages_needed": 153,
+          "specific_pages": [],
+          "wave": "wave_3"
+        },
+        {
+          "title": "Ferdinando Gasparini Francesco Barozzi - Fondamenti di elettrotecnica. Elettromagnetismo (1989, UTET) - libgen.lc",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Ferdinando Gasparini Francesco Barozzi - Fondamenti di elettrotecnica. Elettromagnetismo (1989, UTET) - libgen.lc.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_partial_ocr_tail",
+          "total_pages": 426,
+          "pages_needed": 32,
+          "specific_pages": [
+            366,
+            368,
+            370,
+            372,
+            374,
+            376,
+            378,
+            380,
+            382,
+            384,
+            386,
+            388,
+            390,
+            392,
+            394,
+            396,
+            398,
+            400,
+            402,
+            404,
+            406,
+            408,
+            410,
+            412,
+            414,
+            416,
+            418,
+            420,
+            422,
+            424,
+            425,
+            426
+          ],
+          "wave": "wave_3"
+        }
+      ]
+    },
+    "wave_4": {
+      "documents_count": 37,
+      "pages_needed": 1314,
+      "kaggle_single_t4_gpu_hours_est": 5.05,
+      "cloud_4x4090_wall_hours_est": 0.24,
+      "gemini_25_flash_vision_batch_usd_est": 1.21,
+      "documents": [
+        {
+          "title": "Prof. cucuzza piante",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Prof. cucuzza piante.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 124,
+          "pages_needed": 124,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "boheme",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/boheme.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 120,
+          "pages_needed": 120,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Prof. Cucuzza talassocrazia",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Prof. Cucuzza talassocrazia.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 113,
+          "pages_needed": 113,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Amplificatori operazionali ed applicazioni",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Amplificatori operazionali ed applicazioni.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 60,
+          "pages_needed": 60,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "27-Roside5",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/27-Roside5.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 59,
+          "pages_needed": 59,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "22-BS-Eudicotiledoni_arcaiche-2_cariofillide",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/22-BS-Eudicotiledoni_arcaiche-2_cariofillide.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 48,
+          "pages_needed": 48,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "24-BS-Roside2-Rosales",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/24-BS-Roside2-Rosales.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 43,
+          "pages_needed": 43,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "analogica 1 terze",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/analogica 1 terze.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 43,
+          "pages_needed": 43,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "23-BS-Roside1-Fabales",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/23-BS-Roside1-Fabales.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 40,
+          "pages_needed": 40,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "32-Asteride5-Asteraceae",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/32-Asteride5-Asteraceae.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 40,
+          "pages_needed": 40,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Prof.  Cucuzza Mappe",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Prof.  Cucuzza Mappe.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 39,
+          "pages_needed": 39,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "28-Asteride1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/28-Asteride1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 38,
+          "pages_needed": 38,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "30-Asteridae3-Lamiales-1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/30-Asteridae3-Lamiales-1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 38,
+          "pages_needed": 38,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "33-Monocotiledoni-1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/33-Monocotiledoni-1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 38,
+          "pages_needed": 38,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "33-Monocotiledoni-1-1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/33-Monocotiledoni-1-1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 38,
+          "pages_needed": 38,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "ELE_Impianto_appartamento",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/ELE_Impianto_appartamento.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 38,
+          "pages_needed": 38,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "30-Asteridae3-Lamiales",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/30-Asteridae3-Lamiales.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 37,
+          "pages_needed": 37,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "31-Asteridae4",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/31-Asteridae4.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 37,
+          "pages_needed": 37,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Sequenziale1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Sequenziale1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 36,
+          "pages_needed": 36,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "21-BS-Eudicotiledoni_arcaiche-1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/21-BS-Eudicotiledoni_arcaiche-1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 34,
+          "pages_needed": 34,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "34-Monocotiledoni-2",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/34-Monocotiledoni-2.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 33,
+          "pages_needed": 33,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "34-Monocotiledoni-2-1",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/34-Monocotiledoni-2-1.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 33,
+          "pages_needed": 33,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "analogica2",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/analogica2.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_under_extracted_pdf",
+          "total_pages": 30,
+          "pages_needed": 30,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Sintesi con mappe codifiche...",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Sintesi con mappe codifiche....pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 23,
+          "pages_needed": 23,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Digitale inizio",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Digitale inizio.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 16,
+          "pages_needed": 16,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "memorie e banchi",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/memorie e banchi.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 16,
+          "pages_needed": 16,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "antenne",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/antenne.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 13,
+          "pages_needed": 13,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "standard TV",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/standard TV.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 13,
+          "pages_needed": 13,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "StandardBusiness",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/StandardBusiness.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 12,
+          "pages_needed": 12,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Multiplexer ...full-adder",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Multiplexer ...full-adder.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 10,
+          "pages_needed": 10,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Sintesi canonica e mappe",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Sintesi canonica e mappe.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 8,
+          "pages_needed": 8,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Words",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Words.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 8,
+          "pages_needed": 8,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "fibre ottiche",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/fibre ottiche.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 8,
+          "pages_needed": 8,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "modulazione FM",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/modulazione FM.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 8,
+          "pages_needed": 8,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "sequenziale 2",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/sequenziale 2.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 8,
+          "pages_needed": 8,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "Dynamic",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/Dynamic.pdf",
+          "format": "pdf",
+          "defect_category": "buco_b_cultura_in_ita5_or_silent_blank",
+          "total_pages": 6,
+          "pages_needed": 6,
+          "specific_pages": [],
+          "wave": "wave_4"
+        },
+        {
+          "title": "imbarco 2019 corsi",
+          "source_path": "/Users/dany/Desktop/PACK copy 4/source_pdf/imbarco 2019 corsi.pdf",
+          "format": "pdf",
+          "defect_category": "buco_c_ocr_priority_manifest",
+          "total_pages": 6,
+          "pages_needed": 6,
+          "specific_pages": [],
+          "wave": "wave_4"
+        }
+      ]
+    }
+  }
+}
