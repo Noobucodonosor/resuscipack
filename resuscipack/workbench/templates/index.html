@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>resuscipack · Tavolo di Studio SecAI (L-31 UniMi)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- BARRA FISSA SUPERIORE: LA BUSSOLA DELL'HERO (1 RIGA SEMPRE VISIBILE) -->
+  <header class="hero-compass-bar" id="heroCompassBar">
+    <div class="brand-pill">resuscipack · SecAI</div>
+    <div class="compass-chain" id="compassChain">Caricamento Bussola dell'Hero…</div>
+    <div class="compass-stats" id="compassStats"></div>
+  </header>
+
+  <!-- SELETTORE COMPATTO PERCORSO (4 STRATI + NODI FRONTIERA) -->
+  <nav class="spine-toolbar">
+    <div class="layer-tabs" id="layerTabs">
+      <button type="button" class="layer-tab active" data-filter="frontier">⚡ Nodi Frontiera</button>
+      <button type="button" class="layer-tab" data-filter="0">Strato 0 · Elementari→Medie (45)</button>
+      <button type="button" class="layer-tab" data-filter="1">Strato 1 · Gate OFA (11)</button>
+      <button type="button" class="layer-tab" data-filter="2">Strato 2 · Ponti Shadow (12)</button>
+      <button type="button" class="layer-tab" data-filter="3">Strato 3 · Esami SecAI (21)</button>
+    </div>
+    <div class="node-strip" id="nodeStrip"></div>
+  </nav>
+
+  <!-- TAVOLO DI STUDIO A 2 COLONNE: 60% STUDIO ATTIVO | 40% LIBRO VERO -->
+  <main class="study-table">
+    <!-- COLONNA SINISTRA (60%): FAST-FORWARD, SCHEDA DECISIONE v3, PROVA HERO -->
+    <section class="left-pane" id="leftPane">
+      <div class="node-header">
+        <div>
+          <span class="node-layer-badge" id="nodeLayerBadge"></span>
+          <h1 id="nodeTitle">Seleziona un nodo</h1>
+          <p class="node-decision" id="nodeDecision"></p>
+        </div>
+        <div class="node-status-pill" id="nodeStatusPill"></div>
+      </div>
+
+      <div class="mode-tabs">
+        <button type="button" class="mode-btn active" data-mode="card" id="btnModeCard">📖 Scheda Decisione di Progetto v3</button>
+        <button type="button" class="mode-btn" data-mode="drill" id="btnModeDrill">⚡ Fast-Forward Diagnostico (SymPy)</button>
+        <button type="button" class="mode-btn" data-mode="hero" id="btnModeHero">🏆 Artefatto dell'Hero &amp; Lacune</button>
+      </div>
+
+      <!-- PANNELLO 1: SCHEDA + PONTI "LIBRO SBAGLIATO" -->
+      <div class="mode-panel" id="panelCard">
+        <div id="wrongBookBridgesBox"></div>
+        <article class="card-body" id="cardContent"></article>
+        <div class="footnotes-box" id="footnotesBox"></div>
+        <div class="card-governance-bar" id="cardGovernanceBar">
+          <span id="governanceBadge"></span>
+          <button type="button" class="secondary-btn" id="btnFlagCard">Segnala passaggio oscuro (non bloccante)</button>
+        </div>
+      </div>
+
+      <!-- PANNELLO 2: FAST-FORWARD SYMPY -->
+      <div class="mode-panel hidden" id="panelDrill">
+        <div class="drill-intro">
+          <strong>Scansione Padronanza &amp; Memoria Procedurale (`SymPy`):</strong>
+          risolvi 4 quesiti su 5 per chiudere il nodo in Fast-Forward (forme equivalenti come <code>7/20</code> e <code>0.35</code> sono entrambe accettate).
+        </div>
+        <div id="drillList"></div>
+      </div>
+
+      <!-- PANNELLO 3: ARTEFATTO HERO (GRAFICI / RUBRICHE DIMOSTRAZIONE / TESTI OPEN-ACCESS) -->
+      <div class="mode-panel hidden" id="panelHero">
+        <div id="heroProofContainer"></div>
+        <div id="openAccessBox"></div>
+      </div>
+    </section>
+
+    <!-- COLONNA DESTRA (40%): LETTORE DEL LIBRO VERO + RICERCA FTS5 -->
+    <aside class="right-pane" id="rightPane">
+      <div class="reader-toolbar">
+        <strong>📚 Lettore del Libro Vero (`pack_corpus.db` · sola lettura)</strong>
+        <form id="librarySearchForm" class="search-form">
+          <input type="search" id="librarySearchInput" placeholder="Cerca nei 1.372 volumi (es. Marconi Santa Margherita)…" />
+          <button type="submit">Cerca</button>
+        </form>
+      </div>
+
+      <div id="searchResultsBox" class="search-results hidden"></div>
+
+      <div id="bookReaderContainer" class="book-reader">
+        <div class="reader-placeholder">
+          Clicca su qualsiasi pedice <code>[^n]</code> nella scheda o su un ponte <em>«Dal Libro Sbagliato»</em>
+          per aprire qui la pagina integrale originale del libro con la citazione evidenziata e sfogliare i blocchi adiacenti.
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <script defer src="/static/app.js"></script>
+</body>
+</html>

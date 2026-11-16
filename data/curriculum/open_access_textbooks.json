@@ -1,0 +1,90 @@
+{
+  "schema_version": "open-access-gap-registry.v1",
+  "policy": "Zero allucinazioni LLM: quando il corpus storico (1.365 opere) non contiene fonti primarie su tecnologie moderne o tooling pratico, la lacuna è dichiarata esplicitamente e colmata tramite acquisizione opzionale a costo €0 di manuali/paper canonici ad accesso aperto, indicizzati come block_pk/block_uid verificati.",
+  "reclassified_as_covered_in_wave0": [
+    {
+      "unit_id": "P0.8",
+      "title": "Logica elementare applicata: problemi e stime a tempo",
+      "previous_status": "absent",
+      "wave0_status": "covered",
+      "corpus_sources": [
+        "Testmatbasesol.pdf (Conferenza Nazionale Presidi Facoltà di Scienze — Test Matematica di Base con soluzioni, precursore TOLC-S CISIA)",
+        "test 0809.pdf .. test 1617.pdf (9 annate complete di test ufficiali d'ammissione universitaria, 80 quesiti/anno)",
+        "Test-di-informatica-2015-2017.pdf",
+        "[Hoepli test. Monotematici] AA.VV. - Informatica generale. Manuale di teoria ed esercizi (2018, Hoepli).epub",
+        "[Hoepli test] Fisica (2016, Hoepli).pdf",
+        "Mordechai Ben-Ari - Logica matematica per l'informatica (1998, UTET).djvu"
+      ]
+    },
+    {
+      "unit_id": "P0.5",
+      "title": "Calcolo simbolico: equazioni e disequazioni",
+      "previous_status": "partial",
+      "wave0_status": "covered",
+      "corpus_sources": [
+        "Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica Vol. 1 (958 passaggi)",
+        "01S–04S Scientifico Matematica 1819 (dispense di esercizi liceali)",
+        "AAVV - Matematica manuale di teoria (2018, Hoepli).epub",
+        "Berzolari, Vivanti, Gigli - Enciclopedia delle matematiche elementari (1937, Hoepli).djvu",
+        "Generatore parametrico infinito SymPy (resuscipack/curriculum/drills_sympy.py)"
+      ]
+    }
+  ],
+  "open_access_acquisitions": [
+    {
+      "id": "OA-01-PRO-GIT",
+      "title": "Pro Git (2nd Edition, traduzione italiana)",
+      "authors": "Scott Chacon, Ben Straub",
+      "license": "CC BY-NC-SA 3.0",
+      "cost_eur": 0.0,
+      "url": "https://git-scm.com/book/it/v2",
+      "closes_units": ["P1.2"],
+      "serves_gates": ["G02", "G13", "G16", "G19"],
+      "rationale": "Colma l'assenza totale di un manuale dedicato a Git, branching, risoluzione conflitti e riproducibilità degli esperimenti."
+    },
+    {
+      "id": "OA-02-BONEH-SHOUP",
+      "title": "A Graduate Course in Applied Cryptography (v0.6)",
+      "authors": "Dan Boneh, Victor Shoup",
+      "license": "Free Academic PDF (Stanford / NYU)",
+      "cost_eur": 0.0,
+      "url": "https://toc.cryptobook.us/",
+      "closes_units": ["P4.1"],
+      "serves_gates": ["G09", "G15", "G17"],
+      "rationale": "Affianca Blockchain (Hoepli .epub) ed Elenkov (Android Security) fornendo le dimostrazioni matematiche rigorose su RSA, Diffie-Hellman, SHA-256, MAC e TLS."
+    },
+    {
+      "id": "OA-03-SWE-OWASP",
+      "title": "Software Engineering at Google (Testing Chapters) + OWASP Web Security Testing Guide (v4.2)",
+      "authors": "Titus Winters, Tom Manshreck, Hyrum Wright / OWASP Foundation",
+      "license": "CC BY-NC-ND 4.0 / CC BY-SA 4.0",
+      "cost_eur": 0.0,
+      "url": "https://abseil.io/resources/swe-book / https://owasp.org/www-project-web-security-testing-guide/",
+      "closes_units": ["P5.2", "P5.3"],
+      "serves_gates": ["G16", "G17", "G18"],
+      "rationale": "Colma la lacuna più netta del piano di studi SecAI (assenza di Ingegneria del Software, TDD/unit testing/CI e sicurezza web lato server moderna oltre Canducci PHP 5 .epub)."
+    },
+    {
+      "id": "OA-04-OPENINTRO-STATS",
+      "title": "OpenIntro Statistics (4th Edition)",
+      "authors": "David Diez, Mine Çetinkaya-Rundel, Christopher Barr",
+      "license": "CC BY-SA 3.0",
+      "cost_eur": 0.0,
+      "url": "https://www.openintro.org/book/os/",
+      "closes_units": ["P3.3"],
+      "serves_gates": ["G05", "G06"],
+      "rationale": "Integra Sheldon Ross (Calcolo delle probabilità) e Domenico Costantini (fondamenti epistemici) con esercizi applicati di statistica inferenziale, intervalli di confidenza e limiti del p-value prima di Machine Learning."
+    },
+    {
+      "id": "OA-05-ARXIV-GENAI-ADVML",
+      "title": "Foundational Pack Transformer & Adversarial ML: Attention Is All You Need (2017) + Explaining and Harnessing Adversarial Examples (2015) + Wild Patterns: Ten Years After the Rise of Adversarial ML (2018)",
+      "authors": "Vaswani et al. / Goodfellow, Shlens, Szegedy / Battista Biggio, Fabio Roli",
+      "license": "arXiv Open Access",
+      "cost_eur": 0.0,
+      "url": "https://arxiv.org/abs/1706.03762 , https://arxiv.org/abs/1412.6572 , https://arxiv.org/abs/1712.03141",
+      "closes_units": [],
+      "serves_gates": ["G14", "G15"],
+      "rationale": "Colma i 0 hit del corpus cartaceo storico su Self-Attention/Transformer (Generative AI) e data poisoning / evasion attacks FGSM (Sicurezza e AI)."
+    }
+  ]
+}
