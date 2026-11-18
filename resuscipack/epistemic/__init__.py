@@ -18,19 +18,25 @@ from .bridge import (
 )
 from .op_tags import ALL_OP_TAGS, OP_TAG_DESCRIPTIONS, OpTag, validate_op_tags
 from .schema_v21 import (
+    ALL_MACRO_DISCIPLINES,
     SCHEMA_VERSION,
+    SCHEMA_VERSION_V22,
     AntiSudokuRole,
     AtomicEpistemicUnit,
     BlockExtractionV21,
     BlockYield,
+    MacroDiscipline,
     SchemaValidationError,
     StructuralSignature,
     UnitKind,
     UnitMode,
     normalizza_testo,
     persist_block_extraction,
+    persist_v22_metadata_only,
+    quote_matches_block_ocr_tolerant,
     validate_batch_anti_template,
     validate_block_extraction,
+    validate_v22_metadata_only,
 )
 from .verifica_citazioni import (
     ValidationReport,
@@ -40,6 +46,7 @@ from .verifica_citazioni import (
 )
 
 __all__ = [
+    "ALL_MACRO_DISCIPLINES",
     "ALL_OP_TAGS",
     "AntiSudokuRole",
     "AtomicEpistemicUnit",
@@ -47,9 +54,11 @@ __all__ = [
     "BlockYield",
     "DEFAULT_NODE_ARCHETYPES",
     "GeneratorArchetype",
+    "MacroDiscipline",
     "OP_TAG_DESCRIPTIONS",
     "OpTag",
     "SCHEMA_VERSION",
+    "SCHEMA_VERSION_V22",
     "SchemaValidationError",
     "StructuralSignature",
     "UnitKind",
@@ -62,10 +71,13 @@ __all__ = [
     "normalizza",
     "normalizza_testo",
     "persist_block_extraction",
+    "persist_v22_metadata_only",
+    "quote_matches_block_ocr_tolerant",
     "seed_verified_empirical_bridges",
     "validate_and_upsert_bridge",
     "validate_batch_anti_template",
     "validate_block_extraction",
+    "validate_v22_metadata_only",
     "validate_op_tags",
     "verifica_scheda",
     "verifica_scheda_report",

@@ -77,8 +77,8 @@ Evolviamo `resuscipack` lungo **5 pilastri integrati** (completamento del corpus
 
 ## 4. Task Operativi Collegati (Roadmap verso il Completamento)
 
-- [ ] **TASK-CORPUS-04** *(M1)*: OCR degli 83 volumi muti (`18.502` pagine: Euclide, Galileo, Archimede, Apostol, Newton *Principia*, Maxwell, 7 `.djvu`) e ingestione append-only in `pack_corpus.db`.
-- [ ] **TASK-EPIST-05** *(M1)*: Upgrade a `BlockExtraction v2.2` (`disciplines[]` multi-etichetta, `places[]`), fix normalizzazione OCR/scarti `kind/mode` e recupero dei `1.489` blocchi scartati in Wave 1.
+- [ ] **TASK-CORPUS-04** *(M1)*: OCR degli 83 volumi muti (`18.502` pagine: Euclide, Galileo, Archimede, Apostol, Newton *Principia*, Maxwell, 7 `.djvu`) e ingestione append-only in `pack_corpus.db` *(engine `ocr_ingest.py` completato + 30 volumi `6.907` pag. trovati su GCS a `0 €` + pilota Euclide Libro I `0,0127 €`; esecuzione integrale aperta)*.
+- [x] **TASK-EPIST-05** *(M1)*: Upgrade a `BlockExtraction v2.2` (`macro_disciplines[]` a 22 voci, `topics[]`, `places[]`, `years[]`, tabella `block_metadata_v22`, normalizzazione OCR/LaTeX-greco-array, riconciliazione `kind/mode`, backfill leggero Wave 1 solo-metadati e `responseSchema` packer `pack_size=8` con Vertex Batch JSONL `-50%`).
 - [ ] **TASK-EPIST-06** *(M1)*: Esecuzione integrale Wave 2, Wave 3 e Wave 4 fino al 100% dei `1.372` libri in `pack_corpus.db` (zero mock).
 - [ ] **TASK-SPEC-01** *(M2)*: Calcolo deterministico dello *Spettro Disciplinare Percentuale per Libro* ($\text{Cov}$ e $\text{Share}$ su tabella `book_discipline_spectrum`).
 - [ ] **TASK-SPEC-02** *(M2)*: Motore di *Ricostruzione delle Discipline dal Basso* (`discipline_reconstructor.py` v2: *"La Geografia dentro i libri non geografici"*, Musica, Fisica, Logica).

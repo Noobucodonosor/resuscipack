@@ -149,12 +149,23 @@ CREATE TABLE IF NOT EXISTS block_extraction_log (
     processed_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS block_metadata_v22 (
+    block_pk INTEGER PRIMARY KEY REFERENCES blocks(block_pk),
+    macro_disciplines_json TEXT NOT NULL,
+    emergent_topics_json TEXT NOT NULL,
+    places_json TEXT NOT NULL,
+    historical_years_json TEXT NOT NULL,
+    schema_version TEXT NOT NULL DEFAULT 'block-extraction.v2.2',
+    updated_at TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
 CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
 CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
 CREATE INDEX IF NOT EXISTS idx_epistemic_units_block ON epistemic_units(block_pk);
 CREATE INDEX IF NOT EXISTS idx_curiosity_bridges_node ON curiosity_bridges(node_id, status);
 CREATE INDEX IF NOT EXISTS idx_extraction_log_yield ON block_extraction_log(yield);
+CREATE INDEX IF NOT EXISTS idx_block_meta_v22_ver ON block_metadata_v22(schema_version);
 """
 
 

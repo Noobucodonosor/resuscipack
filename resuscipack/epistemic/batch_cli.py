@@ -41,11 +41,15 @@ from .bridge import (
 )
 from .op_tags import ALL_OP_TAGS, DEFAULT_FORBIDDEN_SURFACE_NOUNS
 from .schema_v21 import (
+    ALL_MACRO_DISCIPLINES,
     BlockExtractionV21,
+    BlockYield,
     SchemaValidationError,
     persist_block_extraction,
+    persist_v22_metadata_only,
     validate_batch_anti_template,
     validate_block_extraction,
+    validate_v22_metadata_only,
 )
 
 DEFAULT_DB_PATH = Path(__file__).resolve().parents[2] / "data" / "pack_corpus.db"
@@ -215,6 +219,127 @@ def build_block_extraction_prompt(
     )
 
 
+V22_COMPACT_ITEM_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["b", "y", "d", "t", "p", "yr", "u"],
+    "properties": {
+        "b": {"type": "INTEGER"},
+        "y": {"type": "STRING", "enum": ["high", "medium", "low_or_paratext"]},
+        "d": {"type": "ARRAY", "maxItems": 3, "items": {"type": "STRING", "enum": sorted(ALL_MACRO_DISCIPLINES)}},
+        "t": {"type": "ARRAY", "maxItems": 3, "items": {"type": "STRING"}},
+        "p": {"type": "ARRAY", "maxItems": 20, "items": {"type": "STRING"}},
+        "yr": {"type": "ARRAY", "maxItems": 12, "items": {"type": "STRING"}},
+        "u": {
+            "type": "ARRAY",
+            "maxItems": 2,
+            "items": {
+                "type": "OBJECT",
+                "required": ["k", "m", "st", "q", "w", "c"],
+                "properties": {
+                    "k": {"type": "STRING", "enum": ["def", "thm", "proof_idea", "proc", "exp", "dispute", "claim", "counterex"]},
+                    "m": {"type": "STRING", "enum": ["defines", "proves", "applies", "critiques", "extends", "presupposes", "narrates"]},
+                    "st": {"type": "STRING"},
+                    "q": {"type": "STRING"},
+                    "w": {"type": "ARRAY", "maxItems": 4, "items": {"type": "STRING"}},
+                    "v": {"type": "STRING", "nullable": True},
+                    "c": {"type": "ARRAY", "maxItems": 3, "items": {"type": "STRING"}},
+                },
+            },
+        },
+        "s": {
+            "type": "OBJECT",
+            "nullable": True,
+            "required": ["op", "r", "mc"],
+            "properties": {
+                "op": {"type": "ARRAY", "maxItems": 2, "items": {"type": "STRING", "enum": sorted(ALL_OP_TAGS)}},
+                "r": {"type": "STRING", "enum": ["genesis_problem", "embodied_intuition", "fertile_error", "hidden_assumption", "feasibility_bound"]},
+                "mc": {"type": "STRING"},
+            },
+        },
+    },
+}
+
+V22_COMPACT_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["items"],
+    "properties": {"items": {"type": "ARRAY", "items": V22_COMPACT_ITEM_SCHEMA}},
+}
+
+V22_SINGLE_COMPACT_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["y", "d", "t", "p", "yr", "u"],
+    "properties": {k: v for k, v in V22_COMPACT_ITEM_SCHEMA["properties"].items() if k != "b"},
+}
+
+V22_METADATA_ONLY_ITEM_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["b", "y", "d", "t", "p", "yr"],
+    "properties": {
+        k: V22_COMPACT_ITEM_SCHEMA["properties"][k] for k in ("b", "y", "d", "t", "p", "yr")
+    },
+}
+
+V22_METADATA_ONLY_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["items"],
+    "properties": {"items": {"type": "ARRAY", "items": V22_METADATA_ONLY_ITEM_SCHEMA}},
+}
+
+V22_SINGLE_METADATA_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["y", "d", "t", "p", "yr"],
+    "properties": {k: V22_COMPACT_ITEM_SCHEMA["properties"][k] for k in ("y", "d", "t", "p", "yr")},
+}
+
+
+def build_multiblock_extraction_prompt(
+    *,
+    book_title: str,
+    surface_domain: str,
+    rows: Sequence[Mapping[str, Any]],
+    single_v22_only: bool = False,
+    metadata_only: bool = False,
+) -> str:
+    """Costruisce il prompt compatto `BlockExtraction v2.2` (`responseSchema` JSON su 1..8 blocchi)."""
+    blocks_section = []
+    for r in rows:
+        bpk = int(r["block_pk"])
+        pg = r["page_start"]
+        sec = str(r["section_title"] or "").strip()
+        txt = str(r["content"] or "").strip()
+        blocks_section.append(
+            f"[B:block_pk={bpk}|p:{pg}|sec={sec!r}]\n{txt}\n[/B:{bpk}]"
+        )
+    joined_blocks = "\n\n".join(blocks_section)
+
+    order_rule = (
+        ""
+        if single_v22_only
+        else "- Restituisci in `items[]` ESATTAMENTE 1 oggetto per ogni `[B:block_pk=id|...]` nell'identico ordine (`b`=id integer).\n"
+    )
+    if metadata_only:
+        return (
+            "Classifica lo spettro reale v2.2 dei seguenti brani in JSON compatto (`d`=macro-discipline, `t`=temi, `p`=luoghi, `yr`=anni).\n"
+            f"{order_rule}"
+            "- Se un blocco è solo indice, sommario, frontespizio o vuoto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[].\n"
+            "- Altrimenti: `d`=1..3 macro-discipline effettive del testo (es. Marconi navale/costiero include `geografia_cartografia_territorio`); `t`=1..3 temi specifici in italiano; `p`=toponimi geografici reali citati nel brano; `yr`=anni o date esplicite.\n"
+            f"LIBRO: {book_title!r} ({surface_domain})\n\n{joined_blocks}\n"
+        )
+
+    return (
+        "Estrai in JSON compatto `BlockExtraction v2.2` secondo lo schema allegato.\n"
+        f"{order_rule}"
+        "- Se indice/frontespizio/bibliografia/vuoto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[],`u`=[],`s`=null.\n"
+        "- Altrimenti: `d`=1..3 macro-discipline reali del brano; `t`=1..3 temi specifici in italiano; `p`=toponimi geografici reali nel brano; `yr`=anni/date esplicite.\n"
+        "- `u`: 1 sola asserzione centrale per brani ordinari, 2 solo se la pagina enuncia due definizioni/teoremi/esperimenti distinti (`st` 45..110 char con soggetto esplicito, vietati egli/esso/costui/ivi; "
+        "`q` citazione CONTIGUA ESATTA di 5..14 parole copiata carattere-per-carattere dal brano: NON correggere refusi OCR come 'ro'->'10', NON tradurre LaTeX greco in Unicode, VIETATO inserire '[...]' o ellissi; "
+        "`v` obbligatorio se `k`='dispute'; `c`=1..3 concetti; mai mettere 'narrates' dentro `k`).\n"
+        "- `s`: null su esposizioni astratte/biografiche pure; valorizza solo per un meccanismo fisico, sperimentale o procedurale concreto "
+        "(`mc` 80..165 char astratto dal dominio, senza meta-frasi 'Il testo descrive...' e senza sostantivi aneddotici di superficie).\n"
+        f"LIBRO: {book_title!r} ({surface_domain})\n\n{joined_blocks}\n"
+    )
+
+
 def _norm_title_dedup_key(title: str) -> str:
     cleaned = re.sub(r"\([^)]*\)|\[[^\]]*\]|libgen\.lc|libgen", " ", title.lower())
     cleaned = re.sub(r"[^a-z0-9à-ÿ]+", " ", cleaned)
@@ -295,13 +420,27 @@ def select_pending_blocks(
     *,
     wave: Optional[int] = None,
     limit: Optional[int] = None,
+    pack_size: int = 1,
+    include_v21_backfill: bool = False,
+    book_pk: Optional[int] = None,
+    block_pks: Optional[Sequence[int]] = None,
 ) -> List[sqlite3.Row]:
-    """Seleziona i blocchi sostantivi attivi non ancora loggati in `block_extraction_log`."""
+    """Seleziona i blocchi sostantivi attivi pendenti (raggruppati in finestre `pack_size` per libro e
+    intercalati Round-Robin tra i libri)."""
     conn.row_factory = sqlite3.Row
     params: List[Any] = []
     filter_clause = ""
 
-    if wave is not None:
+    if block_pks:
+        clean_pks = sorted({int(pk) for pk in block_pks})
+        if clean_pks:
+            placeholders = ",".join("?" for _ in clean_pks)
+            filter_clause += f" AND bl.block_pk IN ({placeholders})"
+            params.extend(clean_pks)
+    if book_pk is not None:
+        filter_clause += " AND bk.book_pk = ?"
+        params.append(int(book_pk))
+    elif wave is not None and not block_pks:
         if wave not in WAVE_DOMAINS:
             raise ValueError(f"Wave non valida: {wave} (ammesse: 1, 2, 3, 4)")
         if wave == 1:
@@ -327,7 +466,20 @@ def select_pending_blocks(
         ).fetchone()
         is not None
     )
-    if has_log_table:
+    has_v22_table = (
+        conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='block_metadata_v22'"
+        ).fetchone()
+        is not None
+    )
+
+    if include_v21_backfill and has_v22_table and has_log_table:
+        done_join = (
+            "LEFT JOIN block_extraction_log bel ON bel.block_pk = bl.block_pk "
+            "LEFT JOIN block_metadata_v22 m22 ON m22.block_pk = bl.block_pk"
+        )
+        done_filter = "AND m22.block_pk IS NULL AND (bel.yield IS NULL OR bel.yield != 'low_or_paratext')"
+    elif has_log_table:
         done_join = "LEFT JOIN block_extraction_log bel ON bel.block_pk = bl.block_pk"
         done_filter = "AND bel.block_pk IS NULL"
     else:
@@ -344,7 +496,8 @@ def select_pending_blocks(
             bl.page_start,
             bl.content,
             bl.est_tokens,
-            bk.surface_domain
+            bk.surface_domain,
+            (SELECT COUNT(*) FROM epistemic_units eu WHERE eu.block_pk = bl.block_pk) AS existing_units_cnt
         FROM blocks bl
         JOIN books bk ON bk.book_pk = bl.book_pk
         {done_join}
@@ -353,11 +506,12 @@ def select_pending_blocks(
           AND bl.block_role != 'paratext'
           {done_filter}
           {filter_clause}
-        ORDER BY bl.book_pk ASC, bl.block_pk ASC
+        ORDER BY bl.book_pk ASC, bl.page_start ASC, bl.block_pk ASC
     """
     raw_rows = conn.execute(sql, tuple(params)).fetchall()
 
-    # Interleaving Round-Robin per book_pk (così anche --limit 40 tocca ~40 libri diversi)
+    # Interleaving Round-Robin per finestre contigue di `pack_size` blocchi dello stesso book_pk
+    win_sz = max(1, int(pack_size))
     by_book: Dict[int, deque[sqlite3.Row]] = defaultdict(deque)
     book_order: List[int] = []
     for r in raw_rows:
@@ -371,18 +525,41 @@ def select_pending_blocks(
     while active_books:
         bpk = active_books.popleft()
         q = by_book[bpk]
-        if q:
+        taken = 0
+        while q and taken < win_sz:
             interleaved.append(q.popleft())
-            if q:
-                active_books.append(bpk)
+            taken += 1
+        if q:
+            active_books.append(bpk)
 
     if limit is not None and limit > 0:
         return list(islice(interleaved, int(limit)))
     return interleaved
 
 
-def estimate_wave_budget(rows: Sequence[sqlite3.Row]) -> Dict[str, Any]:
-    """Calcola token di input/output e costi stimati USD sui blocchi pendenti (onesto, zero sconti finti)."""
+def group_rows_into_book_windows(rows: Sequence[sqlite3.Row], pack_size: int = 5) -> List[List[sqlite3.Row]]:
+    """Raggruppa righe consecutive appartenenti allo stesso `book_pk` in finestre di lunghezza `<= pack_size`."""
+    win_sz = max(1, int(pack_size))
+    if win_sz == 1:
+        return [[r] for r in rows]
+
+    windows: List[List[sqlite3.Row]] = []
+    current: List[sqlite3.Row] = []
+    current_book: Optional[int] = None
+    for r in rows:
+        bpk = int(r["book_pk"])
+        if current and (bpk != current_book or len(current) >= win_sz):
+            windows.append(current)
+            current = []
+        current_book = bpk
+        current.append(r)
+    if current:
+        windows.append(current)
+    return windows
+
+
+def estimate_wave_budget(rows: Sequence[sqlite3.Row], *, pack_size: int = 8) -> Dict[str, Any]:
+    """Calcola token di input/output e costi stimati USD sui blocchi pendenti (`responseSchema` compatto)."""
     n_blocks = len(rows)
     n_books = len({int(r["book_pk"]) for r in rows}) if rows and "book_pk" in rows[0].keys() else 0
     text_tokens = sum(int(r["est_tokens"] or max(1, len(r["content"]) // 4)) for r in rows)
@@ -395,9 +572,25 @@ def estimate_wave_budget(rows: Sequence[sqlite3.Row]) -> Dict[str, Any]:
     cost_gemini_flash_batch = (in_tokens / 1e6) * 0.15 + (out_tokens / 1e6) * 1.25
     cost_vertex_flash_sync = (in_tokens / 1e6) * 0.30 + (out_tokens / 1e6) * 2.50
 
+    windows = group_rows_into_book_windows(rows, pack_size=pack_size)
+    n_win = len(windows)
+    n_meta_only = sum(
+        1 for r in rows if "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
+    )
+    n_full = n_blocks - n_meta_only
+    # Profilo empirico responseSchema a chiavi compatte: ~310 tok header/finestra, ~290 out full, ~70 out backfill
+    packed_in_tokens = text_tokens + n_win * 310
+    packed_out_tokens = n_full * 290 + n_meta_only * 70
+    packed_sync_usd = (packed_in_tokens / 1e6) * 0.30 + (packed_out_tokens / 1e6) * 2.50
+    packed_batch_usd = (packed_in_tokens / 1e6) * 0.15 + (packed_out_tokens / 1e6) * 1.25
+    eur_per_100_batch = (
+        round(((packed_batch_usd * 0.92) / n_blocks) * 100.0, 4) if n_blocks else 0.0
+    )
+
     return {
         "pending_books": n_books,
         "pending_blocks": n_blocks,
+        "pending_metadata_only_blocks": n_meta_only,
         "estimated_input_tokens": in_tokens,
         "estimated_output_tokens": out_tokens,
         "estimated_cost_usd": {
@@ -405,6 +598,16 @@ def estimate_wave_budget(rows: Sequence[sqlite3.Row]) -> Dict[str, Any]:
             "gemini_2_5_flash_batch": round(cost_gemini_flash_batch, 3),
             "gemini_2_5_flash_lite_batch": round(cost_flash_lite, 3),
             "deepseek_v3_batch": round(cost_deepseek, 3),
+        },
+        "packed_v22_estimate": {
+            "pack_size": max(1, int(pack_size)),
+            "window_count": n_win,
+            "estimated_input_tokens_packed": packed_in_tokens,
+            "estimated_output_tokens_packed": packed_out_tokens,
+            "vertex_sync_usd": round(packed_sync_usd, 3),
+            "vertex_batch_usd": round(packed_batch_usd, 3),
+            "vertex_batch_eur": round(packed_batch_usd * 0.92, 3),
+            "vertex_batch_eur_per_100_blocks": eur_per_100_batch,
         },
     }
 
@@ -428,12 +631,26 @@ def _strip_json_fences(raw_text: str) -> str:
     return txt.strip()
 
 
+def _repair_json_latex_escapes(raw_json: str) -> str:
+    return re.sub(r'\\(?![\\/"bfnrtu])', r'\\\\', raw_json)
+
+
+def _decode_json_tolerant(raw_text: str) -> Mapping[str, Any]:
+    cleaned = _strip_json_fences(raw_text)
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        return json.loads(_repair_json_latex_escapes(cleaned))
+
+
 def _vertex_generate_json(
     prompt: str,
     *,
     project_id: Optional[str] = None,
     model: Optional[str] = None,
     thinking_budget: int = 0,
+    max_output_tokens: int = 2048,
+    response_schema: Optional[Mapping[str, Any]] = None,
 ) -> Tuple[Mapping[str, Any], int, int]:
     """Chiama Vertex AI `gemini-2.5-flash` sui crediti Google Cloud con refresh token e retry 429/503."""
     proj = project_id or os.environ.get("GCP_PROJECT_ID", DEFAULT_GCP_PROJECT)
@@ -442,15 +659,18 @@ def _vertex_generate_json(
         f"https://aiplatform.googleapis.com/v1/projects/{proj}"
         f"/locations/global/publishers/google/models/{mdl}:generateContent"
     )
+    gen_cfg: Dict[str, Any] = {
+        "temperature": 0.1,
+        "maxOutputTokens": int(max_output_tokens),
+        "responseMimeType": "application/json",
+        "thinkingConfig": {"thinkingBudget": int(thinking_budget)},
+    }
+    if response_schema is not None:
+        gen_cfg["responseSchema"] = response_schema
     body = json.dumps(
         {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {
-                "temperature": 0.1,
-                "maxOutputTokens": 2048,
-                "responseMimeType": "application/json",
-                "thinkingConfig": {"thinkingBudget": int(thinking_budget)},
-            },
+            "generationConfig": gen_cfg,
         }
     ).encode("utf-8")
 
@@ -471,7 +691,7 @@ def _vertex_generate_json(
             with urllib.request.urlopen(req, timeout=90) as resp:
                 raw = json.loads(resp.read().decode("utf-8"))
             txt = raw["candidates"][0]["content"]["parts"][0]["text"]
-            parsed = json.loads(_strip_json_fences(txt))
+            parsed = _decode_json_tolerant(txt)
             usage = raw.get("usageMetadata") or {}
             in_tok = int(usage.get("promptTokenCount") or 0)
             out_tok = int(usage.get("candidatesTokenCount") or 0)
@@ -508,10 +728,17 @@ def _default_cloud_call(
     project_id: Optional[str] = None,
     model: Optional[str] = None,
     thinking_budget: int = 0,
+    max_output_tokens: int = 2048,
+    response_schema: Optional[Mapping[str, Any]] = None,
 ) -> Tuple[Mapping[str, Any], int, int]:
     if provider == "vertex":
         return _vertex_generate_json(
-            prompt, project_id=project_id, model=model, thinking_budget=thinking_budget
+            prompt,
+            project_id=project_id,
+            model=model,
+            thinking_budget=thinking_budget,
+            max_output_tokens=max_output_tokens,
+            response_schema=response_schema,
         )
 
     if provider == "gemini":
@@ -523,7 +750,7 @@ def _default_cloud_call(
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "temperature": 0.1,
-                "maxOutputTokens": 2048,
+                "maxOutputTokens": int(max_output_tokens),
                 "responseMimeType": "application/json",
             },
         }
@@ -613,6 +840,53 @@ def _log_block_extraction(
     )
 
 
+def _expand_compact_item(item: Mapping[str, Any]) -> Dict[str, Any]:
+    """Espande le chiavi wire compatte (`y,d,t,p,yr,u,s`) nello schema canonico `BlockExtraction v2.2`."""
+    if "yield" in item:
+        return dict(item)
+    expanded: Dict[str, Any] = {
+        "yield": item.get("y"),
+        "macro_disciplines": item.get("d") or [],
+        "topics": item.get("t") or [],
+        "places": item.get("p") or [],
+        "years": item.get("yr") or [],
+    }
+    if "u" in item:
+        raw_units = item.get("u") or []
+        expanded_units = []
+        for u in raw_units:
+            if not isinstance(u, Mapping):
+                continue
+            if "kind" in u:
+                expanded_units.append(dict(u))
+            else:
+                expanded_units.append(
+                    {
+                        "kind": u.get("k"),
+                        "mode": u.get("m"),
+                        "stmt": u.get("st"),
+                        "quote": u.get("q"),
+                        "who": u.get("w") or [],
+                        "vs": u.get("v"),
+                        "concepts": u.get("c") or [],
+                    }
+                )
+        expanded["units"] = expanded_units
+        raw_sig = item.get("s")
+        if isinstance(raw_sig, Mapping):
+            if "mech" in raw_sig:
+                expanded["sig"] = dict(raw_sig)
+            else:
+                expanded["sig"] = {
+                    "op_tags": raw_sig.get("op") or [],
+                    "role": raw_sig.get("r"),
+                    "mech": raw_sig.get("mc"),
+                }
+        else:
+            expanded["sig"] = None
+    return expanded
+
+
 def _extract_single_row(
     row: sqlite3.Row,
     *,
@@ -621,13 +895,29 @@ def _extract_single_row(
     project_id: Optional[str],
     model: Optional[str],
     llm_fn: Optional[Callable[[str, sqlite3.Row], Mapping[str, Any]]],
+    require_v22_metadata: bool = False,
+    metadata_only: bool = False,
 ) -> Tuple[sqlite3.Row, Optional[BlockExtractionV21], int, int, Optional[str]]:
-    base_prompt = build_block_extraction_prompt(
-        book_title=str(row["book_title"] or ""),
-        surface_domain=str(row["surface_domain"] or ""),
-        section_title=str(row["section_title"] or ""),
-        page_start=row["page_start"],
-        content=str(row["content"]),
+    if require_v22_metadata or metadata_only:
+        base_prompt = build_multiblock_extraction_prompt(
+            book_title=str(row["book_title"] or ""),
+            surface_domain=str(row["surface_domain"] or ""),
+            rows=[row],
+            single_v22_only=True,
+            metadata_only=metadata_only,
+        )
+    else:
+        base_prompt = build_block_extraction_prompt(
+            book_title=str(row["book_title"] or ""),
+            surface_domain=str(row["surface_domain"] or ""),
+            section_title=str(row["section_title"] or ""),
+            page_start=row["page_start"],
+            content=str(row["content"]),
+        )
+    schema = (
+        V22_SINGLE_METADATA_RESPONSE_SCHEMA
+        if metadata_only
+        else (V22_SINGLE_COMPACT_RESPONSE_SCHEMA if require_v22_metadata else None)
     )
     total_in = 0
     total_out = 0
@@ -646,24 +936,32 @@ def _extract_single_row(
                     prompt,
                     project_id=project_id,
                     model=model,
+                    thinking_budget=0,
+                    max_output_tokens=1024 if metadata_only else (3072 if require_v22_metadata else 2048),
+                    response_schema=schema if provider == "vertex" else None,
                 )
             total_in += in_tok
             total_out += out_tok
-            ext = validate_block_extraction(
-                raw_payload,
-                block_content=str(row["content"]),
-            )
-            if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
-                raise SchemaValidationError(
-                    "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...' o 'Il testo descrive...'"
+            candidate = _expand_compact_item(raw_payload)
+            if metadata_only:
+                ext = validate_v22_metadata_only(candidate)
+            else:
+                ext = validate_block_extraction(
+                    candidate,
+                    block_content=str(row["content"]),
+                    require_v22_metadata=require_v22_metadata,
                 )
+                if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
+                    raise SchemaValidationError(
+                        "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...' o 'Il testo descrive...'"
+                    )
             return row, ext, total_in, total_out, None
         except (SchemaValidationError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
             if attempt == 0:
                 prompt = (
                     f"{base_prompt}\n"
-                    f"ATTENZIONE CORREZIONE OBBLIGATORIA: il tuo tentativo precedente ha violato questa regola: {exc}. "
-                    "Correggi rigorosamente copiando la citazione esattamente come scritta nel BRANO."
+                    f"ATTENZIONE CORREZIONE OBBLIGATORIA: il tentativo precedente ha violato questa regola: {exc}. "
+                    "Copia la citazione verbatim carattere-per-carattere senza modificare refusi OCR o comandi LaTeX."
                 )
                 continue
             return row, None, total_in, total_out, str(exc)
@@ -671,6 +969,181 @@ def _extract_single_row(
             return row, None, total_in, total_out, str(exc)
 
     return row, None, total_in, total_out, "errore sconosciuto"
+
+
+def _parse_window_extractions_payload(raw_payload: Mapping[str, Any]) -> Dict[int, Mapping[str, Any]]:
+    by_pk: Dict[int, Mapping[str, Any]] = {}
+    if not isinstance(raw_payload, Mapping):
+        return by_pk
+    items = raw_payload.get("items") if "items" in raw_payload else raw_payload.get("extractions")
+    if not isinstance(items, list):
+        return by_pk
+    for item in items:
+        if not isinstance(item, Mapping):
+            continue
+        raw_bpk = item.get("b") if "b" in item else item.get("block_pk")
+        if raw_bpk is None:
+            continue
+        try:
+            bpk = int(raw_bpk)
+        except (TypeError, ValueError):
+            continue
+        cleaned = {k: v for k, v in item.items() if k not in ("b", "block_pk")}
+        by_pk[bpk] = _expand_compact_item(cleaned)
+    return by_pk
+
+
+def _extract_window(
+    window_rows: Sequence[sqlite3.Row],
+    *,
+    provider: str,
+    api_key: str,
+    project_id: Optional[str],
+    model: Optional[str],
+    llm_fn: Optional[Callable[[str, Any], Mapping[str, Any]]],
+    require_v22_metadata: bool = True,
+) -> List[Tuple[sqlite3.Row, Optional[BlockExtractionV21], int, int, Optional[str]]]:
+    """Estrae una finestra di `1..8` blocchi dello stesso libro ammortizzando il prompt + `responseSchema`."""
+    is_metadata_only = (
+        llm_fn is None
+        and require_v22_metadata
+        and all(
+            "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
+            for r in window_rows
+        )
+    )
+    if len(window_rows) == 1:
+        res = _extract_single_row(
+            window_rows[0],
+            provider=provider,
+            api_key=api_key,
+            project_id=project_id,
+            model=model,
+            llm_fn=llm_fn,
+            require_v22_metadata=require_v22_metadata,
+            metadata_only=is_metadata_only,
+        )
+        return [res]
+
+    lead = window_rows[0]
+    prompt = build_multiblock_extraction_prompt(
+        book_title=str(lead["book_title"] or ""),
+        surface_domain=str(lead["surface_domain"] or ""),
+        rows=window_rows,
+        single_v22_only=False,
+        metadata_only=is_metadata_only,
+    )
+    schema = (
+        V22_METADATA_ONLY_RESPONSE_SCHEMA
+        if is_metadata_only
+        else (V22_COMPACT_RESPONSE_SCHEMA if require_v22_metadata else None)
+    )
+    win_in = 0
+    win_out = 0
+    by_pk: Dict[int, Mapping[str, Any]] = {}
+    window_call_err: Optional[str] = None
+
+    try:
+        if llm_fn is not None:
+            raw_payload = llm_fn(prompt, list(window_rows))
+            win_in = max(1, len(prompt) // 4)
+            win_out = max(1, len(json.dumps(raw_payload, ensure_ascii=False)) // 4)
+        else:
+            raw_payload, win_in, win_out = _default_cloud_call(
+                provider,
+                api_key,
+                prompt,
+                project_id=project_id,
+                model=model,
+                thinking_budget=0,
+                max_output_tokens=4096 if is_metadata_only else 8192,
+                response_schema=schema if provider == "vertex" else None,
+            )
+        by_pk = _parse_window_extractions_payload(raw_payload)
+    except Exception as exc:
+        window_call_err = str(exc)
+
+    n = len(window_rows)
+    base_in_share = win_in // n
+    base_out_share = win_out // n
+    rem_in = win_in % n
+    rem_out = win_out % n
+
+    outputs: List[Tuple[sqlite3.Row, Optional[BlockExtractionV21], int, int, Optional[str]]] = []
+    for idx, row in enumerate(window_rows):
+        r_in = base_in_share + (1 if idx < rem_in else 0)
+        r_out = base_out_share + (1 if idx < rem_out else 0)
+        bpk = int(row["block_pk"])
+        candidate = by_pk.get(bpk)
+        err_msg: Optional[str] = window_call_err
+        if candidate is not None:
+            try:
+                if is_metadata_only:
+                    ext = validate_v22_metadata_only(candidate)
+                else:
+                    ext = validate_block_extraction(
+                        candidate,
+                        block_content=str(row["content"]),
+                        require_v22_metadata=require_v22_metadata,
+                    )
+                    if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
+                        raise SchemaValidationError(
+                            "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...'"
+                        )
+                outputs.append((row, ext, r_in, r_out, None))
+                continue
+            except (SchemaValidationError, KeyError, TypeError, ValueError) as exc:
+                err_msg = str(exc)
+        else:
+            err_msg = err_msg or f"block_pk={bpk} assente da items[]"
+
+        # Riparazione mirata a blocco singolo solo se questo specifico blocco ha fallito
+        rep_row, rep_ext, rep_in, rep_out, rep_err = _extract_single_row(
+            row,
+            provider=provider,
+            api_key=api_key,
+            project_id=project_id,
+            model=model,
+            llm_fn=llm_fn if llm_fn is None else None,
+            require_v22_metadata=require_v22_metadata,
+            metadata_only=is_metadata_only,
+        ) if llm_fn is None else (row, None, 0, 0, err_msg)
+        outputs.append((rep_row, rep_ext, r_in + rep_in, r_out + rep_out, rep_err))
+
+    return outputs
+
+
+def _apply_anti_template_filter(
+    valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]],
+    rejected: List[Dict[str, Any]],
+) -> Tuple[List[Tuple[sqlite3.Row, BlockExtractionV21]], int]:
+    """Applica il gate anti-template scartando solo le righe col prefisso ripetuto."""
+    if not valid_pairs:
+        return valid_pairs, 0
+    valid_exts = [ext for _, ext in valid_pairs]
+    try:
+        validate_batch_anti_template(valid_exts)
+        return valid_pairs, 0
+    except SchemaValidationError as batch_err:
+        prefixes = [
+            " ".join(ext.sig.mech.casefold().split()[:4])
+            for _, ext in valid_pairs
+            if ext.sig is not None
+        ]
+        bad_prefix = Counter(prefixes).most_common(1)[0][0] if prefixes else ""
+        filtered_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
+        dropped = 0
+        for row, ext in valid_pairs:
+            if (
+                ext.sig is not None
+                and bad_prefix
+                and " ".join(ext.sig.mech.casefold().split()[:4]) == bad_prefix
+            ):
+                dropped += 1
+                rejected.append({"block_pk": int(row["block_pk"]), "error": str(batch_err)})
+            else:
+                filtered_pairs.append((row, ext))
+        return filtered_pairs, dropped
 
 
 def run_batch_extraction(
@@ -682,27 +1155,42 @@ def run_batch_extraction(
     dry_run: bool = False,
     workers: int = 8,
     batch_size: int = 25,
+    pack_size: Optional[int] = None,
+    require_v22_metadata: Optional[bool] = None,
+    include_v21_backfill: bool = False,
+    book_pk: Optional[int] = None,
+    block_pks: Optional[Sequence[int]] = None,
     discover_bridges: bool = False,
     status_file: Optional[Path] = None,
     project_id: Optional[str] = None,
     model: Optional[str] = None,
-    llm_fn: Optional[Callable[[str, sqlite3.Row], Mapping[str, Any]]] = None,
+    llm_fn: Optional[Callable[[str, Any], Mapping[str, Any]]] = None,
 ) -> Dict[str, Any]:
-    """Esegue un ciclo idempotente di estrazione `BlockExtraction v2.1` con micro-batch concorrenti."""
+    """Esegue un ciclo idempotente di estrazione `BlockExtraction v2.1 / v2.2` con finestre multi-blocco."""
     from resuscipack.corpus.schema import init_corpus_db
+
+    eff_pack = int(pack_size) if pack_size is not None else (1 if llm_fn is not None else 8)
+    eff_v22 = bool(require_v22_metadata) if require_v22_metadata is not None else (llm_fn is None)
 
     conn = init_corpus_db(db_path)
 
     try:
-        pending = select_pending_blocks(conn, wave=wave, limit=limit)
-        budget = estimate_wave_budget(pending)
+        pending = select_pending_blocks(
+            conn,
+            wave=wave,
+            limit=limit,
+            pack_size=eff_pack,
+            include_v21_backfill=include_v21_backfill,
+            book_pk=book_pk,
+            block_pks=block_pks,
+        )
+        budget = estimate_wave_budget(pending, pack_size=eff_pack)
         if dry_run:
             return {"mode": "dry_run", "wave": wave, **budget}
 
         api_key = ""
         if llm_fn is None:
             if provider == "vertex":
-                # Fail-honest prima di avviare thread pool
                 _VERTEX_TOKEN_CACHE.get_token()
             else:
                 api_key = _resolve_api_key(provider)
@@ -720,6 +1208,7 @@ def run_batch_extraction(
         blocks_rejected = 0
         units_written = 0
         sigs_written = 0
+        v22_metadata_written = 0
         paratext_logged = 0
         in_tokens_used = 0
         out_tokens_used = 0
@@ -744,6 +1233,7 @@ def run_batch_extraction(
                     "state": state_name,
                     "wave": wave,
                     "provider": provider_label,
+                    "pack_size": eff_pack,
                     "books_in_wave": books_in_wave,
                     "blocks_total_in_wave": blocks_total_in_wave,
                     "blocks_completed": blocks_completed,
@@ -751,6 +1241,7 @@ def run_batch_extraction(
                     "paratext_logged": paratext_logged,
                     "epistemic_units_total": tot_units_db,
                     "signatures_total": tot_sigs_db,
+                    "v22_metadata_written": v22_metadata_written,
                     "bridges_total": tot_bridges_db,
                     "input_tokens_used": in_tokens_used,
                     "output_tokens_used": out_tokens_used,
@@ -781,41 +1272,44 @@ def run_batch_extraction(
         _emit_status("running")
 
         n_workers = max(1, min(int(workers), 16))
-        chunk_sz = max(1, int(batch_size))
+        windows = group_rows_into_book_windows(pending, pack_size=eff_pack)
+        win_per_commit = max(1, (int(batch_size) + eff_pack - 1) // eff_pack)
         blocks_since_bridge = 0
 
         try:
-            for start in range(0, len(pending), chunk_sz):
-                chunk = pending[start : start + chunk_sz]
-                if n_workers > 1 and len(chunk) > 1:
+            for start in range(0, len(windows), win_per_commit):
+                win_chunk = windows[start : start + win_per_commit]
+                if n_workers > 1 and len(win_chunk) > 1:
                     with ThreadPoolExecutor(max_workers=n_workers) as pool:
-                        results = list(
+                        nested_results = list(
                             pool.map(
-                                lambda r: _extract_single_row(
-                                    r,
+                                lambda wrows: _extract_window(
+                                    wrows,
                                     provider=provider,
                                     api_key=api_key,
                                     project_id=project_id,
                                     model=model,
                                     llm_fn=llm_fn,
+                                    require_v22_metadata=eff_v22,
                                 ),
-                                chunk,
+                                win_chunk,
                             )
                         )
                 else:
-                    results = [
-                        _extract_single_row(
-                            r,
+                    nested_results = [
+                        _extract_window(
+                            wrows,
                             provider=provider,
                             api_key=api_key,
                             project_id=project_id,
                             model=model,
                             llm_fn=llm_fn,
+                            require_v22_metadata=eff_v22,
                         )
-                        for r in chunk
+                        for wrows in win_chunk
                     ]
 
-                valid_exts: List[BlockExtractionV21] = []
+                results = [item for sub in nested_results for item in sub]
                 valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
                 for row, ext, tok_in, tok_out, err in results:
                     in_tokens_used += tok_in
@@ -824,36 +1318,27 @@ def run_batch_extraction(
                         blocks_rejected += 1
                         rejected.append({"block_pk": int(row["block_pk"]), "error": err or "errore"})
                     else:
-                        valid_exts.append(ext)
                         valid_pairs.append((row, ext))
 
-                if valid_exts:
-                    try:
-                        validate_batch_anti_template(valid_exts)
-                    except SchemaValidationError as batch_err:
-                        # Scarta dal commit solo i blocchi del chunk col prefisso ripetuto, senza fermare l'intera Wave
-                        prefixes = [
-                            " ".join(ext.sig.mech.casefold().split()[:4])
-                            for _, ext in valid_pairs
-                            if ext.sig is not None
-                        ]
-                        bad_prefix = Counter(prefixes).most_common(1)[0][0] if prefixes else ""
-                        filtered_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
-                        for row, ext in valid_pairs:
-                            if (
-                                ext.sig is not None
-                                and bad_prefix
-                                and " ".join(ext.sig.mech.casefold().split()[:4]) == bad_prefix
-                            ):
-                                blocks_rejected += 1
-                                rejected.append({"block_pk": int(row["block_pk"]), "error": str(batch_err)})
-                            else:
-                                filtered_pairs.append((row, ext))
-                        valid_pairs = filtered_pairs
+                valid_pairs, dropped_cnt = _apply_anti_template_filter(valid_pairs, rejected)
+                blocks_rejected += dropped_cnt
 
                 for row, ext in valid_pairs:
                     bpk = int(row["block_pk"])
                     buid = str(row["block_uid"])
+                    has_existing_units = (
+                        "existing_units_cnt" in row.keys()
+                        and int(row["existing_units_cnt"] or 0) > 0
+                    )
+                    if has_existing_units and ext.units == ():
+                        wrote_v22 = persist_v22_metadata_only(conn, block_pk=bpk, payload=ext)
+                        if wrote_v22:
+                            v22_metadata_written += 1
+                        elif ext.block_yield is BlockYield.LOW_OR_PARATEXT:
+                            paratext_logged += 1
+                        blocks_completed += 1
+                        continue
+
                     n_u = persist_block_extraction(
                         conn,
                         block_pk=bpk,
@@ -868,6 +1353,8 @@ def run_batch_extraction(
                         provider_model=provider_label,
                     )
                     units_written += n_u
+                    if ext.macro_disciplines:
+                        v22_metadata_written += 1
                     if ext.units == ():
                         paratext_logged += 1
                     if ext.sig is not None:
@@ -905,10 +1392,13 @@ def run_batch_extraction(
             _emit_status("failed")
             raise
 
+        eur_sync = _estimate_eur(in_tokens_used, out_tokens_used)
         return {
             "mode": "executed",
             "wave": wave,
             "provider": provider_label,
+            "pack_size": eff_pack,
+            "windows_sent": len(windows),
             "books_in_wave": books_in_wave,
             "blocks_processed": blocks_completed,
             "blocks_rejected": blocks_rejected,
@@ -916,18 +1406,195 @@ def run_batch_extraction(
             "rejected_details": rejected,
             "units_written": units_written,
             "signatures_written": sigs_written,
+            "v22_metadata_written": v22_metadata_written,
             "bridges_validated": bridges_validated_total,
             "input_tokens_used": in_tokens_used,
             "output_tokens_used": out_tokens_used,
-            "estimated_eur_from_credits": _estimate_eur(in_tokens_used, out_tokens_used),
+            "estimated_eur_from_credits": eur_sync,
+            "equivalent_vertex_batch_eur": round(eur_sync * 0.5, 4),
+            "eur_per_100_blocks_sync": round((eur_sync / blocks_total_in_wave) * 100.0, 4) if blocks_total_in_wave else 0.0,
+            "eur_per_100_blocks_batch": round(((eur_sync * 0.5) / blocks_total_in_wave) * 100.0, 4) if blocks_total_in_wave else 0.0,
         }
     finally:
         conn.close()
 
 
+def export_multiblock_batch_jsonl(
+    conn: sqlite3.Connection,
+    out_jsonl_path: Path | str,
+    *,
+    wave: Optional[int] = None,
+    limit: Optional[int] = None,
+    pack_size: int = 8,
+    include_v21_backfill: bool = False,
+    book_pk: Optional[int] = None,
+) -> Dict[str, Any]:
+    """Esporta le finestre multi-blocco nel formato JSONL Vertex AI Batch Prediction (-50%)."""
+    pending = select_pending_blocks(
+        conn,
+        wave=wave,
+        limit=limit,
+        pack_size=pack_size,
+        include_v21_backfill=include_v21_backfill,
+        book_pk=book_pk,
+    )
+    windows = group_rows_into_book_windows(pending, pack_size=pack_size)
+    out_path = Path(out_jsonl_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_map: Dict[str, List[int]] = {}
+
+    with out_path.open("w", encoding="utf-8") as fh:
+        for widx, wrows in enumerate(windows, start=1):
+            lead = wrows[0]
+            bpk_book = int(lead["book_pk"])
+            cid = f"win_{widx:06d}_bk{bpk_book}"
+            manifest_map[cid] = [int(r["block_pk"]) for r in wrows]
+            is_meta = all(
+                "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
+                for r in wrows
+            )
+            prompt = build_multiblock_extraction_prompt(
+                book_title=str(lead["book_title"] or ""),
+                surface_domain=str(lead["surface_domain"] or ""),
+                rows=wrows,
+                single_v22_only=False,
+                metadata_only=is_meta,
+            )
+            record = {
+                "custom_id": cid,
+                "request": {
+                    "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "temperature": 0.1,
+                        "maxOutputTokens": 4096 if is_meta else 8192,
+                        "responseMimeType": "application/json",
+                        "responseSchema": V22_METADATA_ONLY_RESPONSE_SCHEMA if is_meta else V22_COMPACT_RESPONSE_SCHEMA,
+                        "thinkingConfig": {"thinkingBudget": 0},
+                    },
+                },
+            }
+            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    manifest_path = out_path.with_suffix(".manifest.json")
+    manifest_path.write_text(json.dumps(manifest_map, indent=2), encoding="utf-8")
+    return {
+        "jsonl_path": str(out_path),
+        "manifest_path": str(manifest_path),
+        "windows_exported": len(windows),
+        "blocks_exported": len(pending),
+    }
+
+
+def import_multiblock_batch_jsonl(
+    conn: sqlite3.Connection,
+    predictions_jsonl_path: Path | str,
+    *,
+    provider_model: str = "vertex-batch:gemini-2.5-flash",
+    require_v22_metadata: bool = True,
+) -> Dict[str, Any]:
+    """Valida e persiste idempotentemente i risultati restituiti da Vertex AI Batch Prediction JSONL."""
+    pred_path = Path(predictions_jsonl_path)
+    if not pred_path.exists():
+        raise FileNotFoundError(f"File JSONL predizioni non trovato: {pred_path}")
+
+    rows_by_pk: Dict[int, sqlite3.Row] = {}
+    conn.row_factory = sqlite3.Row
+    for r in conn.execute("SELECT block_pk, block_uid, content FROM blocks WHERE is_active = 1"):
+        rows_by_pk[int(r["block_pk"])] = r
+    existing_unit_pks = {
+        int(r[0]) for r in conn.execute("SELECT DISTINCT block_pk FROM epistemic_units")
+    }
+
+    windows_read = 0
+    blocks_committed = 0
+    blocks_rejected = 0
+    units_written = 0
+    v22_written = 0
+    in_tok = 0
+    out_tok = 0
+    rejected: List[Dict[str, Any]] = []
+    valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
+
+    with pred_path.open("r", encoding="utf-8") as fh:
+        for line in fh:
+            s = line.strip()
+            if not s:
+                continue
+            windows_read += 1
+            obj = json.loads(s)
+            resp = obj.get("response") if isinstance(obj, Mapping) else obj
+            if isinstance(resp, Mapping) and "candidates" in resp:
+                usage = resp.get("usageMetadata") or {}
+                in_tok += int(usage.get("promptTokenCount") or 0)
+                out_tok += int(usage.get("candidatesTokenCount") or 0)
+                txt = resp["candidates"][0]["content"]["parts"][0]["text"]
+                payload = _decode_json_tolerant(txt)
+            else:
+                payload = obj
+
+            by_pk = _parse_window_extractions_payload(payload)
+            for bpk, ext_dict in by_pk.items():
+                blk_row = rows_by_pk.get(bpk)
+                if blk_row is None:
+                    blocks_rejected += 1
+                    rejected.append({"block_pk": bpk, "error": "block_pk assente o inattivo"})
+                    continue
+                try:
+                    if "units" not in ext_dict and bpk in existing_unit_pks:
+                        ext = validate_v22_metadata_only(ext_dict)
+                    else:
+                        ext = validate_block_extraction(
+                            ext_dict,
+                            block_content=str(blk_row["content"]),
+                            require_v22_metadata=require_v22_metadata,
+                        )
+                        if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
+                            raise SchemaValidationError("sig.mech boilerplate")
+                    valid_pairs.append((blk_row, ext))
+                except (SchemaValidationError, KeyError, TypeError, ValueError) as exc:
+                    blocks_rejected += 1
+                    rejected.append({"block_pk": bpk, "error": str(exc)})
+
+    valid_pairs, dropped_cnt = _apply_anti_template_filter(valid_pairs, rejected)
+    blocks_rejected += dropped_cnt
+
+    for blk_row, ext in valid_pairs:
+        bpk = int(blk_row["block_pk"])
+        buid = str(blk_row["block_uid"])
+        if ext.units == () and bpk in existing_unit_pks:
+            if persist_v22_metadata_only(conn, block_pk=bpk, payload=ext):
+                v22_written += 1
+            blocks_committed += 1
+            continue
+        n_u = persist_block_extraction(conn, block_pk=bpk, block_uid=buid, extraction=ext)
+        _log_block_extraction(
+            conn,
+            block_pk=bpk,
+            block_uid=buid,
+            extraction=ext,
+            provider_model=provider_model,
+        )
+        units_written += n_u
+        if ext.macro_disciplines:
+            v22_written += 1
+        blocks_committed += 1
+
+    conn.commit()
+    return {
+        "windows_read": windows_read,
+        "blocks_committed": blocks_committed,
+        "blocks_rejected": blocks_rejected,
+        "units_written": units_written,
+        "v22_written": v22_written,
+        "input_tokens": in_tok,
+        "output_tokens": out_tok,
+        "rejected_details": rejected,
+    }
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="CLI Batch Idempotente BlockExtraction v2.1 per Wave 1..4 di resuscipack."
+        description="CLI Batch Idempotente BlockExtraction v2.1 / v2.2 per Wave 1..4 di resuscipack."
     )
     parser.add_argument("--db", type=Path, default=DEFAULT_DB_PATH, help="Percorso di pack_corpus.db")
     parser.add_argument("--wave", type=int, choices=[1, 2, 3, 4], default=None, help="Filtra per Wave 1..4")
@@ -940,6 +1607,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--workers", type=int, default=8, help="Worker concorrenti HTTP per micro-batch")
     parser.add_argument("--batch-size", type=int, default=25, help="Blocchi per commit transazionale")
+    parser.add_argument("--pack-size", type=int, default=8, help="Blocchi contigui per finestra (1..8)")
+    parser.add_argument("--book-pk", type=int, default=None, help="Filtra un singolo book_pk")
+    parser.add_argument(
+        "--block-pks",
+        type=str,
+        default=None,
+        help="Lista CSV di block_pk specifici da elaborare (es. 28052,28053,28054)",
+    )
+    parser.add_argument("--backfill-v22", action="store_true", help="Include blocchi v2.1 privi di metadati v2.2")
+    parser.add_argument("--export-batch-jsonl", type=Path, default=None, help="Esporta JSONL per Vertex AI Batch (-50%)")
+    parser.add_argument("--import-batch-jsonl", type=Path, default=None, help="Importa JSONL predetto da Vertex AI Batch")
     parser.add_argument(
         "--discover-bridges",
         action="store_true",
@@ -964,6 +1642,40 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(json.dumps(res, indent=2, ensure_ascii=False))
         return 0
 
+    if args.export_batch_jsonl is not None:
+        from resuscipack.corpus.schema import init_corpus_db
+
+        conn = init_corpus_db(args.db)
+        try:
+            res = export_multiblock_batch_jsonl(
+                conn,
+                args.export_batch_jsonl,
+                wave=args.wave,
+                limit=args.limit if args.limit > 0 else None,
+                pack_size=args.pack_size,
+                include_v21_backfill=args.backfill_v22,
+                book_pk=args.book_pk,
+            )
+        finally:
+            conn.close()
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+        return 0
+
+    if args.import_batch_jsonl is not None:
+        from resuscipack.corpus.schema import init_corpus_db
+
+        conn = init_corpus_db(args.db)
+        try:
+            res = import_multiblock_batch_jsonl(conn, args.import_batch_jsonl)
+        finally:
+            conn.close()
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+        return 0
+
+    parsed_block_pks: Optional[List[int]] = None
+    if args.block_pks:
+        parsed_block_pks = [int(tok.strip()) for tok in args.block_pks.split(",") if tok.strip()]
+
     try:
         res = run_batch_extraction(
             args.db,
@@ -973,6 +1685,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             dry_run=args.dry_run,
             workers=args.workers,
             batch_size=args.batch_size,
+            pack_size=args.pack_size,
+            include_v21_backfill=args.backfill_v22,
+            book_pk=args.book_pk,
+            block_pks=parsed_block_pks,
             discover_bridges=args.discover_bridges,
             status_file=None if args.dry_run else args.status_file,
         )
