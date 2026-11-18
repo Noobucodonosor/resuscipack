@@ -1,0 +1,194 @@
+{
+  "scuola": "Istituto Tecnico - Settore Tecnologico - Indirizzo Agraria, Agroalimentare e Agroindustria",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di Matematica",
+          "argomenti": [
+            "Indici di posizione: media, moda, mediana",
+            "Indici di variabilità: varianza, scarto quadratico medio",
+            "Frequenza e rappresentazioni grafiche",
+            "Correlazioni e regressioni",
+            "Variazioni dei capitali nel tempo",
+            "Interesse, montante, sconto, valore attuale; Rendite",
+            "Valori annuali e periodici",
+            "Accumulazioni; Capitalizzazione; Ammortamenti",
+            "Popolazione e campione",
+            "Statistiche, Distribuzioni campionarie e stimatori",
+            "Verifica di ipotesi statistiche per valutare l'efficacia di un nuovo prodotto o servizio"
+          ]
+        },
+        {
+          "nome": "Produzioni Animali",
+          "argomenti": [
+            "Specie e razze in produzione zootecnica",
+            "Aspetti anatomici e zoognostici",
+            "Tipi produttivi e relative produzioni",
+            "Valore genetico e suo miglioramento",
+            "Libri genealogici e relativa gestione",
+            "Tecniche di allevamento e metodi di riproduzione",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Produzioni Vegetali",
+          "argomenti": [
+            "Fattori condizionanti le produzioni agrarie",
+            "Strutture organizzative della produzione",
+            "Fattori determinanti la fertilità; sua evoluzione",
+            "Interventi colturali ordinari e straordinari",
+            "Dinamica degli ecosistemi ed agricoltura; principi di ecosostenibilità",
+            "Sistemi colturali",
+            "Macchine agricole; principi della meccanizzazione integrale",
+            "Colture di interesse agrario e miglioramento genetico",
+            "Caratteri biologici, esigenze agronomiche di famiglie, specie, cultivar",
+            "Tecniche colturali e interventi di difesa",
+            "Aspetti della qualità dei prodotti e criteri di valutazione",
+            "Tecniche colturali per ambienti condizionati",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Trasformazione dei Prodotti",
+          "argomenti": [
+            "Aspetti fisici, chimici, biologici e tipologici delle materie prime",
+            "Linee di trasformazione delle materie prime; macchine ed attrezzi",
+            "Procedimenti generali di trasformazione",
+            "Computo energetico e rendimento dei processi",
+            "Punti critici e metodologie di controllo",
+            "Aspetti chimici dei processi trasformativi",
+            "Metodi analitici per la determinazione dei principali costituenti"
+          ]
+        },
+        {
+          "nome": "Economia, Estimo, Marketing e Legislazione",
+          "argomenti": [
+            "Metodi e strumenti della contabilità aziendale",
+            "Impresa ed azienda",
+            "Fattori della produzione",
+            "Principi di analisi economica delle attività produttive",
+            "Bilanci preventivi, parziali, consuntivi",
+            "Tipologie di contratto e redditi degli imprenditori concreti",
+            "Giudizi di convenienza",
+            "Indici di efficienza aziendale",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Genio Rurale",
+          "argomenti": [
+            "Sistemi di rilievo",
+            "Misure di angoli, distanze, dislivelli, aree",
+            "Rilevamenti plano-altimetrici",
+            "Misure e calcolo delle aree",
+            "Principi della fotogrammetria",
+            "Tecniche di rilevazione satellitare",
+            "Sistema di posizionamento globale (GPS)",
+            "Sistemi informativi territoriali (SIT)",
+            "Materiali da costruzione",
+            "Elementi di statica",
+            "Tipologia di strutture aziendali",
+            "Caratteristiche dell'abitazione aziendale",
+            "Risorse idriche e la loro tutela",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Biotecnologie Agrarie",
+          "argomenti": [
+            "Struttura del materiale ereditario",
+            "Codice genetico",
+            "Tecniche di ingegneria genetica",
+            "Organismi transgenici",
+            "Ibridomi",
+            "Lieviti, batteri, funghi",
+            "Virus e virus simili, fitoplasmi",
+            "Insetti, nematodi, acari",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Produzioni Animali",
+          "argomenti": [
+            "Aspetti dell'alimentazione animale",
+            "Fisiologia della nutrizione",
+            "Criteri e metodi di valutazione degli alimenti",
+            "Metodi di razionamento",
+            "Applicazione di procedimenti biotecnologici",
+            "Meccanizzazione degli allevamenti",
+            "Aspetti ecologici delle infezioni animali"
+          ]
+        },
+        {
+          "nome": "Produzioni Vegetali",
+          "argomenti": [
+            "Caratteri morfologici, biologici, produttivi delle colture arbustive ed arboree",
+            "Cicli produttivi ed esigenze ambientali",
+            "Criteri di scelte di specie e cultivar",
+            "Impianti, allevamento, tecniche colturali",
+            "Calendari di maturazione",
+            "Interventi di difesa",
+            "Qualità dei prodotti e criteri di valutazione",
+            "Produzioni sostenibili e biologiche"
+          ]
+        },
+        {
+          "nome": "Trasformazione dei Prodotti",
+          "argomenti": [
+            "Tecnologie speciali per l'enologia, il caseificio, l'oleificio e il conservificio",
+            "Aspetti microbiologici ed enzimatici dei processi",
+            "Aspetti tecnologici relativi all'organizzazione dei cicli trasformativi",
+            "Criteri per la definizione di trasparenza, rintracciabilità, tracciabilità",
+            "Normative nazionale e comunitaria: di settore, sulla sicurezza e la tutela ambientale",
+            "Principi e tecnologie per il trattamento dei reflui agroalimentari"
+          ]
+        },
+        {
+          "nome": "Economia, Estimo, Marketing e Legislazione",
+          "argomenti": [
+            "Mercato, valori e redditività",
+            "Procedimenti di valutazione",
+            "Metodologie di stima di fondi ad ordinamento annuo e ad ordinamento poliennale",
+            "Stime con procedimenti condizionati; stime di diritti e servizi",
+            "Standard internazionali di valutazione",
+            "Metodologie di analisi costi-benefici e valutazione di beni ambientali",
+            "Caratteristiche dei mercati dei prodotti agrari",
+            "Forme di integrazione",
+            "Tecniche di ricerche di marketing",
+            "Bench marking",
+            "Normativa nazionale sulle imprese agricole",
+            "Aspetti generali della qualità",
+            "Politiche agrarie comunitarie"
+          ]
+        },
+        {
+          "nome": "Biotecnologie Agrarie",
+          "argomenti": [
+            "Azione patogena degli organismi vegetali e animali",
+            "Biotecnologie innovative",
+            "Processi biotecnologici nelle industrie agroalimentari e nel trattamento dei reflui"
+          ]
+        },
+        {
+          "nome": "Gestione dell'Ambiente e del Territorio",
+          "argomenti": [
+            "Attitudini e classificazioni dei territori",
+            "Competenze degli organi amministrativi territoriali",
+            "Interventi a difesa dell'ambiente",
+            "Normativa ambientale e territoriale",
+            "Tipologie del paesaggio e caratteristiche connesse",
+            "Valutazione d'impatto ambientale"
+          ]
+        }
+      ]
+    }
+  ]
+}

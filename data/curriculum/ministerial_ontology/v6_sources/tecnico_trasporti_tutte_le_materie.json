@@ -1,0 +1,195 @@
+{
+  "scuola": "Istituto Tecnico Trasporti",
+  "materia": "Indirizzo e Competenze",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di matematica",
+          "argomenti": [
+            "Numeri complessi",
+            "Derivate parziali e differenziale totale",
+            "Equazioni differenziali",
+            "Integrali curvilinei",
+            "Metodi di quadratura approssimati",
+            "Trigonometria sferica (teorema di Eulero, teorema dei seni, regola di Viete, regola di Nepero)",
+            "Criteri per i problemi di scelta in condizioni d'incertezza",
+            "Problemi caratteristici della ricerca operativa: problema delle scorte, il PERT",
+            "Programmazione lineare in due incognite",
+            "Popolazione e campione",
+            "Statistiche, distribuzioni campionarie e stimatori",
+            "Verifica di ipotesi statistiche per valutare l'efficacia di un nuovo prodotto o servizio"
+          ]
+        },
+        {
+          "nome": "Elettrotecnica, elettronica e automazione",
+          "argomenti": [
+            "Fondamenti di elettrologia ed elettromagnetismo. Fisica dei materiali conduttori, metodi e strumenti di misura",
+            "Metodi per l'analisi circuitale in continua e alternata",
+            "Principi di funzionamento delle principali apparecchiature elettromeccaniche e macchine elettriche",
+            "Impianti elettrici e loro manutenzione",
+            "Protezione e sicurezza negli impianti elettrici",
+            "Principi di elettronica, componenti, amplificatori operazionali, circuiti integrati",
+            "Elementi di tecniche digitali – dispositivi e strutture bus e loro problematiche",
+            "Comunicazioni – segnali, modulazioni e mezzi trasmessivi",
+            "Rischi nei luoghi di lavoro, sistemi di protezione e prevenzione utilizzabili, nel rispetto delle normative nazionali, comunitarie ed internazionali",
+            "Procedure di espletamento delle attività secondo i Sistemi di Qualità e di Sicurezza adottati e la registrazione documentale",
+            "Metodologie di monitoraggio e valutazione dei processi",
+            "Principi di funzionamento dei sistemi tradizionali e radio assistiti per la condotta ed il controllo della navigazione",
+            "Procedure per la trasmissione delle informazioni",
+            "Format dei diversi tipi di documentazione"
+          ]
+        },
+        {
+          "nome": "Diritto ed economia",
+          "argomenti": [
+            "Disciplina giuridica del contratto",
+            "Particolari tipologie contrattuali",
+            "Disciplina giuridica del diritto di proprietà",
+            "I diritti reali",
+            "Norme che regolano la natura e l'attività dell'Imprenditore e dell'Impresa",
+            "Diritto commerciale e societario di settore",
+            "Fonti del diritto Internazionale del sistema trasporti e della navigazione",
+            "Codici della Navigazione",
+            "Organismi nazionali internazionali e la normativa di settore prevista dalle Convenzioni internazionali, Codici, Leggi comunitarie e nazionali",
+            "Organizzazione giuridica della navigazione",
+            "Strutture e correlazioni tra porti, aeroporti ed interporti",
+            "Infrastrutture di accoglienza e costruzione dei mezzi di trasporti",
+            "Regolamentazioni territoriali dei trasporti"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Elettrotecnica, elettronica e automazione",
+          "argomenti": [
+            "Diagnostica dei vari degli apparati elettronici di bordo",
+            "Sistemi di gestione mediante software",
+            "Automazione dei processi di conduzione e controllo del mezzo",
+            "Sistemi elettrici ed elettronici di bordo, loro controlli automatici e manutenzione",
+            "Convenzioni internazionali e dei regolamenti comunitari e nazionali che disciplinano la sicurezza del lavoro, degli operatori, del mezzo e dell'ambiente",
+            "Sistemi di produzione, trasformazione e/o trasmissione dell'energia e metodi di calcolo delle prestazioni mediante anche l'utilizzo di grafici, tabelle e diagrammi",
+            "Principi di automazione e tecniche di controllo asservite ad apparati, sistemi e processi di bordo",
+            "Procedure di montaggio dei sotto-assiemi strutturali",
+            "Sistemi di protezione e prevenzione",
+            "Normative nazionali, comunitarie ed internazionali che disciplinano la qualità e la sicurezza del lavoro e dell'ambiente",
+            "Conformazione e schemi degli impianti tecnici e i relativi parametri di funzionamento",
+            "Caratteristiche delle pompe e diagrammi di funzionamento",
+            "Calcolo delle perdite di carico negli impianti e dimensionamento dei condotti"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo biennio e quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Diritto e legislazione dei trasporti",
+          "argomenti": [
+            "Contratti del trasporto",
+            "Principi, normative e contratti di assicurazione",
+            "Legislazione, normative, regolamenti e procedure a tutela della sicurezza, dell'ambiente e della qualità nei trasporti",
+            "Contratti di lavoro nazionali ed internazionali",
+            "Certificazioni, licenze e abilitazioni per il personale dei trasporti",
+            "Responsabilità connesse con l'esercizio delle funzioni professionali del settore trasporti",
+            "Normativa nazionale e internazionale sul diporto"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Struttura, costruzione, sistemi e impianti del mezzo - Secondo biennio",
+          "argomenti": [
+            "Tipologie e prestazioni dei mezzi di trasporto, strutture, processi produttivi e costruttivi, dinamica dei mezzi",
+            "Configurazione del mezzo in funzione dell'utilizzo e del genere di trasporto",
+            "Caratteristiche fisiche e chimiche dell'ambiente fluidodinamico nel quale si muove il mezzo di trasporto e relativi fenomeni che in esso avvengono",
+            "Norme per il disegno tecnico. Software per la schematizzazione e il disegno progettuale",
+            "Caratterizzazione meccanica, tecnologica e funzionale di materiali ingegneristici, componenti e parti del mezzo",
+            "Prove strutturali, test e collaudi",
+            "Tecniche, processi, impianti e organizzazione della produzione industriale del mezzo di trasporto",
+            "Procedure di lavorazione, costruzione, montaggio, smontaggio e regolazione di elementi strutturali, sistemi, ed organi di collegamento, secondo le norme di settore",
+            "Attrezzature di officina",
+            "Metodologie per il monitoraggio e la valutazione di processo e prodotto",
+            "Norme tecniche nazionali e internazionali relative al mezzo di trasporto, ai sistemi e agli impianti connessi, anche in lingua inglese",
+            "Standard e procedure preposte alla certificazione dei processi costruttivi",
+            "Tipologia dei difetti e tecniche di ispezione",
+            "Programmi di controllo, prevenzione, rimozione e riparazione relativi all'invecchiamento, alla fatica ed alla corrosione",
+            "Programmi di manutenzione - procedure di certificazione e riammissione in servizio - ispezione manutentiva/controllo di qualità/assicurazione - interfaccia con il funzionamento del mezzo - software per l'analisi e la simulazione",
+            "Concetti fondamentali di sicurezza, lettura delle analisi rischi, sistemi di prevenzione e protezione, procedure applicative"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Mezzo navale",
+          "argomenti": [
+            "Resistenza al moto dei galleggianti",
+            "Equilibrio dei galleggianti, moti di rollio e beccheggio, condizioni di assetto e prove di stabilità. Software di calcolo della stabilità delle navi",
+            "Sollecitazioni composte",
+            "Robustezza longitudinale delle navi",
+            "Procedure di calcolo degli elementi geometrici e meccanici della carena",
+            "Standard di produzione, norme RINA sulla costruzione e sui materiali degli scafi",
+            "Tabelle UNI",
+            "Caratteristiche generali delle navi mercantili, dimensioni, strutture, diagrammi statistici e parametri tecnici fondamentali",
+            "Software specifici per le verifiche strutturali",
+            "Modalità e sequenze operative per la costruzione di un mezzo navale",
+            "Sistemi di produzione, trasformazione e/o trasmissione dell'energia e metodi di calcolo delle prestazioni mediante anche l'utilizzo di grafici, tabelle e diagrammi",
+            "Strutture, parametri di funzionamento, schemi, principi di automazione e tecniche di controllo degli impianti tecnici ausiliari di bordo",
+            "Mezzi per il sollevamento e lo spostamento di grandi masse",
+            "Norme sulla sicurezza del lavoro e procedure di emergenza",
+            "Organizzazione dei servizi di emergenza a bordo: impianti e dotazioni di sicurezza per la prevenzione dei sinistri marittimi nel rispetto della normativa nazionale, comunitaria ed internazionale"
+          ]
+        },
+        {
+          "nome": "Mezzo aereo",
+          "argomenti": [
+            "Configurazioni del mezzo dal punto di vista fluido-dinamico",
+            "Materiali per la costruzione e manutenzione del mezzo e la loro scelta",
+            "Principi costruttivo-progettuali safe life, fail safe e damage tolerance",
+            "Collaudi e prove, distruttive e non distruttive, su materiali e manufatti, apparati ed impianti",
+            "Tecnologie convenzionali e innovative per la costruzione e manutenzione nonché speciali processi di fabbricazione",
+            "Impianti di bordo e loro vita operativa",
+            "Procedure di controllo su apparati, impianti, strutture, sistemi, equipaggiamenti e finiture",
+            "Metodologie di manutenzione programmata",
+            "Eventi anormali e loro riconoscimento. Case history e failure analysis",
+            "Tempi e metodi studi di fabbricazione",
+            "Certificazione tecnica degli organismi nazionali e internazionali",
+            "Organizzazione industriale e tecniche di team working",
+            "Disciplina sulla sicurezza del lavoro, del mezzo e ambientale nelle convenzioni internazionali, nei regolamenti comunitari e nella legislazione italiana. Normativa UNI EN ISO",
+            "Lessico tecnico di settore anche in lingua inglese"
+          ]
+        },
+        {
+          "nome": "Mezzo terrestre",
+          "argomenti": [
+            "Configurazioni del mezzo dal punto di vista dinamico",
+            "Materiali per la costruzione e manutenzione del mezzo e la loro scelta",
+            "Principi costruttivi-progettuali safe life, fail safe e damage tolerance",
+            "Collaudi e prove, distruttive e non distruttive sui materiali e manufatti",
+            "Tecnologie convenzionali e innovative per la costruzione e manutenzione nonché speciali processi di fabbricazione",
+            "Impianti ausiliari e loro vita operativa",
+            "Controlli sugli apparati, strutture, sistemi, equipaggiamenti e finiture",
+            "La manutenzione programmata: gestione in situ, progressive care",
+            "Eventi anormali e loro riconoscimento - Case history, failure analysis",
+            "Studi di fabbricazione - tempi e metodi",
+            "Collaudi e prove, distruttive e non distruttive su manufatti, apparati e impianti",
+            "Dinamica di gruppo, lavoro e sinergie operative - Organizzazione industriale - Tecniche di team working",
+            "Conoscenza delle convenzioni internazionali e dei regolamenti comunitari che disciplinano la sicurezza del lavoro, degli operatori, del mezzo e dell'ambiente",
+            "La normativa UNI EN ISO",
+            "La legislazione italiana in materia di sicurezza, dalle origini alla D.L.vo 81/08 e sue successive modificazioni"
+          ]
+        }
+      ]
+    }
+  ]
+}

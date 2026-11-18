@@ -1,0 +1,26 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Geografia",
+  "anni": [
+    {
+      "anno": "Triennio (classe 1a-3a)",
+      "nuclei_tematici": [
+        {
+          "nome": "Paesaggio",
+          "argomenti": [
+            "Interpretare e confrontare alcuni caratteri dei paesaggi italiani, europei e mondiali, anche in relazione alla loro evoluzione nel tempo.",
+            "Conoscere temi e problemi di tutela del paesaggio come patrimonio naturale e culturale e progettare azioni di valorizzazione."
+          ]
+        },
+        {
+          "nome": "Regione e sistema territoriale",
+          "argomenti": [
+            "Consolidare il concetto di regione geografica (fisica, climatica, storica, economica) applicandolo all'Italia, all'Europa e agli altri continenti.",
+            "Analizzare in termini di spazio le interrelazioni tra fatti e fenomeni demografici, sociali ed economici di portata nazionale, europea e mondiale.",
+            "Utilizzare modelli interpretativi di assetti territoriali dei principali paesi europei e degli altri continenti, anche in relazione alla loro evoluzione storico-politico-economica."
+          ]
+        }
+      ]
+    }
+  ]
+}

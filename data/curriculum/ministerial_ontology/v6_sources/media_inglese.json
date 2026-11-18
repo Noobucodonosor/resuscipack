@@ -1,0 +1,47 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Lingua Inglese",
+  "anni": [
+    {
+      "anno": "Terza (termine del triennio)",
+      "nuclei_tematici": [
+        {
+          "nome": "Ascolto (comprensione orale)",
+          "argomenti": [
+            "Comprendere istruzioni, espressioni e frasi di uso quotidiano se pronunciate chiaramente e identificare il tema generale di brevi messaggi orali in cui si parla di argomenti conosciuti",
+            "Comprendere brevi testi multimediali identificandone parole chiave e il senso generale"
+          ]
+        },
+        {
+          "nome": "Parlato (produzione e interazione orale)",
+          "argomenti": [
+            "Descrivere persone, luoghi e oggetti familiari utilizzando parole e frasi già incontrate ascoltando o leggendo",
+            "Riferire semplici informazioni afferenti alla sfera personale, integrando il significato di ciò che si dice con mimica e gesti",
+            "Interagire in modo comprensibile con un compagno o un adulto con cui si ha familiarità, utilizzando espressioni e frasi adatte alla situazione"
+          ]
+        },
+        {
+          "nome": "Lettura (comprensione scritta)",
+          "argomenti": [
+            "Comprendere testi semplici di contenuto familiare e di tipo concreto e trovare informazioni specifiche in materiali di uso corrente"
+          ]
+        },
+        {
+          "nome": "Scrittura (produzione scritta)",
+          "argomenti": [
+            "Scrivere testi brevi e semplici per raccontare le proprie esperienze, per fare gli auguri, per ringraziare o per invitare qualcuno, anche con errori formali che non compromettano però la comprensibilità del messaggio"
+          ]
+        },
+        {
+          "nome": "Riflessione sulla lingua e sull'apprendimento",
+          "argomenti": [
+            "Osservare le parole nei contesti d'uso e rilevare le eventuali variazioni di significato",
+            "Osservare la struttura delle frasi e mettere in relazione costrutti e intenzioni comunicative",
+            "Confrontare parole e strutture relative a codici verbali diversi",
+            "Riconoscere i propri errori e i propri modi di apprendere le lingue"
+          ]
+        }
+      ]
+    }
+  ]
+}

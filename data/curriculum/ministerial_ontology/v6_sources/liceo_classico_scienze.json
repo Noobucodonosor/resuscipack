@@ -1,0 +1,114 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Scienze Naturali",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Metodo sperimentale",
+          "argomenti": [
+            "Introduzione al metodo sperimentale in termini operativi",
+            "Uso delle unità di misura",
+            "Criteri per la raccolta e la registrazione dei dati"
+          ]
+        },
+        {
+          "nome": "Scienze della Terra",
+          "argomenti": [
+            "Completamento e approfondimento dei moti della Terra",
+            "Studio geomorfologico di fiumi, laghi, ghiacciai, mari e altre strutture della superficie terrestre"
+          ]
+        },
+        {
+          "nome": "Biologia",
+          "argomenti": [
+            "Osservazione delle caratteristiche degli organismi viventi",
+            "Costituzione fondamentale della cellula",
+            "Biodiversità",
+            "Tecniche sperimentali di base in campo biologico",
+            "Osservazione microscopica",
+            "Evoluzione e sistematica",
+            "Genetica mendeliana",
+            "Rapporti organismi-ambiente",
+            "Valorizzazione e mantenimento della biodiversità"
+          ]
+        },
+        {
+          "nome": "Chimica",
+          "argomenti": [
+            "Osservazione e descrizione di fenomeni e reazioni semplici",
+            "Riconoscimento e rappresentazione delle reazioni chimiche",
+            "Esempi tratti dalla vita quotidiana",
+            "Stati di aggregazione della materia e relative trasformazioni",
+            "Classificazione della materia (miscugli omogenei ed eterogenei, sostanze semplici e composte)",
+            "Definizioni operative della classificazione della materia",
+            "Leggi fondamentali della chimica",
+            "Modello atomico di Dalton",
+            "Formula chimica e suoi significati",
+            "Prima classificazione degli elementi: sistema periodico di Mendeleev"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Biologia",
+          "argomenti": [
+            "Complessità dei sistemi e dei fenomeni biologici",
+            "Relazioni tra i componenti dei sistemi biologici e tra diversi sistemi",
+            "Basi molecolari dei fenomeni biologici",
+            "Struttura e funzioni del DNA",
+            "Sintesi delle proteine",
+            "Codice genetico",
+            "Forma e funzioni degli organismi (microrganismi, vegetali, animali, uomo)",
+            "Aspetti anatomici e fisiologici degli organismi",
+            "Educazione alla salute con riferimento al corpo umano"
+          ]
+        },
+        {
+          "nome": "Chimica",
+          "argomenti": [
+            "Classificazione dei principali composti inorganici e relativa nomenclatura",
+            "Struttura della materia",
+            "Fondamenti della relazione tra struttura e proprietà",
+            "Aspetti quantitativi delle trasformazioni (stechiometria)",
+            "Struttura atomica e modelli atomici",
+            "Sistema periodico e proprietà periodiche",
+            "Legami chimici",
+            "Chimica organica: caratteristiche dell'atomo di carbonio",
+            "Legami, catene, gruppi funzionali e classi di composti organici",
+            "Scambi energetici associati alle trasformazioni chimiche",
+            "Fondamenti degli aspetti termodinamici e cinetici",
+            "Equilibri chimici anche in soluzione",
+            "Reazioni acido-base",
+            "Ossidoriduzioni"
+          ]
+        },
+        {
+          "nome": "Scienze della Terra",
+          "argomenti": [
+            "Cenni di mineralogia",
+            "Cenni di petrologia (le rocce)",
+            "Connessione con le realtà locali",
+            "Studio coordinato con chimica e fisica"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Chimica e Biologia - Biochimica",
+          "argomenti": [
+            "Struttura e funzione di molecole di interesse biologico",
+            "Intreccio tra percorso di chimica e percorso di biologia nella biochimica"
+          ]
+        }
+      ]
+    }
+  ]
+}

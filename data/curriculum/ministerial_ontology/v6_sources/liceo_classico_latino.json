@@ -1,0 +1,137 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Lingua e Cultura Latina",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenze linguistiche",
+          "argomenti": [
+            "Lettura scorrevole",
+            "Conoscenza delle strutture morfosintattiche: flessione nominale e verbale",
+            "Funzioni dei casi nella frase e delle frasi nel periodo",
+            "Formazione delle parole",
+            "Conoscenza del lessico per famiglie semantiche e per ambiti lessicali",
+            "Acquisizione delle strutture morfosintattiche partendo dal verbo (verbo-dipendenza)",
+            "Approccio al latino naturale (metodo natura) come alternativa allo studio tradizionale",
+            "Confronto continuo con la lingua italiana anche nel suo formarsi storico"
+          ]
+        },
+        {
+          "nome": "Traduzione",
+          "argomenti": [
+            "Comprensione e traduzione di testi d'autore prevalentemente in prosa e di argomento mitologico, storico, narrativo",
+            "Lettura di testi corredati da note di contestualizzazione",
+            "Riconoscimento delle strutture morfosintattiche, dei connettivi testuali e delle parole-chiave",
+            "Formulazione e verifica di ipotesi di traduzione e motivazione delle scelte",
+            "Comprensione del testo latino nel suo complesso anche senza ausilio del vocabolario",
+            "Comprensione-traduzione di brani originali della cultura latina",
+            "Acquisizione progressiva dell'usus scribendi degli autori latini"
+          ]
+        },
+        {
+          "nome": "Cultura",
+          "argomenti": [
+            "Lettura antologica di testi d'autore a partire dal secondo anno",
+            "Percorsi tematici o di genere per potenziare le competenze linguistiche",
+            "Introduzione graduale alla lettura diretta dei classici"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenze linguistiche e traduzione",
+          "argomenti": [
+            "Prosecuzione dell'allenamento alla traduzione del testo d'autore",
+            "Brani scelti dagli autori esaminati nello studio della letteratura: III anno Cesare, Sallustio, Cicerone; IV anno Cicerone, Livio, storici di età imperiale",
+            "Percorsi per generi letterari",
+            "Testi poetici con gradualità: Catullo, Lucrezio, Virgilio, Orazio, Tibullo, Properzio",
+            "Ampliamento dello spettro di autori e testi: Plauto, i Vangeli, Ovidio, Marziale, prosa tardoantica",
+            "Consolidamento delle competenze linguistiche: complessità della costruzione sintattica e lessico di storiografia, retorica, politica e filosofia",
+            "Cogliere le varianti diacroniche della lingua e la specificità dei lessici settoriali",
+            "Rendere nella traduzione lo specifico letterario del testo",
+            "Motivare le scelte di traduzione sulla base dell'interpretazione complessiva del testo"
+          ]
+        },
+        {
+          "nome": "Cultura e letteratura",
+          "argomenti": [
+            "Testi più significativi della latinità dalle origini all'età augustea",
+            "L'epica arcaica",
+            "Il teatro: Plauto e Terenzio",
+            "La satira",
+            "Catullo e i neoteroi",
+            "Cesare",
+            "Sallustio",
+            "Cicerone",
+            "Lucrezio",
+            "Virgilio",
+            "Orazio",
+            "Ovidio",
+            "L'elegia",
+            "Livio",
+            "Forme di comunicazione e circolazione dei testi",
+            "Concetti di originalità, creatività e imitazione",
+            "Importanza dei generi letterari",
+            "Rapporto tra autori e contesto sociale e politico",
+            "Modalità di selezione, conservazione e trasmissione del patrimonio letterario latino",
+            "Lettura e interpretazione degli autori in lingua originale in parallelo al percorso cronologico: III anno Cesare, Sallustio, Cicerone, Catullo, Lucrezio; IV anno Cicerone, Virgilio, Orazio, Livio",
+            "Studio della letteratura latina per generi letterari con attenzione alla continuità/discontinuità rispetto alla tradizione greca",
+            "Ricerca di permanenze nella cultura e nelle letterature italiana ed europea (prospettiva comparatistica e intertestuale)",
+            "Lettura antologica in originale accompagnata da lettura in traduzione",
+            "Lettura espressiva e in metrica: almeno l'esametro e il distico elegiaco",
+            "Traduzione rispettando il senso e la specificità letteraria e retorica",
+            "Interpretazione con strumenti dell'analisi testuale e conoscenze del contesto storico-culturale",
+            "Cogliere elementi di alterità e continuità tra cultura letteraria greco-romana e cultura attuale",
+            "Confronti di genere o tematici con le letterature moderne",
+            "Lettura di pagine critiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenze linguistiche e traduzione",
+          "argomenti": [
+            "Prosecuzione dell'allenamento alla traduzione del testo d'autore",
+            "Brani scelti dagli autori del V anno: Seneca, Petronio, Quintiliano, Tacito, Apuleio",
+            "Consolidamento delle competenze linguistiche con lessico di storiografia, retorica, politica e filosofia",
+            "Cogliere le varianti diacroniche della lingua e la specificità dei lessici settoriali",
+            "Rendere nella traduzione lo specifico letterario del testo",
+            "Motivare le scelte di traduzione sulla base dell'interpretazione complessiva del testo"
+          ]
+        },
+        {
+          "nome": "Cultura e letteratura",
+          "argomenti": [
+            "Linee generali della storia della letteratura latina dall'età giulio-claudia al IV secolo d.C.",
+            "Seneca",
+            "Petronio",
+            "Plinio il Vecchio",
+            "La satira di Persio e Giovenale",
+            "Svetonio",
+            "Quintiliano",
+            "Marziale",
+            "Lucano",
+            "Tacito",
+            "Plinio il Giovane",
+            "Apuleio",
+            "Gli inizi della letteratura cristiana",
+            "La rinascita pagana del IV secolo",
+            "I grandi autori cristiani: Ambrogio, Agostino",
+            "Lettura in lingua originale degli autori secondo il percorso storico: Seneca, Tacito, Petronio, Apuleio",
+            "Approfondimento di autori già affrontati negli anni precedenti: Lucrezio, Orazio",
+            "Percorsi tematici o tipologici considerati anche nei loro esiti medievali e moderni",
+            "Lettura di almeno un saggio critico"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Arte e Immagine",
+  "anni": [
+    {
+      "anno": "Termine della classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Esprimersi e comunicare",
+          "argomenti": [
+            "Esprimere sensazioni, emozioni, pensieri in produzioni di vario tipo (grafiche, plastiche, pittoriche) utilizzando materiali e tecniche adeguate e integrando diversi linguaggi",
+            "Utilizzare strumenti e regole per produrre immagini grafiche, pittoriche, plastiche attraverso processi di manipolazione, rielaborazione e associazione di codici, di tecniche e materiali diversi tra loro",
+            "Elaborare creativamente produzioni personali e autentiche per esprimere sensazioni ed emozioni"
+          ]
+        },
+        {
+          "nome": "Osservare e leggere le immagini",
+          "argomenti": [
+            "Guardare e osservare con consapevolezza un'immagine e gli oggetti presenti nell'ambiente descrivendo gli elementi formali e utilizzando le regole della percezione visiva e l'orientamento nello spazio",
+            "Riconoscere in un testo iconico-visivo gli elementi grammaticali e tecnici del linguaggio visivo (linee, colori, forme, volume, spazio) e del linguaggio audiovisivo, individuando il loro significato espressivo",
+            "Individuare nel linguaggio del fumetto, filmico e audiovisivo le diverse tipologie di codici, le sequenze narrative e decodificare in forma elementare i diversi significati"
+          ]
+        },
+        {
+          "nome": "Comprendere e apprezzare le opere d'arte",
+          "argomenti": [
+            "Individuare in un'opera d'arte, sia antica che moderna, gli elementi essenziali della forma, del linguaggio, della tecnica e dello stile dell'artista per comprenderne il messaggio e la funzione",
+            "Familiarizzare con alcune forme di arte e di produzione artigianale appartenenti alla propria e ad altre culture",
+            "Riconoscere e apprezzare nel proprio territorio gli aspetti più caratteristici del patrimonio ambientale e urbanistico e i principali monumenti storico-artistici"
+          ]
+        }
+      ]
+    }
+  ]
+}

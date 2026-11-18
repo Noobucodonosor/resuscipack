@@ -1,0 +1,40 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Musica",
+  "anni": [
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Produzione vocale, strumentale e tecnologica",
+          "argomenti": [
+            "Utilizzare voce, strumenti e nuove tecnologie sonore in modo creativo e consapevole",
+            "Ampliare con gradualità le proprie capacità di invenzione e improvvisazione",
+            "Eseguire collettivamente e individualmente brani vocali/strumentali anche polifonici",
+            "Curare l'intonazione, l'espressività e l'interpretazione"
+          ]
+        },
+        {
+          "nome": "Ascolto e valutazione",
+          "argomenti": [
+            "Valutare aspetti funzionali ed estetici in brani musicali di vario genere e stile",
+            "Riconoscimento di culture, tempi e luoghi diversi"
+          ]
+        },
+        {
+          "nome": "Linguaggio musicale",
+          "argomenti": [
+            "Riconoscere e classificare gli elementi costitutivi basilari del linguaggio musicale all'interno di brani di vario genere e provenienza",
+            "Rappresentare gli elementi basilari di brani musicali e di eventi sonori attraverso sistemi simbolici convenzionali e non convenzionali"
+          ]
+        },
+        {
+          "nome": "Musica e multimedialità",
+          "argomenti": [
+            "Riconoscere gli usi, le funzioni e i contesti della musica e dei suoni nella realtà multimediale (cinema, televisione, computer)"
+          ]
+        }
+      ]
+    }
+  ]
+}

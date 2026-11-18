@@ -1,0 +1,201 @@
+{
+  "scuola": "Istituto Tecnico",
+  "materia": "Area Generale (Italiano, Storia)",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua italiana - Conoscenze",
+          "argomenti": [
+            "Radici storiche ed evoluzione della lingua italiana dal Medioevo all'Unità nazionale",
+            "Rapporto tra lingua e letteratura",
+            "Lingua letteraria e linguaggi della scienza e della tecnologia",
+            "Fonti dell'informazione e della documentazione",
+            "Tecniche della comunicazione",
+            "Caratteristiche e struttura di testi scritti e repertori di testi specialistici",
+            "Criteri per la redazione di un rapporto e di una relazione",
+            "Caratteri comunicativi di un testo multimediale"
+          ]
+        },
+        {
+          "nome": "Lingua italiana - Abilità",
+          "argomenti": [
+            "Riconoscere le linee di sviluppo storico-culturale della lingua italiana",
+            "Riconoscere i caratteri stilistici e strutturali di testi letterari, artistici, scientifici e tecnologici",
+            "Utilizzare registri comunicativi adeguati ai diversi ambiti specialistici",
+            "Consultare dizionari e altre fonti informative per l'approfondimento e la produzione linguistica",
+            "Sostenere conversazioni e colloqui su tematiche predefinite anche professionali",
+            "Raccogliere, selezionare ed utilizzare informazioni utili all'attività di ricerca di testi letterari, artistici, scientifici e tecnologici",
+            "Produrre testi scritti di diversa tipologia e complessità",
+            "Ideare e realizzare testi multimediali su tematiche culturali, di studio e professionali"
+          ]
+        },
+        {
+          "nome": "Letteratura italiana - Conoscenze",
+          "argomenti": [
+            "Linee di evoluzione della cultura e del sistema letterario italiano dalle origini all'Unità nazionale",
+            "Testi ed autori fondamentali che caratterizzano l'identità culturale nazionale italiana nelle varie epoche",
+            "Significative opere letterarie, artistiche e scientifiche anche di autori internazionali nelle varie epoche",
+            "Elementi di identità e di diversità tra la cultura italiana e le culture di altri Paesi",
+            "Fonti di documentazione letteraria; siti web dedicati alla letteratura",
+            "Tecniche di ricerca, catalogazione e produzione multimediale di testi e documenti letterari"
+          ]
+        },
+        {
+          "nome": "Letteratura italiana - Abilità",
+          "argomenti": [
+            "Riconoscere e identificare periodi e linee di sviluppo della cultura letteraria ed artistica italiana",
+            "Identificare gli autori e le opere fondamentali del patrimonio culturale italiano ed internazionale dal Medioevo all'Unità nazionale",
+            "Riconoscere i tratti peculiari o comuni alle diverse culture dei popoli europei nella produzione letteraria, artistica, scientifica e tecnologica contemporanea",
+            "Individuare i caratteri specifici di un testo letterario, scientifico, tecnico, storico, critico ed artistico",
+            "Contestualizzare testi e opere letterarie, artistiche e scientifiche di differenti epoche e realtà territoriali in rapporto alla tradizione culturale italiana e di altri popoli",
+            "Formulare un motivato giudizio critico su un testo letterario anche mettendolo in relazione alle esperienze personali",
+            "Utilizzare le tecnologie digitali per la presentazione di un progetto o di un prodotto"
+          ]
+        },
+        {
+          "nome": "Altre espressioni artistiche - Conoscenze",
+          "argomenti": [
+            "Caratteri fondamentali delle arti e dell'architettura in Italia e in Europa dal Medioevo all'Unità nazionale",
+            "Rapporti tra letteratura ed altre espressioni culturali ed artistiche"
+          ]
+        },
+        {
+          "nome": "Altre espressioni artistiche - Abilità",
+          "argomenti": [
+            "Analizzare il patrimonio artistico presente nei monumenti, siti archeologici, istituti culturali, musei significativi in particolare del proprio territorio"
+          ]
+        },
+        {
+          "nome": "Storia - Conoscenze",
+          "argomenti": [
+            "Principali persistenze e processi di trasformazione tra il secolo XI e il secolo XIX in Italia, in Europa e nel mondo",
+            "Evoluzione dei sistemi politico-istituzionali ed economici, con riferimenti agli aspetti demografici, sociali e culturali",
+            "Principali persistenze e mutamenti culturali in ambito religioso e laico",
+            "Innovazioni scientifiche e tecnologiche: fattori e contesti di riferimento",
+            "Territorio come fonte storica: tessuto socio-economico e patrimonio ambientale, culturale e artistico",
+            "Aspetti della storia locale quali configurazioni della storia generale",
+            "Diverse interpretazioni storiografiche di grandi processi di trasformazione (es.: riforme e rivoluzioni)",
+            "Lessico delle scienze storico-sociali",
+            "Categorie e metodi della ricerca storica (es.: analisi di fonti; modelli interpretativi; periodizzazione)",
+            "Strumenti della ricerca e della divulgazione storica (es.: vari tipi di fonti, carte geo-storiche e tematiche, mappe, statistiche e grafici, manuali, testi divulgativi multimediali, siti Web)"
+          ]
+        },
+        {
+          "nome": "Storia - Abilità",
+          "argomenti": [
+            "Ricostruire processi di trasformazione individuando elementi di persistenza e discontinuità",
+            "Riconoscere la varietà e lo sviluppo storico dei sistemi economici e politici e individuarne i nessi con i contesti internazionali e gli intrecci con alcune variabili ambientali, demografiche, sociali e culturali",
+            "Individuare i cambiamenti culturali, socio-economici e politico-istituzionali (es. in rapporto a rivoluzioni e riforme)",
+            "Analizzare correnti di pensiero, contesti, fattori e strumenti che hanno favorito le innovazioni scientifiche e tecnologiche",
+            "Individuare l'evoluzione sociale, culturale ed ambientale del territorio con riferimenti ai contesti nazionali e internazionali",
+            "Leggere ed interpretare gli aspetti della storia locale in relazione alla storia generale",
+            "Analizzare e confrontare testi di diverso orientamento storiografico",
+            "Utilizzare il lessico delle scienze storico-sociali",
+            "Utilizzare ed applicare categorie, metodi e strumenti della ricerca storica in contesti laboratoriali ed operativi",
+            "Utilizzare fonti storiche di diversa tipologia (es.: visive, multimediali e siti web dedicati) per produrre ricerche su tematiche storiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua italiana - Conoscenze",
+          "argomenti": [
+            "Processo storico e tendenze evolutive della lingua italiana dall'Unità nazionale ad oggi",
+            "Caratteristiche dei linguaggi specialistici e del lessico tecnico-scientifico",
+            "Strumenti e metodi di documentazione per approfondimenti letterari e tecnici",
+            "Tecniche compositive per diverse tipologie di produzione scritta",
+            "Repertori dei termini tecnici e scientifici relativi al settore d'indirizzo anche in lingua straniera",
+            "Software 'dedicati' per la comunicazione professionale",
+            "Social network e new media come fenomeno comunicativo",
+            "Struttura di un curriculum vitæ e modalità di compilazione del CV europeo"
+          ]
+        },
+        {
+          "nome": "Lingua italiana - Abilità",
+          "argomenti": [
+            "Identificare momenti e fasi evolutive della lingua italiana con particolare riferimento al Novecento",
+            "Individuare aspetti linguistici, stilistici e culturali dei/nei testi letterari più rappresentativi",
+            "Individuare le correlazioni tra le innovazioni scientifiche e tecnologiche e le trasformazioni linguistiche",
+            "Produrre relazioni, sintesi, commenti ed altri testi di ambito professionale con linguaggio specifico",
+            "Utilizzare termini tecnici e scientifici anche in lingue diverse dall'italiano",
+            "Interagire con interlocutori esperti del settore di riferimento anche per negoziare in contesti professionali",
+            "Scegliere la forma multimediale più adatta alla comunicazione nel settore professionale di riferimento in relazione agli interlocutori e agli scopi",
+            "Elaborare il proprio curriculum vitæ in formato europeo"
+          ]
+        },
+        {
+          "nome": "Letteratura italiana - Conoscenze",
+          "argomenti": [
+            "Elementi e principali movimenti culturali della tradizione letteraria dall'Unità d'Italia ad oggi con riferimenti alle letterature di altri paesi",
+            "Autori e testi significativi della tradizione culturale italiana e di altri popoli",
+            "Modalità di integrazione delle diverse forme di espressione artistica e letteraria",
+            "Metodi e strumenti per l'analisi e l'interpretazione dei testi letterari"
+          ]
+        },
+        {
+          "nome": "Letteratura italiana - Abilità",
+          "argomenti": [
+            "Contestualizzare l'evoluzione della civiltà artistica e letteraria italiana dall'Unità d'Italia ad oggi in rapporto ai principali processi sociali, culturali, politici e scientifici di riferimento",
+            "Identificare e analizzare temi, argomenti e idee sviluppate dai principali autori della letteratura italiana e di altre letterature",
+            "Cogliere, in prospettiva interculturale, gli elementi di identità e di diversità tra la cultura italiana e le culture di altri Paesi",
+            "Collegare i testi letterari con altri ambiti disciplinari",
+            "Interpretare testi letterari con opportuni metodi e strumenti d'analisi al fine di formulare un motivato giudizio critico"
+          ]
+        },
+        {
+          "nome": "Altre espressioni artistiche - Conoscenze",
+          "argomenti": [
+            "Arti visive nella cultura del Novecento",
+            "Criteri per la lettura di un'opera d'arte",
+            "Beni artistici ed istituzioni culturali del territorio"
+          ]
+        },
+        {
+          "nome": "Altre espressioni artistiche - Abilità",
+          "argomenti": [
+            "Leggere ed interpretare un'opera d'arte visiva e cinematografica con riferimento all'ultimo secolo",
+            "Identificare e contestualizzare le problematiche connesse alla conservazione e tutela dei beni culturali del territorio"
+          ]
+        },
+        {
+          "nome": "Storia - Conoscenze",
+          "argomenti": [
+            "Principali persistenze e processi di trasformazione tra la fine del secolo XIX e il secolo XXI, in Italia, in Europa e nel mondo",
+            "Aspetti caratterizzanti la storia del Novecento ed il mondo attuale (quali in particolare: industrializzazione e società post-industriale; limiti dello sviluppo; violazioni e conquiste dei diritti fondamentali; nuovi soggetti e movimenti; Stato sociale e sua crisi; globalizzazione)",
+            "Modelli culturali a confronto: conflitti, scambi e dialogo interculturale",
+            "Innovazioni scientifiche e tecnologiche e relativo impatto su modelli e mezzi di comunicazione, condizioni socio-economiche e assetti politico-istituzionali",
+            "Problematiche sociali ed etiche caratterizzanti l'evoluzione dei settori produttivi e del mondo del lavoro",
+            "Territorio come fonte storica: tessuto socio-economico e patrimonio ambientale, culturale ed artistico",
+            "Categorie, lessico, strumenti e metodi della ricerca storica (es.: critica delle fonti)",
+            "Radici storiche della Costituzione italiana e dibattito sulla Costituzione europea",
+            "Carte internazionali dei diritti",
+            "Principali istituzioni internazionali, europee e nazionali"
+          ]
+        },
+        {
+          "nome": "Storia - Abilità",
+          "argomenti": [
+            "Riconoscere nella storia del Novecento e nel mondo attuale le radici storiche del passato, cogliendo gli elementi di continuità e discontinuità",
+            "Analizzare problematiche significative del periodo considerato",
+            "Riconoscere la varietà e lo sviluppo storico dei sistemi economici e politici e individuarne i nessi con i contesti internazionali e alcune variabili ambientali, demografiche, sociali e culturali",
+            "Effettuare confronti tra diversi modelli/tradizioni culturali in un'ottica interculturale",
+            "Riconoscere le relazioni fra evoluzione scientifica e tecnologica (con particolare riferimento ai settori produttivi e agli indirizzi di studio) e contesti ambientali, demografici, socioeconomici, politici e culturali",
+            "Individuare i rapporti fra cultura umanistica e scientifico-tecnologica con riferimento agli ambiti professionali",
+            "Analizzare storicamente campi e profili professionali, anche in funzione dell'orientamento",
+            "Inquadrare i beni ambientali, culturali ed artistici nel periodo storico di riferimento",
+            "Applicare categorie, strumenti e metodi delle scienze storico-sociali per comprendere mutamenti socio-economici, aspetti demografici e processi di trasformazione",
+            "Utilizzare fonti storiche di diversa tipologia per ricerche su specifiche tematiche, anche pluri/interdisciplinari",
+            "Interpretare e confrontare testi di diverso orientamento storiografico",
+            "Utilizzare ed applicare categorie, metodi e strumenti della ricerca storica in contesti laboratoriali per affrontare, in un'ottica storico-interdisciplinare, situazioni e problemi, anche in relazione agli indirizzi di studio ed ai campi professionali di riferimento",
+            "Analizzare criticamente le radici storiche e l'evoluzione delle principali carte costituzionali e delle istituzioni internazionali, europee e nazionali"
+          ]
+        }
+      ]
+    }
+  ]
+}

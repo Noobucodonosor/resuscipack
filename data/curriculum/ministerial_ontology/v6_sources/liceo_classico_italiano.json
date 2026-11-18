@@ -1,0 +1,108 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Lingua e Letteratura Italiana",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Competenze linguistiche orali e scritte",
+          "argomenti": [
+            "Consolidamento e approfondimento delle capacità linguistiche orali e scritte",
+            "Riflessione sulla lingua orientata ai dinamismi di coesione morfosintattica e coerenza logico-argomentativa del discorso",
+            "Differenze generali nell'uso della lingua orale, scritta e trasmessa",
+            "Forme della videoscrittura e della comunicazione multimediale",
+            "Rispetto dei turni verbali, ordine dei temi ed efficacia espressiva nella produzione orale",
+            "Costruzione del testo secondo progressioni tematiche coerenti nella produzione scritta",
+            "Organizzazione logica entro e oltre la frase, uso dei connettivi, dell'interpunzione e scelte lessicali",
+            "Competenza testuale nella comprensione: individuare dati e informazioni, fare inferenze, comprendere le relazioni logiche interne",
+            "Competenza testuale nella produzione: curare la dimensione testuale, ideativa e linguistica",
+            "Composizione di brevi scritti su consegne vincolate, paragrafare, riassumere, titolare, parafrasare, relazionare",
+            "Composizione di testi variando i registri e i punti di vista",
+            "Arricchimento del lessico attraverso i linguaggi delle diverse discipline",
+            "Nascita dei volgari italiani dalla matrice latina e diffusione del fiorentino letterario fino alla sua affermazione come lingua italiana (in prospettiva storica, al termine del biennio)"
+          ]
+        },
+        {
+          "nome": "Letteratura - Opere e autori della classicità e prime espressioni della letteratura italiana",
+          "argomenti": [
+            "Lettura in traduzione di opere e autori significativi della classicità: i poemi omerici, la tragedia attica del V secolo, l'Eneide",
+            "Lettura di altri testi di primari autori greci e latini",
+            "Lettura della Bibbia",
+            "Lettura di autori di epoca moderna anche stranieri",
+            "Lettura dei Promessi Sposi di Manzoni",
+            "Prime espressioni della letteratura italiana: la poesia religiosa, i Siciliani, la poesia toscana prestilnovistica",
+            "Acquisizione delle principali tecniche di analisi: generi letterari, metrica, retorica"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Consolidamento e sviluppo delle competenze linguistiche",
+          "argomenti": [
+            "Consolidamento e sviluppo delle conoscenze e competenze linguistiche in varietà di testi",
+            "Affinamento delle competenze di comprensione e produzione in collaborazione con le altre discipline",
+            "Possesso dei lessici disciplinari e attenzione ai termini che passano dalle lingue speciali alla lingua comune",
+            "Analisi dei testi letterari sotto il profilo linguistico: peculiarità del lessico, della semantica e della sintassi",
+            "Spiegazione letterale per rilevare l'incidenza del linguaggio figurato e della metrica nei testi poetici",
+            "Tecniche dell'argomentazione nella prosa saggistica",
+            "Codificazione cinquecentesca della lingua italiana in prospettiva storica",
+            "Fortuna dell'italiano in Europa soprattutto in epoca rinascimentale",
+            "Importanza della coscienza linguistica nelle generazioni del Risorgimento",
+            "Progressiva diffusione dell'italiano parlato nella comunità nazionale dall'Unità ad oggi"
+          ]
+        },
+        {
+          "nome": "Letteratura - Disegno storico dallo Stilnovo al Romanticismo",
+          "argomenti": [
+            "Movimenti e autori dallo Stilnovo al Romanticismo",
+            "Contesto culturale: strutture sociali e gruppi intellettuali (borghesia comunale, clero, corti, città, forme della committenza)",
+            "Visioni del mondo: umanesimo, rinascimento, barocco, Illuminismo",
+            "Nuovi paradigmi etici e conoscitivi: la nuova scienza, la secolarizzazione",
+            "Lettura della Commedia di Dante (almeno 25 canti complessivi nel corso degli ultimi tre anni)",
+            "La lirica da Petrarca a Foscolo",
+            "La poesia narrativa cavalleresca: Ariosto, Tasso",
+            "La prosa: dalla novella al romanzo (da Boccaccio a Manzoni)",
+            "Il trattato politico e scientifico: Machiavelli, Galileo",
+            "La tradizione teatrale: Goldoni, Alfieri"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Approfondimento e tendenze evolutive",
+          "argomenti": [
+            "Ulteriore consolidamento delle competenze linguistiche attraverso testi letterari e non",
+            "Tendenze evolutive recenti: semplificazione delle strutture sintattiche",
+            "Coniazione di composti e derivati",
+            "Accoglienza e calco di dialettalismi e forestierismi"
+          ]
+        },
+        {
+          "nome": "Letteratura - Leopardi e il percorso dall'Unità d'Italia ad oggi",
+          "argomenti": [
+            "Studio di Leopardi (all'inizio dell'ultimo anno) per le risonanze novecentesche e la complessità della sua posizione nella letteratura europea del XIX secolo",
+            "Relazione del sistema letterario (generi, temi, stili, rapporto con il pubblico, nuovi mezzi espressivi) con il corso degli eventi storici dall'Unità d'Italia ad oggi",
+            "Fenomeni della modernità e della postmodernità in panorama europeo ed extraeuropeo",
+            "Baudelaire e la ricezione italiana della stagione simbolista europea",
+            "Pascoli e D'Annunzio",
+            "Verga e la rappresentazione del 'vero' nella narrativa",
+            "Pirandello e Svevo: scomposizione delle forme del romanzo",
+            "Poesia del Novecento: Ungaretti, Saba, Montale",
+            "Autori della lirica coeva e successiva: Rebora, Campana, Luzi, Sereni, Caproni, Zanzotto",
+            "Narrativa dalla stagione neorealistica ad oggi: Gadda, Fenoglio, Calvino, P. Levi",
+            "Altri autori della narrativa: Pavese, Pasolini, Morante, Meneghello",
+            "Lettura di pagine della migliore prosa saggistica, giornalistica e memorialistica",
+            "Continuazione della lettura della Commedia di Dante (almeno 25 canti complessivi nel corso degli ultimi tre anni)"
+          ]
+        }
+      ]
+    }
+  ]
+}

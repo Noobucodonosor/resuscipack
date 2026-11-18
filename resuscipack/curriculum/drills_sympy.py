@@ -59,7 +59,22 @@ def _sympy_equivalent(student_raw: str, expected_raw: str) -> tuple[bool, str]:
 
 
 def _sympy_scalar_eq(s_expr_str: str, e_expr_str: str) -> bool:
-    local_dict = {"x": x_sym, "y": y_sym, "w": w_sym, "pi": sp.pi, "e": sp.E, "sqrt": sp.sqrt, "log": sp.log, "ln": sp.log, "sin": sp.sin, "cos": sp.cos}
+    local_dict = {
+        "x": x_sym,
+        "y": y_sym,
+        "w": w_sym,
+        "pi": sp.pi,
+        "e": sp.E,
+        "I": sp.I,
+        "i": sp.I,
+        "sqrt": sp.sqrt,
+        "log": sp.log,
+        "ln": sp.log,
+        "sin": sp.sin,
+        "cos": sp.cos,
+        "exp": sp.exp,
+        "oo": sp.oo,
+    }
     try:
         s_expr = sp.sympify(s_expr_str, locals=local_dict, convert_xor=True)
         e_expr = sp.sympify(e_expr_str, locals=local_dict, convert_xor=True)
@@ -71,7 +86,7 @@ def _sympy_scalar_eq(s_expr_str: str, e_expr_str: str) -> bool:
         if diff == 0:
             return True
         if not s_expr.free_symbols and not e_expr.free_symbols:
-            return abs(float(sp.N(s_expr)) - float(sp.N(e_expr))) < 1e-9
+            return abs(complex(sp.N(s_expr)) - complex(sp.N(e_expr))) < 1e-9
     except Exception:
         pass
     return False
@@ -224,6 +239,199 @@ def _build_single_drill(node_id: str, key: str, idx: int, rng: random.Random) ->
         ans = str(twos)
         prompt = f"Qual è il valore intero senza segno (0..255) del byte che rappresenta -{k} in complemento a due su 8 bit?"
         why = f"Su 8 bit il complemento a due di -{k} vale 2^8 - {k} = 256 - {k} = {twos}."
+    elif key in {"drill_polynomial_products", "superiori.polinomi-prodotti-notevoli"}:
+        a = rng.randint(2, 4)
+        b = rng.randint(2, 6)
+        if idx % 2 == 0:
+            ans = str(sp.expand((a * x_sym + b) ** 2))
+            prompt = f"Usa il modello geometrico del quadrato scomposto per espandere ({a}*x + {b})^2 in forma polinomiale."
+            why = f"({a}x + {b})^2 somma i due quadrati ({a}x)^2, {b}^2 e i due rettangoli misti 2·{a}·{b}·x: {ans}."
+        else:
+            ans = f"{2 * b}*x"
+            prompt = (
+                f"[Che cosa si rompe] Se espandi (x + {b})^2 dimenticando i due rettangoli misti e scrivendo x^2 + {b**2}, "
+                f"quale termine algebrico (in x) stai perdendo?"
+            )
+            why = f"(x + {b})^2 = x^2 + {2*b}*x + {b**2}: la scorciatoia 'falso quadrato' perde 2·{b}·x = {ans}."
+    elif key in {"drill_polynomial_ruffini", "superiori.fattorizzazione-frazioni-algebriche"}:
+        r = rng.randint(2, 5)
+        k = rng.randint(1, 4)
+        rem = rng.choice([3, 5, 7, -4])
+        if idx % 2 == 0:
+            poly = sp.expand((x_sym - r) * (x_sym + k) + rem)
+            ans = str(rem)
+            prompt = f"Per il teorema del resto di Ruffini, qual è il resto della divisione di P(x) = {poly} per (x - {r})?"
+            why = f"Valutando P({r}) al posto del divisore si isola direttamente il resto P({r}) = {rem}."
+        else:
+            ans = str(r)
+            prompt = (
+                f"[Che cosa si rompe] Nella frazione algebrica (x^2 - {r*r})/(x - {r}), dopo la semplificazione resta x + {r}: "
+                f"quale valore x0 è comunque escluso dal dominio iniziale perché annulla il denominatore?"
+            )
+            why = f"Per x = {r} l'espressione originaria vale 0/0 (forma indeterminata), mai definita senza condizione x != {r}."
+    elif key in {"drill_linear_systems_line", "superiori.sistemi-lineari-retta"}:
+        if idx % 2 == 0:
+            x_val = rng.randint(2, 7)
+            y_val = rng.randint(1, 5)
+            ans = f"[{x_val}, {y_val}]"
+            prompt = (
+                f"Trova il punto di intersezione [x, y] delle due rette del sistema lineare "
+                f"x + y = {x_val + y_val} e x - y = {x_val - y_val}."
+            )
+            why = f"Sommando membro a membro 2x = {2*x_val} => x = {x_val} e y = {y_val}: punto [{x_val}, {y_val}]."
+        else:
+            m = rng.choice([2, 3, 4, 5])
+            ans = str(-sp.Rational(1, m))
+            prompt = (
+                f"[Che cosa si rompe] Nel fascio improprio y = {m}*x + q, quanto vale il coefficiente angolare m' "
+                f"di una retta perpendicolare (che rompe il parallelismo con m*m' = -1)?"
+            )
+            why = f"La condizione di ortogonalità nel piano cartesiano è m·m' = -1, quindi m' = -1/{m}."
+    elif key in {"drill_quadratic_radicals", "superiori.radicali-equazioni-secondo-grado"}:
+        r1 = rng.randint(2, 5)
+        r2 = r1 + rng.randint(1, 4)
+        if idx % 2 == 0:
+            ans = str(r1 + r2)
+            prompt = (
+                f"Applicando le formule di Viète senza estrarre le radici, quanto vale la somma x_1 + x_2 delle soluzioni "
+                f"di x^2 - {r1 + r2}*x + {r1 * r2} = 0?"
+            )
+            why = f"In x^2 - Sx + P = 0 la somma vale -b/a = {r1 + r2} (qui le radici sono {r1} e {r2})."
+        else:
+            a, b, c = rng.choice([(1, 4, 5), (2, 3, 4), (1, 2, 5)])
+            ans = str(b * b - 4 * a * c)
+            prompt = (
+                f"[Che cosa si rompe nei reali] Calcola il discriminante Delta = b^2 - 4ac di {a}*x^2 + {b}*x + {c} = 0 "
+                f"per verificare perché la parabola non tocca mai l'asse x."
+            )
+            why = f"Delta = {b}^2 - 4·{a}·{c} = {ans} < 0: nessuna soluzione reale finché restiamo in R."
+    elif key in {"drill_conics_loci", "superiori.coniche-luoghi-geometrici"}:
+        triples = [(5, 3, 4), (5, 4, 3), (13, 5, 12), (10, 6, 8)]
+        a, b, c_foc = triples[idx % len(triples)]
+        if idx % 2 == 0:
+            ans = str(c_foc)
+            prompt = f"L'ellisse x^2/{a*a} + y^2/{b*b} = 1 ha semiassi a={a} e b={b}: quanto vale la semidistanza focale c?"
+            why = f"Per i fuochi dell'ellisse c = sqrt(a^2 - b^2) = sqrt({a*a} - {b*b}) = {c_foc}."
+        else:
+            p, q = rng.choice([(3, 2), (4, 3), (5, 2)])
+            ans = str(sp.Rational(q, p))
+            prompt = f"Nell'iperbole x^2/{p*p} - y^2/{q*q} = 1, quanto vale il coefficiente angolare positivo b/a dell'asintoto?"
+            why = f"Gli asintoti soddisfano x^2/a^2 - y^2/b^2 = 0, ossia y = ±(b/a)x con b/a = {q}/{p}."
+    elif key in {"drill_progressions_sum", "superiori.successioni-progressioni"}:
+        if idx % 2 == 0:
+            a1 = rng.randint(1, 4)
+            d = rng.randint(2, 4)
+            n = rng.choice([6, 8, 10])
+            an = a1 + (n - 1) * d
+            ans = str(n * (a1 + an) // 2)
+            prompt = f"Calcola con la formula di Gauss la somma dei primi {n} termini della progressione aritmetica con a_1={a1} e ragione d={d}."
+            why = f"a_{n} = {a1} + {n-1}·{d} = {an}; dunque S_{n} = {n}·({a1}+{an})/2 = {ans}."
+        else:
+            r = rng.choice([2, 3])
+            k = rng.choice([3, 4])
+            ans = str((r ** (k + 1) - 1) // (r - 1))
+            prompt = f"Calcola la somma finita della progressione geometrica 1 + {r} + ... + {r}^{k} usando ({r}^({k}+1) - 1)/({r} - 1)."
+            why = f"S = ({r}^{k+1} - 1)/({r} - 1) = {ans}."
+    elif key in {"drill_logarithms_exp", "superiori.esponenziali-logaritmi"}:
+        if idx % 2 == 0:
+            base = rng.choice([2, 3])
+            p1 = rng.randint(3, 5)
+            p2 = rng.randint(1, 2)
+            ans = str(p1 - p2)
+            prompt = f"Calcola il valore esatto di log_{base}({base**p1}) - log_{base}({base**p2}) senza calcolatrice."
+            why = f"Per la proprietà del quoziente vale log_{base}({base**p1}/{base**p2}) = log_{base}({base**(p1-p2)}) = {p1 - p2}."
+        else:
+            k = rng.choice([2, 4, 5])
+            ans = str(sp.Rational(k + 1, 2))
+            prompt = f"Risolvi l'equazione esponenziale 3^(2*x - 1) = 3^{k} sfruttando l'iniettività della base."
+            why = f"Eguagliando gli esponenti: 2x - 1 = {k} => x = {ans}."
+    elif key in {"drill_complex_numbers", "superiori.numeri-complessi-gauss"}:
+        if idx % 2 == 0:
+            a, b = rng.randint(1, 4), rng.randint(1, 3)
+            c, d = rng.randint(1, 3), rng.randint(1, 4)
+            prod = sp.expand((a + b * sp.I) * (c + d * sp.I))
+            ans = str(prod)
+            prompt = f"Nel piano di Gauss calcola il prodotto ({a} + {b}*i)*({c} + {d}*i) ricordando i^2 = -1 (usa i o I)."
+            why = f"({a}·{c} - {b}·{d}) + ({a}·{d} + {b}·{c})*i = {prod}."
+        else:
+            k = rng.choice([1, 2, 3])
+            ans = str(5 * k)
+            prompt = f"Calcola il modulo euclideo |z| = sqrt(Re(z)^2 + Im(z)^2) del numero complesso z = {3*k} + {4*k}*i."
+            why = f"|{3*k} + {4*k}*i| = sqrt({(3*k)**2} + {(4*k)**2}) = {5*k}."
+    elif key in {"drill_combinatorics_binomial", "superiori.combinatoria-probabilita-composta"}:
+        if idx % 2 == 0:
+            n = rng.choice([5, 6, 7])
+            k = rng.choice([2, 3])
+            ans = str(math.comb(n, k))
+            prompt = f"In quanti modi puoi estrarre un comitato non ordinato di {k} elementi da un insieme di {n} persone? Calcola C({n}, {k})."
+            why = f"Le combinazioni semplici valgono {n}! / ({k}!·{n-k}!) = {ans}."
+        else:
+            a = rng.randint(2, 5)
+            ans = str(3 * (a * a))
+            prompt = f"[Binomio di Newton] Nello sviluppo completo di (x + {a})^3, quanto vale il coefficiente numerico di x?"
+            why = f"Il termine lineare è C(3, 2)·{a}^2·x = 3·{a*a}·x = {ans}*x."
+    elif key in {"drill_limits_continuity", "superiori.limiti-continuita-asintoti"}:
+        if idx % 2 == 0:
+            r = rng.randint(2, 6)
+            ans = str(2 * r)
+            prompt = f"Calcola lim_{{x -> {r}}} (x^2 - {r*r}) / (x - {r}) eliminando la forma indeterminata 0/0."
+            why = f"Scomponendo x^2 - {r*r} = (x - {r})(x + {r}), per x != {r} vale x + {r} -> {2*r}."
+        else:
+            k = rng.choice([2, 3, 5])
+            m = rng.choice([2, 3, 4])
+            ans = str(sp.Rational(k, m))
+            prompt = f"[Limite notevole] Quanto vale lim_{{x -> 0}} sin({k}*x) / ({m}*x)?"
+            why = f"Riscrivendo come ({k}/{m})·sin({k}*x)/({k}*x) e applicando sin(u)/u -> 1 si ottiene {ans}."
+    elif key in {"drill_derivatives_extrema", "superiori.derivata-studio-funzione"}:
+        if idx % 2 == 0:
+            a = rng.randint(1, 3)
+            x0 = rng.randint(2, 6)
+            c = rng.randint(1, 9)
+            ans = str(x0)
+            prompt = f"Trova l'ascissa x del punto di minimo di f(x) = {a}*x^2 - {2*a*x0}*x + {c} annullando la derivata prima f'(x) = 0."
+            why = f"f'(x) = {2*a}*x - {2*a*x0} = 0 si annulla esattamente in x = {x0} (dove f'' > 0)."
+        else:
+            a = rng.randint(2, 4)
+            n = rng.randint(3, 5)
+            b = rng.randint(2, 5)
+            deriv = sp.diff(a * x_sym**n + b * sp.sin(x_sym), x_sym)
+            ans = str(deriv)
+            prompt = f"Calcola la derivata prima f'(x) rispetto a x di f(x) = {a}*x^{n} + {b}*sin(x)."
+            why = f"Derivando termine a termine: d/dx({a}x^{n}) + d/dx({b}sin(x)) = {deriv}."
+    elif key in {"drill_definite_integrals", "superiori.integrali-teorema-fondamentale"}:
+        if idx % 2 == 0:
+            p = rng.choice([1, 2, 3])
+            c = p + 1
+            b = rng.randint(2, 4)
+            val = sp.integrate(c * x_sym**p, (x_sym, 0, b))
+            ans = str(val)
+            prompt = f"Applica Torricelli-Barrow: calcola l'integrale definito da 0 a {b} di {c}*x^{p} dx."
+            why = f"Una primitiva di {c}*x^{p} è x^{p+1}; valutata tra 0 e {b} dà {b}^{p+1} = {val}."
+        else:
+            p = rng.choice([3, 5])
+            b = rng.randint(2, 5)
+            ans = "0"
+            prompt = (
+                f"[Che cosa si rompe tra integrale e area] Quanto vale l'integrale definito di f(x) = x^{p} "
+                f"sull'intervallo simmetrico [-{b}, {b}]?"
+            )
+            why = f"Essendo x^{p} dispari su dominio simmetrico [-{b}, {b}], l'area con segno negativo e quella positiva si elidono: 0."
+    elif key in {"drill_ode_separable", "superiori.equazioni-differenziali-modelli"}:
+        if idx % 2 == 0:
+            k = rng.choice([2, 3, 4])
+            y0 = rng.choice([2, 5, 7])
+            ans = f"{y0}*exp({k}*x)"
+            prompt = (
+                f"Risolvi il problema di Cauchy y'(x) = {k}*y(x) con y(0) = {y0}: scrivi la soluzione y(x) "
+                f"in funzione di x (usa exp(...) oppure e^(...))."
+            )
+            why = f"Separando dy/y = {k} dx si ha y(x) = C·exp({k}*x); imponendo y(0) = {y0} segue y(x) = {y0}*exp({k}*x)."
+        else:
+            a = rng.choice([6, 10, 15])
+            b = rng.choice([2, 3, 5])
+            ans = str(sp.Rational(a, b))
+            prompt = f"Nel modello lineare y'(x) = {a} - {b}*y(x), quanto vale il livello di equilibrio stazionario y* (dove y' = 0)?"
+            why = f"All'equilibrio il tasso di variazione si annulla: {a} - {b}·y* = 0 => y* = {ans}."
     else:
         # Generatore algebrico universale coerente col livello per tutti gli altri nodi del DAG
         m = rng.randint(2, 9)

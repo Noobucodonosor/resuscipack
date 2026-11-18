@@ -1,0 +1,68 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Matematica",
+  "anni": [
+    {
+      "anno": "Triennio (classi 1-3)",
+      "nuclei_tematici": [
+        {
+          "nome": "Numeri",
+          "argomenti": [
+            "Utilizzare frazioni equivalenti e numeri decimali per denotare uno stesso numero razionale in diversi modi, essendo consapevoli di vantaggi e svantaggi delle diverse rappresentazioni.",
+            "Comprendere il significato di percentuale e saperla calcolare utilizzando strategie diverse.",
+            "Interpretare una variazione percentuale di una quantità data come una moltiplicazione per un numero decimale.",
+            "Individuare multipli e divisori di un numero naturale e multipli e divisori comuni a più numeri.",
+            "Comprendere il significato e l'utilità del multiplo comune più piccolo e del divisore comune più grande, in matematica e in situazioni concrete.",
+            "In casi semplici scomporre numeri naturali in fattori primi e conoscere l'utilità di tale scomposizione per diversi fini.",
+            "Utilizzare la notazione usuale per le potenze con esponente intero positivo, consapevoli del significato, e le proprietà delle potenze per semplificare calcoli e notazioni.",
+            "Conoscere la radice quadrata come operatore inverso dell'elevamento al quadrato.",
+            "Dare stime della radice quadrata utilizzando solo la moltiplicazione.",
+            "Sapere che non si può trovare una frazione o un numero decimale che elevato al quadrato dà 2, o altri numeri interi.",
+            "Utilizzare la proprietà associativa e distributiva per raggruppare e semplificare, anche mentalmente, le operazioni.",
+            "Descrivere con un'espressione numerica la sequenza di operazioni che fornisce la soluzione di un problema.",
+            "Eseguire semplici espressioni di calcolo con i numeri conosciuti, essendo consapevoli del significato delle parentesi e delle convenzioni sulla precedenza delle operazioni.",
+            "Esprimere misure utilizzando anche le potenze del 10 e le cifre significative."
+          ]
+        },
+        {
+          "nome": "Spazio e figure",
+          "argomenti": [
+            "Riprodurre figure e disegni geometrici, utilizzando in modo appropriato e con accuratezza opportuni strumenti (riga, squadra, compasso, goniometro, software di geometria).",
+            "Rappresentare punti, segmenti e figure sul piano cartesiano.",
+            "Conoscere definizioni e proprietà (angoli, assi di simmetria, diagonali…) delle principali figure piane (triangoli, quadrilateri, poligoni regolari, cerchio).",
+            "Descrivere figure complesse e costruzioni geometriche al fine di comunicarle ad altri.",
+            "Riprodurre figure e disegni geometrici in base a una descrizione e codificazione fatta da altri.",
+            "Riconoscere figure piane simili in vari contesti e riprodurre in scala una figura assegnata.",
+            "Conoscere il Teorema di Pitagora e le sue applicazioni in matematica e in situazioni concrete.",
+            "Determinare l'area di semplici figure scomponendole in figure elementari, ad esempio triangoli, o utilizzando le più comuni formule.",
+            "Stimare per difetto e per eccesso l'area di una figura delimitata anche da linee curve.",
+            "Conoscere il numero π, e alcuni modi per approssimarlo.",
+            "Calcolare l'area del cerchio e la lunghezza della circonferenza, conoscendo il raggio, e viceversa.",
+            "Conoscere e utilizzare le principali trasformazioni geometriche e i loro invarianti.",
+            "Rappresentare oggetti e figure tridimensionali in vario modo tramite disegni sul piano.",
+            "Visualizzare oggetti tridimensionali a partire da rappresentazioni bidimensionali.",
+            "Calcolare l'area e il volume delle figure solide più comuni e dare stime di oggetti della vita quotidiana.",
+            "Risolvere problemi utilizzando le proprietà geometriche delle figure."
+          ]
+        },
+        {
+          "nome": "Relazioni e funzioni",
+          "argomenti": [
+            "Interpretare, costruire e trasformare formule che contengono lettere per esprimere in forma generale relazioni e proprietà.",
+            "Esprimere la relazione di proporzionalità con un'uguaglianza di frazioni e viceversa.",
+            "Usare il piano cartesiano per rappresentare relazioni e funzioni empiriche o ricavate da tabelle, e per conoscere in particolare le funzioni del tipo y = ax, y = a/x, y = ax2, y = 2n e i loro grafici e collegare le prime due al concetto di proporzionalità.",
+            "Esplorare e risolvere problemi utilizzando equazioni di primo grado."
+          ]
+        },
+        {
+          "nome": "Dati e previsioni",
+          "argomenti": [
+            "Rappresentare insiemi di dati, anche facendo uso di un foglio elettronico. In situazioni significative, confrontare dati al fine di prendere decisioni, utilizzando le distribuzioni delle frequenze e delle frequenze relative. Scegliere ed utilizzare valori medi (moda, mediana, media aritmetica) adeguati alla tipologia ed alle caratteristiche dei dati a disposizione. Saper valutare la variabilità di un insieme di dati determinandone, ad esempio, il campo di variazione.",
+            "In semplici situazioni aleatorie, individuare gli eventi elementari, assegnare a essi una probabilità, calcolare la probabilità di qualche evento, scomponendolo in eventi elementari disgiunti.",
+            "Riconoscere coppie di eventi complementari, incompatibili, indipendenti."
+          ]
+        }
+      ]
+    }
+  ]
+}

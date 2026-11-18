@@ -43,6 +43,8 @@ Evolviamo `resuscipack` lungo **5 pilastri integrati** (completamento del corpus
    - *Livello B — Contenuto Collaterale & Ricostruzione dal Basso (`discipline_reconstructor.py`):* per qualunque disciplina $D$, raccoglie e ordina tutti i passaggi ad alta densità dove $D$ compare dentro libri il cui `surface_domain` primario **non** è $D$ (es. *"La Geografia secondo PACK"* estratta da Masini, Kelvin, Abbagnano, Galvani).
 4. **Decompressore Sinottico (`Chi / Come / Dove / Quando / Con chi in disaccordo`):**
    Vista cronologica e modale su un concetto attraverso tutti i `1.372` volumi, distinguendo chi `defines`, `proves`, `applies`, `critiques`, `extends` e `presupposes`.
+5. **Ontologia Ministeriale v6 (`2.813+` obiettivi) & Mappatura sulla Contezza Simultanea (`TASK-SPEC-04`):**
+   Importa in forma versionata i **53 file JSON** di `ontologia_v6` più l'integrazione del **Quinto Anno di Matematica Liceo Scientifico** da `CONTENUTI_PROGRAMMI_MINISTERIALI.txt` (`2.828` obiettivi totali in `data/curriculum/ministerial_ontology/ontology_v6_consolidated.json`), tenendo sempre distinto per la regola `R4` di `SPEC.md` il livello `institutional_declared` dalla copertura empirica `corpus_learnable`. Le fondamenta scolastiche del DAG si estendono a **64 nodi (`1ª elementare → 5ª superiore`, totale 108 nodi)** coprendo al 100% gli obiettivi matematici di Primaria, Medie e Liceo Scientifico come *radar anti-lacune* per il **Volume I**. Al termine di `M1` si esegue la mappatura bidirezionale sui 1.372 libri.
 
 ### C. Motore Editoriale dei "Nuovi Libri" Continui (`M3` — Dare Carne alla Matematica)
 1. **Generazione Autoriale di Capitoli Continui (`resuscipack/books/`):**
@@ -81,6 +83,7 @@ Evolviamo `resuscipack` lungo **5 pilastri integrati** (completamento del corpus
 - [ ] **TASK-SPEC-01** *(M2)*: Calcolo deterministico dello *Spettro Disciplinare Percentuale per Libro* ($\text{Cov}$ e $\text{Share}$ su tabella `book_discipline_spectrum`).
 - [ ] **TASK-SPEC-02** *(M2)*: Motore di *Ricostruzione delle Discipline dal Basso* (`discipline_reconstructor.py` v2: *"La Geografia dentro i libri non geografici"*, Musica, Fisica, Logica).
 - [ ] **TASK-SPEC-03** *(M2)*: *Decompressore Sinottico Cronologico e Modale* (`Chi / Come / Dove / Quando / Con chi in disaccordo`) sull'intero corpus.
+- [ ] **TASK-SPEC-04** *(M2)*: *Ontologia Ministeriale v6 (`2.813+` obiettivi) & Mappatura Bidirezionale della Contezza Simultanea (`1ª Elementare → 5ª Superiore`)* (`resuscipack/curriculum/ministerial_ontology.py`, `resuscipack/epistemic/curriculum_mapper.py` — import `v6_sources`, integrazione Quinto Anno e espansione DAG a 108 nodi già acquisiti in `TASK-SPEC-04a`; mappatura empirica finale sui 1.372 libri aperta post-`M1`).
 - [ ] **TASK-BOOK-01** *(M3)*: Motore Autoriale dei *Nuovi Libri* continui con figure Baidu, apparato fonti a 3 colori e passata avversaria di rilettura critica.
 - [ ] **TASK-BOOK-02** *(M3)*: Stesura *Volume I — Dall'Ovvio al Simbolo* (dalle fondamenta elementari al Gate OFA) con palestra `SymPy` integrata nel testo.
 - [ ] **TASK-BOOK-03** *(M3)*: Stesura *Volume II — I Ponti Nascosti di SecAI* (Probabilità 0 CFU, Discreto, Crittografia, Sistemi, Testing + 5 testi Open-Access).

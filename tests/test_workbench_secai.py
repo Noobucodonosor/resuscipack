@@ -38,13 +38,18 @@ def test_dag_4_layers_acyclic_and_zero_dead_ends() -> None:
     dag = load_unified_dag()
     meta = dag["metadata"]
     assert meta["acyclic"] is True
-    assert meta["total_nodes"] == 89
+    assert meta["total_nodes"] == 108
     assert meta["layer_counts"] == {
-        "layer_0_foundations": 45,
+        "layer_0_foundations": 64,
         "layer_1_ofa_pre": 11,
         "layer_2_shadow_bridges": 12,
         "layer_3_secai_gates": 21,
     }
+
+    superiori_nodes = [nid for nid in dag["nodes"] if nid.startswith("superiori.")]
+    assert len(superiori_nodes) == 19
+    for snid in superiori_nodes:
+        assert dag["nodes"][snid]["hero_compass"]["gates_unlocked_count"] >= 1
 
     # Dal mattone #1 della 1ª elementare la Bussola dell'Hero punta a G00 (OFA formale) e oltre
     q_node = dag["nodes"]["numeri.quantita"]
@@ -256,7 +261,7 @@ def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
     r_ov = client.get("/api/overview")
     assert r_ov.status_code == 200
     ov = r_ov.get_json()
-    assert ov["metadata"]["total_nodes"] == 89
+    assert ov["metadata"]["total_nodes"] == 108
     assert len(ov["frontier_nodes"]) >= 1
 
     # 3. Nodo P0.5 e apertura libro vero su Marconi a Santa Margherita (block_pk=28379)

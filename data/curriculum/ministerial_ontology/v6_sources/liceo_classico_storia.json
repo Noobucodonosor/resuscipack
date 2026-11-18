@@ -1,0 +1,108 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Storia e Geografia",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia - Civiltà antiche e altomedievale",
+          "argomenti": [
+            "Le principali civiltà dell'Antico vicino Oriente",
+            "La civiltà giudaica",
+            "La civiltà greca",
+            "La civiltà romana",
+            "L'avvento del Cristianesimo",
+            "L'Europa romano-barbarica",
+            "Società ed economia nell'Europa altomedioevale",
+            "La Chiesa nell'Europa altomedievale",
+            "La nascita e la diffusione dell'Islam",
+            "Impero e regni nell'altomedioevo",
+            "Il particolarismo signorile e feudale",
+            "Riflessione sulla natura delle fonti utilizzate nello studio della storia antica e medievale",
+            "Contributo di discipline come l'archeologia, l'epigrafia e la paleografia"
+          ]
+        },
+        {
+          "nome": "Geografia - Il pianeta contemporaneo",
+          "argomenti": [
+            "Il paesaggio",
+            "L'urbanizzazione",
+            "La globalizzazione e le sue conseguenze",
+            "Le diversità culturali (lingue, religioni)",
+            "Le migrazioni",
+            "La popolazione e la questione demografica",
+            "La relazione tra economia, ambiente e società",
+            "Gli squilibri fra regioni del mondo",
+            "Lo sviluppo sostenibile (energia, risorse idriche, cambiamento climatico, alimentazione e biodiversità)",
+            "La geopolitica",
+            "L'Unione europea",
+            "L'Italia, l'Europa e i suoi Stati principali",
+            "I continenti e i loro Stati più rilevanti",
+            "Descrizione e collocazione su base cartografica dei principali Stati del mondo con attenzione all'area mediterranea ed europea",
+            "Aspetti ambientali, demografici, politico-economici e culturali degli Stati",
+            "Fattori fondamentali per gli insediamenti dei popoli e la costituzione degli Stati in prospettiva geostorica (confini naturali, vie d'acqua navigabili, porti, materie prime, flussi migratori, aree linguistiche, religioni)",
+            "Ritmi di crescita delle popolazioni e flussi delle grandi migrazioni",
+            "Distribuzione e densità della popolazione in relazione a fattori ambientali e sociali",
+            "Lettura e produzione di strumenti statistico-quantitativi (grafici e istogrammi)",
+            "Diverse rappresentazioni della terra e loro finalità, dalle origini della cartografia fino al GIS"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia - Formazione dell'Europa e dimensione globale tra Medioevo ed età moderna (XI secolo - soglie del Novecento)",
+          "argomenti": [
+            "I diversi aspetti della rinascita dell'XI secolo",
+            "I poteri universali (Papato e Impero), comuni e monarchie",
+            "La Chiesa e i movimenti religiosi",
+            "Società ed economia nell'Europa basso medievale",
+            "La crisi dei poteri universali e l'avvento delle monarchie territoriali e delle Signorie",
+            "Le scoperte geografiche e le loro conseguenze",
+            "La definitiva crisi dell'unità religiosa dell'Europa",
+            "La costruzione degli stati moderni e l'assolutismo",
+            "Lo sviluppo dell'economia fino alla rivoluzione industriale",
+            "Le rivoluzioni politiche del Sei-Settecento (inglese, americana, francese)",
+            "L'età napoleonica e la Restaurazione",
+            "Il problema della nazionalità nell'Ottocento, il Risorgimento italiano e l'Italia unita",
+            "L'Occidente degli Stati-Nazione",
+            "La questione sociale e il movimento operaio",
+            "La seconda rivoluzione industriale",
+            "L'imperialismo e il nazionalismo",
+            "Lo sviluppo dello Stato italiano fino alla fine dell'Ottocento",
+            "Trattazione interdisciplinare di: società e cultura del Medioevo, il Rinascimento, la nascita della cultura scientifica nel Seicento, l'Illuminismo, il Romanticismo"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia - Epoca contemporanea (dalla I guerra mondiale ai giorni nostri)",
+          "argomenti": [
+            "L'inizio della società di massa in Occidente",
+            "L'età giolittiana",
+            "La prima guerra mondiale",
+            "La rivoluzione russa e l'URSS da Lenin a Stalin",
+            "La crisi del dopoguerra",
+            "Il fascismo",
+            "La crisi del '29 e le sue conseguenze negli Stati Uniti e nel mondo",
+            "Il nazismo",
+            "La shoah e gli altri genocidi del XX secolo",
+            "La seconda guerra mondiale",
+            "L'Italia dal Fascismo alla Resistenza e le tappe di costruzione della democrazia repubblicana",
+            "Dalla 'guerra fredda' alle svolte di fine Novecento: l'ONU, la questione tedesca, i due blocchi, l'età di Kruscev e Kennedy, il crollo del sistema sovietico, il processo di formazione dell'Unione Europea, i processi di globalizzazione, la rivoluzione informatica e le nuove conflittualità del mondo globale",
+            "Decolonizzazione e lotta per lo sviluppo in Asia, Africa e America latina: la nascita dello stato d'Israele e la questione palestinese, il movimento dei non-allineati, la rinascita della Cina e dell'India come potenze mondiali",
+            "La storia d'Italia nel secondo dopoguerra: la ricostruzione, il boom economico, le riforme degli anni Sessanta e Settanta, il terrorismo, Tangentopoli e la crisi del sistema politico all'inizio degli anni 90",
+            "Temi geografici del mondo contemporaneo: distribuzione delle risorse naturali ed energetiche, dinamiche migratorie, caratteristiche demografiche delle diverse aree del pianeta, relazioni tra clima ed economia",
+            "Trattazione interdisciplinare di: l'esperienza della guerra, società e cultura nell'epoca del totalitarismo, il rapporto fra intellettuali e potere politico"
+          ]
+        }
+      ]
+    }
+  ]
+}

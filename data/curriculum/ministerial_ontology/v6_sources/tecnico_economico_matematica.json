@@ -1,0 +1,144 @@
+{
+  "scuola": "Istituto Tecnico Economico",
+  "materia": "Matematica",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Logica e insiemi",
+          "argomenti": [
+            "Connettivi e calcolo degli enunciati",
+            "Variabili e quantificatori",
+            "Ipotesi e tesi",
+            "Il principio d'induzione",
+            "Insieme dei numeri reali"
+          ]
+        },
+        {
+          "nome": "Trigonometria",
+          "argomenti": [
+            "Il numero π",
+            "Teoremi dei seni e del coseno",
+            "Formule di addizione e duplicazione degli archi"
+          ]
+        },
+        {
+          "nome": "Geometria analitica e funzioni",
+          "argomenti": [
+            "Rappresentazione nel piano cartesiano della circonferenza e della parabola",
+            "Funzioni di uso comune nelle scienze economiche e sociali e loro rappresentazione grafica"
+          ]
+        },
+        {
+          "nome": "Analisi matematica",
+          "argomenti": [
+            "Continuità e limite di una funzione",
+            "Limiti notevoli di successioni e di funzioni",
+            "Il numero e",
+            "Concetto di derivata e derivazione di una funzione",
+            "Proprietà locali e globali delle funzioni",
+            "Approssimazione locale di una funzione mediante polinomi",
+            "Integrale indefinito e integrale definito"
+          ]
+        },
+        {
+          "nome": "Statistica e probabilità",
+          "argomenti": [
+            "Concetto e rappresentazione grafica delle distribuzioni doppie di frequenze",
+            "Indicatori statistici mediante differenze e rapporti",
+            "Concetti di dipendenza, correlazione, regressione",
+            "Applicazioni finanziarie ed economiche delle distribuzioni di probabilità",
+            "Ragionamento induttivo e basi concettuali dell'inferenza"
+          ]
+        },
+        {
+          "nome": "Abilità - Logica e algebra",
+          "argomenti": [
+            "Dimostrare una proposizione a partire da altre",
+            "Ricavare e applicare le formule per la somma dei primi n termini di una progressione aritmetica o geometrica"
+          ]
+        },
+        {
+          "nome": "Abilità - Trigonometria",
+          "argomenti": [
+            "Applicare la trigonometria alla risoluzione di problemi riguardanti i triangoli"
+          ]
+        },
+        {
+          "nome": "Abilità - Analisi matematica",
+          "argomenti": [
+            "Calcolare limiti di successioni e funzioni",
+            "Analizzare funzioni continue e discontinue",
+            "Calcolare derivate di funzioni",
+            "Calcolare l'integrale di funzioni elementari",
+            "Costruire modelli matematici per rappresentare fenomeni delle scienze economiche e sociali, anche utilizzando derivate e integrali",
+            "Utilizzare metodi grafici e numerici per risolvere equazioni e disequazioni anche con l'aiuto di strumenti informatici",
+            "Risolvere problemi di massimo e di minimo"
+          ]
+        },
+        {
+          "nome": "Abilità - Statistica",
+          "argomenti": [
+            "Analizzare distribuzioni doppie di frequenze",
+            "Classificare e rappresentare graficamente dati secondo due caratteri",
+            "Utilizzare, anche per formulare previsioni, informazioni statistiche da fonti diverse di natura economica per costruire indicatori di efficacia, di efficienza e di qualità di prodotti o servizi",
+            "Calcolare, anche con l'uso del computer, e interpretare misure di correlazione e parametri di regressione",
+            "Costruire modelli, continui e discreti, di crescita lineare, esponenziale o ad andamento periodico a partire dai dati statistici"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Algoritmi e ricerca operativa",
+          "argomenti": [
+            "Algoritmi per l'approssimazione degli zeri di una funzione",
+            "Concetti di algoritmo iterativo e di algoritmo ricorsivo",
+            "Problemi e modelli di programmazione lineare",
+            "Ricerca operativa e problemi di scelta"
+          ]
+        },
+        {
+          "nome": "Probabilità",
+          "argomenti": [
+            "Probabilità totale, condizionata, formula di Bayes",
+            "Concetto di gioco equo"
+          ]
+        },
+        {
+          "nome": "Statistica inferenziale",
+          "argomenti": [
+            "Piano di rilevazione e analisi dei dati",
+            "Campionamento casuale semplice e inferenza induttiva sulla media e sulla proporzione"
+          ]
+        },
+        {
+          "nome": "Abilità - Matematica finanziaria e ricerca operativa",
+          "argomenti": [
+            "Risolvere e rappresentare in modo formalizzato problemi finanziari ed economici",
+            "Utilizzare strumenti di analisi matematica e di ricerca operativa nello studio di fenomeni economici e nelle applicazioni alla realtà aziendale"
+          ]
+        },
+        {
+          "nome": "Abilità - Probabilità e statistica",
+          "argomenti": [
+            "Utilizzare la formula di Bayes nei problemi di probabilità condizionata",
+            "Costruire un campione casuale semplice data una popolazione",
+            "Costruire stime puntuali ed intervallari per la media e la proporzione",
+            "Utilizzare e valutare criticamente informazioni statistiche di diversa origine con particolare riferimento ai giochi di sorte e ai sondaggi",
+            "Realizzare ricerche e indagini di comparazione, ottimizzazione, andamento, ecc., collegate alle applicazioni d'indirizzo"
+          ]
+        },
+        {
+          "nome": "Abilità - Storia della matematica",
+          "argomenti": [
+            "Individuare e riassumere momenti significativi nella storia del pensiero matematico"
+          ]
+        }
+      ]
+    }
+  ]
+}

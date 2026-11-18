@@ -1,0 +1,77 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Lingua Italiana",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Ascolto e parlato",
+          "argomenti": [
+            "Ascoltare testi prodotti da altri, anche trasmessi dai media, riconoscendone la fonte e individuando scopo, argomento, informazioni principali e punto di vista dell'emittente.",
+            "Intervenire in una conversazione o in una discussione, di classe o di gruppo, con pertinenza e coerenza, rispettando tempi e turni di parola e fornendo un positivo contributo personale.",
+            "Utilizzare le proprie conoscenze sui tipi di testo per adottare strategie funzionali a comprendere durante l'ascolto.",
+            "Ascoltare testi applicando tecniche di supporto alla comprensione: durante l'ascolto (presa di appunti, parole-chiave, brevi frasi riassuntive, segni convenzionali) e dopo l'ascolto (rielaborazione degli appunti, esplicitazione delle parole chiave, ecc.).",
+            "Riconoscere, all'ascolto, alcuni elementi ritmici e sonori del testo poetico.",
+            "Narrare esperienze, eventi, trame selezionando informazioni significative in base allo scopo, ordinandole in base a un criterio logico-cronologico, esplicitandole in modo chiaro ed esauriente e usando un registro adeguato all'argomento e alla situazione.",
+            "Descrivere oggetti, luoghi, persone e personaggi, esporre procedure selezionando le informazioni significative in base allo scopo e usando un lessico adeguato all'argomento e alla situazione.",
+            "Riferire oralmente su un argomento di studio esplicitando lo scopo e presentandolo in modo chiaro: esporre le informazioni secondo un ordine prestabilito e coerente, usare un registro adeguato all'argomento e alla situazione, controllare il lessico specifico, precisare le fonti e servirsi eventualmente di materiali di supporto (cartine, tabelle, grafici).",
+            "Argomentare la propria tesi su un tema affrontato nello studio e nel dialogo in classe con dati pertinenti e motivazioni valide."
+          ]
+        },
+        {
+          "nome": "Lettura",
+          "argomenti": [
+            "Leggere ad alta voce in modo espressivo testi noti raggruppando le parole legate dal significato e usando pause e intonazioni per seguire lo sviluppo del testo e permettere a chi ascolta di capire.",
+            "Leggere in modalità silenziosa testi di varia natura e provenienza applicando tecniche di supporto alla comprensione (sottolineature, note a margine, appunti) e mettendo in atto strategie differenziate (lettura selettiva, orientativa, analitica).",
+            "Utilizzare testi funzionali di vario tipo per affrontare situazioni della vita quotidiana.",
+            "Ricavare informazioni esplicite e implicite da testi espositivi, per documentarsi su un argomento specifico o per realizzare scopi pratici.",
+            "Ricavare informazioni sfruttando le varie parti di un manuale di studio: indice, capitoli, titoli, sommari, testi, riquadri, immagini, didascalie, apparati grafici.",
+            "Confrontare, su uno stesso argomento, informazioni ricavabili da più fonti, selezionando quelle ritenute più significative ed affidabili. Riformulare in modo sintetico le informazioni selezionate e riorganizzarle in modo personale (liste di argomenti, riassunti schematici, mappe, tabelle).",
+            "Comprendere testi descrittivi, individuando gli elementi della descrizione, la loro collocazione nello spazio e il punto di vista dell'osservatore.",
+            "Leggere semplici testi argomentativi e individuare tesi centrale e argomenti a sostegno, valutandone la pertinenza e la validità.",
+            "Leggere testi letterari di vario tipo e forma (racconti, novelle, romanzi, poesie, commedie) individuando tema principale e intenzioni comunicative dell'autore; personaggi, loro caratteristiche, ruoli, relazioni e motivazione delle loro azioni; ambientazione spaziale e temporale; genere di appartenenza. Formulare in collaborazione con i compagni ipotesi interpretative fondate sul testo."
+          ]
+        },
+        {
+          "nome": "Scrittura",
+          "argomenti": [
+            "Conoscere e applicare le procedure di ideazione, pianificazione, stesura e revisione del testo a partire dall'analisi del compito di scrittura: servirsi di strumenti per l'organizzazione delle idee (ad es. mappe, scalette); utilizzare strumenti per la revisione del testo in vista della stesura definitiva; rispettare le convenzioni grafiche.",
+            "Scrivere testi di tipo diverso (narrativo, descrittivo, espositivo, regolativo, argomentativo) corretti dal punto di vista morfosintattico, lessicale, ortografico, coerenti e coesi, adeguati allo scopo e al destinatario.",
+            "Scrivere testi di forma diversa (ad es. istruzioni per l'uso, lettere private e pubbliche, diari personali e di bordo, dialoghi, articoli di cronaca, recensioni, commenti, argomentazioni) sulla base di modelli sperimentati, adeguandoli a situazione, argomento, scopo, destinatario, e selezionando il registro più adeguato.",
+            "Utilizzare nei propri testi, sotto forma di citazione esplicita e/o di parafrasi, parti di testi prodotti da altri e tratti da fonti diverse.",
+            "Scrivere sintesi, anche sotto forma di schemi, di testi ascoltati o letti in vista di scopi specifici.",
+            "Utilizzare la videoscrittura per i propri testi, curandone l'impaginazione; scrivere testi digitali (ad es. e-mail, post di blog, presentazioni), anche come supporto all'esposizione orale.",
+            "Realizzare forme diverse di scrittura creativa, in prosa e in versi (ad es. giochi linguistici, riscritture di testi narrativi con cambiamento del punto di vista); scrivere o inventare testi teatrali, per un'eventuale messa in scena."
+          ]
+        },
+        {
+          "nome": "Acquisizione ed espansione del lessico ricettivo e produttivo",
+          "argomenti": [
+            "Ampliare, sulla base delle esperienze scolastiche ed extrascolastiche, delle letture e di attività specifiche, il proprio patrimonio lessicale, così da comprendere e usare le parole dell'intero vocabolario di base, anche in accezioni diverse.",
+            "Comprendere e usare parole in senso figurato.",
+            "Comprendere e usare in modo appropriato i termini specialistici di base afferenti alle diverse discipline e anche ad ambiti di interesse personale.",
+            "Realizzare scelte lessicali adeguate in base alla situazione comunicativa, agli interlocutori e al tipo di testo.",
+            "Utilizzare la propria conoscenza delle relazioni di significato fra le parole e dei meccanismi di formazione delle parole per comprendere parole non note all'interno di un testo.",
+            "Utilizzare dizionari di vario tipo; rintracciare all'interno di una voce di dizionario le informazioni utili per risolvere problemi o dubbi linguistici."
+          ]
+        },
+        {
+          "nome": "Elementi di grammatica esplicita e riflessione sugli usi della lingua",
+          "argomenti": [
+            "Riconoscere ed esemplificare casi di variabilità della lingua.",
+            "Stabilire relazioni tra situazioni di comunicazione, interlocutori e registri linguistici; tra campi di discorso, forme di testo, lessico specialistico.",
+            "Riconoscere le caratteristiche e le strutture dei principali tipi testuali (narrativi, descrittivi, regolativi, espositivi, argomentativi).",
+            "Riconoscere le principali relazioni fra significati delle parole (sinonimia, opposizione, inclusione); conoscere l'organizzazione del lessico in campi semantici e famiglie lessicali.",
+            "Conoscere i principali meccanismi di formazione delle parole: derivazione, composizione.",
+            "Riconoscere l'organizzazione logico-sintattica della frase semplice.",
+            "Riconoscere la struttura e la gerarchia logico-sintattica della frase complessa almeno a un primo grado di subordinazione.",
+            "Riconoscere in un testo le parti del discorso, o categorie lessicali, e i loro tratti grammaticali.",
+            "Riconoscere i connettivi sintattici e testuali, i segni interpuntivi e la loro funzione specifica.",
+            "Riflettere sui propri errori tipici, segnalati dall'insegnante, allo scopo di imparare ad autocorreggerli nella produzione scritta."
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Disegno e Storia dell'Arte",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Introduzione alla lettura dell'opera d'arte e dello spazio architettonico",
+          "argomenti": [
+            "Definizioni e classificazioni delle arti",
+            "Categorie formali del fatto artistico e architettonico"
+          ]
+        },
+        {
+          "nome": "Arte preistorica",
+          "argomenti": [
+            "Architettura megalitica",
+            "Sistema costruttivo trilitico"
+          ]
+        },
+        {
+          "nome": "Arte greca",
+          "argomenti": [
+            "Il tempio",
+            "Gli ordini architettonici",
+            "La decorazione scultorea con particolare riferimento a quella del Partenone",
+            "Il teatro"
+          ]
+        },
+        {
+          "nome": "Arte romana",
+          "argomenti": [
+            "Opere di ingegneria (strade, ponti, acquedotti)",
+            "Tecniche costruttive",
+            "Principali tipologie architettoniche (terme, anfiteatri, fori)",
+            "Principali monumenti celebrativi"
+          ]
+        },
+        {
+          "nome": "Produzione architettonica e artistica dalle origini alla fine del XIV secolo",
+          "argomenti": [
+            "Studio della produzione architettonica e artistica dalle origini sino alla fine del XIV secolo"
+          ]
+        }
+      ]
+    }
+  ]
+}

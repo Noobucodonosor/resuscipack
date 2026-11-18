@@ -22,7 +22,7 @@ Serve un'architettura pedagogica e software cristallina che consenta allo studen
 ## 2. Decisione Architetturale
 
 1. **DAG Curricolare Unificato Aciclico a 4 Strati (`data/curriculum/secai_unified_dag.json` & `resuscipack/curriculum/dag.py`):**
-   - **Strato 0 — Fondamenta ("Decisioni di Progetto" 1ª Elementare $\to$ 3ª Media, 45 nodi in 3 rami):** *Numeri e Operazioni*, *Spazio, Misure e Figure*, *Relazioni, Logica e Dati*. Ogni nodo dichiara la decisione progettuale, le primitive `target_op_tags` (allineate all'Enum a 24 valori di `ADR-0002`), l'archetipo generatore e la catena viva verso i Gate SecAI.
+   - **Strato 0 — Fondamenta Scolastiche ("Decisioni di Progetto" 1ª Elementare $\to$ 5ª Superiore, 64 nodi in 3 rami):** *Numeri e Operazioni*, *Spazio, Misure e Figure*, *Relazioni, Logica e Dati*, comprensivo dei 45 nodi `1ª elementare → 3ª media` e dei 19 snodi liceali `1ª → 5ª superiore` (polinomi/Ruffini, coniche, esponenziali/logaritmi, goniometria/trigonometria, numeri complessi, combinatoria, limiti, derivate, integrali ed equazioni differenziali) allineati con l'[Ontologia Ministeriale v6 (`TASK-SPEC-04`)](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md). Ogni nodo dichiara la decisione progettuale, le primitive `target_op_tags` (allineate all'Enum a 24 valori di `ADR-0002`), l'archetipo generatore e la catena viva verso i Gate SecAI (totale 108 nodi, 252 archi).
    - **Strato 1 — Bonifica OFA Pre-Immatricolazione (`P0.1–P0.8`, `P1.1–P1.2`, `P6.1`):** 11 unità mirate ad azzerare `G00` (`GATE-OFA-MATH`) prima dell'avvio del Q1. Include la riclassificazione empirica di `P0.8` (coperta dai test ufficiali `Testmatbasesol`, `test 0809..1617` e Hoepli Test `.epub`).
    - **Strato 2 — Ponti Anti-Baratro per i 20 Shadow Gates (`P2.1–P2.3`, `P3.1–P3.3`, `P4.1–P4.2`, `P5.1–P5.3`, `P6.2`):** 12 unità posizionate prima della finestra critica di ciascun esame (in primis le 44h di `P3.1–P3.3` per Algebra Lineare, Probabilità e Statistica prima di `G05 Machine Learning`).
    - **Strato 3 — I 21 Esami e Gate Ufficiali SecAI (`G00–G20`, 180 CFU):** traguardi dell'Hero con prerequisiti reali, finestra temporale e prove diagnostiche.
@@ -58,7 +58,7 @@ Serve un'architettura pedagogica e software cristallina che consenta allo studen
 
 - [x] **TASK-SECAI-01**: **Costruzione DAG Unificato a 4 Strati, Registro Open-Access e Migrazione Schede v3**
   - *File coinvolti*: `data/curriculum/secai_unified_dag.json`, `data/curriculum/open_access_textbooks.json`, `resuscipack/curriculum/dag.py`, `resuscipack/curriculum/cards.py`, `data/cards/*.md`
-  - *Acceptance Criteria*: DAG aciclico verificato topologicamente (`Strato 0..3`, ~89+ nodi tra fondamenta, 23 unità `P0–P6` e 21 gate `G00–G20`); `numeri.quantita.md` e schede migrate aggiornate a `[block_pk=... | block_uid=...]` con `verifica_citazioni.py` = 0 errori.
+  - *Acceptance Criteria*: DAG aciclico verificato topologicamente (`Strato 0..3`, ~89+ nodi iniziali espansi a **108 nodi** `1ª Elementare → 5ª Superiore → OFA → SecAI`); `numeri.quantita.md` e schede migrate aggiornate a `[block_pk=... | block_uid=...]` con `verifica_citazioni.py` = 0 errori.
   - *Verification Step*: `.venv/bin/pytest tests/test_workbench_secai.py -k "dag or cards"`
 - [x] **TASK-SECAI-02**: **Motore Fast-Forward Diagnostico `SymPy`, Verifica Grafici/Dimostrazioni e Stato Studente Separato**
   - *File coinvolti*: `resuscipack/curriculum/drills_sympy.py`, `resuscipack/curriculum/student_state.py`

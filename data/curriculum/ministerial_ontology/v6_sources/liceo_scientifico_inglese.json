@@ -1,0 +1,43 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Lingua e Cultura Straniera",
+  "anni": [
+    {
+      "anno": "Quinquennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Analisi e confronto di testi letterari",
+          "argomenti": [
+            "Analisi e confronto di testi letterari provenienti da lingue e culture diverse (italiane e straniere)"
+          ]
+        },
+        {
+          "nome": "Prodotti culturali",
+          "argomenti": [
+            "Comprensione e interpretazione di prodotti culturali di diverse tipologie e generi",
+            "Temi di attualità",
+            "Cinema",
+            "Musica",
+            "Arte"
+          ]
+        },
+        {
+          "nome": "Nuove tecnologie e comunicazione",
+          "argomenti": [
+            "Utilizzo delle nuove tecnologie per fare ricerche",
+            "Approfondimento di argomenti di natura non linguistica",
+            "Espressione creativa",
+            "Comunicazione con interlocutori stranieri"
+          ]
+        },
+        {
+          "nome": "Linguaggi e problematiche dell'epoca moderna e contemporanea",
+          "argomenti": [
+            "Problematiche proprie dell'epoca moderna e contemporanea",
+            "Linguaggi propri dell'epoca moderna e contemporanea"
+          ]
+        }
+      ]
+    }
+  ]
+}

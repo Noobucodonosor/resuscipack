@@ -1,0 +1,64 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Scienze Motorie e Sportive",
+  "anni": [
+    {
+      "anno": "Linee Generali e Competenze (intero percorso liceale)",
+      "nuclei_tematici": [
+        {
+          "nome": "Consapevolezza corporea",
+          "argomenti": [
+            "Conoscenza, padronanza e rispetto del proprio corpo",
+            "Padronanza del proprio corpo attraverso un'ampia gamma di attività motorie e sportive",
+            "Equilibrato sviluppo fisico e neuromotorio",
+            "Il corpo come linguaggio specifico: messaggi volontari e involontari",
+            "Libera espressione di stati d'animo ed emozioni attraverso il linguaggio non verbale"
+          ]
+        },
+        {
+          "nome": "Capacità motorie",
+          "argomenti": [
+            "Stimolazione delle capacità coordinative",
+            "Forza",
+            "Resistenza",
+            "Velocità",
+            "Flessibilità",
+            "Raggiungimento di elevati livelli di abilità e prestazioni motorie"
+          ]
+        },
+        {
+          "nome": "Comportamento responsabile e autovalutazione",
+          "argomenti": [
+            "Agire in maniera responsabile ragionando su quanto si pone in atto",
+            "Riconoscimento delle cause dei propri errori",
+            "Procedure di correzione adeguate",
+            "Analisi della propria e dell'altrui prestazione",
+            "Identificazione di aspetti positivi e negativi della prestazione"
+          ]
+        },
+        {
+          "nome": "Attività sportive individuali e di squadra",
+          "argomenti": [
+            "Conoscenza e pratica di varie attività sportive individuali",
+            "Conoscenza e pratica di varie attività sportive di squadra",
+            "Scoperta e valorizzazione di attitudini, capacità e preferenze personali",
+            "Acquisizione e padronanza delle abilità motorie",
+            "Acquisizione delle tecniche sportive specifiche",
+            "Sperimentazione dei ruoli di giocatore, arbitro, giudice e organizzatore",
+            "Promozione dell'abitudine e dell'apprezzamento della pratica sportiva",
+            "Attività propedeutica ai Centri Sportivi Scolastici"
+          ]
+        },
+        {
+          "nome": "Valori e stile di vita",
+          "argomenti": [
+            "Consolidamento dei valori sociali dello sport",
+            "Acquisizione di una buona preparazione motoria",
+            "Atteggiamento positivo verso uno stile di vita sano e attivo",
+            "Implicazioni e benefici derivanti dalla pratica di varie attività fisiche nei diversi ambienti"
+          ]
+        }
+      ]
+    }
+  ]
+}

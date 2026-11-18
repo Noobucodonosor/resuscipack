@@ -1,0 +1,146 @@
+{
+  "scuola": "Istituto Professionale",
+  "materia": "Competenze Indirizzo",
+  "anni": [
+    {
+      "anno": "Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza n°8 - Reti e strumenti informatici",
+          "argomenti": [
+            "Utilizzare i principali dispositivi individuali e servizi di rete nell'ambito della vita quotidiana e in contesti di studio circoscritti rispettando le norme in materia di sicurezza e privacy"
+          ]
+        },
+        {
+          "nome": "Competenza n°9 - Espressività corporea e pratica sportiva",
+          "argomenti": [
+            "Praticare l'espressività corporea ed esercitare la pratica sportiva, in modo efficace, in situazioni note, in ambito familiare, scolastico e sociale"
+          ]
+        },
+        {
+          "nome": "Competenza n°10 - Economia e processi produttivi",
+          "argomenti": [
+            "Riconoscere le principali funzioni e processi di un'organizzazione e i principi di base dell'economia"
+          ]
+        },
+        {
+          "nome": "Competenza n°11 - Strumenti tecnologici e sicurezza",
+          "argomenti": [
+            "Utilizzare gli strumenti tecnologici affidati avendo cura della sicurezza, della tutela della salute nei luoghi di lavoro e della dignità della persona, nel rispetto della normativa di riferimento e sotto supervisione"
+          ]
+        },
+        {
+          "nome": "Competenza n°12 - Concetti e strumenti degli assi culturali",
+          "argomenti": [
+            "Utilizzare i concetti e gli strumenti fondamentali dell'asse culturale matematico per affrontare e risolvere problemi strutturati anche utilizzando strumenti e applicazioni informatiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Terzo Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza n°8 - Reti e strumenti informatici",
+          "argomenti": [
+            "Utilizzare le reti e gli strumenti informatici anche in situazioni di lavoro relative all'area professionale di riferimento"
+          ]
+        },
+        {
+          "nome": "Competenza n°9 - Espressività corporea e pratica sportiva",
+          "argomenti": [
+            "Agire l'espressività corporea ed esercitare la pratica sportiva, in modo responsabile, sulla base della valutazione delle varie situazioni sociali e professionali, nei diversi ambiti di esercizio"
+          ]
+        },
+        {
+          "nome": "Competenza n°10 - Economia e processi produttivi",
+          "argomenti": [
+            "Applicare i concetti fondamentali relativi all'organizzazione aziendale e alla produzione di beni e servizi, per l'analisi di semplici casi aziendali relativi al settore professionale di riferimento"
+          ]
+        },
+        {
+          "nome": "Competenza n°11 - Strumenti tecnologici e sicurezza",
+          "argomenti": [
+            "Utilizzare in modo avanzato gli strumenti tecnologici avendo cura della sicurezza, della tutela della salute nei luoghi di lavoro e della dignità della persona, rispettando le normative in autonomia"
+          ]
+        },
+        {
+          "nome": "Competenza n°12 - Concetti e strumenti degli assi culturali",
+          "argomenti": [
+            "Utilizzare i concetti e gli strumenti fondamentali dell'asse culturale matematico per affrontare e risolvere problemi strutturati, riferiti a situazioni applicative relative alla filiera di riferimento, anche utilizzando strumenti e applicazioni informatiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quarto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza n°8 - Reti e strumenti informatici",
+          "argomenti": [
+            "Utilizzare le reti e gli strumenti informatici in modalità avanzata in situazioni di lavoro relative al settore di riferimento, adeguando i propri comportamenti al contesto organizzativo e professionale"
+          ]
+        },
+        {
+          "nome": "Competenza n°9 - Espressività corporea e pratica sportiva",
+          "argomenti": [
+            "Agire l'espressività corporea ed esercitare la pratica sportiva in modo autonomo e responsabile, sulla base della valutazione delle situazioni sociali e professionali soggette a cambiamenti e che possono richiedere un adattamento del proprio operato"
+          ]
+        },
+        {
+          "nome": "Competenza n°10 - Economia e processi produttivi",
+          "argomenti": [
+            "Applicare i concetti fondamentali relativi all'organizzazione aziendale e alla produzione di beni e servizi per la soluzione di casi aziendali relativi al settore professionale di riferimento anche utilizzando documentazione tecnica e tecniche elementari di analisi statistica e matematica"
+          ]
+        },
+        {
+          "nome": "Competenza n°11 - Strumenti tecnologici e sicurezza",
+          "argomenti": [
+            "Utilizzare in modo avanzato gli strumenti tecnologici avendo cura della sicurezza, della tutela della salute nei luoghi di lavoro, della dignità della persona, dell'ambiente e del territorio, rispettando le normative specifiche dell'area professionale ed adottando comportamenti adeguati al contesto"
+          ]
+        },
+        {
+          "nome": "Competenza n°12 - Concetti e strumenti degli assi culturali",
+          "argomenti": [
+            "Utilizzare in modo flessibile i concetti e gli strumenti fondamentali dell'asse culturale matematico per affrontare e risolvere problemi non completamente strutturati, riferiti a situazioni applicative relative al settore di riferimento, anche utilizzando strumenti e applicazioni informatiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza n°8 - Reti e strumenti informatici",
+          "argomenti": [
+            "Utilizzare le reti e gli strumenti informatici in modalità avanzata in situazioni di lavoro relative al settore di riferimento, adeguando i propri comportamenti al contesto organizzativo e professionale anche nella prospettiva dell'apprendimento permanente"
+          ]
+        },
+        {
+          "nome": "Competenza n°9 - Espressività corporea e pratica sportiva",
+          "argomenti": [
+            "Agire l'espressività corporea ed esercitare la pratica sportiva in modo anche responsabilmente creativo, così che i relativi propri comportamenti personali, sociali e professionali siano parte di un progetto di vita orientato allo sviluppo culturale, sociale ed economico di sé e della propria comunità"
+          ]
+        },
+        {
+          "nome": "Competenza n°10 - Economia e processi produttivi",
+          "argomenti": [
+            "Utilizzare concetti e modelli relativi all'organizzazione aziendale, alla produzione di beni e servizi e all'evoluzione del mercato del lavoro per affrontare casi pratici relativi all'area professionale di riferimento"
+          ]
+        },
+        {
+          "nome": "Competenza n°11 - Strumenti tecnologici e sicurezza",
+          "argomenti": [
+            "Padroneggiare, in autonomia, l'uso di strumenti tecnologici con particolare attenzione alla sicurezza e alla tutela della salute nei luoghi di vita e di lavoro, alla tutela della persona, dell'ambiente e del territorio"
+          ]
+        },
+        {
+          "nome": "Competenza n°12 - Concetti e strumenti degli assi culturali",
+          "argomenti": [
+            "Utilizzare in modo flessibile i concetti e gli strumenti fondamentali dell'asse culturale matematico per affrontare e risolvere problemi non completamente strutturati, riferiti a situazioni applicative relative al settore di riferimento, individuando strategie risolutive ottimali, anche utilizzando strumenti e applicazioni informatiche avanzate"
+          ]
+        }
+      ]
+    }
+  ]
+}

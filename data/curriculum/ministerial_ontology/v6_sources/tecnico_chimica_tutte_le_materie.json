@@ -1,0 +1,139 @@
+{
+  "scuola": "Istituto Tecnico - Settore Tecnologico - Indirizzo: Chimica, materiali e biotecnologie - Articolazione: Chimica dei materiali",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di matematica",
+          "argomenti": [
+            "Potenze ad esponente reale",
+            "Logaritmi in base 'e'",
+            "Numeri complessi",
+            "Derivate parziali e differenziale totale",
+            "Integrazione di funzioni d'interesse per la chimica",
+            "Equazioni differenziali d'interesse per la chimica",
+            "Popolazione e campione",
+            "Statistiche, Distribuzioni campionarie e stimatori",
+            "Verifica di ipotesi statistiche per valutare l'efficacia di un nuovo prodotto o servizio"
+          ]
+        },
+        {
+          "nome": "Chimica analitica e strumentale",
+          "argomenti": [
+            "Misura, strumenti e processi di misurazione",
+            "Teoria della misura, elaborazione dati e analisi statistica",
+            "Composizione elementare e formula chimica",
+            "Stechiometria e quantità di reazione",
+            "Proprietà di acidi e basi, di ossidanti e riducenti, dei composti di coordinazione",
+            "Reattività degli ioni in soluzione e analisi qualitativa",
+            "Applicazione della termodinamica e delle funzioni di stato agli equilibri fisici e chimici",
+            "Cinetica chimica e modelli interpretativi",
+            "Studio degli equilibri in soluzione acquosa",
+            "Elettrochimica, potenziali elettrochimici e dispositivi strumentali",
+            "Struttura della materia: orbitali atomici e molecolari",
+            "Interazioni radiazione-materia: spettroscopia atomica e molecolare",
+            "Metodi di analisi chimica qualitativa, quantitativa e strumentale",
+            "Metodi di analisi elettrochimici, ottici e cromatografici",
+            "Modelli di documentazione tecnica",
+            "Dispositivi tecnologici e principali software dedicati",
+            "Norme e procedure di sicurezza e prevenzione degli infortuni",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese"
+          ]
+        },
+        {
+          "nome": "Chimica organica e biochimica",
+          "argomenti": [
+            "Effetti elettronici dei legami localizzati e delocalizzati",
+            "Interazioni intermolecolari, geometria delle molecole e proprietà fisiche delle sostanze",
+            "Reattività del carbonio, sostanze organiche e relativa nomenclatura; tipologia delle formule chimiche",
+            "Gruppi funzionali, classi di composti organici e isomeria",
+            "Stereoisomeria geometrica E-Z, stereoisomeria ottica R-S",
+            "Uso degli spettri IR, UV-Vis, per l'identificazione della struttura molecolare",
+            "Teorie acido-base, nucleofili ed elettrofili ed effetti induttivo e coniugativo sulla reattività",
+            "Meccanismo delle reazioni organiche e intermedi di reazione (carbocationi, carbanioni, radicali liberi)",
+            "Sostituzione radicalica, addizione al doppio legame e al triplo legame",
+            "Sostituzione elettrofila aromatica e sostituzione nucleofila al carbonio saturo",
+            "Reazioni di eliminazione, trasposizioni, ossidazioni e riduzioni",
+            "Studio dei polimeri e delle reazioni di polimerizzazione",
+            "Metodi cromatografici (su colonna e strato sottile)",
+            "Caratteristiche strutturali e funzionali delle molecole organiche e bio-organiche",
+            "Struttura di amminoacidi, peptidi e proteine, enzimi, glucidi, lipidi, acidi nucleici (RNA e DNA)",
+            "Struttura primaria, secondaria, terziaria e quaternaria di una proteina",
+            "Norme e procedure di sicurezza e prevenzione degli infortuni",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese"
+          ]
+        },
+        {
+          "nome": "Tecnologie chimiche industriali",
+          "argomenti": [
+            "Trasporto di materia ed energia; conduzione, convezione e irraggiamento",
+            "Regimi di moto dei liquidi",
+            "Termodinamica, equilibri fisici e chimici ed esempi applicativi ai processi",
+            "Modelli cinetici di base dei reattori, cinetica chimica",
+            "Operazioni Unitarie, processi, cicli di lavorazione e relativi reflui anche in relazione al territorio",
+            "Bilanci di materia ed energia applicati alle operazioni unitarie",
+            "Prestazione e funzioni delle apparecchiature di processo",
+            "Banche dati per la compatibilità ambientale e la sicurezza",
+            "Regolazione e controllo dei processi",
+            "Caratteristiche fisiche, chimico-fisiche, prestazionali, di qualità, di gestione di materie prime, prodotti e fluidi di servizio",
+            "Sostenibilità ambientale dei processi e analisi del ciclo di vita dei prodotti",
+            "Norme di sicurezza e prevenzione. Procedure di smaltimento dei reflui",
+            "Schemi di processo per le operazioni unitarie e norme UNICHIM",
+            "Elementi di software CAD",
+            "Software per acquisizione dati, controllo e simulazione; controllo di apparecchiature e di impianti pilota",
+            "Processi rilevanti in campo ambientale, dei vettori energetici, dei materiali, delle biotecnologie anche in relazione alla sicurezza e alla tutela dell'ambiente",
+            "Normative di settore nazionale e comunitaria"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Chimica analitica e strumentale",
+          "argomenti": [
+            "Studio delle matrici reali",
+            "Tecniche di campionamento e di elaborazione dei dati",
+            "Sequenza delle fasi del processo analitico",
+            "Controllo dei dati analitici, tipologia e trattamento degli errori",
+            "Normativa specifica di settore"
+          ]
+        },
+        {
+          "nome": "Chimica organica e biochimica",
+          "argomenti": [
+            "Nomenclatura, classificazione e meccanismo di azione degli enzimi",
+            "Gruppi microbici e virus di interesse biotecnologico. Morfologia e osservazione al microscopio, crescita microbica, cicli e vie metaboliche",
+            "Cenni su virus inattivati per la terapia genica",
+            "Trasporto di membrana",
+            "Metodi fisici e chimici della sterilizzazione",
+            "Rischio chimico biologico nell'uso di microrganismi",
+            "Energia e processi metabolici. ATP e reazioni accoppiate, sintesi proteica. Cinetica enzimatica. Fondamentali processi metabolici",
+            "Principali processi fermentativi e loro chimismo",
+            "Metodi della conta microbica"
+          ]
+        },
+        {
+          "nome": "Tecnologie chimiche industriali",
+          "argomenti": [
+            "Studio chimico-fisico di processi rilevanti in campo ambientale, dei vettori energetici fossili e rinnovabili, dei materiali, delle biotecnologie, anche in relazione al territorio, e loro aspetti applicativi",
+            "Bilanci di materia ed energia per le operazioni a stadi di equilibrio",
+            "Equilibri di fase e operazioni unitarie a stadi d'equilibrio con relative apparecchiature: distillazione, assorbimento, estrazione",
+            "Diffusione e processi a membrane",
+            "Cinetica enzimatica, modelli auto catalitici applicati alla crescita microbica",
+            "Reattoristica e studio dei fermentatori",
+            "Costi di esercizio e valutazione del risparmio energetico",
+            "Casi di sostenibilità ambientale di processi e di analisi del ciclo di vita dei prodotti",
+            "Elementi di dinamica dei processi, regolatori e azioni PID",
+            "Schemi di processo, software CAD e operazioni a stadi di equilibrio",
+            "Analisi dei rischi",
+            "Audit, implementazione e verifica di un sistema di qualità"
+          ]
+        }
+      ]
+    }
+  ]
+}

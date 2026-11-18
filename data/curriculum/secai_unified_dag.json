@@ -1,17 +1,17 @@
 {
   "schema_version": "secai-unified-dag.v1",
   "metadata": {
-    "title": "SecAI Unified 4-Layer Curricular Spine (1ª Elementare → OFA → L-31 UniMi)",
+    "title": "SecAI Unified 4-Layer Curricular Spine (1ª Elementare → 5ª Superiore → OFA → L-31 UniMi)",
     "degree": "Sicurezza Informatica e Intelligenza Artificiale (L-31, Università degli Studi di Milano)",
     "regulatory_baseline": "Manifesto degli Studi FAOof1_2027",
-    "total_nodes": 89,
+    "total_nodes": 108,
     "layer_counts": {
-      "layer_0_foundations": 45,
+      "layer_0_foundations": 64,
       "layer_1_ofa_pre": 11,
       "layer_2_shadow_bridges": 12,
       "layer_3_secai_gates": 21
     },
-    "total_edges": 190,
+    "total_edges": 252,
     "acyclic": true,
     "topological_order": [
       "numeri.quantita",
@@ -44,35 +44,54 @@
       "P1.2",
       "geometria.coordinate-griglia",
       "geometria.simmetrie-traslazioni",
+      "superiori.geometria-sintetica-congruenza",
       "geometria.solidi-volume",
       "divisibilita.mcd",
       "divisibilita.mcm",
       "frazioni.equivalenza",
       "geometria.area-triangolo-poligoni",
       "relazioni.equazione-primo-grado-base",
+      "superiori.polinomi-prodotti-notevoli",
       "G02",
       "dati.tabelle-grafici",
       "frazioni.denominatore-comune",
       "frazioni.moltiplicazione-divisione",
       "numeri.decimali",
+      "superiori.sistemi-lineari-retta",
+      "superiori.fattorizzazione-frazioni-algebriche",
       "operazioni.radici-base",
       "misure.equivalenze-decimali",
       "rapporti.proporzioni-percentuali",
       "geometria.pitagora",
+      "superiori.radicali-equazioni-secondo-grado",
       "dati.media-frequenza-incertezza",
       "geometria.cerchio-pi-greco",
       "geometria.similitudine-scala",
       "relazioni.proporzionalita-diretta-inversa",
       "P0.1",
+      "superiori.equazioni-fratte-irrazionali-modulo",
+      "superiori.successioni-progressioni",
+      "superiori.combinatoria-probabilita-composta",
+      "superiori.circonferenza-euclide-talete",
       "P0.2",
+      "superiori.esponenziali-logaritmi",
+      "superiori.coniche-luoghi-geometrici",
       "P0.3",
+      "superiori.goniometria-formule-equazioni",
       "P0.4",
       "P2.1",
+      "superiori.limiti-continuita-asintoti",
+      "superiori.numeri-complessi-gauss",
+      "superiori.trigonometria-triangoli",
       "P0.5",
+      "superiori.derivata-studio-funzione",
+      "superiori.geometria-spazio-vettori",
       "P0.6",
       "P0.8",
+      "superiori.integrali-teorema-fondamentale",
       "P0.7",
       "G00",
+      "superiori.equazioni-differenziali-modelli",
       "P2.2",
       "P3.1",
       "G01",
@@ -120,7 +139,7 @@
       "id": "numeri.quantita",
       "title": "Contare e il numero come quantità",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª elementare",
       "estimated_hours": 1.5,
@@ -192,7 +211,7 @@
       "id": "numeri.ordine",
       "title": "Confrontare e ordinare i numeri",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª elementare",
       "estimated_hours": 1.5,
@@ -278,7 +297,7 @@
       "id": "numeri.posizionale",
       "title": "Sistema posizionale decimale e zero",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª-2ª elementare",
       "estimated_hours": 1.5,
@@ -363,7 +382,7 @@
       "id": "operazioni.addizione",
       "title": "Addizione come riunire",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª elementare",
       "estimated_hours": 1.5,
@@ -444,7 +463,7 @@
       "id": "operazioni.sottrazione",
       "title": "Sottrazione come togliere e come differenza",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª elementare",
       "estimated_hours": 1.5,
@@ -464,8 +483,8 @@
       "hero_compass": {
         "primary_path_ids": [
           "operazioni.sottrazione",
-          "numeri.relativi",
-          "relazioni.equazione-primo-grado-base",
+          "operazioni.divisione",
+          "superiori.fattorizzazione-frazioni-algebriche",
           "P0.5",
           "G00"
         ],
@@ -476,13 +495,13 @@
             "layer": 0
           },
           {
-            "id": "numeri.relativi",
-            "title": "Numeri interi relativi (Z) e regola dei segni",
+            "id": "operazioni.divisione",
+            "title": "Divisione come ripartire e contenere, e il resto",
             "layer": 0
           },
           {
-            "id": "relazioni.equazione-primo-grado-base",
-            "title": "Equazioni lineari: isolare l'incognita disfacendo le operazioni",
+            "id": "superiori.fattorizzazione-frazioni-algebriche",
+            "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
             "layer": 0
           },
           {
@@ -529,7 +548,7 @@
       "id": "operazioni.colonna",
       "title": "Addizione e sottrazione in colonna",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "2ª elementare",
       "estimated_hours": 1.5,
@@ -616,7 +635,7 @@
       "id": "operazioni.moltiplicazione",
       "title": "Moltiplicazione come addizione ripetuta e schieramento",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "2ª elementare",
       "estimated_hours": 1.5,
@@ -695,7 +714,7 @@
       "id": "operazioni.distributiva",
       "title": "Proprietà distributiva",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "3ª elementare",
       "estimated_hours": 1.5,
@@ -769,7 +788,7 @@
       "id": "operazioni.divisione",
       "title": "Divisione come ripartire e contenere, e il resto",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "3ª elementare",
       "estimated_hours": 1.5,
@@ -790,8 +809,7 @@
       "hero_compass": {
         "primary_path_ids": [
           "operazioni.divisione",
-          "frazioni.significato",
-          "frazioni.denominatore-comune",
+          "superiori.fattorizzazione-frazioni-algebriche",
           "P0.5",
           "G00"
         ],
@@ -802,13 +820,8 @@
             "layer": 0
           },
           {
-            "id": "frazioni.significato",
-            "title": "La frazione come parti uguali di un intero",
-            "layer": 0
-          },
-          {
-            "id": "frazioni.denominatore-comune",
-            "title": "Somma di frazioni con il denominatore comune",
+            "id": "superiori.fattorizzazione-frazioni-algebriche",
+            "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
             "layer": 0
           },
           {
@@ -855,7 +868,7 @@
       "id": "frazioni.significato",
       "title": "La frazione come parti uguali di un intero",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "3ª elementare",
       "estimated_hours": 1.5,
@@ -934,7 +947,7 @@
       "id": "frazioni.equivalenza",
       "title": "Frazioni equivalenti",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "4ª elementare",
       "estimated_hours": 1.5,
@@ -1014,7 +1027,7 @@
       "id": "frazioni.denominatore-comune",
       "title": "Somma di frazioni con il denominatore comune",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "5ª elementare",
       "estimated_hours": 1.5,
@@ -1089,7 +1102,7 @@
       "id": "frazioni.moltiplicazione-divisione",
       "title": "Moltiplicazione, reciproco e divisione tra frazioni",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª media",
       "estimated_hours": 1.5,
@@ -1169,7 +1182,7 @@
       "id": "numeri.decimali",
       "title": "Numeri decimali e approssimazione",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "4ª-5ª elementare",
       "estimated_hours": 1.5,
@@ -1250,7 +1263,7 @@
       "id": "divisibilita.multipli-primi",
       "title": "Divisibilità, numeri primi e fattorizzazione unica",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª media",
       "estimated_hours": 1.5,
@@ -1330,7 +1343,7 @@
       "id": "divisibilita.mcm",
       "title": "Minimo comune multiplo (mcm)",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª media",
       "estimated_hours": 1.5,
@@ -1403,7 +1416,7 @@
       "id": "divisibilita.mcd",
       "title": "Massimo comune divisore (MCD) e frazioni irriducibili",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª media",
       "estimated_hours": 1.5,
@@ -1476,7 +1489,7 @@
       "id": "numeri.relativi",
       "title": "Numeri interi relativi (Z) e regola dei segni",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "3ª media",
       "estimated_hours": 1.5,
@@ -1556,7 +1569,7 @@
       "id": "operazioni.potenze-base",
       "title": "Potenze e proprietà degli esponenti",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "1ª-3ª media",
       "estimated_hours": 1.5,
@@ -1636,7 +1649,7 @@
       "id": "operazioni.radici-base",
       "title": "Radice quadrata ed estrazione inversa della potenza",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "2ª media",
       "estimated_hours": 1.5,
@@ -1710,7 +1723,7 @@
       "id": "rapporti.proporzioni-percentuali",
       "title": "Rapporti, proporzioni e percentuali",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "numeri-e-operazioni",
       "school_grade": "2ª media",
       "estimated_hours": 1.5,
@@ -1784,7 +1797,7 @@
       "id": "misure.confronto-unita",
       "title": "Misurare: scegliere un'unità campione",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "1ª-2ª elementare",
       "estimated_hours": 1.5,
@@ -1864,7 +1877,7 @@
       "id": "misure.equivalenze-decimali",
       "title": "Sistema metrico decimale ed equivalenze",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "4ª elementare",
       "estimated_hours": 1.5,
@@ -1938,7 +1951,7 @@
       "id": "geometria.punti-rette-segmenti",
       "title": "Punti, rette, segmenti e distanza minima",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "2ª-3ª elementare",
       "estimated_hours": 1.5,
@@ -1959,9 +1972,7 @@
         "primary_path_ids": [
           "geometria.punti-rette-segmenti",
           "geometria.poligoni-perimetro",
-          "geometria.area-rettangolo-schieramento",
-          "geometria.area-triangolo-poligoni",
-          "geometria.pitagora",
+          "superiori.geometria-sintetica-congruenza",
           "P0.1",
           "G00"
         ],
@@ -1977,18 +1988,8 @@
             "layer": 0
           },
           {
-            "id": "geometria.area-rettangolo-schieramento",
-            "title": "Area del rettangolo e unità quadrate",
-            "layer": 0
-          },
-          {
-            "id": "geometria.area-triangolo-poligoni",
-            "title": "Equiscomponibilità e area di triangoli e poligoni",
-            "layer": 0
-          },
-          {
-            "id": "geometria.pitagora",
-            "title": "Teorema di Pitagora e distanza euclidea",
+            "id": "superiori.geometria-sintetica-congruenza",
+            "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
             "layer": 0
           },
           {
@@ -2035,7 +2036,7 @@
       "id": "geometria.angoli-rotazioni",
       "title": "Angolo come cambio di direzione e rotazione",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "3ª-4ª elementare",
       "estimated_hours": 1.5,
@@ -2056,10 +2057,8 @@
         "primary_path_ids": [
           "geometria.angoli-rotazioni",
           "geometria.parallelismo-perpendicolarita",
-          "geometria.coordinate-griglia",
-          "dati.tabelle-grafici",
-          "dati.media-frequenza-incertezza",
-          "P0.8",
+          "superiori.geometria-sintetica-congruenza",
+          "P0.1",
           "G00"
         ],
         "chain": [
@@ -2074,23 +2073,13 @@
             "layer": 0
           },
           {
-            "id": "geometria.coordinate-griglia",
-            "title": "Piano cartesiano: punti e distanze come coppie di numeri",
+            "id": "superiori.geometria-sintetica-congruenza",
+            "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
             "layer": 0
           },
           {
-            "id": "dati.tabelle-grafici",
-            "title": "Raccogliere dati, frequenze e rappresentazioni grafiche",
-            "layer": 0
-          },
-          {
-            "id": "dati.media-frequenza-incertezza",
-            "title": "Media, moda, mediana e primi passi nell'incertezza",
-            "layer": 0
-          },
-          {
-            "id": "P0.8",
-            "title": "Logica elementare applicata: problemi e stime a tempo",
+            "id": "P0.1",
+            "title": "Che cosa è una dimostrazione",
             "layer": 1
           },
           {
@@ -2132,7 +2121,7 @@
       "id": "geometria.parallelismo-perpendicolarita",
       "title": "Rette parallele, perpendicolari e distanza punto-retta",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "4ª elementare",
       "estimated_hours": 1.5,
@@ -2152,10 +2141,8 @@
       "hero_compass": {
         "primary_path_ids": [
           "geometria.parallelismo-perpendicolarita",
-          "geometria.coordinate-griglia",
-          "dati.tabelle-grafici",
-          "dati.media-frequenza-incertezza",
-          "P0.8",
+          "superiori.geometria-sintetica-congruenza",
+          "P0.1",
           "G00"
         ],
         "chain": [
@@ -2165,23 +2152,13 @@
             "layer": 0
           },
           {
-            "id": "geometria.coordinate-griglia",
-            "title": "Piano cartesiano: punti e distanze come coppie di numeri",
+            "id": "superiori.geometria-sintetica-congruenza",
+            "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
             "layer": 0
           },
           {
-            "id": "dati.tabelle-grafici",
-            "title": "Raccogliere dati, frequenze e rappresentazioni grafiche",
-            "layer": 0
-          },
-          {
-            "id": "dati.media-frequenza-incertezza",
-            "title": "Media, moda, mediana e primi passi nell'incertezza",
-            "layer": 0
-          },
-          {
-            "id": "P0.8",
-            "title": "Logica elementare applicata: problemi e stime a tempo",
+            "id": "P0.1",
+            "title": "Che cosa è una dimostrazione",
             "layer": 1
           },
           {
@@ -2223,7 +2200,7 @@
       "id": "geometria.poligoni-perimetro",
       "title": "Poligoni, triangoli e disuguaglianza triangolare",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "3ª-4ª elementare",
       "estimated_hours": 1.5,
@@ -2244,9 +2221,7 @@
       "hero_compass": {
         "primary_path_ids": [
           "geometria.poligoni-perimetro",
-          "geometria.area-rettangolo-schieramento",
-          "geometria.area-triangolo-poligoni",
-          "geometria.pitagora",
+          "superiori.geometria-sintetica-congruenza",
           "P0.1",
           "G00"
         ],
@@ -2257,18 +2232,8 @@
             "layer": 0
           },
           {
-            "id": "geometria.area-rettangolo-schieramento",
-            "title": "Area del rettangolo e unità quadrate",
-            "layer": 0
-          },
-          {
-            "id": "geometria.area-triangolo-poligoni",
-            "title": "Equiscomponibilità e area di triangoli e poligoni",
-            "layer": 0
-          },
-          {
-            "id": "geometria.pitagora",
-            "title": "Teorema di Pitagora e distanza euclidea",
+            "id": "superiori.geometria-sintetica-congruenza",
+            "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
             "layer": 0
           },
           {
@@ -2315,7 +2280,7 @@
       "id": "geometria.area-rettangolo-schieramento",
       "title": "Area del rettangolo e unità quadrate",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "4ª elementare",
       "estimated_hours": 1.5,
@@ -2401,7 +2366,7 @@
       "id": "geometria.area-triangolo-poligoni",
       "title": "Equiscomponibilità e area di triangoli e poligoni",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "5ª elementare",
       "estimated_hours": 1.5,
@@ -2481,7 +2446,7 @@
       "id": "geometria.simmetrie-traslazioni",
       "title": "Isometrie: traslazioni, rotazioni e simmetrie",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "4ª-5ª elementare",
       "estimated_hours": 1.5,
@@ -2543,7 +2508,7 @@
       "id": "geometria.pitagora",
       "title": "Teorema di Pitagora e distanza euclidea",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "2ª media",
       "estimated_hours": 1.5,
@@ -2617,7 +2582,7 @@
       "id": "geometria.cerchio-pi-greco",
       "title": "Circonferenza, cerchio e la costante pi greco",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "5ª elem - 3ª media",
       "estimated_hours": 1.5,
@@ -2680,7 +2645,7 @@
       "id": "geometria.similitudine-scala",
       "title": "Figure simili, riduzioni in scala e teorema di Talete",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "2ª media",
       "estimated_hours": 1.5,
@@ -2743,7 +2708,7 @@
       "id": "geometria.solidi-volume",
       "title": "Solidi nello spazio, volume e principio delle fette",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "3ª media",
       "estimated_hours": 1.5,
@@ -2805,7 +2770,7 @@
       "id": "geometria.coordinate-griglia",
       "title": "Piano cartesiano: punti e distanze come coppie di numeri",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "spazio-misure-figure",
       "school_grade": "5ª elem - 3ª media",
       "estimated_hours": 1.5,
@@ -2891,7 +2856,7 @@
       "id": "logica.classificare-attributi",
       "title": "Classificare oggetti per attributi (insiemi intuitivi)",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "1ª elementare",
       "estimated_hours": 1.5,
@@ -2964,7 +2929,7 @@
       "id": "logica.vero-falso-non-e-o",
       "title": "Enunciati vero/falso e connettivi NON, E, O",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "2ª-3ª elementare",
       "estimated_hours": 1.5,
@@ -3037,7 +3002,7 @@
       "id": "logica.tutti-qualcuno-controesempio",
       "title": "Tutti, esiste almeno uno, e la forza del controesempio",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "4ª-5ª elementare",
       "estimated_hours": 1.5,
@@ -3110,7 +3075,7 @@
       "id": "relazioni.uguaglianza-bilancia",
       "title": "Il segno '=' come equilibrio di bilancia (non 'fa')",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "1ª-2ª elementare",
       "estimated_hours": 1.5,
@@ -3196,7 +3161,7 @@
       "id": "relazioni.sequenze-regole",
       "title": "Sequenze, regolarità e passi ricorsivi",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "2ª-3ª elementare",
       "estimated_hours": 1.5,
@@ -3242,15 +3207,19 @@
         "target_gate_window": "Prime 3 settimane del Q1",
         "serves_ofa_formal": false,
         "gates_unlocked": [
+          "G01",
           "G02",
           "G03",
           "G04",
+          "G05",
           "G06",
           "G07",
           "G09",
           "G10",
+          "G11",
           "G12",
           "G13",
+          "G14",
           "G15",
           "G16",
           "G17",
@@ -3258,14 +3227,14 @@
           "G19",
           "G20"
         ],
-        "gates_unlocked_count": 15
+        "gates_unlocked_count": 19
       }
     },
     "relazioni.lettere-formule": {
       "id": "relazioni.lettere-formule",
       "title": "Dalle parole alle lettere: variabili ed espressioni letterali",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "1ª-3ª media",
       "estimated_hours": 1.5,
@@ -3345,7 +3314,7 @@
       "id": "relazioni.proporzionalita-diretta-inversa",
       "title": "Leggi di proporzionalità diretta (y = kx) e inversa (x·y = k)",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "2ª-3ª media",
       "estimated_hours": 1.5,
@@ -3408,7 +3377,7 @@
       "id": "relazioni.equazione-primo-grado-base",
       "title": "Equazioni lineari: isolare l'incognita disfacendo le operazioni",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "3ª media",
       "estimated_hours": 1.5,
@@ -3482,7 +3451,7 @@
       "id": "dati.tabelle-grafici",
       "title": "Raccogliere dati, frequenze e rappresentazioni grafiche",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "3ª-5ª elementare",
       "estimated_hours": 1.5,
@@ -3562,7 +3531,7 @@
       "id": "dati.media-frequenza-incertezza",
       "title": "Media, moda, mediana e primi passi nell'incertezza",
       "layer": 0,
-      "layer_label": "Strato 0 · Fondamenta (1ª Elementare → 3ª Media)",
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
       "branch": "relazioni-logica-dati",
       "school_grade": "5ª elem - 3ª media",
       "estimated_hours": 1.5,
@@ -3630,6 +3599,1298 @@
           "G20"
         ],
         "gates_unlocked_count": 20
+      }
+    },
+    "superiori.polinomi-prodotti-notevoli": {
+      "id": "superiori.polinomi-prodotti-notevoli",
+      "title": "Polinomi e prodotti notevoli (geometria dell'algebra)",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "1ª superiore",
+      "estimated_hours": 3.0,
+      "prerequisites": [
+        "relazioni.lettere-formule",
+        "operazioni.potenze-base",
+        "geometria.area-rettangolo-schieramento"
+      ],
+      "decision": "Ogni prodotto notevole — (a+b)^2 = a^2 + 2ab + b^2, a^2 - b^2 = (a-b)(a+b) — è l'identità geometrica di un rettangolo o cubo scomposto per la legge distributiva.",
+      "target_op_tags": [
+        "COMBINATORIAL_GRID_PATTERN",
+        "INVARIANT_PRESERVATION"
+      ],
+      "generator_archetype": "Calcolare prodotti e scomposizioni simboliche conservando i termini misti e le aree rettangolari composte.",
+      "drill_key": "drill_polynomial_products",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.polinomi-prodotti-notevoli",
+          "superiori.fattorizzazione-frazioni-algebriche",
+          "P0.5",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.polinomi-prodotti-notevoli",
+            "title": "Polinomi e prodotti notevoli (geometria dell'algebra)",
+            "layer": 0
+          },
+          {
+            "id": "superiori.fattorizzazione-frazioni-algebriche",
+            "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
+            "layer": 0
+          },
+          {
+            "id": "P0.5",
+            "title": "Calcolo simbolico: equazioni e disequazioni",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.fattorizzazione-frazioni-algebriche": {
+      "id": "superiori.fattorizzazione-frazioni-algebriche",
+      "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "1ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "superiori.polinomi-prodotti-notevoli",
+        "operazioni.divisione",
+        "frazioni.denominatore-comune"
+      ],
+      "decision": "Un polinomio P(x) è divisibile per (x - r) sse P(r) = 0 (teorema del resto di Ruffini): scomporre trasforma equazioni opache in fattori annullabili sotto condizioni di esistenza esplicite.",
+      "target_op_tags": [
+        "INVARIANT_PRESERVATION",
+        "CONSTRAINED_SEARCH_DECODING"
+      ],
+      "generator_archetype": "Dividere ed estrarre radici razionali di polinomi imponendo le condizioni di non annullamento dei denominatori.",
+      "drill_key": "drill_polynomial_ruffini",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.fattorizzazione-frazioni-algebriche",
+          "P0.5",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.fattorizzazione-frazioni-algebriche",
+            "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
+            "layer": 0
+          },
+          {
+            "id": "P0.5",
+            "title": "Calcolo simbolico: equazioni e disequazioni",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.geometria-sintetica-congruenza": {
+      "id": "superiori.geometria-sintetica-congruenza",
+      "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "1ª superiore",
+      "estimated_hours": 3.0,
+      "prerequisites": [
+        "geometria.parallelismo-perpendicolarita",
+        "geometria.poligoni-perimetro",
+        "logica.tutti-qualcuno-controesempio"
+      ],
+      "decision": "Dedurre le proprietà delle figure (criteri di congruenza, somma degli angoli = 180°, parallelogrammi) a partire da un nucleo minimo di definizioni e postulati.",
+      "target_op_tags": [
+        "INVARIANT_PRESERVATION",
+        "CONTRADICTION_REDUCTIO"
+      ],
+      "generator_archetype": "Catene deduttive su angoli formati da trasversali e criteri minimi di rigidità dei triangoli.",
+      "drill_key": "drill_perpendicular_angles",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.geometria-sintetica-congruenza",
+          "P0.1",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.geometria-sintetica-congruenza",
+            "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
+            "layer": 0
+          },
+          {
+            "id": "P0.1",
+            "title": "Che cosa è una dimostrazione",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.sistemi-lineari-retta": {
+      "id": "superiori.sistemi-lineari-retta",
+      "title": "Sistemi lineari e retta nel piano cartesiano",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "2ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "relazioni.equazione-primo-grado-base",
+        "geometria.coordinate-griglia"
+      ],
+      "decision": "Un sistema lineare 2×2 è l'intersezione geometrica di due rette (y = mx + q): determinante != 0 significa incidenza unica, 0 significa parallelismo o coincidenza.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "VARIABLE_ISOLATION_CONTROL"
+      ],
+      "generator_archetype": "Risolvere sistemi lineari (sostituzione, riduzione, Cramer) traducendo pendenza, ortogonalità e incidenza.",
+      "drill_key": "drill_linear_systems_line",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.sistemi-lineari-retta",
+          "superiori.radicali-equazioni-secondo-grado",
+          "P0.4",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.sistemi-lineari-retta",
+            "title": "Sistemi lineari e retta nel piano cartesiano",
+            "layer": 0
+          },
+          {
+            "id": "superiori.radicali-equazioni-secondo-grado",
+            "title": "Radicali, razionalizzazione ed equazioni di secondo grado",
+            "layer": 0
+          },
+          {
+            "id": "P0.4",
+            "title": "Numeri: dagli interi ai reali",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.radicali-equazioni-secondo-grado": {
+      "id": "superiori.radicali-equazioni-secondo-grado",
+      "title": "Radicali, razionalizzazione ed equazioni di secondo grado",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "2ª superiore",
+      "estimated_hours": 4.0,
+      "prerequisites": [
+        "operazioni.radici-base",
+        "superiori.fattorizzazione-frazioni-algebriche",
+        "superiori.sistemi-lineari-retta"
+      ],
+      "decision": "Completare il quadrato riduce ax^2 + bx + c = 0 a uno scostamento puro (x + b/2a)^2 = Delta/(4a^2); il discriminante decide il numero di intersezioni reali con l'asse x.",
+      "target_op_tags": [
+        "INVARIANT_PRESERVATION",
+        "BOUNDED_TOLERANCE"
+      ],
+      "generator_archetype": "Semplificare radicali su dominio lecito, completare il quadrato e applicare le formule di Viète (somma/prodotto radici).",
+      "drill_key": "drill_quadratic_radicals",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.radicali-equazioni-secondo-grado",
+          "P0.4",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.radicali-equazioni-secondo-grado",
+            "title": "Radicali, razionalizzazione ed equazioni di secondo grado",
+            "layer": 0
+          },
+          {
+            "id": "P0.4",
+            "title": "Numeri: dagli interi ai reali",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.circonferenza-euclide-talete": {
+      "id": "superiori.circonferenza-euclide-talete",
+      "title": "Circonferenza, teoremi di Euclide e similitudine di Talete",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "2ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "superiori.geometria-sintetica-congruenza",
+        "geometria.pitagora",
+        "geometria.similitudine-scala",
+        "geometria.cerchio-pi-greco"
+      ],
+      "decision": "La proiezione ortogonale genera triangoli simili dentro il triangolo rettangolo (1° e 2° teorema di Euclide) e lega angoli al centro, alla circonferenza e rette tangenti.",
+      "target_op_tags": [
+        "PROPORTIONAL_SCALING",
+        "ANGULAR_GEOMETRY_PROJECTION"
+      ],
+      "generator_archetype": "Usare fasci paralleli e medie geometriche per calcolare corde, tangenti e segmenti inaccessibili.",
+      "drill_key": "drill_euclid_similarity",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.circonferenza-euclide-talete",
+          "superiori.coniche-luoghi-geometrici",
+          "P0.6",
+          "G01"
+        ],
+        "chain": [
+          {
+            "id": "superiori.circonferenza-euclide-talete",
+            "title": "Circonferenza, teoremi di Euclide e similitudine di Talete",
+            "layer": 0
+          },
+          {
+            "id": "superiori.coniche-luoghi-geometrici",
+            "title": "Coniche come luoghi geometrici ed equazioni (parabola, ellisse, iperbole)",
+            "layer": 0
+          },
+          {
+            "id": "P0.6",
+            "title": "Funzioni elementari e loro grafici",
+            "layer": 1
+          },
+          {
+            "id": "G01",
+            "title": "G01 · Matematica II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G01",
+        "target_gate_title": "G01 · Matematica II",
+        "target_gate_window": "Prima dell'appello Q1 (co-erogato con Matematica I)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 9
+      }
+    },
+    "superiori.equazioni-fratte-irrazionali-modulo": {
+      "id": "superiori.equazioni-fratte-irrazionali-modulo",
+      "title": "Disequazioni fratte, sistemi di disequazioni, irrazionali e moduli",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "3ª superiore",
+      "estimated_hours": 4.0,
+      "prerequisites": [
+        "superiori.radicali-equazioni-secondo-grado"
+      ],
+      "decision": "Non moltiplicare mai per un denominatore di segno ignoto e non elevare al quadrato senza concordanza di segno: lo studio del segno e delle condizioni di accettabilità previene soluzioni fantasma.",
+      "target_op_tags": [
+        "BOUNDED_TOLERANCE",
+        "SIGNED_DEVIATION_FEEDBACK"
+      ],
+      "generator_archetype": "Discutere sistemi equivalenti per disequazioni fratte, valori assoluti e radici di indice pari/dispari.",
+      "drill_key": "drill_p0_symbolic_inequalities",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.equazioni-fratte-irrazionali-modulo",
+          "P0.5",
+          "G00"
+        ],
+        "chain": [
+          {
+            "id": "superiori.equazioni-fratte-irrazionali-modulo",
+            "title": "Disequazioni fratte, sistemi di disequazioni, irrazionali e moduli",
+            "layer": 0
+          },
+          {
+            "id": "P0.5",
+            "title": "Calcolo simbolico: equazioni e disequazioni",
+            "layer": 1
+          },
+          {
+            "id": "G00",
+            "title": "G00 · Matematica I",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G00",
+        "target_gate_title": "G00 · Matematica I",
+        "target_gate_window": "Entro 12 mesi dall'immatricolazione (pena blocco totale esami 2° e 3° anno)",
+        "serves_ofa_formal": true,
+        "gates_unlocked": [
+          "G00",
+          "G01",
+          "G03",
+          "G04",
+          "G05",
+          "G06",
+          "G07",
+          "G08",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 20
+      }
+    },
+    "superiori.coniche-luoghi-geometrici": {
+      "id": "superiori.coniche-luoghi-geometrici",
+      "title": "Coniche come luoghi geometrici ed equazioni (parabola, ellisse, iperbole)",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "3ª superiore",
+      "estimated_hours": 4.0,
+      "prerequisites": [
+        "superiori.sistemi-lineari-retta",
+        "superiori.radicali-equazioni-secondo-grado",
+        "superiori.circonferenza-euclide-talete"
+      ],
+      "decision": "Circonferenza, ellisse, parabola e iperbole uniscono la sezione del cono (Apollonio), proprietà focali fisiche e quadratica algebrica nel piano cartesiano.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "INVARIANT_PRESERVATION"
+      ],
+      "generator_archetype": "Passare dalla definizione come luogo di distanze all'equazione canonica di fuochi, direttrici, assi e asintoti.",
+      "drill_key": "drill_conics_loci",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.coniche-luoghi-geometrici",
+          "P0.6",
+          "G01"
+        ],
+        "chain": [
+          {
+            "id": "superiori.coniche-luoghi-geometrici",
+            "title": "Coniche come luoghi geometrici ed equazioni (parabola, ellisse, iperbole)",
+            "layer": 0
+          },
+          {
+            "id": "P0.6",
+            "title": "Funzioni elementari e loro grafici",
+            "layer": 1
+          },
+          {
+            "id": "G01",
+            "title": "G01 · Matematica II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G01",
+        "target_gate_title": "G01 · Matematica II",
+        "target_gate_window": "Prima dell'appello Q1 (co-erogato con Matematica I)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 9
+      }
+    },
+    "superiori.successioni-progressioni": {
+      "id": "superiori.successioni-progressioni",
+      "title": "Successioni numeriche, progressioni aritmetiche e geometriche",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "3ª superiore",
+      "estimated_hours": 3.0,
+      "prerequisites": [
+        "relazioni.sequenze-regole",
+        "superiori.radicali-equazioni-secondo-grado"
+      ],
+      "decision": "Sottrarre una somma da se stessa spostata (Gauss) chiude le somme aritmetiche e geometriche S_n = a_1 (1 - q^n)/(1 - q), anticipando le serie e l'induzione.",
+      "target_op_tags": [
+        "RECURSIVE_SELF_SIMILARITY",
+        "ACCUMULATION_INTEGRATION"
+      ],
+      "generator_archetype": "Calcolare termini generali e somme parziali chiuse distinguendo crescita lineare (differenza costante) da moltiplicativa (ragione costante).",
+      "drill_key": "drill_progressions_sum",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.successioni-progressioni",
+          "P2.1",
+          "G07"
+        ],
+        "chain": [
+          {
+            "id": "superiori.successioni-progressioni",
+            "title": "Successioni numeriche, progressioni aritmetiche e geometriche",
+            "layer": 0
+          },
+          {
+            "id": "P2.1",
+            "title": "Induzione e ricorsione",
+            "layer": 2
+          },
+          {
+            "id": "G07",
+            "title": "G07 · Programmazione e Algoritmi II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G07",
+        "target_gate_title": "G07 · Programmazione e Algoritmi II",
+        "target_gate_window": "Fine Q2",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G07",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 16
+      }
+    },
+    "superiori.goniometria-formule-equazioni": {
+      "id": "superiori.goniometria-formule-equazioni",
+      "title": "Funzioni goniometriche, formule di addizione ed equazioni periodiche",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "3ª superiore",
+      "estimated_hours": 4.0,
+      "prerequisites": [
+        "superiori.circonferenza-euclide-talete",
+        "superiori.coniche-luoghi-geometrici"
+      ],
+      "decision": "Tutte le identità di addizione, duplicazione e bisezione scendono da una rotazione unitaria sulla circonferenza (o dalla distanza tra due punti su essa), riducendo le equazioni goniometriche a sistemi sulla circonferenza.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "MODULAR_PERIODICITY"
+      ],
+      "generator_archetype": "Manipolare identità di seno/coseno/tangente e risolvere equazioni e disequazioni periodiche in modulo 2π.",
+      "drill_key": "drill_goniometry_identities",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.goniometria-formule-equazioni",
+          "P0.7",
+          "G01"
+        ],
+        "chain": [
+          {
+            "id": "superiori.goniometria-formule-equazioni",
+            "title": "Funzioni goniometriche, formule di addizione ed equazioni periodiche",
+            "layer": 0
+          },
+          {
+            "id": "P0.7",
+            "title": "Trigonometria essenziale",
+            "layer": 1
+          },
+          {
+            "id": "G01",
+            "title": "G01 · Matematica II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G01",
+        "target_gate_title": "G01 · Matematica II",
+        "target_gate_window": "Prima dell'appello Q1 (co-erogato con Matematica I)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 9
+      }
+    },
+    "superiori.trigonometria-triangoli": {
+      "id": "superiori.trigonometria-triangoli",
+      "title": "Trigonometria piana e risoluzione di triangoli qualunque",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "4ª superiore",
+      "estimated_hours": 3.0,
+      "prerequisites": [
+        "superiori.goniometria-formule-equazioni"
+      ],
+      "decision": "I teoremi dei seni e di Carnot (c^2 = a^2 + b^2 - 2ab cos γ) generalizzano Pitagora a qualunque angolo, sbloccando navigazione, geodesia e meccanica.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "PROPORTIONAL_SCALING"
+      ],
+      "generator_archetype": "Ricostruire lati e angoli inaccessibili da rilievi angolari parziali.",
+      "drill_key": "drill_cosine_law",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.trigonometria-triangoli",
+          "P0.7",
+          "G01"
+        ],
+        "chain": [
+          {
+            "id": "superiori.trigonometria-triangoli",
+            "title": "Trigonometria piana e risoluzione di triangoli qualunque",
+            "layer": 0
+          },
+          {
+            "id": "P0.7",
+            "title": "Trigonometria essenziale",
+            "layer": 1
+          },
+          {
+            "id": "G01",
+            "title": "G01 · Matematica II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G01",
+        "target_gate_title": "G01 · Matematica II",
+        "target_gate_window": "Prima dell'appello Q1 (co-erogato con Matematica I)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 9
+      }
+    },
+    "superiori.esponenziali-logaritmi": {
+      "id": "superiori.esponenziali-logaritmi",
+      "title": "Funzioni esponenziali, logaritmi e scale multiplicativo-additive",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "4ª superiore",
+      "estimated_hours": 4.0,
+      "prerequisites": [
+        "operazioni.potenze-base",
+        "superiori.successioni-progressioni",
+        "superiori.equazioni-fratte-irrazionali-modulo"
+      ],
+      "decision": "Il logaritmo log_a(y) trasforma prodotti in somme e potenze in moltiplicazioni (inverso continuo dell'esponenziale a^x), rendendo lineari scale fisiche di molti ordini di grandezza.",
+      "target_op_tags": [
+        "ORDER_OF_MAGNITUDE_BOUND",
+        "RATE_OF_CHANGE"
+      ],
+      "generator_archetype": "Risolvere equazioni e disequazioni esponenziali/logaritmiche con cambio di base e vincoli sull'argomento (> 0).",
+      "drill_key": "drill_logarithms_exp",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.esponenziali-logaritmi",
+          "P0.6",
+          "G01"
+        ],
+        "chain": [
+          {
+            "id": "superiori.esponenziali-logaritmi",
+            "title": "Funzioni esponenziali, logaritmi e scale multiplicativo-additive",
+            "layer": 0
+          },
+          {
+            "id": "P0.6",
+            "title": "Funzioni elementari e loro grafici",
+            "layer": 1
+          },
+          {
+            "id": "G01",
+            "title": "G01 · Matematica II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G01",
+        "target_gate_title": "G01 · Matematica II",
+        "target_gate_window": "Prima dell'appello Q1 (co-erogato con Matematica I)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G01",
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 9
+      }
+    },
+    "superiori.numeri-complessi-gauss": {
+      "id": "superiori.numeri-complessi-gauss",
+      "title": "Numeri complessi, piano di Gauss, De Moivre e radici n-esime",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "numeri-e-operazioni",
+      "school_grade": "4ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "superiori.goniometria-formule-equazioni",
+        "superiori.radicali-equazioni-secondo-grado"
+      ],
+      "decision": "Introdurre i con i^2 = -1 significa interpretare il prodotto come scalatura + rotazione nel piano (De Moivre), chiudendo l'algebra polinomiale sui poligoni regolari delle radici n-esime.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "MODULAR_PERIODICITY"
+      ],
+      "generator_archetype": "Convertire tra forma algebrica (a + ib) e polare/trigonometrica ed estrarre radici n-esime.",
+      "drill_key": "drill_complex_numbers",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.numeri-complessi-gauss",
+          "P3.1",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.numeri-complessi-gauss",
+            "title": "Numeri complessi, piano di Gauss, De Moivre e radici n-esime",
+            "layer": 0
+          },
+          {
+            "id": "P3.1",
+            "title": "Algebra lineare operativa",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 7
+      }
+    },
+    "superiori.combinatoria-probabilita-composta": {
+      "id": "superiori.combinatoria-probabilita-composta",
+      "title": "Calcolo combinatorio, binomio di Newton e probabilità composta/Bayes",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "4ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "dati.media-frequenza-incertezza",
+        "superiori.polinomi-prodotti-notevoli"
+      ],
+      "decision": "Separare l'importanza dell'ordine (disposizioni vs combinazioni C(n,k)) spiega insieme i coefficienti di (a+b)^n e il conteggio esatto delle probabilità condizionate.",
+      "target_op_tags": [
+        "COMBINATORIAL_GRID_PATTERN",
+        "PROBABILITY_BAYESIAN_UPDATE"
+      ],
+      "generator_archetype": "Contare disposizioni, permutazioni, combinazioni ed eventi dipendenti condizionati.",
+      "drill_key": "drill_combinatorics_binomial",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.combinatoria-probabilita-composta",
+          "P2.2",
+          "G07"
+        ],
+        "chain": [
+          {
+            "id": "superiori.combinatoria-probabilita-composta",
+            "title": "Calcolo combinatorio, binomio di Newton e probabilità composta/Bayes",
+            "layer": 0
+          },
+          {
+            "id": "P2.2",
+            "title": "Matematica del discreto",
+            "layer": 2
+          },
+          {
+            "id": "G07",
+            "title": "G07 · Programmazione e Algoritmi II",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G07",
+        "target_gate_title": "G07 · Programmazione e Algoritmi II",
+        "target_gate_window": "Fine Q2",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G06",
+          "G07",
+          "G09",
+          "G10",
+          "G11",
+          "G12",
+          "G13",
+          "G14",
+          "G15",
+          "G16",
+          "G17",
+          "G18",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 15
+      }
+    },
+    "superiori.geometria-spazio-vettori": {
+      "id": "superiori.geometria-spazio-vettori",
+      "title": "Vettori, matrici 2×2/3×3 e geometria analitica nello spazio 3D",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "spazio-misure-figure",
+      "school_grade": "4ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "geometria.solidi-volume",
+        "superiori.sistemi-lineari-retta",
+        "superiori.trigonometria-triangoli"
+      ],
+      "decision": "Un vettore normale (a, b, c) identifica un piano ax + by + cz + d = 0 nello spazio 3D, unificando distanza, ortogonalità (prodotto scalare = 0) e determinanti.",
+      "target_op_tags": [
+        "ANGULAR_GEOMETRY_PROJECTION",
+        "INVARIANT_PRESERVATION"
+      ],
+      "generator_archetype": "Operare su vettori in R^2/R^3, prodotti scalari e intersezioni/distanze tra rette e piani nello spazio.",
+      "drill_key": "drill_space_vectors",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.geometria-spazio-vettori",
+          "P3.1",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.geometria-spazio-vettori",
+            "title": "Vettori, matrici 2×2/3×3 e geometria analitica nello spazio 3D",
+            "layer": 0
+          },
+          {
+            "id": "P3.1",
+            "title": "Algebra lineare operativa",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 7
+      }
+    },
+    "superiori.limiti-continuita-asintoti": {
+      "id": "superiori.limiti-continuita-asintoti",
+      "title": "Limiti, continuità, asintoti e teoremi globali (Weierstrass, valori intermedi)",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "5ª superiore",
+      "estimated_hours": 4.5,
+      "prerequisites": [
+        "superiori.equazioni-fratte-irrazionali-modulo",
+        "superiori.esponenziali-logaritmi",
+        "superiori.goniometria-formule-equazioni"
+      ],
+      "decision": "Il limite (ε-δ) fissa una tolleranza arbitraria sull'uscita e trova un corridoio attorno a x_0 in cui la funzione non scappa (localizzazione rigorosa dell'infinito e delle discontinuità).",
+      "target_op_tags": [
+        "BOUNDED_TOLERANCE",
+        "THRESHOLD_PHASE_TRANSITION"
+      ],
+      "generator_archetype": "Calcolare limiti con forme indeterminate, limiti notevoli e classificare discontinuità e asintoti.",
+      "drill_key": "drill_limits_continuity",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.limiti-continuita-asintoti",
+          "P2.3",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.limiti-continuita-asintoti",
+            "title": "Limiti, continuità, asintoti e teoremi globali (Weierstrass, valori intermedi)",
+            "layer": 0
+          },
+          {
+            "id": "P2.3",
+            "title": "Analisi: quel tanto che serve (Limiti, Derivate, Catena, Integrali)",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 8
+      }
+    },
+    "superiori.derivata-studio-funzione": {
+      "id": "superiori.derivata-studio-funzione",
+      "title": "Derivata, teoremi del calcolo differenziale (Rolle/Lagrange) e studio di funzione",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "5ª superiore",
+      "estimated_hours": 5.0,
+      "prerequisites": [
+        "superiori.limiti-continuita-asintoti"
+      ],
+      "decision": "La derivata f'(x_0) è la migliore approssimazione lineare locale (pendenza tangente e velocità istantanea); azzerarla isola massimi, minimi e punti di svolta fisici ed economici.",
+      "target_op_tags": [
+        "RATE_OF_CHANGE",
+        "SIGNED_DEVIATION_FEEDBACK"
+      ],
+      "generator_archetype": "Calcolare derivate di funzioni composte e ricostruire il grafico qualitativo completo tramite f' e f''.",
+      "drill_key": "drill_derivatives_extrema",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.derivata-studio-funzione",
+          "P2.3",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.derivata-studio-funzione",
+            "title": "Derivata, teoremi del calcolo differenziale (Rolle/Lagrange) e studio di funzione",
+            "layer": 0
+          },
+          {
+            "id": "P2.3",
+            "title": "Analisi: quel tanto che serve (Limiti, Derivate, Catena, Integrali)",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 8
+      }
+    },
+    "superiori.integrali-teorema-fondamentale": {
+      "id": "superiori.integrali-teorema-fondamentale",
+      "title": "Integrali indefiniti/definiti e Teorema Fondamentale del Calcolo",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "5ª superiore",
+      "estimated_hours": 5.0,
+      "prerequisites": [
+        "superiori.derivata-studio-funzione",
+        "geometria.area-triangolo-poligoni"
+      ],
+      "decision": "L'accumulazione continua di rettangoli infinitesimi (integrale di Riemann) è l'operazione inversa del tasso istantaneo (Torricelli-Barrow): F'(x) = f(x) lega aree e derivate.",
+      "target_op_tags": [
+        "ACCUMULATION_INTEGRATION",
+        "INVARIANT_PRESERVATION"
+      ],
+      "generator_archetype": "Integrare per scomposizione, sostituzione e parti per calcolare aree e volumi esatti.",
+      "drill_key": "drill_definite_integrals",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.integrali-teorema-fondamentale",
+          "P2.3",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.integrali-teorema-fondamentale",
+            "title": "Integrali indefiniti/definiti e Teorema Fondamentale del Calcolo",
+            "layer": 0
+          },
+          {
+            "id": "P2.3",
+            "title": "Analisi: quel tanto che serve (Limiti, Derivate, Catena, Integrali)",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 8
+      }
+    },
+    "superiori.equazioni-differenziali-modelli": {
+      "id": "superiori.equazioni-differenziali-modelli",
+      "title": "Equazioni differenziali del 1° e 2° ordine e modelli dinamici",
+      "layer": 0,
+      "layer_label": "Strato 0 · Fondamenta Scolastiche (1ª Elementare → 5ª Superiore)",
+      "branch": "relazioni-logica-dati",
+      "school_grade": "5ª superiore",
+      "estimated_hours": 3.5,
+      "prerequisites": [
+        "superiori.integrali-teorema-fondamentale"
+      ],
+      "decision": "In fisica, biologia e ingegneria non conosciamo subito lo stato y(t), ma la legge locale y' = F(t, y) che ne regola il tasso di cambiamento; integrarla genera l'intera traiettoria.",
+      "target_op_tags": [
+        "RATE_OF_CHANGE",
+        "ACCUMULATION_INTEGRATION"
+      ],
+      "generator_archetype": "Separare le variabili e risolvere equazioni differenziali lineari con condizioni iniziali (Cauchy).",
+      "drill_key": "drill_ode_separable",
+      "canonical_domains": [
+        "matematica"
+      ],
+      "hero_compass": {
+        "primary_path_ids": [
+          "superiori.equazioni-differenziali-modelli",
+          "P2.3",
+          "G05"
+        ],
+        "chain": [
+          {
+            "id": "superiori.equazioni-differenziali-modelli",
+            "title": "Equazioni differenziali del 1° e 2° ordine e modelli dinamici",
+            "layer": 0
+          },
+          {
+            "id": "P2.3",
+            "title": "Analisi: quel tanto che serve (Limiti, Derivate, Catena, Integrali)",
+            "layer": 2
+          },
+          {
+            "id": "G05",
+            "title": "G05 · Machine Learning",
+            "layer": 3
+          }
+        ],
+        "target_gate_id": "G05",
+        "target_gate_title": "G05 · Machine Learning",
+        "target_gate_window": "Tra fine Q2 e inizio Q3 — finestra più critica del 1° anno (Prob/Stat a 0 CFU nel piano!)",
+        "serves_ofa_formal": false,
+        "gates_unlocked": [
+          "G05",
+          "G06",
+          "G11",
+          "G13",
+          "G14",
+          "G15",
+          "G19",
+          "G20"
+        ],
+        "gates_unlocked_count": 8
       }
     },
     "P6.1": {
@@ -3719,6 +4980,7 @@
       "prerequisites": [
         "logica.tutti-qualcuno-controesempio",
         "geometria.pitagora",
+        "superiori.geometria-sintetica-congruenza",
         "P6.1"
       ],
       "decision": "Separare ipotesi, tesi, assiomi e regole deduttive (diretta, per assurdo, controesempio) per arrestare il regresso infinito delle giustificazioni.",
@@ -3945,7 +5207,8 @@
         "divisibilita.mcd",
         "divisibilita.mcm",
         "operazioni.radici-base",
-        "rapporti.proporzioni-percentuali"
+        "rapporti.proporzioni-percentuali",
+        "superiori.radicali-equazioni-secondo-grado"
       ],
       "decision": "Estendere N -> Z -> Q -> R a ogni operazione che si rompe (sottrazione, divisione, diagonale incommensurabile sqrt(2)).",
       "objective": "Manipolare senza errori potenze razionali/negative, radicali, frazioni, valore assoluto e ordini di grandezza.",
@@ -4021,7 +5284,9 @@
         "P0.4",
         "frazioni.denominatore-comune",
         "relazioni.equazione-primo-grado-base",
-        "operazioni.distributiva"
+        "operazioni.distributiva",
+        "superiori.fattorizzazione-frazioni-algebriche",
+        "superiori.equazioni-fratte-irrazionali-modulo"
       ],
       "decision": "Ricondurre equazioni e disequazioni (1°/2° grado, fratte, con valore assoluto |x - x0| < δ e radicali) a fattorizzazione e studio del segno.",
       "objective": "Risolvere senza esitazione equazioni e disequazioni con frazioni, moduli e radicali, controllando il risultato per sostituzione.",
@@ -4096,7 +5361,9 @@
         "P0.5",
         "geometria.coordinate-griglia",
         "geometria.simmetrie-traslazioni",
-        "relazioni.proporzionalita-diretta-inversa"
+        "relazioni.proporzionalita-diretta-inversa",
+        "superiori.coniche-luoghi-geometrici",
+        "superiori.esponenziali-logaritmi"
       ],
       "decision": "Fondere algebra e geometria (Cartesio): leggere rette, parabole, esponenziali e logaritmi tramite trasformazioni geometriche anziché tabelle di punti.",
       "objective": "Disegnare a mano, senza tabelle di valori, il grafico di una funzione elementare e delle sue trasformazioni.",
@@ -4161,7 +5428,9 @@
         "P0.6",
         "geometria.cerchio-pi-greco",
         "geometria.similitudine-scala",
-        "geometria.pitagora"
+        "geometria.pitagora",
+        "superiori.goniometria-formule-equazioni",
+        "superiori.trigonometria-triangoli"
       ],
       "decision": "Definire seno e coseno come coordinate sulla circonferenza unitaria in radianti per modellare rotazioni, proiezioni d'angolo e fenomeni periodici.",
       "objective": "Usare seno, coseno e tangente come funzioni periodiche e proiezioni geometriche senza memorizzare tabelle cieche.",
@@ -4433,6 +5702,7 @@
       "estimated_hours": 10,
       "prerequisites": [
         "P0.3",
+        "superiori.successioni-progressioni",
         "G02"
       ],
       "decision": "Induzione matematica (base + passo n -> n+1) e ricorsione ben fondata nel codice sono la medesima struttura vista da due lati.",
@@ -4497,6 +5767,7 @@
       "estimated_hours": 14,
       "prerequisites": [
         "P2.1",
+        "superiori.combinatoria-probabilita-composta",
         "G00"
       ],
       "decision": "Contare configurazioni finite (combinatoria, pigeonhole), modellare reti come grafi e calcolare nei resti modulari Z_n.",
@@ -4562,6 +5833,10 @@
       "prerequisites": [
         "P0.6",
         "geometria.solidi-volume",
+        "superiori.limiti-continuita-asintoti",
+        "superiori.derivata-studio-funzione",
+        "superiori.integrali-teorema-fondamentale",
+        "superiori.equazioni-differenziali-modelli",
         "G01"
       ],
       "decision": "Leggere la derivata come tasso istantaneo di variazione (Newton) e la regola della catena come propagazione della sensibilità lungo strati composti.",
@@ -4623,6 +5898,9 @@
       "estimated_hours": 18,
       "prerequisites": [
         "P0.6",
+        "superiori.sistemi-lineari-retta",
+        "superiori.numeri-complessi-gauss",
+        "superiori.geometria-spazio-vettori",
         "G00"
       ],
       "decision": "Vedere matrici come trasformazioni geometriche dello spazio, prodotti scalari come proiezioni di similarità e autovettori come direzioni invarianti.",
@@ -4684,6 +5962,7 @@
       "prerequisites": [
         "P0.3",
         "P0.4",
+        "superiori.combinatoria-probabilita-composta",
         "P2.3"
       ],
       "decision": "Formalizzare l'incertezza con gli assiomi di Kolmogorov e l'aggiornamento razionale delle credenze col teorema di Bayes.",
@@ -6574,11 +7853,191 @@
       "dati.media-frequenza-incertezza"
     ],
     [
+      "relazioni.lettere-formule",
+      "superiori.polinomi-prodotti-notevoli"
+    ],
+    [
+      "operazioni.potenze-base",
+      "superiori.polinomi-prodotti-notevoli"
+    ],
+    [
+      "geometria.area-rettangolo-schieramento",
+      "superiori.polinomi-prodotti-notevoli"
+    ],
+    [
+      "superiori.polinomi-prodotti-notevoli",
+      "superiori.fattorizzazione-frazioni-algebriche"
+    ],
+    [
+      "operazioni.divisione",
+      "superiori.fattorizzazione-frazioni-algebriche"
+    ],
+    [
+      "frazioni.denominatore-comune",
+      "superiori.fattorizzazione-frazioni-algebriche"
+    ],
+    [
+      "geometria.parallelismo-perpendicolarita",
+      "superiori.geometria-sintetica-congruenza"
+    ],
+    [
+      "geometria.poligoni-perimetro",
+      "superiori.geometria-sintetica-congruenza"
+    ],
+    [
+      "logica.tutti-qualcuno-controesempio",
+      "superiori.geometria-sintetica-congruenza"
+    ],
+    [
+      "relazioni.equazione-primo-grado-base",
+      "superiori.sistemi-lineari-retta"
+    ],
+    [
+      "geometria.coordinate-griglia",
+      "superiori.sistemi-lineari-retta"
+    ],
+    [
+      "operazioni.radici-base",
+      "superiori.radicali-equazioni-secondo-grado"
+    ],
+    [
+      "superiori.fattorizzazione-frazioni-algebriche",
+      "superiori.radicali-equazioni-secondo-grado"
+    ],
+    [
+      "superiori.sistemi-lineari-retta",
+      "superiori.radicali-equazioni-secondo-grado"
+    ],
+    [
+      "superiori.geometria-sintetica-congruenza",
+      "superiori.circonferenza-euclide-talete"
+    ],
+    [
+      "geometria.pitagora",
+      "superiori.circonferenza-euclide-talete"
+    ],
+    [
+      "geometria.similitudine-scala",
+      "superiori.circonferenza-euclide-talete"
+    ],
+    [
+      "geometria.cerchio-pi-greco",
+      "superiori.circonferenza-euclide-talete"
+    ],
+    [
+      "superiori.radicali-equazioni-secondo-grado",
+      "superiori.equazioni-fratte-irrazionali-modulo"
+    ],
+    [
+      "superiori.sistemi-lineari-retta",
+      "superiori.coniche-luoghi-geometrici"
+    ],
+    [
+      "superiori.radicali-equazioni-secondo-grado",
+      "superiori.coniche-luoghi-geometrici"
+    ],
+    [
+      "superiori.circonferenza-euclide-talete",
+      "superiori.coniche-luoghi-geometrici"
+    ],
+    [
+      "relazioni.sequenze-regole",
+      "superiori.successioni-progressioni"
+    ],
+    [
+      "superiori.radicali-equazioni-secondo-grado",
+      "superiori.successioni-progressioni"
+    ],
+    [
+      "superiori.circonferenza-euclide-talete",
+      "superiori.goniometria-formule-equazioni"
+    ],
+    [
+      "superiori.coniche-luoghi-geometrici",
+      "superiori.goniometria-formule-equazioni"
+    ],
+    [
+      "superiori.goniometria-formule-equazioni",
+      "superiori.trigonometria-triangoli"
+    ],
+    [
+      "operazioni.potenze-base",
+      "superiori.esponenziali-logaritmi"
+    ],
+    [
+      "superiori.successioni-progressioni",
+      "superiori.esponenziali-logaritmi"
+    ],
+    [
+      "superiori.equazioni-fratte-irrazionali-modulo",
+      "superiori.esponenziali-logaritmi"
+    ],
+    [
+      "superiori.goniometria-formule-equazioni",
+      "superiori.numeri-complessi-gauss"
+    ],
+    [
+      "superiori.radicali-equazioni-secondo-grado",
+      "superiori.numeri-complessi-gauss"
+    ],
+    [
+      "dati.media-frequenza-incertezza",
+      "superiori.combinatoria-probabilita-composta"
+    ],
+    [
+      "superiori.polinomi-prodotti-notevoli",
+      "superiori.combinatoria-probabilita-composta"
+    ],
+    [
+      "geometria.solidi-volume",
+      "superiori.geometria-spazio-vettori"
+    ],
+    [
+      "superiori.sistemi-lineari-retta",
+      "superiori.geometria-spazio-vettori"
+    ],
+    [
+      "superiori.trigonometria-triangoli",
+      "superiori.geometria-spazio-vettori"
+    ],
+    [
+      "superiori.equazioni-fratte-irrazionali-modulo",
+      "superiori.limiti-continuita-asintoti"
+    ],
+    [
+      "superiori.esponenziali-logaritmi",
+      "superiori.limiti-continuita-asintoti"
+    ],
+    [
+      "superiori.goniometria-formule-equazioni",
+      "superiori.limiti-continuita-asintoti"
+    ],
+    [
+      "superiori.limiti-continuita-asintoti",
+      "superiori.derivata-studio-funzione"
+    ],
+    [
+      "superiori.derivata-studio-funzione",
+      "superiori.integrali-teorema-fondamentale"
+    ],
+    [
+      "geometria.area-triangolo-poligoni",
+      "superiori.integrali-teorema-fondamentale"
+    ],
+    [
+      "superiori.integrali-teorema-fondamentale",
+      "superiori.equazioni-differenziali-modelli"
+    ],
+    [
       "logica.tutti-qualcuno-controesempio",
       "P0.1"
     ],
     [
       "geometria.pitagora",
+      "P0.1"
+    ],
+    [
+      "superiori.geometria-sintetica-congruenza",
       "P0.1"
     ],
     [
@@ -6626,6 +8085,10 @@
       "P0.4"
     ],
     [
+      "superiori.radicali-equazioni-secondo-grado",
+      "P0.4"
+    ],
+    [
       "P0.4",
       "P0.5"
     ],
@@ -6639,6 +8102,14 @@
     ],
     [
       "operazioni.distributiva",
+      "P0.5"
+    ],
+    [
+      "superiori.fattorizzazione-frazioni-algebriche",
+      "P0.5"
+    ],
+    [
+      "superiori.equazioni-fratte-irrazionali-modulo",
       "P0.5"
     ],
     [
@@ -6658,6 +8129,14 @@
       "P0.6"
     ],
     [
+      "superiori.coniche-luoghi-geometrici",
+      "P0.6"
+    ],
+    [
+      "superiori.esponenziali-logaritmi",
+      "P0.6"
+    ],
+    [
       "P0.6",
       "P0.7"
     ],
@@ -6671,6 +8150,14 @@
     ],
     [
       "geometria.pitagora",
+      "P0.7"
+    ],
+    [
+      "superiori.goniometria-formule-equazioni",
+      "P0.7"
+    ],
+    [
+      "superiori.trigonometria-triangoli",
       "P0.7"
     ],
     [
@@ -6702,11 +8189,19 @@
       "P2.1"
     ],
     [
+      "superiori.successioni-progressioni",
+      "P2.1"
+    ],
+    [
       "G02",
       "P2.1"
     ],
     [
       "P2.1",
+      "P2.2"
+    ],
+    [
+      "superiori.combinatoria-probabilita-composta",
       "P2.2"
     ],
     [
@@ -6722,11 +8217,39 @@
       "P2.3"
     ],
     [
+      "superiori.limiti-continuita-asintoti",
+      "P2.3"
+    ],
+    [
+      "superiori.derivata-studio-funzione",
+      "P2.3"
+    ],
+    [
+      "superiori.integrali-teorema-fondamentale",
+      "P2.3"
+    ],
+    [
+      "superiori.equazioni-differenziali-modelli",
+      "P2.3"
+    ],
+    [
       "G01",
       "P2.3"
     ],
     [
       "P0.6",
+      "P3.1"
+    ],
+    [
+      "superiori.sistemi-lineari-retta",
+      "P3.1"
+    ],
+    [
+      "superiori.numeri-complessi-gauss",
+      "P3.1"
+    ],
+    [
+      "superiori.geometria-spazio-vettori",
       "P3.1"
     ],
     [
@@ -6739,6 +8262,10 @@
     ],
     [
       "P0.4",
+      "P3.2"
+    ],
+    [
+      "superiori.combinatoria-probabilita-composta",
       "P3.2"
     ],
     [

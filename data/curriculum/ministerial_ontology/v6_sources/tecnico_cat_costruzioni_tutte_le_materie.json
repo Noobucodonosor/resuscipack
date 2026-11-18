@@ -1,0 +1,174 @@
+{
+  "scuola": "Istituto Tecnico CAT (Geometri) - Settore Tecnologico - Indirizzo Costruzioni, Ambiente e Territorio",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di Matematica",
+          "argomenti": [
+            "Vettori, operazioni e trasformazioni vettoriali",
+            "Luoghi geometrici; equazioni delle coniche e di altre curve notevoli; formule parametriche di alcune curve",
+            "Analisi di Fourier delle funzioni periodiche",
+            "Proprietà delle rappresentazioni polari e logaritmiche",
+            "Applicazioni delle equazioni differenziali lineari",
+            "Applicazioni delle derivate parziali e del differenziale totale",
+            "Metodo dei minimi quadrati",
+            "Popolazione e campione",
+            "Statistiche, distribuzioni campionarie e stimatori",
+            "Verifica di ipotesi statistiche per valutare l'efficacia di un nuovo prodotto o servizio"
+          ]
+        },
+        {
+          "nome": "Gestione del Cantiere e Sicurezza dell'Ambiente di Lavoro",
+          "argomenti": [
+            "Principi di organizzazione del cantiere e di utilizzo delle macchine",
+            "Normativa relativa alla sicurezza e alla prevenzione degli infortuni e degli incendi nei cantieri",
+            "Documenti di controllo sanitario",
+            "Principi e procedure per la stesura di Piani di sicurezza e di coordinamento",
+            "Ruolo e funzioni del coordinatore nella gestione della sicurezza in fase di progetto e in fase esecutiva; gestione delle interferenze",
+            "Software per la gestione della sicurezza",
+            "Modelli di Sistemi Qualità aziendali; tipologia dei documenti della qualità"
+          ]
+        },
+        {
+          "nome": "Progettazione, Costruzioni e Impianti",
+          "argomenti": [
+            "Proprietà chimico-fisiche, meccaniche e tecnologiche dei materiali da costruzione, naturali e artificiali e loro classificazione",
+            "Criteri di utilizzo e processi di lavorazione dei materiali anche in rapporto all'impatto e alla sostenibilità ambientale",
+            "Principi, norme e metodi statistici di controllo di qualità di materiali ed artefatti",
+            "Comportamento elastico e post-elastico dei materiali",
+            "Elementi delle costruzioni ed evoluzione delle tecniche costruttive, anche in relazione agli stili architettonici e ai materiali",
+            "Principi della normativa antisismica",
+            "Classificazione sismica del territorio italiano",
+            "Impostazione strutturale di edifici nuovi con caratteristiche di antisismicità",
+            "Criteri e tecniche di consolidamento degli edifici esistenti",
+            "Relazioni tra le forze che agiscono su elementi strutturali, calcolo vettoriale",
+            "Condizioni di equilibrio di un corpo materiale, geometria delle masse, teorema di Varignon",
+            "Caratteristiche e classificazione delle sollecitazioni",
+            "Strutture isostatiche, iperstatiche e labili; metodo delle forze per l'analisi di strutture iperstatiche",
+            "Classificazione degli stati limite e calcolo con il metodo semiprobabilistico agli stati limite",
+            "Calcolo di semplici elementi costruttivi",
+            "Principi di geotecnica",
+            "Tipologie delle opere di sostegno",
+            "Elementi di composizione architettonica",
+            "Norme, metodi e procedimenti della progettazione di edifici e manufatti",
+            "Principi e standard di arredo urbano",
+            "Principi di sostenibilità edilizia",
+            "Processi di innovazione tecnologica nell'edilizia",
+            "Caratteristiche del piano di manutenzione di un organismo edilizio",
+            "Tipologie di impianti a servizio delle costruzioni; norme, materiali e tecnologie",
+            "Processi di conversione dell'energia e tecnologie di risparmio energetico negli edifici"
+          ]
+        },
+        {
+          "nome": "Geopedologia, Economia ed Estimo",
+          "argomenti": [
+            "Processi geomorfici e unità geomorfologiche fondamentali dell'Italia",
+            "Fattori e processi di formazione del suolo e correlate proprietà fisiche, chimiche e biologiche",
+            "Agrosistemi, ecosistemi e loro evoluzione",
+            "Processi e fenomeni di dissesto idrogeologico; principi ed opere per la difesa del suolo",
+            "Significato e valore delle carte tematiche",
+            "Ciclo dell'acqua, disponibilità e depurazione idrica per le necessità umane e produttive",
+            "Classificazione dei rifiuti e metodi di smaltimento",
+            "Processi di inquinamento dell'atmosfera, delle acque e del suolo",
+            "Fonti energetiche disponibili, con particolare riferimento alla situazione italiana",
+            "Concetti di bisogno, bene, consumo e produzione",
+            "Concetti e teorie del mercato e della moneta",
+            "Sistema creditizio e fiscale italiano",
+            "Principi di economia dello Stato e comunitaria",
+            "Calcolo di interesse semplice, interesse composto, valori periodici, reintegrazione e ammortamento del capitale",
+            "Capitalizzazione dei redditi, valore potenziale, riparti proporzionali",
+            "Descrizione statistica dei fenomeni macro e micro-economici",
+            "Principi di valutazione, aspetti economici e valori di stima dei beni",
+            "Metodi, procedimenti di stima e valori previsti dagli standard europei e internazionali"
+          ]
+        },
+        {
+          "nome": "Topografia",
+          "argomenti": [
+            "Superfici di riferimento in relazione al campo operativo del rilievo topografico",
+            "Sistemi di riferimento cartesiano e polare e conversione fra coordinate",
+            "Caratteristiche e definizione degli angoli azimutali e zenitali; metodi di misura",
+            "Metodi e tecniche di impiego della strumentazione topografica ordinaria e delle stazioni totali elettroniche",
+            "Metodi e tecniche della rilevazione topografica",
+            "Segnali utilizzabili attivi o passivi e loro impiego",
+            "Concetto e tipologie di distanza; metodi di misura della distanza",
+            "Procedimenti per il calcolo e la misura di un dislivello con visuale orizzontale o inclinata",
+            "Teoria degli errori; metodi di compensazione e correzione, livelli di tolleranza",
+            "Tipologia di dati presenti in un registro di campagna",
+            "Operazioni di campagna connesse al rilievo di appoggio mediante poligonali",
+            "Modalità di effettuazione di un rilievo catastale di aggiornamento e normativa di riferimento",
+            "Rappresentazione grafica e cartografica del territorio e le relative convenzioni simboliche",
+            "Tecniche di tracciamento",
+            "Principio di funzionamento del sistema di posizionamento globale (GPS)",
+            "Sistemi di riferimento del rilievo satellitare, superfici di riferimento nelle operazioni altimetriche e metodi e tecniche del rilievo satellitare",
+            "Caratteristiche delle visioni monoscopica e stereoscopica",
+            "Tecniche di correzione delle immagini rilevate con metodi ottici e numerici",
+            "Principio di funzionamento di un laser-scan",
+            "Campi e modalità di applicazione delle scansioni laser terrestri ed aeree",
+            "Sistemi, metodi e tecniche della restituzione e della rappresentazione cartografica",
+            "Norme di rappresentazione e utilità delle mappe catastali; catasto storico",
+            "Teoria e metodi di gestione del territorio attraverso il sistema informativo territoriale (GIS)",
+            "Lessico specifico di settore, anche in lingua inglese"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Gestione del Cantiere e Sicurezza dell'Ambiente di Lavoro",
+          "argomenti": [
+            "Processo di valutazione dei rischi e di individuazione delle misure di prevenzione",
+            "Strategie e metodi di pianificazione e programmazione delle attività e delle risorse nel rispetto delle normative sulla sicurezza",
+            "Sistemi di controllo del processo produttivo per la verifica degli standard qualitativi",
+            "Software per la programmazione dei lavori",
+            "Documenti contabili per il procedimento e la direzione dei lavori"
+          ]
+        },
+        {
+          "nome": "Progettazione, Costruzioni e Impianti",
+          "argomenti": [
+            "Storia dell'architettura in relazione ai materiali da costruzione, alle tecniche costruttive e ai profili socio-economici",
+            "Principi della normativa urbanistica e territoriale",
+            "Competenze istituzionali nella gestione del territorio",
+            "Principi di pianificazione territoriale e piani urbanistici",
+            "Norme tecniche delle costruzioni (D.M. 14/1/2008): strutture in cemento armato, murature, murature armate e legno, e responsabilità professionali in cantiere",
+            "Codice appalti e contratti pubblici"
+          ]
+        },
+        {
+          "nome": "Geopedologia, Economia ed Estimo",
+          "argomenti": [
+            "Strumenti e metodi di valutazione di beni e servizi",
+            "Metodi di ricerca del valore di un bene e stime patrimoniali",
+            "Catasto dei terreni e Catasto dei fabbricati",
+            "Metodi di stima dei beni ambientali",
+            "Giudizi di convenienza per le opere pubbliche",
+            "Procedure per le valutazioni di impatto ambientale",
+            "Albo professionale e codice etico-deontologico",
+            "C.T.U. e Arbitrato",
+            "Gestione e amministrazione immobiliare e condominiale"
+          ]
+        },
+        {
+          "nome": "Topografia",
+          "argomenti": [
+            "Determinazione dell'area di poligoni",
+            "Modalità telematiche di aggiornamento della documentazione catastale; normativa di riferimento",
+            "Metodi di individuazione analitica delle dividenti per il frazionamento di un appezzamento di terreno",
+            "Metodologie e procedure per la rettifica di un confine",
+            "Classificazione e tecniche di calcolo degli spianamenti di terreno",
+            "Calcolo e stima di volumetrie",
+            "Normativa, rilievi, progettazione, materiali per opere stradali",
+            "Impieghi della strumentazione topografica per particolari applicazioni",
+            "Tecniche di rilievo topografico e tracciamento di opere a sviluppo lineare"
+          ]
+        }
+      ]
+    }
+  ]
+}

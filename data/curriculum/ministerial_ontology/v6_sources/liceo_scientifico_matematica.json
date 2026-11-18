@@ -1,0 +1,115 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Matematica",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Aritmetica e algebra",
+          "argomenti": [
+            "Calcolo con numeri interi, razionali (frazioni e decimali) e proprietà delle operazioni",
+            "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+            "Conoscenza intuitiva dei numeri reali e loro rappresentazione geometrica su una retta",
+            "Dimostrazione dell'irrazionalità di √2 e di altri numeri",
+            "Studio dei numeri irrazionali e approssimazione",
+            "Calcolo dei radicali",
+            "Elementi di base del calcolo letterale, proprietà dei polinomi e operazioni tra polinomi",
+            "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+            "Equazioni, disequazioni e sistemi come rappresentazione di problemi",
+            "Vettori, dipendenza e indipendenza lineare, prodotto scalare e vettoriale nel piano e nello spazio",
+            "Elementi del calcolo matriciale"
+          ]
+        },
+        {
+          "nome": "Geometria",
+          "argomenti": [
+            "Fondamenti della geometria euclidea del piano: postulato, assioma, definizione, teorema, dimostrazione",
+            "Teorema di Pitagora: aspetti geometrici e implicazioni nella teoria dei numeri",
+            "Principali trasformazioni geometriche: traslazioni, rotazioni, simmetrie, similitudini e teorema di Talete",
+            "Proprietà fondamentali della circonferenza",
+            "Costruzioni geometriche con riga e compasso e con programmi informatici di geometria",
+            "Metodo delle coordinate cartesiane: rappresentazione di punti, rette e fasci di rette nel piano",
+            "Parallelismo e perpendicolarità nel piano cartesiano",
+            "Funzioni quadratiche e rappresentazione geometrica delle coniche nel piano cartesiano",
+            "Funzioni circolari, loro proprietà e relazioni elementari",
+            "Teoremi per la risoluzione dei triangoli e applicazioni in fisica"
+          ]
+        },
+        {
+          "nome": "Relazioni e funzioni",
+          "argomenti": [
+            "Linguaggio degli insiemi e delle funzioni: dominio, composizione, inversa",
+            "Descrizione di problemi con equazioni, disequazioni o sistemi",
+            "Funzioni f(x) = ax + b, f(x) = ax² + bx + c e rappresentazione di rette e parabole nel piano cartesiano",
+            "Equazioni di primo e secondo grado, disequazioni associate e sistemi di equazioni lineari in due incognite: risoluzione grafica e algebrica",
+            "Funzioni f(x) = |x|, f(x) = a/x, funzioni lineari a tratti, funzioni circolari",
+            "Teoria della proporzionalità diretta e inversa",
+            "Passaggio tra registri di rappresentazione: numerico, grafico, funzionale",
+            "Uso di strumenti informatici per la rappresentazione dei dati"
+          ]
+        },
+        {
+          "nome": "Dati e previsioni",
+          "argomenti": [
+            "Rappresentazione e analisi di insiemi di dati con strumenti informatici",
+            "Caratteri qualitativi, quantitativi discreti e quantitativi continui",
+            "Distribuzioni di frequenze e loro rappresentazione",
+            "Valori medi e misure di variabilità",
+            "Uso di calcolatrice e foglio di calcolo per analizzare raccolte di dati e serie statistiche",
+            "Inferenze da diagrammi statistici",
+            "Nozione di probabilità con esempi da contesti classici",
+            "Introduzione al concetto di modello matematico"
+          ]
+        },
+        {
+          "nome": "Elementi di informatica",
+          "argomenti": [
+            "Strumenti informatici per rappresentare e manipolare oggetti matematici",
+            "Modalità di rappresentazione dei dati elementari testuali e multimediali",
+            "Concetto di algoritmo e strategie di risoluzione algoritmica per problemi semplici",
+            "Concetto di funzione calcolabile e di calcolabilità"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Aritmetica e algebra",
+          "argomenti": [
+            "Studio della circonferenza, del cerchio, del numero π e crescite esponenziali con il numero e",
+            "Numeri trascendenti",
+            "Formalizzazione dei numeri reali e problematica dell'infinito matematico",
+            "Calcolo approssimato: aspetti teorici e uso di strumenti di calcolo",
+            "Numeri complessi: definizione e proprietà nella forma algebrica, geometrica e trigonometrica"
+          ]
+        },
+        {
+          "nome": "Geometria",
+          "argomenti": [
+            "Sezioni coniche: studio geometrico sintetico e analitico",
+            "Approccio sintetico e analitico allo studio della geometria",
+            "Proprietà della circonferenza e del cerchio, determinazione dell'area del cerchio",
+            "Nozione di luogo geometrico con esempi significativi",
+            "Geometria dello spazio: posizioni reciproche di rette e piani, parallelismo e perpendicolarità",
+            "Proprietà dei principali solidi geometrici: poliedri e solidi di rotazione"
+          ]
+        },
+        {
+          "nome": "Relazioni e funzioni",
+          "argomenti": [
+            "Numero delle soluzioni delle equazioni polinomiali",
+            "Successioni numeriche, anche definite per ricorrenza; progressioni aritmetiche e geometriche",
+            "Funzioni esponenziale e logaritmo",
+            "Modelli di crescita o decrescita esponenziale e andamenti periodici in contesto discreto e continuo",
+            "Analisi grafica e analitica delle principali funzioni",
+            "Funzioni composte e inverse",
+            "Concetto di velocità di variazione di un processo rappresentato mediante una funzione"
+          ]
+        }
+      ]
+    }
+  ]
+}

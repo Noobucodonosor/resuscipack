@@ -1,0 +1,89 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Lingua Italiana",
+  "anni": [
+    {
+      "anno": "Primo Ciclo (Scuola Primaria)",
+      "nuclei_tematici": [
+        {
+          "nome": "Oralità",
+          "argomenti": [
+            "Ascolto e parlato come forme naturali di comunicazione",
+            "Capacità di interagire e nominare in modo sempre più esteso",
+            "Elaborazione del pensiero attraverso l'oralità",
+            "Comprensione di discorsi e testi di vario tipo",
+            "Ampliamento del lessico orale",
+            "Produzione di discorsi per scopi diversi e progressivamente più articolati",
+            "Usi della lingua: comunicativi, euristici, cognitivi, espressivi, argomentativi",
+            "Dialogo, interazione e costruzione di significati in ambienti sociali di apprendimento",
+            "Riconoscimento di punti di vista e loro negoziazione"
+          ]
+        },
+        {
+          "nome": "Lettura",
+          "argomenti": [
+            "Acquisizione della strumentalità del leggere",
+            "Lettura a voce alta e cura dell'espressione",
+            "Strategie e tecniche di lettura",
+            "Comprensione del testo e operazioni cognitive",
+            "Lettura di testi continui e non continui (moduli, orari, grafici, mappe)",
+            "Lettura per scopi diversi e con strategie funzionali al compito",
+            "Comprensione di testi espositivi e argomentativi",
+            "Lettura personale e ascolto di testi letti dall'insegnante",
+            "Sviluppo del gusto per la lettura e della lettura autonoma",
+            "Incontro con testi letterari e prima educazione letteraria",
+            "Uso di biblioteche scolastiche, libri e nuovi media"
+          ]
+        },
+        {
+          "nome": "Scrittura",
+          "argomenti": [
+            "Prima alfabetizzazione: lettura e scrittura di parole e frasi in contesti motivanti",
+            "Abilità grafico-manuali e correttezza ortografica nei primi due anni",
+            "Fasi del processo di scrittura: ideazione, pianificazione, prima stesura, revisione, auto-correzione",
+            "Produzione di testi per lo studio: schema, riassunto, esposizione di argomenti, relazione",
+            "Produzione di testi funzionali: istruzioni, questionari",
+            "Produzione di testi narrativi, espositivi e argomentativi",
+            "Produzione di testi fantastici in prosa e in versi",
+            "Produzione di testi multimediali",
+            "Individuazione e uso di modelli testuali come riferimento nelle produzioni",
+            "Scrittura interdisciplinare e diversificazione delle attività didattiche"
+          ]
+        },
+        {
+          "nome": "Acquisizione ed espansione del lessico ricettivo e produttivo",
+          "argomenti": [
+            "Rilevazione del patrimonio lessicale iniziale degli allievi attraverso attività ludiche e creative",
+            "Consolidamento del nucleo di vocaboli di base (fondamentali e di alto uso)",
+            "Estensione alle parole-chiave delle discipline di studio",
+            "Sviluppo dell'ampiezza del lessico compreso e usato (ricettivo e produttivo)",
+            "Padronanza nell'uso del lessico e crescente specificità",
+            "Uso del lessico adeguato a discipline, destinatari, situazioni comunicative e mezzi espressivi",
+            "Valorizzazione delle espressioni locali, gergali e modi di dire legati alle esperienze",
+            "Consultazione di dizionari e repertori tradizionali e online"
+          ]
+        },
+        {
+          "nome": "Elementi di grammatica esplicita e riflessione sugli usi della lingua",
+          "argomenti": [
+            "Sviluppo della grammatica implicita attraverso l'uso della lingua",
+            "Riflessione sulla lingua condotta in modo induttivo",
+            "Acquisizione e automatizzazione dell'ortografia nei primi anni di scuola",
+            "Monitoraggio costante della correttezza ortografica",
+            "Riflessione sulle strutture sintattiche delle frasi semplici e complesse",
+            "Studio delle parti del discorso e categorie lessicali",
+            "Elementi di coesione: connettivi, pronomi, segni di interpunzione",
+            "Riflessione sul lessico e sua organizzazione",
+            "Studio delle varietà dell'italiano più diffuse",
+            "Riflessione privilegiata sul livello lessicale-semantico a partire da testi orali e scritti",
+            "Introduzione degli aspetti morfologici, sintattici, semantici e testuali attraverso riflessioni sull'uso",
+            "Ripresa ciclica degli aspetti grammaticali per precisazioni e approfondimenti",
+            "Relazioni di significato e meccanismi di formazione delle parole",
+            "Riflessione in prospettiva plurilingue e interculturale",
+            "Sviluppo delle capacità metacognitive: categorizzare, connettere, analizzare, indurre e dedurre"
+          ]
+        }
+      ]
+    }
+  ]
+}

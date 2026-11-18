@@ -1,0 +1,77 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Storia",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Uso delle fonti",
+          "argomenti": [
+            "Individuare le tracce e usarle come fonti per produrre conoscenze sul proprio passato, della generazione degli adulti e della comunità di appartenenza.",
+            "Ricavare da fonti di tipo diverso informazioni e conoscenze su aspetti del passato."
+          ]
+        },
+        {
+          "nome": "Organizzazione delle informazioni",
+          "argomenti": [
+            "Rappresentare graficamente e verbalmente le attività, i fatti vissuti e narrati.",
+            "Riconoscere relazioni di successione e di contemporaneità, durate, periodi, cicli temporali, mutamenti, in fenomeni ed esperienze vissute e narrate.",
+            "Comprendere la funzione e l'uso degli strumenti convenzionali per la misurazione e la rappresentazione del tempo (orologio, calendario, linea temporale…)."
+          ]
+        },
+        {
+          "nome": "Strumenti concettuali",
+          "argomenti": [
+            "Seguire e comprendere vicende storiche attraverso l'ascolto o lettura di testi dell'antichità, di storie, racconti, biografie di grandi del passato.",
+            "Organizzare le conoscenze acquisite in semplici schemi temporali.",
+            "Individuare analogie e differenze attraverso il confronto tra quadri storico-sociali diversi, lontani nello spazio e nel tempo."
+          ]
+        },
+        {
+          "nome": "Produzione scritta e orale",
+          "argomenti": [
+            "Rappresentare conoscenze e concetti appresi mediante grafismi, disegni, testi scritti e con risorse digitali.",
+            "Riferire in modo semplice e coerente le conoscenze acquisite."
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Uso delle fonti",
+          "argomenti": [
+            "Produrre informazioni con fonti di diversa natura utili alla ricostruzione di un fenomeno storico.",
+            "Rappresentare, in un quadro storico-sociale, le informazioni che scaturiscono dalle tracce del passato presenti sul territorio vissuto."
+          ]
+        },
+        {
+          "nome": "Organizzazione delle informazioni",
+          "argomenti": [
+            "Leggere una carta storico-geografica relativa alle civiltà studiate.",
+            "Usare cronologie e carte storico-geografiche per rappresentare le conoscenze.",
+            "Confrontare i quadri storici delle civiltà affrontate."
+          ]
+        },
+        {
+          "nome": "Strumenti concettuali",
+          "argomenti": [
+            "Usare il sistema di misura occidentale del tempo storico (avanti Cristo – dopo Cristo) e comprendere i sistemi di misura del tempo storico di altre civiltà.",
+            "Elaborare rappresentazioni sintetiche delle società studiate, mettendo in rilievo le relazioni fra gli elementi caratterizzanti."
+          ]
+        },
+        {
+          "nome": "Produzione scritta e orale",
+          "argomenti": [
+            "Confrontare aspetti caratterizzanti le diverse società studiate anche in rapporto al presente.",
+            "Ricavare e produrre informazioni da grafici, tabelle, carte storiche, reperti iconografici e consultare testi di genere diverso, manualistici e non, cartacei e digitali.",
+            "Esporre con coerenza conoscenze e concetti appresi, usando il linguaggio specifico della disciplina.",
+            "Elaborare in testi orali e scritti gli argomenti studiati, anche usando risorse digitali."
+          ]
+        }
+      ]
+    }
+  ]
+}

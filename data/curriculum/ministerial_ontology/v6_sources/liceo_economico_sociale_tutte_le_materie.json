@@ -1,0 +1,169 @@
+{
+  "scuola": "Liceo delle Scienze Umane - Opzione Economico-Sociale",
+  "materia": "Tutte le materie (Diritto, Economia, Scienze Umane)",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Psicologia",
+          "argomenti": [
+            "Specificità della psicologia come disciplina scientifica",
+            "Differenza tra psicologia scientifica e psicologia del senso comune",
+            "Relazioni sui luoghi di lavoro: psicologia sociale, teorie psicoanalitiche, psicologia umanista, sistemica",
+            "Comunicazione verbale e non verbale, pregiudizi, stereotipi, atteggiamenti, motivazioni al lavoro, ruoli, contesti lavorativi, emozioni",
+            "Processi sociali di influenzamento, cooperazione, conflitto e negoziazione nei luoghi di lavoro",
+            "Dinamiche del lavoro di gruppo e gruppo di lavoro",
+            "Teorie relative all'apprendimento: comportamentismo, cognitivismo, costruttivismo, socio-costruttivismo",
+            "Intelligenza, linguaggio, differenze individuali e apprendimento, stili di pensiero e apprendimento, motivazione e apprendimento",
+            "Metodo di studio: metacognizione, strategie di studio, immagine di sé, emozioni e metodo di studio, ambienti di apprendimento"
+          ]
+        },
+        {
+          "nome": "Metodologia della ricerca (Secondo anno)",
+          "argomenti": [
+            "Elementi di base della statistica descrittiva: campionamento, variabili, diagrammi",
+            "Esercizi di elaborazione statistica relativi ai diversi tipi di distribuzione delle variabili e incroci fra di esse"
+          ]
+        },
+        {
+          "nome": "Economia politica - Primo Biennio",
+          "argomenti": [
+            "Natura specifica del problema economico: ricchezza, reddito, moneta, produzione, consumo, risparmio, investimento, costo, ricavo",
+            "Principali problemi di matrice economica nelle società del passato e nell'attuale",
+            "Lettura e comprensione dell'evoluzione dei sistemi economici attraverso rappresentazioni grafiche e dati statistici",
+            "Fasi di sviluppo dell'organizzazione economica: dalla rivoluzione agricola ai grandi imperi antichi, economia comunale e mercantile",
+            "Analogie e differenziazioni fra civiltà antiche e attuale società economica globalizzata"
+          ]
+        },
+        {
+          "nome": "Diritto - Primo Biennio",
+          "argomenti": [
+            "Significato e funzione della norma giuridica come fondamento della convivenza civile",
+            "Utilizzo della Costituzione e dei codici come fonti giuridiche",
+            "Evoluzione storica della disciplina giuridica nelle diverse civiltà",
+            "Ruolo e funzioni dell'individuo e delle organizzazioni collettive nella società civile",
+            "Principi fondamentali dello Stato come comunità e organizzazione politica",
+            "Diritti e doveri fondamentali della persona umana (scuola, famiglia, società)",
+            "Comportamenti devianti, sanzioni e sistema giudiziario",
+            "Cittadinanza e sovranità popolare in dimensione europea e internazionale",
+            "Forme di stato e di governo; organi dello Stato e loro relazioni",
+            "Dignità della persona umana e crimini contro l'umanità: Costituzione Italiana, fonti UE (Carta di Nizza, Trattato di Lisbona), Dichiarazioni internazionali dei diritti"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Antropologia",
+          "argomenti": [
+            "Significato che la cultura riveste per l'uomo",
+            "Diversità culturali e ragioni che le hanno determinate in collegamento con la geografia",
+            "Diverse teorie antropologiche e concetti di cultura ad esse sottesi",
+            "Diverse culture: adattamento all'ambiente, modalità di conoscenza, immagine di sé e degli altri, forme di famiglia e parentela, dimensione religiosa e rituale, organizzazione economica e politica",
+            "Grandi culture-religioni mondiali e la particolare razionalizzazione del mondo che ciascuna produce"
+          ]
+        },
+        {
+          "nome": "Sociologia",
+          "argomenti": [
+            "Contesto storico-culturale nel quale nasce la sociologia: rivoluzione industriale e scientifico-tecnologica",
+            "Concetti fondamentali della sociologia: istituzione, status e ruolo, socializzazione, sistemi sociali, mobilità sociale, comunicazione, mezzi di comunicazione di massa, secolarizzazione, devianza, critica della società di massa",
+            "Diverse teorie sociologiche e modi di intendere individuo e società",
+            "Lettura di pagine significative dei classici della sociologia: Comte, Marx, Durkheim, Weber, Pareto, Parsons"
+          ]
+        },
+        {
+          "nome": "Metodologia della ricerca",
+          "argomenti": [
+            "Principi, metodi e modelli della ricerca nelle scienze economico-sociali e antropologiche (quantitativa e qualitativa)",
+            "Elaborazione dei dati, incrocio delle variabili e costruzione di modelli rappresentativi",
+            "Formulazione di ipotesi interpretative collegate alle elaborazioni dei dati",
+            "Principali tecniche di rilevazione dei dati",
+            "Criteri di validità e attendibilità del processo di rilevazione"
+          ]
+        },
+        {
+          "nome": "Economia politica - Secondo Biennio",
+          "argomenti": [
+            "Analisi critica dei fatti economici nello scenario italiano e internazionale",
+            "Logica microeconomica e macroeconomica",
+            "Funzionamento del sistema economico: impresa, mercato del lavoro, sistema monetario e finanziario",
+            "Crescita economica, inflazione, crisi, disuguaglianze, povertà e sottosviluppo",
+            "Indagine storico-economica: mercantilismo, rivoluzione industriale, economia capitalistica, commercio globale",
+            "Teorie delle principali scuole di pensiero economico: classica, neoclassica, keynesiana, monetarista, istituzionalista"
+          ]
+        },
+        {
+          "nome": "Diritto - Secondo Biennio",
+          "argomenti": [
+            "Diritto civile: diritti reali, proprietà e implicazioni sociali",
+            "Obbligazioni, negozi giuridici e contratti",
+            "Diritto di famiglia e successioni",
+            "Libertà di iniziativa economica, tutela del consumatore, garanzia della concorrenza e del mercato",
+            "Concetto giuridico di impresa: tipi di imprese e di società",
+            "Responsabilità d'impresa, gestione economica, fallimento, terzo settore",
+            "Mercato del lavoro: rapporto di lavoro come fonte giuridica, risorsa produttiva e fondamento costituzionale (art. 1 Cost.)"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Sociologia",
+          "argomenti": [
+            "Contesto socio-culturale ed economico in cui nasce e si sviluppa il modello occidentale di welfare state",
+            "Trasformazioni socio-politiche ed economiche indotte dalla globalizzazione",
+            "Tematiche relative alla gestione della multiculturalità",
+            "Significato socio-politico ed economico del terzo settore",
+            "Elementi essenziali dell'indagine sociologica sul campo: applicazione della sociologia al mondo del lavoro e alle politiche pubbliche",
+            "Lettura di pagine significative tratte da autori classici e contemporanei"
+          ]
+        },
+        {
+          "nome": "Metodologia della ricerca",
+          "argomenti": [
+            "Interpretazione dei risultati di ricerche e rapporti documentari",
+            "Costruzione di strategie di raccolta dei dati per studiare fenomeni e elaborare ipotesi interpretative",
+            "Organizzazione delle fasi del lavoro di ricerca con rigore metodologico",
+            "Cooperazione con esperti di altre discipline in attività di ricerca multidisciplinare in area socio-economica"
+          ]
+        },
+        {
+          "nome": "Economia politica - Quinto Anno",
+          "argomenti": [
+            "Strategie di scelta economica dei governi e condizionamenti delle relazioni globali",
+            "Interazioni tra mercato e politiche economiche",
+            "Politiche di welfare e contributo del terzo settore",
+            "Interazione tra politiche locali, nazionali e sovranazionali",
+            "Ruolo delle Organizzazioni internazionali e dell'Unione Europea nelle scelte economiche",
+            "Scelte politiche sostenibili con gli equilibri ambientali e la tutela delle risorse",
+            "Riduzione degli squilibri nello sviluppo"
+          ]
+        },
+        {
+          "nome": "Diritto - Quinto Anno",
+          "argomenti": [
+            "Principi filosofici della teoria dello stato e sua evoluzione",
+            "Approfondimento dei principi costituzionali, diritti e doveri dei cittadini in dimensione europea (UE)",
+            "Metodo di rappresentanza democratica e sistemi elettorali italiani e stranieri",
+            "Esercizio del diritto di voto",
+            "Poteri e relazioni interistituzionali nella forma di governo italiana",
+            "Organi costituzionali e relazioni fra gli stessi",
+            "Ruolo della pubblica amministrazione e funzione di servizio alla cittadinanza",
+            "Diritto processuale, sussidiarietà, decentramento, regionalismo, federalismo e globalizzazione",
+            "Diritto internazionale e sue istituzioni",
+            "Processo di integrazione europea",
+            "Analisi comparata delle istituzioni giuridiche nel mondo",
+            "Nuove forme di lex mercatoria",
+            "Sviluppo sostenibile in una dimensione di patto sociale intergenerazionale"
+          ]
+        }
+      ]
+    }
+  ]
+}

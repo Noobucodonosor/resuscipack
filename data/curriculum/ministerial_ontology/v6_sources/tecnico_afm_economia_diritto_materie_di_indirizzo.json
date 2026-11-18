@@ -1,0 +1,57 @@
+{
+  "scuola": "Istituto Tecnico - Settore Economico: Amministrazione Finanza e Marketing",
+  "materia": "Economia e Diritto",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Diritto - Diritti reali e obbligazioni",
+          "argomenti": [
+            "Diritti reali: proprietà e usufrutto",
+            "Obbligazioni",
+            "Contratti tipici e atipici, inerenti l'imprenditore e la sua attività"
+          ]
+        },
+        {
+          "nome": "Diritto - Impresa e concorrenza",
+          "argomenti": [
+            "Imprenditore e azienda",
+            "Disciplina della concorrenza",
+            "Forme giuridiche d'impresa: costituzione e gestione",
+            "Schema di bilancio",
+            "Bilancio sociale e ambientale"
+          ]
+        },
+        {
+          "nome": "Diritto - Mercato del lavoro",
+          "argomenti": [
+            "Caratteristiche giuridiche, economiche del mercato del lavoro",
+            "Struttura, contenuto e aspetto economico dei contratti di lavoro anche in relazione alle situazioni locali"
+          ]
+        },
+        {
+          "nome": "Diritto - Intermediazione finanziaria e normativa",
+          "argomenti": [
+            "Aspetti giuridici delle operazioni di intermediazione finanziaria, bancarie e non bancarie",
+            "Normativa nazionale e comunitaria sulla sicurezza e sul trattamento dei dati personali"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Diritto - Istituzioni e Pubblica Amministrazione",
+          "argomenti": [
+            "Compiti e funzioni delle istituzioni locali, nazionali e internazionali con particolare riferimento ai rapporti con l'impresa",
+            "Principi e organizzazione della Pubblica Amministrazione",
+            "Caratteristiche degli atti amministrativi con particolare riferimento all'attività contrattuale della PA",
+            "Caratteristiche delle imprese internazionali e multinazionali negli scenari della globalizzazione"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "scuola": "Istituto Tecnico - Settore Tecnologico - Indirizzo Grafica e Comunicazione",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di matematica",
+          "argomenti": [
+            "Costruzione grafica delle coniche",
+            "Proprietà invarianti per trasformazioni di figure nel piano",
+            "Popolazione e campione",
+            "Indagine campionaria",
+            "Utilizzare pacchetti informatici dedicati per la rappresentazione grafica di funzioni reali",
+            "Utilizzare pacchetti informatici dedicati per la rappresentazione grafica di rotazioni e traslazioni di figure nel piano",
+            "Analizzare una rappresentazione grafica nello spazio",
+            "Realizzare piccole indagini statistiche e/o ricerche di mercato per valutare la soddisfazione e la qualità su prodotti o servizi"
+          ]
+        },
+        {
+          "nome": "Teoria della comunicazione",
+          "argomenti": [
+            "Linguaggi verbali e non verbali",
+            "Sistemi e modelli della comunicazione interpersonale e di massa",
+            "Network di comunicazione audiovisiva e a stampa",
+            "Tecnologie innovative e nuovi modelli di comunicazione",
+            "Stili comunicativi e loro evoluzione in rapporto allo sviluppo tecnologico",
+            "Tecniche di valutazione dei prodotti della comunicazione e studi di caso",
+            "Tipologie dei messaggi visivi e audiovisivi",
+            "Lessico e fraseologia di settore anche in lingua inglese",
+            "Utilizzare i mezzi della comunicazione in funzione degli obiettivi della committenza e del target",
+            "Analizzare campagne di comunicazione e pubblicitarie nazionali e internazionali",
+            "Scegliere prodotti di comunicazione in base a criteri di coerenza, efficacia comunicativa, interattività e fattibilità tecnica",
+            "Valutare le scelte comunicative dei progetti pubblicitari in rapporto agli obiettivi",
+            "Utilizzare il lessico e fraseologia di settore anche in lingua inglese"
+          ]
+        },
+        {
+          "nome": "Progettazione multimediale",
+          "argomenti": [
+            "Evoluzione storica del design grafico e audiovisivo",
+            "Psicologia, percezione dei colori e applicazioni",
+            "Metodi e criteri di composizione grafico-visiva bi e tridimensionale",
+            "Fasi della progettazione del prodotto grafico e audiovisivo",
+            "Software di grafica e animazione computerizzata",
+            "Software e hardware per l'input e l'output digitale dei prodotti grafico visivi",
+            "Caratteristiche tecniche, funzionali ed estetiche dei prodotti grafici, multimediali",
+            "Sperimentare nella ricerca grafica le potenzialità espressive del segno alfabetico e del colore",
+            "Riconoscere gli elementi storici, tipologici ed espressivi dei caratteri tipografici ed rielaborarli per la realizzazione di composizioni grafiche",
+            "Scegliere le applicazioni software e i dispositivi hardware per l'acquisizione e l'elaborazione di elementi comunicativi di base",
+            "Individuare i media per la comunicazione più efficace",
+            "Scegliere modalità espressive in relazione all'efficacia e all'impatto visivo del prodotto",
+            "Progettare, realizzare e presentare prodotti grafici, fotografici e video sulla base dell'analisi dei contenuti, del tipo di interazione con l'utenza e delle finalità comunicative"
+          ]
+        },
+        {
+          "nome": "Tecnologie dei processi di produzione",
+          "argomenti": [
+            "Procedimenti e processi di stampa",
+            "Tipologie dei prodotti e loro classificazione",
+            "Principali tipologie di supporti fisici per la comunicazione a stampa e audiovisiva",
+            "Tecnologie per la registrazione e riproduzione audio",
+            "Colorimetria e sue applicazioni nei processi",
+            "Impianti, attrezzature e flussi di lavoro del processo produttivo dell'industria grafica e audiovisiva",
+            "Controllo di qualità del processo e del prodotto",
+            "Scegliere il processo in funzione del prodotto da realizzare",
+            "Selezionare i materiali idonei alla realizzazione del prodotto",
+            "Stabilire il corretto flusso operativo di prestampa, stampa e poststampa",
+            "Applicare le nozioni di fisica necessarie alla selezione e gestione del colore",
+            "Ottimizzare la riproduzione del suono",
+            "Individuare i parametri e gli standard di qualità del prodotto"
+          ]
+        },
+        {
+          "nome": "Laboratori tecnici",
+          "argomenti": [
+            "Strumenti e programmi per l'acquisizione e l'elaborazione di testi e immagini per prodotti grafici",
+            "Tipometria e lettering",
+            "Strumenti e impianti per la riproduzione a stampa",
+            "Strumenti e tecniche per la poststampa",
+            "Strumenti di comunicazione in rete",
+            "Strumenti e tecniche per la produzione di immagini fotografiche, filmati e audiovisivi",
+            "Programmi e macchine per l'output digitale di prodotti grafici e audiovisivi",
+            "Variabili dei processi di produzione",
+            "Strumenti e metodi di misurazione e valutazione dei risultati in funzione di uno standard di produzione",
+            "Tecniche di ripresa e movimento macchina",
+            "Tecniche e materiali per l'allestimento di un set",
+            "Normative di settore nazionale e comunitaria sulla sicurezza e la tutela ambientale",
+            "Produrre file per i processi di stampa secondo le specifiche tecniche",
+            "Verificare e ottimizzare i file forniti per la stampa",
+            "Stampare su supporti e materiali diversi",
+            "Verificare e ottimizzare i flussi per la produzione grafica e audiovisiva",
+            "Utilizzare i sistemi di comunicazione on-line",
+            "Individuare e risolvere problematiche relative ai vari processi di stampa",
+            "Utilizzare simulatori e/o macchine da stampa",
+            "Effettuare ripresa e montaggio audio-video",
+            "Utilizzare le sorgenti luminose in uso sui set di ripresa, nei teatri di posa e negli studi di produzione multimediale",
+            "Valutare la qualità di uno prodotto su dati oggettivi strumentali",
+            "Applicare le norme per la sicurezza nei luoghi di lavoro"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Progettazione multimediale",
+          "argomenti": [
+            "Tipologie di prodotti per la comunicazione in campagne pubblicitarie",
+            "Composizione grafica bidimensionale, tridimensionale e animazione finalizzata alla promozione pubblicitaria multi-soggetto, multimediale e alla realizzazione della veste grafica del prodotto",
+            "Tecniche di progettazione per prodotti per l'industria grafica ed audiovisiva",
+            "Tecniche di visualizzazione 3D e software dedicati",
+            "Tipologie usabilità, accessibilità e leggibilità dei siti web",
+            "Progettare i prodotti della comunicazione grafica in funzione dei processi e delle tecniche di stampa",
+            "Ideare e realizzare prodotti per campagne pubblicitarie e/o di promozione",
+            "Ideare e realizzare prodotti visivi e audiovisivi",
+            "Progettare un sito o un prodotto cross-media incluse le interazioni con gli utenti",
+            "Utilizzare piattaforme per la collaborazione e condivisione di informazioni in rete",
+            "Rispettare le regole di usabilità, accessibilità e leggibilità dei siti web, seguendo le indicazioni degli organismi preposti al controllo della qualità della comunicazione"
+          ]
+        },
+        {
+          "nome": "Tecnologie dei processi di produzione",
+          "argomenti": [
+            "Funzionamento degli impianti e delle apparecchiature nel ciclo produttivo",
+            "Valutazione qualitativa del processo e del prodotto",
+            "Impianti dell'industria grafica e audiovisiva e tutela dell'ambiente",
+            "Piattaforme per la gestione di collaborazione in rete",
+            "Prevenzione e sicurezza negli ambienti di lavoro",
+            "Normative di settore nazionale e comunitaria sulla sicurezza e la tutela ambientale",
+            "Valutare la qualità e la conformità del prodotto finale",
+            "Identificare eventuali problematiche di un impianto o di un prodotto e proporre soluzioni",
+            "Analizzare i fabbisogni di materiali, servizi, attrezzature ed impianti necessari per la produzione",
+            "Applicare le norme nazionali e comunitarie in relazione ai contesti e ai prodotti specifici",
+            "Utilizzare piattaforme per la collaborazione e condivisione di informazioni in rete",
+            "Applicare la normativa sulla sicurezza negli ambienti di lavoro"
+          ]
+        },
+        {
+          "nome": "Organizzazione e gestione dei processi produttivi",
+          "argomenti": [
+            "Metodi di analisi del mercato",
+            "Funzioni e ruoli all'interno dei differenti modelli organizzativi aziendali",
+            "Modelli di rappresentazione del processo produttivo; il flussogramma operativo",
+            "Programmazione e controllo della produzione",
+            "Criteri e metodi per l'analisi dei costi industriali",
+            "Preventivazione e strumenti informatici dedicati",
+            "Norme relative alla sicurezza nei luoghi di lavoro",
+            "Individuare le caratteristiche fondamentali dell'organizzazione di un'azienda grafica o audiovisiva",
+            "Documentare gli aspetti organizzativi ed economici di un'attività produttiva",
+            "Interpretare e risolvere le problematiche produttive, gestionali e commerciali",
+            "Elaborare il flussogramma operativo relativo alla realizzazione di un prodotto grafico o audiovisivo",
+            "Coordinare le diverse fasi di produzione in coerenza con la pianificazione e programmazione della commessa",
+            "Interagire con le figure professionali operanti nelle diverse fasi di realizzazione del prodotto",
+            "Gestire tempi, metodi e costi di segmenti produttivi nell'ambito di una struttura industriale o di una impresa artigiana",
+            "Elaborare un preventivo di spesa in base ai costi aziendali",
+            "Applicare i principi e le norme di igiene e sicurezza nei luoghi di lavoro"
+          ]
+        },
+        {
+          "nome": "Laboratori tecnici",
+          "argomenti": [
+            "Software e linguaggi di programmazione per la creazione di siti web",
+            "Strumenti e tecniche di ripresa audiovisiva e di montaggio",
+            "Software e tecniche di animazione",
+            "Software professionali per la realizzazione di prodotti grafici e multimediali",
+            "Tipologie di autoring multimediali",
+            "Strumenti, procedure e linguaggi per la realizzazione di prodotti cross-media",
+            "Strumenti e tecniche per la produzione in 3D",
+            "Progettazione e composizione di pagine multimediali",
+            "Indicizzazione dei contenuti e sistemi di archiviazione digitale",
+            "Realizzare siti web con l'integrazione di codici e linguaggi specifici",
+            "Effettuare riprese audiovisive",
+            "Creare animazioni 2D e 3D con software dedicati",
+            "Utilizzare correttamente le attrezzature e software di input, archiviazione e output",
+            "Realizzare autonomamente o in team un prodotto multimediale"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Lingua Inglese",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Ascolto (comprensione orale)",
+          "argomenti": [
+            "Comprendere vocaboli, istruzioni, espressioni e frasi di uso quotidiano, pronunciati chiaramente e lentamente relativi a se stesso, ai compagni, alla famiglia"
+          ]
+        },
+        {
+          "nome": "Parlato (produzione e interazione orale)",
+          "argomenti": [
+            "Produrre frasi significative riferite ad oggetti, luoghi, persone, situazioni note",
+            "Interagire con un compagno per presentarsi e/o giocare, utilizzando espressioni e frasi memorizzate adatte alla situazione"
+          ]
+        },
+        {
+          "nome": "Lettura (comprensione scritta)",
+          "argomenti": [
+            "Comprendere cartoline, biglietti e brevi messaggi, accompagnati preferibilmente da supporti visivi o sonori, cogliendo parole e frasi già acquisite a livello orale"
+          ]
+        },
+        {
+          "nome": "Scrittura (produzione scritta)",
+          "argomenti": [
+            "Scrivere parole e semplici frasi di uso quotidiano attinenti alle attività svolte in classe e ad interessi personali e del gruppo"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Ascolto (comprensione orale)",
+          "argomenti": [
+            "Comprendere brevi dialoghi, istruzioni, espressioni e frasi di uso quotidiano se pronunciate chiaramente e identificare il tema generale di un discorso in cui si parla di argomenti conosciuti",
+            "Comprendere brevi testi multimediali identificandone parole chiave e il senso generale"
+          ]
+        },
+        {
+          "nome": "Parlato (produzione e interazione orale)",
+          "argomenti": [
+            "Descrivere persone, luoghi e oggetti familiari utilizzando parole e frasi già incontrate ascoltando e/o leggendo",
+            "Riferire semplici informazioni afferenti alla sfera personale, integrando il significato di ciò che si dice con mimica e gesti",
+            "Interagire in modo comprensibile con un compagno o un adulto con cui si ha familiarità, utilizzando espressioni e frasi adatte alla situazione"
+          ]
+        },
+        {
+          "nome": "Lettura (comprensione scritta)",
+          "argomenti": [
+            "Leggere e comprendere brevi e semplici testi, accompagnati preferibilmente da supporti visivi, cogliendo il loro significato globale e identificando parole e frasi familiari"
+          ]
+        },
+        {
+          "nome": "Scrittura (produzione scritta)",
+          "argomenti": [
+            "Scrivere in forma comprensibile messaggi semplici e brevi per presentarsi, per fare gli auguri, per ringraziare o invitare qualcuno, per chiedere o dare notizie, ecc."
+          ]
+        },
+        {
+          "nome": "Riflessione sulla lingua e sull'apprendimento",
+          "argomenti": [
+            "Osservare coppie di parole simili come suono e distinguerne il significato",
+            "Osservare parole ed espressioni nei contesti d'uso e coglierne i rapporti di significato",
+            "Osservare la struttura delle frasi e mettere in relazione costrutti e intenzioni comunicative",
+            "Riconoscere che cosa si è imparato e che cosa si deve imparare"
+          ]
+        }
+      ]
+    }
+  ]
+}
