@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADR) & Master Task Backlog — `resuscipack`
 
-Questa cartella raccoglie gli **Architecture Decision Records (ADR)** e il **Master Task Backlog** del progetto **`resuscipack`** (*Pedagogical Agentic Curriculum Knowledge — Corpus Integrale, "Libro Sbagliato" & Tavolo di Studio SecAI L-31*), consolidando le decisioni architetturali, epistemiche e pedagogiche validate.
+Questa cartella raccoglie gli **Architecture Decision Records (ADR)** e il **Master Task Backlog** del progetto **`resuscipack`** (*Pedagogical Agentic Curriculum Knowledge — Corpus Integrale, Spettro Disciplinare, "Libro Sbagliato" & Nuovi Libri verso SecAI L-31*), consolidando le decisioni architetturali, epistemiche e editoriali fino al completamento finale.
 
 ---
 
@@ -10,61 +10,81 @@ Questa cartella raccoglie gli **Architecture Decision Records (ADR)** e il **Mas
 | :--- | :--- | :--- | :--- | :--- |
 | **[ADR-0001](./0001-immutable-corpus-and-wave0.md)** | Schema Corpus Immutabile (`block_pk`/`block_uid`), Bonifica Wave 0 e Manifesto OCR Wave 1–4 | Accettato (`Accepted`) | **P0 — Critica** | `@scale`, `@critic` |
 | **[ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md)** | Schema `BlockExtraction v2.1`, 24 `op_tags`, Ponte *"Libro Sbagliato"* e Validatore a 6 Gate | Accettato (`Accepted`) | **P0 — Critica** | `@wrongbook`, `@critic` |
-| **[ADR-0003](./0003-secai-spine-and-study-workbench.md)** | Spina Dorsale Curricolare a 4 Strati, Fast-Forward `SymPy` e Tavolo di Studio SecAI a 2 Colonne | Accettato (`Accepted`) | **P1 — Alta** | `@secai`, `@critic` |
+| **[ADR-0003](./0003-secai-spine-and-study-workbench.md)** | Spina Dorsale Curricolare a 4 Strati, Fast-Forward `SymPy` e Tavolo di Studio SecAI v1 | Accettato (`Accepted`) | **P1 — Alta** | `@secai`, `@critic` |
+| **[ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md)** | *"Nuovi Libri"* Continui, Spettro Disciplinare Percentuale, Doppio *"Libro Sbagliato"* & UI Anti-Slop | Accettato (`Accepted`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
 
 ---
 
-## Diagramma Architetturale del Sistema
+## Diagramma Architetturale End-to-End
 
 ```mermaid
 flowchart LR
-  subgraph Sources["Fonti Storiche (Strict Read-Only)"]
-    FB["from_before + Baidu OCR\n(4.162 pag. ricucite)"]
-    EPUB["PACK copy 4/source_pdf\n(32 EPUB + Manifesto OCR)"]
+  subgraph Sources["1. Patrimonio Integrale (100% — M1)"]
+    RAW["1.372 Libri (from_before + Baidu + 32 EPUB)"]
+    OCR["83 Volumi Muti (18.502 pag. OCR)\nEuclide, Galileo, Apostol, Newton, 7 DjVu"]
+    RAW --> CORPUS
+    OCR -->|"Append-only block_pk"| CORPUS
   end
 
-  subgraph CoreDB["Storage Locale Unificato (SQLite)"]
-    CORPUS[("pack_corpus.db\nbooks + blocks (block_uid)\npassages_fts + bridges")]
-    STATE[("student_state.db\nprogress + attempts\nhero_portfolio")]
+  subgraph CoreDB["2. Memoria Simultanea & Spettro (M1–M2)"]
+    CORPUS[("pack_corpus.db\nbooks + blocks + passages_fts\nepistemic_units + bridges\nbook_discipline_spectrum")]
+    V22["BlockExtraction v2.2\n(disciplines[], places[],\n24 op_tags, vs, quotes)"]
+    CORPUS <-->|"Wave 1..4 100%"| V22
+    V22 --> SPEC["Spettro Percentuale (%)\n& Mosaico Discipline dal Basso\n(es. Geografia dentro Marconi)"]
+    V22 --> SYN["Decompressore Sinottico\nChi / Come / Dove / Quando / vs"]
+    SPEC --> CORPUS
   end
 
-  subgraph Epistemic["Motore Epistemico & 'Libro Sbagliato'"]
-    V21["BlockExtraction v2.1\n+ 24 Canonical op_tags"]
-    BRIDGE["Inversione Disciplinare\n& 6-Gate Verifier"]
+  subgraph Books["3. Nuovi Libri Continui (M3)"]
+    AUTHOR["Motore Autoriale\nNobilitazione dell'Ovvio\n+ Apparato Fonti 3 Colori"]
+    VOLS["Volume I (OFA) & Volume II (SecAI)\n+ Palestra SymPy & Verifiche"]
+    CORPUS --> AUTHOR
+    SYN --> AUTHOR
+    AUTHOR --> VOLS
   end
 
-  subgraph SecAI["Spina Dorsale & Tavolo di Studio SecAI"]
-    DAG["DAG 4 Strati\n1ª Elem -> OFA -> G00..G20"]
-    SYMPY["Fast-Forward SymPy\n+ Invarianti & Rubriche"]
-    UI["Flask Workbench (2 Colonne)\n60% Scheda v3 | 40% Libro Vero"]
+  subgraph UI["4. Esperienza Editoriale Anti-Slop (M4)"]
+    READER["Lettore Continuo + Pagina Vera\n(design-taste-frontend +\nmodern-web-guidance)"]
+    ATLAS["Atlante 1.372 Libri\n(Barre % cliccabili)"]
+    VOLS --> READER
+    CORPUS --> READER
+    SPEC --> ATLAS
+    CORPUS --> ATLAS
   end
-
-  FB -->|"Wave 0 Ingest"| CORPUS
-  EPUB -->|"Wave 0 XHTML"| CORPUS
-  CORPUS <-->|"Wave 1..4 Batch"| V21
-  V21 --> BRIDGE
-  BRIDGE -->|"curiosity_bridges"| CORPUS
-  DAG --> UI
-  SYMPY <--> STATE
-  SYMPY --> UI
-  CORPUS -->|"Read-Only /api/block"| UI
 ```
 
 ---
 
-## Master Task Backlog (Tutti i Task Censiti)
+## Master Task Backlog — Fondamenta Completate (`M0`, Su `main`)
 
-> **Nota:** Ogni task è legato al proprio ADR di origine e dispone di test automatici end-to-end eseguibili con `.venv/bin/pytest -v`.
+| Stato | Task ID | ADR | Titolo Task | File Principali | Priorità |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| ✅ | **TASK-CORPUS-01** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Schema SQLite immutabile (`books`, `blocks`, `passages_fts`, trigger FTS5) e normalizzatore testo | `resuscipack/corpus/schema.py`, `normalizer.py` | **P0** |
+| ✅ | **TASK-CORPUS-02** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Esecuzione Wave 0 (splicing 4.162 pag. Baidu, 32 `.epub`, filtro rumore/cloni, migrazione `rowid`) | `resuscipack/corpus/wave0_ingest.py`, `data/legacy_card_migration.json` | **P0** |
+| ✅ | **TASK-CORPUS-03** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Manifesto OCR `wave_1..wave_4` per le pagine mancanti e test Wave 0 | `resuscipack/corpus/ocr_manifest.py`, `data/ocr_wave_manifest.json` | **P1** |
+| ✅ | **TASK-EPIST-01** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Vocabolario chiuso 24 `op_tags` e validatore `BlockExtraction v2.1` | `resuscipack/epistemic/op_tags.py`, `schema_v21.py` | **P0** |
+| ✅ | **TASK-EPIST-02** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Validatore deterministico a 6 Gate (`verifica_citazioni.py`) | `resuscipack/epistemic/verifica_citazioni.py` | **P0** |
+| ✅ | **TASK-EPIST-03** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Motore *"Libro Sbagliato"*, seed ponti reali (Marconi, Galvani, Cartesio) e Batch CLI | `resuscipack/epistemic/bridge.py`, `batch_cli.py` | **P1** |
+| ✅ | **TASK-EPIST-04** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Runner Vertex AI su crediti GCP, `block_extraction_log`, Wave 1 Nucleo Aureo (`3.608` blocchi, `135` ponti) | `resuscipack/epistemic/batch_cli.py`, `bridge.py`, `schema.py` | **P1** |
+| ✅ | **TASK-SECAI-01** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | DAG Unificato a 4 Strati, registro Open-Access (€0) e prime 7 schede v3 | `data/curriculum/`, `resuscipack/curriculum/dag.py`, `data/cards/` | **P1** |
+| ✅ | **TASK-SECAI-02** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | Motore Fast-Forward Diagnostico `SymPy`, verificatori grafici/dimostrazioni e `student_state.db` | `resuscipack/curriculum/drills_sympy.py`, `student_state.py` | **P1** |
+| ✅ | **TASK-SECAI-03** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | Prototipo v1 Tavolo di Studio Flask a 2 Colonne (superseded da `M4` UI Anti-Slop) | `resuscipack/workbench/` | **P1** |
 
-| Task ID | ADR | Titolo Task | File Coinvolti | Priorità | Assegnatari |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **TASK-CORPUS-01** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Schema SQLite immutabile (`books`, `blocks`, `passages_fts`, trigger FTS5) e normalizzatore testo | `resuscipack/corpus/schema.py`, `resuscipack/corpus/normalizer.py` | **P0 — Critica** | `@scale` |
-| **TASK-CORPUS-02** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Esecuzione Wave 0 (splicing 4.162 pag. Baidu, 32 `.epub`, filtro rumore/cloni, migrazione legacy `rowid`) | `resuscipack/corpus/wave0_ingest.py`, `data/legacy_card_migration.json` | **P0 — Critica** | `@scale` |
-| **TASK-CORPUS-03** | [ADR-0001](./0001-immutable-corpus-and-wave0.md) | Generazione manifesto OCR `wave_1..wave_4` per le 19.226 pagine mancanti e test Wave 0 | `resuscipack/corpus/ocr_manifest.py`, `data/ocr_wave_manifest.json`, `tests/test_corpus_wave0.py` | **P1 — Alta** | `@scale` |
-| **TASK-EPIST-01** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Vocabolario chiuso a 24 `op_tags` e validatore `BlockExtraction v2.1` (anti-deissi, `domain_stripping`, anti-template) | `resuscipack/epistemic/op_tags.py`, `resuscipack/epistemic/schema_v21.py` | **P0 — Critica** | `@wrongbook` |
-| **TASK-EPIST-02** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Validatore deterministico a 6 Gate (`verifica_citazioni.py`) per le schede `.md` contro `pack_corpus.db` | `resuscipack/epistemic/verifica_citazioni.py` | **P0 — Critica** | `@wrongbook` |
-| **TASK-EPIST-03** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Motore di inversione disciplinare *"Libro Sbagliato"*, seed ponti reali (Marconi, Galvani, Cartesio), CLI batch e test | `resuscipack/epistemic/bridge.py`, `resuscipack/epistemic/batch_cli.py`, `tests/test_epistemic_v21.py` | **P1 — Alta** | `@wrongbook` |
-| **TASK-EPIST-04** | [ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md) | Runner Vertex AI su crediti GCP, tabella `block_extraction_log`, selettore Wave 1 Nucleo Aureo, bridge discovery & stato live | `resuscipack/corpus/schema.py`, `resuscipack/epistemic/batch_cli.py`, `resuscipack/epistemic/bridge.py`, `resuscipack/workbench/app.py` | **P1 — Alta** | `@coordinator` |
-| **TASK-SECAI-01** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | Costruzione DAG Unificato a 4 Strati, registro 5 testi Open-Access (€0) e migrazione schede `data/cards/` | `data/curriculum/`, `resuscipack/curriculum/dag.py`, `resuscipack/curriculum/cards.py`, `data/cards/` | **P1 — Alta** | `@secai` |
-| **TASK-SECAI-02** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | Motore Fast-Forward Diagnostico `SymPy`, verificatori grafici/dimostrazioni e DB separato `student_state.db` | `resuscipack/curriculum/drills_sympy.py`, `resuscipack/curriculum/student_state.py` | **P1 — Alta** | `@secai` |
-| **TASK-SECAI-03** | [ADR-0003](./0003-secai-spine-and-study-workbench.md) | Tavolo di Studio Flask a 2 Colonne (Bussola Hero, Scheda v3 + KaTeX, Lettore Libro Vero `/api/block/<block_pk>`) e test E2E | `resuscipack/workbench/`, `tests/test_workbench_secai.py` | **P1 — Alta** | `@secai` |
+---
+
+## Master Task Backlog — Roadmap Attiva fino al Prodotto Finale (`M1 → M4` su GitHub)
+
+| Stato | Task ID | Milestone | ADR | Titolo Task | File Coinvolti | Priorità |
+| :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| ⬜ | **TASK-CORPUS-04** | `M1` Contezza Simultanea | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | OCR degli 83 volumi muti (`18.502` pag.: Euclide, Galileo, Archimede, Apostol, Principia, 7 DjVu) | `resuscipack/corpus/ocr_manifest.py`, `ocr_ingest.py` | **P1 — Alta** |
+| ⬜ | **TASK-EPIST-05** | `M1` Contezza Simultanea | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Upgrade `BlockExtraction v2.2` (`disciplines[]`, `places[]`) + fix scarti OCR/kind | `resuscipack/epistemic/schema_v21.py`, `batch_cli.py`, `corpus/schema.py` | **P0 — Critica** |
+| ⬜ | **TASK-EPIST-06** | `M1` Contezza Simultanea | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Estrazione integrale Wave 2, Wave 3 e Wave 4 fino al 100% dei `1.372` libri | `resuscipack/epistemic/batch_cli.py`, `data/pack_corpus.db` | **P1 — Alta** |
+| ⬜ | **TASK-SPEC-01** | `M2` Spettro & Libro Sbagliato | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Spettro Disciplinare Percentuale per Libro ($\text{Cov}$ e $\text{Share}$) calcolato sui blocchi reali | `resuscipack/epistemic/spectrum.py`, `tests/test_spectrum.py` | **P1 — Alta** |
+| ⬜ | **TASK-SPEC-02** | `M2` Spettro & Libro Sbagliato | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Ricostruzione delle Discipline dal Basso (es. Geografia dentro Marconi e libri non geografici) | `resuscipack/epistemic/discipline_reconstructor.py` | **P1 — Alta** |
+| ⬜ | **TASK-SPEC-03** | `M2` Spettro & Libro Sbagliato | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Decompressore Sinottico Cronologico e Modale (`Chi / Come / Dove / Quando / vs`) | `resuscipack/epistemic/decompressor.py` | **P1 — Alta** |
+| ⬜ | **TASK-BOOK-01** | `M3` Nuovi Libri SecAI | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Motore Autoriale di Capitoli Continui (figure, apparato fonti 3 colori, rilettura critica) | `resuscipack/books/author_engine.py`, `critique.py` | **P0 — Critica** |
+| ⬜ | **TASK-BOOK-02** | `M3` Nuovi Libri SecAI | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | *Volume I — Dall'Ovvio al Simbolo*: capitoli continui e palestra `SymPy` fino al Gate OFA | `data/books/vol1_ofa/`, `resuscipack/books/` | **P1 — Alta** |
+| ⬜ | **TASK-BOOK-03** | `M3` Nuovi Libri SecAI | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | *Volume II — I Ponti Nascosti di SecAI*: Probabilità 0 CFU, Discreto, Crypto, Sistemi, Testing | `data/books/vol2_secai/`, `resuscipack/books/` | **P1 — Alta** |
+| ⬜ | **TASK-UI-01** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Rifondazione Design System Editoriale con `design-taste-frontend` + `modern-web-guidance` (zero codici interni) | `resuscipack/workbench/`, `.taste-skill/` | **P0 — Critica** |
+| ⬜ | **TASK-UI-02** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Lettore continuo dei *Nuovi Libri* con pagina originale e figure a fianco + palestra operativa | `resuscipack/workbench/templates/`, `static/` | **P1 — Alta** |
+| ⬜ | **TASK-UI-03** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | *Atlante dei 1.372 Libri* con barre interattive dello Spettro Percentuale e mosaico per disciplina | `resuscipack/workbench/`, `app.py` | **P2 — Media** |

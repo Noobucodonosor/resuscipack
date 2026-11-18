@@ -8,8 +8,8 @@
 ## 1. Panoramica del Progetto
 
 - **Nome Progetto:** `resuscipack` (P.A.C.K. — *Pedagogical Agentic Curriculum Knowledge*)
-- **Repository:** `dany/resuscipack`
-- **Descrizione Sintetica:** Infrastruttura locale-first per l'estrazione epistemica integrale dal patrimonio librario (~1.365 opere autentiche), la scoperta rigorosa di ponti interdisciplinari (*"Il Libro Sbagliato" / "Marconi a Santa Margherita"*) e il tavolo di studio attivo dalla 1ª elementare alla laurea **SecAI (L-31 Informatica / Sicurezza AI, UniMi)** e relativi gate OFA.
+- **Repository:** `Noobucodonosor/resuscipack`
+- **Descrizione Sintetica:** Infrastruttura locale-first per l'estrazione epistemica integrale dal patrimonio librario (~1.372 volumi), calcolo dello Spettro Disciplinare Percentuale, scoperta rigorosa del *"Libro Sbagliato"* (sia per isomorfismo che per disciplina nascosta, es. Geografia dentro Marconi), generazione di **Nuovi Libri continui** verso la laurea **SecAI (L-31 UniMi)** e interfaccia editoriale anti-slop.
 - **Stack Tecnologico:**
   - **Backend & Core:** Python 3 (`.venv` locale isolato), Flask, SymPy, PyYAML, Pytest
   - **Frontend:** HTML5 / CSS3 / Vanilla JS + KaTeX (Tavolo di Studio a 2 colonne, zero framework pesanti, zero `.slice()` di troncamento)
@@ -26,6 +26,7 @@
 | [`docs/adr/0001-immutable-corpus-and-wave0.md`](./docs/adr/0001-immutable-corpus-and-wave0.md) | Schema SQLite immutabile (`block_pk`/`block_uid`), bonifica Wave 0 (splicing Baidu OCR + 32 EPUB) e manifesto OCR Wave 1–4. |
 | [`docs/adr/0002-block-extraction-and-wrong-book-bridge.md`](./docs/adr/0002-block-extraction-and-wrong-book-bridge.md) | Schema `BlockExtraction v2.1`, 24 `op_tags`, ponte *Libro Sbagliato* e validatore deterministico a 6 Gate (`verifica_citazioni.py`). |
 | [`docs/adr/0003-secai-spine-and-study-workbench.md`](./docs/adr/0003-secai-spine-and-study-workbench.md) | Spina dorsale curricolare a 4 strati (1ª elementare -> OFA -> SecAI), Fast-Forward `SymPy` e Tavolo di Studio a 2 colonne. |
+| [`docs/adr/0004-new-books-disciplinary-spectrum-and-editorial-ui.md`](./docs/adr/0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | *Nuovi Libri* continui, Spettro Disciplinare Percentuale per libro, Doppio *Libro Sbagliato* e UI editoriale anti-slop (`M1–M4`). |
 | `.github/ISSUE_TEMPLATE/` | Template standard per l'apertura di GitHub Issues (`adr_task.yml`, `bug_report.yml`). |
 | `resuscipack/corpus/` | Ingestione idempotente Wave 0, normalizzazione testo, schema SQLite `pack_corpus.db` e manifesto OCR. |
 | `resuscipack/epistemic/` | `op_tags.py`, validazione `schema_v21.py`, inversione disciplinare `bridge.py`, CLI batch e `verifica_citazioni.py`. |
@@ -58,6 +59,7 @@
 
 - **Mai committare segreti o database:** Il file `.env`, l'ambiente `.venv/` e i database SQLite (`data/*.db*`, `*.sqlite*`) devono restare sempre in `.gitignore`.
 - **Zero Mock & Zero Troncamenti:** Nessun fallback deterministico finto su fallimento API; nessun `.slice(0, 10)` sui risultati mostrati all'utente.
+- **Regola Frontend Anti-Slop (MANDATORY per `TASK-UI-*`):** Ogni intervento HTML/CSS/JS sul frontend DEVE caricare ed eseguire prima le skill **`design-taste-frontend`** (`/Users/dany/.gemini/config/skills/design-taste-frontend/SKILL.md`, incl. `copy-lint.mjs`, `consistency.mjs`, `gate.mjs`) e **`modern-web-guidance`**. È severamente vietato esporre all'utente codici interni da sviluppatore (`block_pk`, `score`, `Strato`, `P0.x`, `G00`, `Gate`) nelle schermate di lettura: il prodotto deve apparire come un libro e un atlante culturale curati, mai come un cruscotto di debug.
 - **Verifica Pre-Release:** Prima di generare commit di rilascio o fare push, esegui:
   ```bash
   python3 ~/.gemini/config/skills/adr-github-methodology/scripts/pre_release_check.py
