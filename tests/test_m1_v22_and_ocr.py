@@ -189,10 +189,27 @@ def test_multiblock_packer_batch_jsonl_roundtrip_and_Selective_repair() -> None:
         exp = export_multiblock_batch_jsonl(conn2, jsonl_in, pack_size=5)
         assert exp["blocks_exported"] == 1
         assert exp["windows_exported"] == 1
+        exported_obj = json.loads(jsonl_in.read_text(encoding="utf-8").splitlines()[0])
+        assert set(exported_obj.keys()) == {"request"}
+        assert "[WIN_ID=" in exported_obj["request"]["contents"][0]["parts"][0]["text"]
+        assert "responseSchema" in exported_obj["request"]["generationConfig"]
 
-        jsonl_out = tmp_dir / "batch_out.jsonl"
+        jsonl_retry = tmp_dir / "batch_retry.jsonl"
+        export_multiblock_batch_jsonl(
+            conn2,
+            jsonl_retry,
+            pack_size=1,
+            retry_notes={bpk_new: f"Blocco {bpk_new}: err"},
+            thinking_budget=128,
+        )
+        retry_obj = json.loads(jsonl_retry.read_text(encoding="utf-8").splitlines()[0])
+        assert "ATTENZIONE CORREZIONE OBBLIGATORIA" in retry_obj["request"]["contents"][0]["parts"][0]["text"]
+        assert retry_obj["request"]["generationConfig"]["thinkingConfig"]["thinkingBudget"] == 128
+
+        out_dir = tmp_dir / "batch_out_dir"
+        out_dir.mkdir()
+        jsonl_out = out_dir / "predictions-00001.jsonl"
         pred_line = {
-            "custom_id": f"win_000001_bk{bpk_new}",
             "response": {
                 "usageMetadata": {"promptTokenCount": 420, "candidatesTokenCount": 140},
                 "candidates": [
@@ -238,7 +255,7 @@ def test_multiblock_packer_batch_jsonl_roundtrip_and_Selective_repair() -> None:
         }
         jsonl_out.write_text(json.dumps(pred_line) + "\n", encoding="utf-8")
 
-        imp = import_multiblock_batch_jsonl(conn2, jsonl_out)
+        imp = import_multiblock_batch_jsonl(conn2, out_dir)
         assert imp["blocks_committed"] == 1
         assert imp["v22_written"] == 1
         assert imp["input_tokens"] == 420
@@ -425,3 +442,90 @@ def test_v22_latex_greek_short_ocr_ellipsis_places_and_compact_wire_backfill() -
         )
         assert len(meta_places) == 12
         conn.close()
+
+
+def test_pdf_shadow_stutter_soft_hyphen_and_multi_unit_salvage() -> None:
+    from resuscipack.epistemic.batch_cli import _validate_with_unit_salvage
+    from resuscipack.epistemic.schema_v21 import (
+        _collapse_pdf_shadow_stutter,
+        quote_matches_block_ocr_tolerant,
+    )
+
+    stutter_raw = (
+        "Tipo Tipodidiconduttura conduttura Cavo Cavo: :secondo secondolalanormativa "
+        "normativadidiriferimento riferimento in tra\xadsporto sicuro per impianti."
+    )
+    collapsed = _collapse_pdf_shadow_stutter(stutter_raw)
+    assert "trasporto sicuro per impianti." in collapsed
+    assert "Tipo Tipo" not in collapsed
+
+    table_block = (
+        "Norma CEI 27 Segno grafico Descrizione R Su un trasformatore. "
+        "Per contrassegnare un morsetto neutro di protezione CEI."
+    )
+    assert quote_matches_block_ocr_tolerant(
+        "Norma CEI Segno grafico Descrizione Su un trasformatore",
+        table_block,
+    )
+    assert not quote_matches_block_ocr_tolerant(
+        "Frase totalmente assente inventata dal modello linguistico",
+        table_block,
+    )
+
+    ext = _validate_with_unit_salvage(
+        {
+            "yield": "high",
+            "macro_disciplines": ["ingegneria_meccanica_elettronica"],
+            "topics": ["normativa CEI", "trasformatore"],
+            "places": [],
+            "years": [],
+            "units": [
+                {
+                    "kind": "def",
+                    "mode": "defines",
+                    "stmt": "La norma CEI 27 identifica il segno grafico applicato su un trasformatore elettrico.",
+                    "quote": "Norma CEI 27 Segno grafico Descrizione R Su un trasformatore.",
+                    "who": [],
+                    "vs": None,
+                    "concepts": ["CEI 27", "trasformatore"],
+                },
+                {
+                    "kind": "claim",
+                    "mode": "narrates",
+                    "stmt": "Il secondo enunciato contiene una citazione parafrasata assente dal testo.",
+                    "quote": "Citazione inesistente completamente parafrasata fuori blocco sorgente",
+                    "who": [],
+                    "vs": None,
+                    "concepts": ["parafrasi"],
+                },
+            ],
+            "sig": {
+                "op_tags": ["THRESHOLD_GATE"],
+                "role": "hidden_assumption",
+                "mech": "Il testo descrive in modo generico una convenzione grafica senza meccanismo quantitativo.",
+            },
+        },
+        block_content=table_block,
+        require_v22_metadata=True,
+    )
+    assert len(ext.units) == 1
+    assert ext.units[0].concepts == ("CEI 27", "trasformatore")
+    assert ext.sig is None
+
+    html_table_block = (
+        "<table><tr><td>Carrier frequency range</td><td>Band 1: 5.461 MHz"
+        "Band 2: 710.1 MHz</td></tr></table>"
+    )
+    assert quote_matches_block_ocr_tolerant(
+        "Carrier frequency range Band 1: 5.461 MHz",
+        html_table_block,
+    )
+
+    two_col_block = (
+        "6.1 Metodi e tecnologie per  6.1.1 Tecnico superiore per i metodi e le tecnologie per "
+        "lo sviluppo di sistemi software  27  lo sviluppo di sistemi software"
+    )
+    assert quote_matches_block_ocr_tolerant(
+        "Tecnico superiore per i metodi e le tecnologie per lo sviluppo di sistemi software",
+        two_col_block,
+    )

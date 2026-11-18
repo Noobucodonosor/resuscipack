@@ -14,8 +14,10 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime as dt
+import hashlib
 import json
 import os
+import random
 import re
 import shutil
 import sqlite3
@@ -44,9 +46,33 @@ from .normalizer import (
 from .schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db, supersede_block
 
 DEFAULT_MANIFEST_PATH = Path(__file__).resolve().parents[2] / "data" / "ocr_wave_manifest.json"
+DEFAULT_FIGURES_DIR = Path(__file__).resolve().parents[2] / "data" / "corpus_figures"
 DEFAULT_GCP_PROJECT = "macro-authority-492722-u7"
 DEFAULT_VISION_MODEL = "gemini-2.5-flash"
 DEFAULT_GCS_OCR_PREFIX = "gs://macro-authority-492722-u7-unlimited-ocr/output"
+DEFAULT_GCS_BATCH_PREFIX = "gs://macro-authority-492722-u7-unlimited-ocr/m1_batch"
+
+VISION_OCR_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["batch_id", "pages"],
+    "properties": {
+        "batch_id": {"type": "STRING"},
+        "pages": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "required": ["pdf_page", "printed_page", "section_title", "block_role", "text"],
+                "properties": {
+                    "pdf_page": {"type": "INTEGER"},
+                    "printed_page": {"type": "STRING"},
+                    "section_title": {"type": "STRING"},
+                    "block_role": {"type": "STRING", "enum": ["body", "paratext", "footnote"]},
+                    "text": {"type": "STRING"},
+                },
+            },
+        },
+    },
+}
 
 _VISION_TOKEN_LOCK = threading.Lock()
 _VISION_TOKEN_VALUE = ""
@@ -206,10 +232,7 @@ def transcribe_pages_via_vertex_vision(
 
     proj = project_id or os.environ.get("GCP_PROJECT_ID", DEFAULT_GCP_PROJECT)
     mdl = model or os.environ.get("VERTEX_GEMINI_MODEL", DEFAULT_VISION_MODEL)
-    url = (
-        f"https://aiplatform.googleapis.com/v1/projects/{proj}"
-        f"/locations/global/publishers/google/models/{mdl}:generateContent"
-    )
+    online_locations = ("us-central1", "global", "europe-west1", "us-east4")
 
     page_list_str = ", ".join(str(p) for p, _ in page_images)
     instruction = (
@@ -227,6 +250,7 @@ def transcribe_pages_via_vertex_vision(
         "4. Imposta block_role='paratext' su indici, sommari, bibliografie, frontespizi o pagine bianche; "
         "'body' sul testo sostantivo (definizioni, teoremi, dimostrazioni, commenti).\n"
         "5. Se una pagina ha figure geometriche, aggiungi una riga breve `[Figura geometrica: descrivi lettere/etichette visibili]`.\n"
+        "6. Negli indici/tabelle NON trascrivere puntini di allineamento (`. . .` o `....`) né linee/trattini ripetuti: separa titolo e numero di pagina con un singolo spazio.\n"
     )
 
     parts: List[Dict[str, Any]] = [{"text": instruction}]
@@ -248,14 +272,21 @@ def transcribe_pages_via_vertex_vision(
                 "temperature": 0.0,
                 "maxOutputTokens": 8192,
                 "responseMimeType": "application/json",
+                "responseSchema": VISION_OCR_RESPONSE_SCHEMA,
                 "thinkingConfig": {"thinkingBudget": 0},
             },
         }
     ).encode("utf-8")
 
-    backoffs = (2.0, 5.0)
+    backoffs = (4.0, 12.0, 28.0, 55.0)
     last_err: Optional[Exception] = None
     for attempt in range(len(backoffs) + 1):
+        loc = online_locations[attempt % len(online_locations)]
+        host = "aiplatform.googleapis.com" if loc == "global" else f"{loc}-aiplatform.googleapis.com"
+        url = (
+            f"https://{host}/v1/projects/{proj}"
+            f"/locations/{loc}/publishers/google/models/{mdl}:generateContent"
+        )
         token = _get_gcloud_token(force_refresh=(attempt > 0))
         req = urllib.request.Request(
             url,
@@ -295,7 +326,70 @@ def transcribe_pages_via_vertex_vision(
                             model=model,
                         )
                         return p_left + p_right, in_tok + li + ri, out_tok + lo + ro
-                    raise
+                    # Pagina singola con JSON troncato (es. loop su puntini di indici/tabelle):
+                    # recupero in testo semplice con anti-loop e stopSequences.
+                    pnum_single, img_single = page_images[0]
+                    plain_body = json.dumps(
+                        {
+                            "contents": [
+                                {
+                                    "role": "user",
+                                    "parts": [
+                                        {
+                                            "text": (
+                                                f"Trascrivi il testo della pagina {pnum_single} di {book_title!r} "
+                                                "in testo semplice senza puntini di riempimento (. . .) o spazi ripetuti."
+                                            )
+                                        },
+                                        {
+                                            "inlineData": {
+                                                "mimeType": "image/jpeg",
+                                                "data": base64.b64encode(img_single).decode("ascii"),
+                                            }
+                                        },
+                                    ],
+                                }
+                            ],
+                            "generationConfig": {
+                                "temperature": 0.2,
+                                "maxOutputTokens": 4096,
+                                "thinkingConfig": {"thinkingBudget": 0},
+                                "stopSequences": [". . . . . .", "........", "________", "--------"],
+                            },
+                        }
+                    ).encode("utf-8")
+                    plain_req = urllib.request.Request(
+                        url,
+                        data=plain_body,
+                        headers={
+                            "Content-Type": "application/json",
+                            "Authorization": f"Bearer {token}",
+                            "x-goog-user-project": proj,
+                        },
+                    )
+                    with urllib.request.urlopen(plain_req, timeout=120) as p_resp:
+                        p_raw = json.loads(p_resp.read().decode("utf-8"))
+                    p_txt = (
+                        ((p_raw.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [{}]
+                    )[0].get("text", "")
+                    p_txt = re.sub(r"(?:\.\s*){5,}", " ", p_txt).strip()
+                    p_usage = p_raw.get("usageMetadata") or {}
+                    p_in = in_tok + int(p_usage.get("promptTokenCount") or 0)
+                    p_out = out_tok + int(p_usage.get("candidatesTokenCount") or 0)
+                    role = classify_block_role(p_txt, "") if p_txt else "paratext"
+                    return (
+                        [
+                            {
+                                "pdf_page": int(pnum_single),
+                                "printed_page": str(pnum_single),
+                                "section_title": "",
+                                "block_role": role,
+                                "text": p_txt,
+                            }
+                        ],
+                        p_in,
+                        p_out,
+                    )
             pages_out = parsed.get("pages") if isinstance(parsed, dict) else []
             norm_pages: List[Dict[str, Any]] = []
             for idx, p_obj in enumerate(pages_out or []):
@@ -308,14 +402,14 @@ def transcribe_pages_via_vertex_vision(
         except urllib.error.HTTPError as exc:
             last_err = exc
             if exc.code in {401, 429, 500, 503} and attempt < len(backoffs):
-                time.sleep(backoffs[attempt])
+                time.sleep(backoffs[attempt] + random.uniform(0.0, 2.5))
                 continue
             detail = exc.read().decode("utf-8", errors="ignore")[:260]
             raise RuntimeError(f"Vertex Vision HTTP {exc.code}: {detail}") from exc
         except Exception as exc:
             last_err = exc
             if attempt < len(backoffs):
-                time.sleep(backoffs[attempt])
+                time.sleep(backoffs[attempt] + random.uniform(0.0, 2.5))
                 continue
             raise RuntimeError(f"Errore Vertex Vision OCR: {exc}") from exc
 
@@ -428,7 +522,17 @@ def ingest_ocr_pages_append_only(
         old_active_pks = [
             int(r[0])
             for r in conn.execute(
-                "SELECT block_pk FROM blocks WHERE book_pk = ? AND is_active = 1",
+                """
+                SELECT block_pk FROM blocks
+                WHERE book_pk = ? AND is_active = 1
+                  AND COALESCE(source_origin, '') NOT IN (
+                      'gcs_baidu_ocr',
+                      'vertex_vision_ocr',
+                      'vertex_vision_batch',
+                      'djvutxt_layer',
+                      'pdftotext_tail'
+                  )
+                """,
                 (book_pk,),
             ).fetchall()
         ]
@@ -535,6 +639,110 @@ def list_gcs_ocr_matches(
     return matches
 
 
+def get_book_active_pages(conn: sqlite3.Connection, title: str) -> Tuple[Optional[int], Optional[str], set[int]]:
+    """Restituisce `(book_pk, book_uid, insieme_pagine_attive)` se il titolo canonico esiste in `books`."""
+    ck = canonical_stem_key(title)
+    for row in conn.execute("SELECT book_pk, book_uid, title FROM books WHERE is_active = 1").fetchall():
+        if canonical_stem_key(str(row["title"])) == ck:
+            bpk = int(row["book_pk"])
+            pages = {
+                int(r[0])
+                for r in conn.execute(
+                    "SELECT page_start FROM blocks WHERE book_pk = ? AND is_active = 1 AND page_start IS NOT NULL",
+                    (bpk,),
+                ).fetchall()
+            }
+            return bpk, str(row["book_uid"]), pages
+    return None, None, set()
+
+
+def _decode_djvu_bytes(raw: bytes) -> str:
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        try:
+            return raw.decode("cp1252")
+        except UnicodeDecodeError:
+            return raw.decode("latin-1", errors="replace")
+
+
+def extract_djvu_text_pages(doc_path: Path) -> Tuple[List[Dict[str, Any]], List[int]]:
+    """Estrae in sola lettura il layer testuale completo per pagina di un `.djvu` tramite `djvutxt`."""
+    doc_path = Path(doc_path)
+    tot_pages = count_document_pages(doc_path)
+    djvutxt = _resolve_tool("djvutxt", "/opt/homebrew/bin/djvutxt")
+    proc = subprocess.run([djvutxt, str(doc_path)], capture_output=True, check=True)
+    chunks = proc.stdout.split(b"\x0c")
+    if len(chunks) > tot_pages and chunks[-1].strip() == b"":
+        chunks = chunks[:-1]
+
+    pages_out: List[Dict[str, Any]] = []
+    sparse_pages: List[int] = []
+    if len(chunks) == tot_pages:
+        for pnum, chunk in enumerate(chunks, start=1):
+            txt = clean_ocr_markdown(_decode_djvu_bytes(chunk))
+            if len(txt) < 25:
+                sparse_pages.append(pnum)
+            else:
+                pages_out.append({"pdf_page": pnum, "printed_page": str(pnum), "text": txt})
+    else:
+        for pnum in range(1, tot_pages + 1):
+            p_proc = subprocess.run([djvutxt, f"--page={pnum}", str(doc_path)], capture_output=True, check=True)
+            txt = clean_ocr_markdown(_decode_djvu_bytes(p_proc.stdout))
+            if len(txt) < 25:
+                sparse_pages.append(pnum)
+            else:
+                pages_out.append({"pdf_page": pnum, "printed_page": str(pnum), "text": txt})
+    return pages_out, sparse_pages
+
+
+def ingest_djvu_document(
+    conn: sqlite3.Connection,
+    doc_path: Path,
+    *,
+    title: Optional[str] = None,
+    supersede_under_extracted: bool = True,
+) -> Dict[str, Any]:
+    """Ingerisce in modalità append-only il testo reale contenuto nello strato `djvutxt` (0 € API)."""
+    doc_path = Path(doc_path)
+    eff_title = title or doc_path.stem
+    tot_pages = count_document_pages(doc_path)
+    parsed_pages, sparse_pages = extract_djvu_text_pages(doc_path)
+    res = ingest_ocr_pages_append_only(
+        conn,
+        title=eff_title,
+        source_path=str(doc_path),
+        source_kind="djvutxt_layer",
+        total_pages=tot_pages,
+        transcribed_pages=parsed_pages,
+        supersede_under_extracted=supersede_under_extracted,
+    )
+    return {
+        **res,
+        "total_pages": tot_pages,
+        "text_pages_extracted": len(parsed_pages),
+        "sparse_pages_count": len(sparse_pages),
+        "sparse_pages": sparse_pages,
+    }
+
+
+def extract_pdf_embedded_text_pages(doc_path: Path, page_numbers: Sequence[int]) -> List[Dict[str, Any]]:
+    """Estrae pagine specifiche da un PDF già dotato di layer testuale affidabile via `pdftotext`."""
+    doc_path = Path(doc_path)
+    pdftotext = _resolve_tool("pdftotext", "/opt/homebrew/bin/pdftotext")
+    out: List[Dict[str, Any]] = []
+    for pnum in sorted({int(p) for p in page_numbers}):
+        proc = subprocess.run(
+            [pdftotext, "-f", str(pnum), "-l", str(pnum), str(doc_path), "-"],
+            capture_output=True,
+            check=True,
+        )
+        txt = clean_ocr_markdown(proc.stdout.decode("utf-8", errors="ignore"))
+        if len(txt) >= 25:
+            out.append({"pdf_page": pnum, "printed_page": str(pnum), "text": txt})
+    return out
+
+
 def import_gcs_baidu_book(
     conn: sqlite3.Connection,
     *,
@@ -543,9 +751,34 @@ def import_gcs_baidu_book(
     gcs_dir: str,
     total_pages: int = 0,
     supersede_under_extracted: bool = False,
+    only_pages: Optional[Sequence[int]] = None,
+    sync_images: bool = True,
+    figures_dir: Path = DEFAULT_FIGURES_DIR,
 ) -> Dict[str, Any]:
-    """Scarica temporaneamente i file `pages/page_*.md` già presenti nel bucket GCS (0 € di API Vision)
-    e li ingerisce in modalità append-only dentro `pack_corpus.db`."""
+    """Scarica temporaneamente i file `pages/page_*.md` e le figure `images/*` già presenti in GCS
+    (0 € API Vision) e li ingerisce in modalità append-only dentro `pack_corpus.db`."""
+    allowed_pages = {int(p) for p in only_pages} if only_pages is not None else None
+    parsed_pages: List[Dict[str, Any]] = []
+
+    ls_proc = subprocess.run(
+        ["gcloud", "storage", "ls", f"{gcs_dir.rstrip('/')}/pages/*.md"],
+        env=_gcloud_env(),
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    if ls_proc.returncode != 0 or not ls_proc.stdout.strip():
+        return {
+            "book_pk": None,
+            "book_uid": None,
+            "blocks_inserted": 0,
+            "blocks_skipped": 0,
+            "blocks_superseded": 0,
+            "pages_found_in_gcs": 0,
+            "figures_synced": 0,
+        }
+
     with tempfile.TemporaryDirectory(prefix="resuscipack_gcs_ocr_") as tmp_str:
         tmpdir = Path(tmp_str)
         pages_src = f"{gcs_dir.rstrip('/')}/pages/*.md"
@@ -554,20 +787,21 @@ def import_gcs_baidu_book(
             env=_gcloud_env(),
             capture_output=True,
             text=True,
-            timeout=180,
+            timeout=240,
             check=False,
         )
         if proc.returncode != 0:
             raise RuntimeError(f"Impossibile copiare pagine GCS da {pages_src}: {proc.stderr[:240]}")
 
-        parsed_pages: List[Dict[str, Any]] = []
         for md_file in sorted(tmpdir.glob("page_*.md")):
             m = re.search(r"page_(\d+)\.md$", md_file.name)
             pnum = int(m.group(1)) if m else 0
+            if allowed_pages is not None and pnum not in allowed_pages:
+                continue
             text = md_file.read_text(encoding="utf-8", errors="ignore")
             parsed_pages.append({"pdf_page": pnum, "text": text})
 
-    return ingest_ocr_pages_append_only(
+    ingest_res = ingest_ocr_pages_append_only(
         conn,
         title=title,
         source_path=source_path,
@@ -576,6 +810,297 @@ def import_gcs_baidu_book(
         transcribed_pages=parsed_pages,
         supersede_under_extracted=supersede_under_extracted,
     )
+
+    figures_synced = 0
+    book_uid = ingest_res.get("book_uid")
+    if sync_images and book_uid:
+        dest_dir = Path(figures_dir) / str(book_uid)
+        if dest_dir.exists() and any(dest_dir.iterdir()):
+            figures_synced = len(list(dest_dir.glob("*")))
+        else:
+            img_ls = subprocess.run(
+                ["gcloud", "storage", "ls", f"{gcs_dir.rstrip('/')}/images/"],
+                env=_gcloud_env(),
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            img_lines = [ln.strip() for ln in img_ls.stdout.splitlines() if ln.strip()]
+            if img_ls.returncode == 0 and img_lines:
+                dest_dir.mkdir(parents=True, exist_ok=True)
+                cp_img = subprocess.run(
+                    ["gcloud", "storage", "cp", f"{gcs_dir.rstrip('/')}/images/*", str(dest_dir)],
+                    env=_gcloud_env(),
+                    capture_output=True,
+                    text=True,
+                    timeout=180,
+                    check=False,
+                )
+                if cp_img.returncode == 0:
+                    figures_synced = len(list(dest_dir.glob("*")))
+
+    return {
+        **ingest_res,
+        "pages_found_in_gcs": len(parsed_pages),
+        "figures_synced": figures_synced,
+    }
+
+
+def _slug_for_gcs(title: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "_", canonical_stem_key(title)).strip("_")
+    return f"{s[:48]}_{hashlib.sha1(title.encode('utf-8')).hexdigest()[:8]}" if s else hashlib.sha1(title.encode('utf-8')).hexdigest()[:12]
+
+
+def prepare_vision_batch_jsonl(
+    tasks: Sequence[Mapping[str, Any]],
+    out_jsonl_path: Path | str,
+    *,
+    gcs_batch_prefix: str = DEFAULT_GCS_BATCH_PREFIX,
+    pages_per_request: int = 4,
+    dpi: int = 135,
+    min_blank_bytes: int = 8000,
+    upload_to_gcs: bool = True,
+) -> Dict[str, Any]:
+    """Renderizza in TemporaryDirectory i JPEG delle pagine PDF/DjVu mancanti, li carica su GCS
+    e costruisce un JSONL nativo Vertex AI `batchPredictionJobs` (`fileData.fileUri`, -50%)."""
+    out_path = Path(out_jsonl_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    pdftoppm = _resolve_tool("pdftoppm", "/opt/homebrew/bin/pdftoppm")
+    manifest_map: Dict[str, Dict[str, Any]] = {}
+    requests_written = 0
+    pages_queued = 0
+    blank_skipped = 0
+
+    with out_path.open("w", encoding="utf-8") as fh:
+        for task in tasks:
+            doc_path = Path(task["source_path"])
+            title = str(task["title"])
+            defect_cat = str(task["defect_category"])
+            wanted_pages = sorted({int(p) for p in task["page_numbers"] if int(p) > 0})
+            if not wanted_pages:
+                continue
+
+            slug = _slug_for_gcs(title)
+            gcs_img_dir = f"{gcs_batch_prefix.rstrip('/')}/ocr_pages/{slug}"
+            wanted_set = set(wanted_pages)
+
+            with tempfile.TemporaryDirectory(prefix=f"vision_prep_{slug[:16]}_") as tmp_str:
+                tmpdir = Path(tmp_str)
+                rendered_files: List[Tuple[int, Path]] = []
+                if doc_path.suffix.lower() == ".pdf":
+                    # Rendering a blocchi contigui di 60 pagine per velocità (zero I/O sul sorgente)
+                    ranges: List[Tuple[int, int]] = []
+                    for p in wanted_pages:
+                        if not ranges or p > ranges[-1][1] + 8 or (p - ranges[-1][0]) >= 60:
+                            ranges.append((p, p))
+                        else:
+                            ranges[-1] = (ranges[-1][0], p)
+                    for a, b in ranges:
+                        prefix = tmpdir / "page"
+                        subprocess.run(
+                            [pdftoppm, "-jpeg", "-r", str(dpi), "-f", str(a), "-l", str(b), str(doc_path), str(prefix)],
+                            capture_output=True,
+                            check=True,
+                        )
+                    for jpg in sorted(tmpdir.glob("page-*.jpg")):
+                        mm = re.search(r"page-(\d+)\.jpg$", jpg.name)
+                        if not mm:
+                            continue
+                        pnum = int(mm.group(1))
+                        if pnum not in wanted_set:
+                            jpg.unlink(missing_ok=True)
+                            continue
+                        if jpg.stat().st_size < min_blank_bytes:
+                            jpg.unlink(missing_ok=True)
+                            blank_skipped += 1
+                            continue
+                        std_jpg = tmpdir / f"p{pnum:04d}.jpg"
+                        jpg.rename(std_jpg)
+                        rendered_files.append((pnum, std_jpg))
+                else:
+                    for pnum, jpg_bytes in render_pages_to_jpeg_bytes(doc_path, wanted_pages, dpi=dpi):
+                        if len(jpg_bytes) < min_blank_bytes:
+                            blank_skipped += 1
+                            continue
+                        std_jpg = tmpdir / f"p{pnum:04d}.jpg"
+                        std_jpg.write_bytes(jpg_bytes)
+                        rendered_files.append((pnum, std_jpg))
+
+                rendered_files.sort(key=lambda x: x[0])
+                if not rendered_files:
+                    continue
+
+                if upload_to_gcs:
+                    subprocess.run(
+                        ["gcloud", "storage", "cp", "-q", f"{tmpdir}/p*.jpg", f"{gcs_img_dir}/"],
+                        env=_gcloud_env(),
+                        capture_output=True,
+                        text=True,
+                        timeout=600,
+                        check=True,
+                    )
+
+                step = max(1, min(int(pages_per_request), 4))
+                for idx in range(0, len(rendered_files), step):
+                    chunk = rendered_files[idx : idx + step]
+                    p_nums = [p for p, _ in chunk]
+                    bid = f"ocr_{slug}_{p_nums[0]:04d}_{p_nums[-1]:04d}"
+                    manifest_map[bid] = {
+                        "title": title,
+                        "source_path": str(doc_path),
+                        "defect_category": defect_cat,
+                        "total_pages": int(task.get("total_pages") or 0),
+                        "page_numbers": p_nums,
+                    }
+                    page_list_str = ", ".join(str(p) for p in p_nums)
+                    instruction = (
+                        f"batch_id='{bid}' | Volume: {title!r}.\n"
+                        f"Le immagini allegate corrispondono nell'ordine esatto ai numeri PDF: [{page_list_str}].\n"
+                        "Restituisci JSON valido secondo lo schema allegato:\n"
+                        "1. Trascrivi fedelmente tutto il testo stampato nella lingua originale (ricucendo le parole spezzate a fine riga).\n"
+                        "2. Formule in LaTeX pulito ($...$ o $$...$$).\n"
+                        "3. Rimuovi filigrane ripetitive ('Cultura_in_Ita5', 'Cultura_in_Ita', 'scribd.com').\n"
+                        "4. block_role='paratext' per indici/bibliografie/frontespizi/pagine vuote; 'body' per testo sostantivo; breve nota `[Figura: ...]` se presenti diagrammi.\n"
+                        "5. Negli indici/tabelle NON trascrivere puntini di allineamento (`. . .` o `....`) né linee/trattini ripetuti: separa voce e numero pagina con un singolo spazio."
+                    )
+                    parts: List[Dict[str, Any]] = [{"text": instruction}]
+                    for pnum, _jpg_path in chunk:
+                        parts.append({"text": f"[PAGINA PDF {pnum}]"})
+                        parts.append(
+                            {
+                                "fileData": {
+                                    "mimeType": "image/jpeg",
+                                    "fileUri": f"{gcs_img_dir}/p{pnum:04d}.jpg",
+                                }
+                            }
+                        )
+                    record = {
+                        "request": {
+                            "contents": [{"role": "user", "parts": parts}],
+                            "generationConfig": {
+                                "temperature": 0.0,
+                                "maxOutputTokens": 8192,
+                                "responseMimeType": "application/json",
+                                "responseSchema": VISION_OCR_RESPONSE_SCHEMA,
+                                "thinkingConfig": {"thinkingBudget": 0},
+                            },
+                        }
+                    }
+                    fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    requests_written += 1
+                    pages_queued += len(p_nums)
+
+    manifest_path = out_path.with_suffix(".manifest.json")
+    manifest_path.write_text(json.dumps(manifest_map, indent=2, ensure_ascii=False), encoding="utf-8")
+    return {
+        "jsonl_path": str(out_path),
+        "manifest_path": str(manifest_path),
+        "requests_written": requests_written,
+        "pages_queued": pages_queued,
+        "blank_skipped": blank_skipped,
+    }
+
+
+def import_vision_batch_outputs(
+    conn: sqlite3.Connection,
+    predictions_paths: Sequence[Path | str] | Path | str,
+    manifest_path: Path | str,
+) -> Dict[str, Any]:
+    """Importa le trascrizioni restituite da Vertex AI Multimodal Batch Vision in modalità append-only."""
+    manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    if isinstance(predictions_paths, (Path, str)):
+        p = Path(predictions_paths)
+        pred_files = sorted(p.glob("predictions*.jsonl")) if p.is_dir() else [p]
+    else:
+        pred_files = [Path(x) for x in predictions_paths]
+
+    by_book_pages: Dict[str, List[Dict[str, Any]]] = {}
+    by_book_meta: Dict[str, Dict[str, Any]] = {}
+    seen_bids: set[str] = set()
+    lines_read = 0
+    lines_failed = 0
+    in_tok = 0
+    out_tok = 0
+
+    for pf in pred_files:
+        with pf.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                s = line.strip()
+                if not s:
+                    continue
+                lines_read += 1
+                try:
+                    obj = json.loads(s)
+                    resp = obj.get("response") if isinstance(obj, Mapping) else obj
+                    if not isinstance(resp, Mapping) or "candidates" not in resp:
+                        lines_failed += 1
+                        continue
+                    usage = resp.get("usageMetadata") or {}
+                    in_tok += int(usage.get("promptTokenCount") or 0)
+                    out_tok += int(usage.get("candidatesTokenCount") or 0)
+                    txt = resp["candidates"][0]["content"]["parts"][0]["text"]
+                    cleaned_txt = _strip_json_fences(txt)
+                    try:
+                        parsed = json.loads(cleaned_txt)
+                    except json.JSONDecodeError:
+                        parsed = json.loads(_repair_json_latex_escapes(cleaned_txt))
+                    bid = str(parsed.get("batch_id") or "").strip()
+                    pages = list(parsed.get("pages") or [])
+                    if bid not in manifest:
+                        lines_failed += 1
+                        continue
+                    seen_bids.add(bid)
+                    meta = manifest[bid]
+                    req_pnums = meta["page_numbers"]
+                    if len(pages) == len(req_pnums):
+                        for idx, p_obj in enumerate(pages):
+                            if isinstance(p_obj, dict):
+                                p_obj["pdf_page"] = int(req_pnums[idx])
+                    t_key = meta["title"]
+                    by_book_meta[t_key] = meta
+                    by_book_pages.setdefault(t_key, []).extend(pages)
+                except Exception:
+                    lines_failed += 1
+
+    books_summary: List[Dict[str, Any]] = []
+    tot_inserted = 0
+    tot_superseded = 0
+    for t_key, pages in by_book_pages.items():
+        meta = by_book_meta[t_key]
+        should_supersede = meta["defect_category"] in {
+            "buco_b_cultura_in_ita5_or_silent_blank",
+            "buco_c_under_extracted_pdf",
+        }
+        res = ingest_ocr_pages_append_only(
+            conn,
+            title=t_key,
+            source_path=meta["source_path"],
+            source_kind="vertex_vision_batch",
+            total_pages=meta["total_pages"],
+            transcribed_pages=pages,
+            supersede_under_extracted=should_supersede,
+        )
+        tot_inserted += int(res["blocks_inserted"])
+        tot_superseded += int(res["blocks_superseded"])
+        books_summary.append({"title": t_key, **res})
+
+    missing_batches = [manifest[k] for k in manifest if k not in seen_bids]
+    batch_usd = (in_tok / 1e6) * 0.15 + (out_tok / 1e6) * 1.25
+    return {
+        "lines_read": lines_read,
+        "lines_failed": lines_failed,
+        "batches_expected": len(manifest),
+        "batches_received": len(seen_bids),
+        "missing_batches_count": len(missing_batches),
+        "missing_batches": missing_batches,
+        "books_ingested": len(books_summary),
+        "total_blocks_inserted": tot_inserted,
+        "total_blocks_superseded": tot_superseded,
+        "input_tokens": in_tok,
+        "output_tokens": out_tok,
+        "batch_eur": round(batch_usd * 0.92, 4),
+    }
 
 
 def run_vision_ocr_on_document(
@@ -587,6 +1112,7 @@ def run_vision_ocr_on_document(
     pages_per_call: int = 4,
     dpi: int = 150,
     supersede_under_extracted: bool = False,
+    workers: int = 1,
     vision_fn: Optional[
         Callable[[Sequence[Tuple[int, bytes]], str], Tuple[List[Dict[str, Any]], int, int]]
     ] = None,
@@ -601,19 +1127,31 @@ def run_vision_ocr_on_document(
     tot_in_tok = 0
     tot_out_tok = 0
     step = max(1, min(int(pages_per_call), 6))
+    batches = [rendered[idx : idx + step] for idx in range(0, len(rendered), step)]
 
-    for idx in range(0, len(rendered), step):
-        batch = rendered[idx : idx + step]
-        if vision_fn is not None:
-            pages_out, in_tok, out_tok = vision_fn(batch, eff_title)
-        else:
-            pages_out, in_tok, out_tok = transcribe_pages_via_vertex_vision(
-                batch,
-                book_title=eff_title,
+    if int(workers) > 1 and vision_fn is None and len(batches) > 1:
+        from concurrent.futures import ThreadPoolExecutor
+
+        with ThreadPoolExecutor(max_workers=min(int(workers), 8, len(batches))) as pool:
+            results = list(
+                pool.map(lambda b: transcribe_pages_via_vertex_vision(b, book_title=eff_title), batches)
             )
-        tot_in_tok += in_tok
-        tot_out_tok += out_tok
-        all_transcribed.extend(pages_out)
+        for pages_out, in_tok, out_tok in results:
+            tot_in_tok += in_tok
+            tot_out_tok += out_tok
+            all_transcribed.extend(pages_out)
+    else:
+        for batch in batches:
+            if vision_fn is not None:
+                pages_out, in_tok, out_tok = vision_fn(batch, eff_title)
+            else:
+                pages_out, in_tok, out_tok = transcribe_pages_via_vertex_vision(
+                    batch,
+                    book_title=eff_title,
+                )
+            tot_in_tok += in_tok
+            tot_out_tok += out_tok
+            all_transcribed.extend(pages_out)
 
     ingest_res = ingest_ocr_pages_append_only(
         conn,

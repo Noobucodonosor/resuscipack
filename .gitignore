@@ -8,6 +8,8 @@ venv/
 *.db-wal
 data/*.db*
 data/wave*_status.json
+data/corpus_figures/
+data/m1_batch/
 *.sqlite
 *.sqlite3
 __pycache__/

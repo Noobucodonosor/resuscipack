@@ -267,9 +267,49 @@ def _levenshtein_le_1(a: str, b: str) -> bool:
     return True
 
 
+_HTML_TAG_STRIP_RE = re.compile(r"</?[a-zA-Z][^>]*>")
+_CAMEL_CELL_BOUNDARY_RE = re.compile(r"([a-z0-9])([A-Z][a-z])")
+
+
+def _collapse_pdf_shadow_stutter(text: str) -> str:
+    """Pulisce tag HTML tabellari, confini camelCase incollati, trattini molli (`\\xad`)
+    e duplicati tipografici da falso grassetto `pdftotext` (`W W+Next Next` / `W W`)."""
+    s = _HTML_TAG_STRIP_RE.sub(" ", str(text or ""))
+    s = _CAMEL_CELL_BOUNDARY_RE.sub(r"\1 \2", s)
+    s = re.sub(r"\xad\s*", "", s)
+    toks = s.split()
+    if len(toks) < 4:
+        return s
+    out: List[str] = []
+    i = 0
+    while i < len(toks):
+        w = toks[i]
+        if i + 2 < len(toks) and (
+            toks[i + 1] == w + toks[i + 2]
+            or (
+                len(w) >= 2
+                and len(toks[i + 2]) >= 2
+                and toks[i + 1].startswith(w)
+                and toks[i + 1].endswith(toks[i + 2])
+                and len(toks[i + 1]) <= len(w) + len(toks[i + 2]) + 4
+            )
+        ):
+            out.append(w)
+            i += 2
+            continue
+        if i + 1 < len(toks) and toks[i + 1] == w:
+            out.append(w)
+            i += 2
+            continue
+        out.append(w)
+        i += 1
+    return " ".join(out)
+
+
 def quote_matches_block_ocr_tolerant(quote: str, block_content: str) -> bool:
     """Verifica verbatim della citazione tollerando spaziature tipografiche, un singolo refuso OCR
-    (o 1 token <=3 char su finestra >=6 parole), diacritici/greco LaTeX e un taglio `[...]` ordinato."""
+    (o 1 token <=3 char su finestra >=6 parole), diacritici/greco LaTeX, sdoppiamenti shadow
+    `pdftotext` / trattini `\\xad` con max 2–3 token tabellari spuri e un taglio `[...]` ordinato."""
     norm_quote = normalizza_testo(quote)
     norm_block = normalizza_testo(block_content)
     if _single_span_ocr_match(norm_quote, norm_block):
@@ -290,6 +330,52 @@ def quote_matches_block_ocr_tolerant(quote: str, block_content: str) -> bool:
                 idx2 = latex_block.find(n2, idx1 + len(n1))
                 if idx2 >= 0 and (idx2 - (idx1 + len(n1))) <= 350:
                     return True
+
+    stutter_block = _normalize_ocr_and_latex(_collapse_pdf_shadow_stutter(block_content))
+    if _single_span_ocr_match(latex_quote, stutter_block):
+        return True
+
+    nq = _ALNUM_TOKEN_RE.findall(latex_quote)
+    nb = _ALNUM_TOKEN_RE.findall(stutter_block)
+    m = len(nq)
+    if m >= 6 and len(nb) >= m:
+        max_extra = 2 if m < 10 else 3
+        first = nq[0]
+        for start, tok in enumerate(nb):
+            if tok != first:
+                continue
+            limit = min(len(nb), start + m + max_extra)
+            qi = 1
+            for bi in range(start + 1, limit):
+                if nb[bi] == nq[qi]:
+                    qi += 1
+                    if qi == m:
+                        return True
+    if m >= 6 and len(nb) >= m:
+        jb = " ".join(nb)
+        for k in range(3, m - 2):
+            p1 = " ".join(nq[:k])
+            p2 = " ".join(nq[k:])
+            i1 = jb.find(p1)
+            while i1 >= 0:
+                end1 = i1 + len(p1)
+                i2 = jb.find(p2, end1)
+                if i2 >= 0 and (i2 - end1) <= 320:
+                    return True
+                i1 = jb.find(p1, i1 + 1)
+    if m >= 8 and len(nb) >= m - 2:
+        jb = " ".join(nb)
+        for skip in (1, 2):
+            for k in range(4, m - 4 - skip + 1):
+                p1 = " ".join(nq[:k])
+                p2 = " ".join(nq[k + skip :])
+                i1 = jb.find(p1)
+                while i1 >= 0:
+                    end1 = i1 + len(p1)
+                    i2 = jb.find(p2, end1)
+                    if i2 >= 0 and (i2 - end1) <= 65:
+                        return True
+                    i1 = jb.find(p1, i1 + 1)
     return False
 
 

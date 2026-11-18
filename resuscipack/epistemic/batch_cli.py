@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import re
 import sqlite3
 import subprocess
@@ -56,6 +57,7 @@ DEFAULT_DB_PATH = Path(__file__).resolve().parents[2] / "data" / "pack_corpus.db
 DEFAULT_STATUS_PATH = Path(__file__).resolve().parents[2] / "data" / "wave1_status.json"
 DEFAULT_GCP_PROJECT = "macro-authority-492722-u7"
 DEFAULT_VERTEX_MODEL = "gemini-2.5-flash"
+DEFAULT_BATCH_LOCATION = "us-central1"
 
 WAVE_DOMAINS: Mapping[int, tuple[str, ...]] = {
     # Wave 1: Nucleo Aureo (selettore dedicato ~50-62 libri; fallback dominio storia_della_scienza)
@@ -321,7 +323,7 @@ def build_multiblock_extraction_prompt(
         return (
             "Classifica lo spettro reale v2.2 dei seguenti brani in JSON compatto (`d`=macro-discipline, `t`=temi, `p`=luoghi, `yr`=anni).\n"
             f"{order_rule}"
-            "- Se un blocco è solo indice, sommario, frontespizio o vuoto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[].\n"
+            "- Se un blocco è solo indice, sommario, frontespizio, vuoto OPPURE sequenza illeggibile di simboli/numeri/codici font corrotti priva di frasi di senso compiuto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[].\n"
             "- Altrimenti: `d`=1..3 macro-discipline effettive del testo (es. Marconi navale/costiero include `geografia_cartografia_territorio`); `t`=1..3 temi specifici in italiano; `p`=toponimi geografici reali citati nel brano; `yr`=anni o date esplicite.\n"
             f"LIBRO: {book_title!r} ({surface_domain})\n\n{joined_blocks}\n"
         )
@@ -329,7 +331,7 @@ def build_multiblock_extraction_prompt(
     return (
         "Estrai in JSON compatto `BlockExtraction v2.2` secondo lo schema allegato.\n"
         f"{order_rule}"
-        "- Se indice/frontespizio/bibliografia/vuoto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[],`u`=[],`s`=null.\n"
+        "- Se indice/frontespizio/bibliografia/vuoto OPPURE sequenza illeggibile di simboli/numeri/codici font corrotti priva di frasi di senso compiuto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[],`u`=[],`s`=null.\n"
         "- Altrimenti: `d`=1..3 macro-discipline reali del brano; `t`=1..3 temi specifici in italiano; `p`=toponimi geografici reali nel brano; `yr`=anni/date esplicite.\n"
         "- `u`: 1 sola asserzione centrale per brani ordinari, 2 solo se la pagina enuncia due definizioni/teoremi/esperimenti distinti (`st` 45..110 char con soggetto esplicito, vietati egli/esso/costui/ivi; "
         "`q` citazione CONTIGUA ESATTA di 5..14 parole copiata carattere-per-carattere dal brano: NON correggere refusi OCR come 'ro'->'10', NON tradurre LaTeX greco in Unicode, VIETATO inserire '[...]' o ellissi; "
@@ -643,6 +645,9 @@ def _decode_json_tolerant(raw_text: str) -> Mapping[str, Any]:
         return json.loads(_repair_json_latex_escapes(cleaned))
 
 
+_ONLINE_LOCATIONS: Tuple[str, ...] = ("us-central1", "global", "europe-west1", "us-east4")
+
+
 def _vertex_generate_json(
     prompt: str,
     *,
@@ -652,13 +657,9 @@ def _vertex_generate_json(
     max_output_tokens: int = 2048,
     response_schema: Optional[Mapping[str, Any]] = None,
 ) -> Tuple[Mapping[str, Any], int, int]:
-    """Chiama Vertex AI `gemini-2.5-flash` sui crediti Google Cloud con refresh token e retry 429/503."""
+    """Chiama Vertex AI `gemini-2.5-flash` sui crediti Google Cloud con refresh token e failover multi-regione 429/503."""
     proj = project_id or os.environ.get("GCP_PROJECT_ID", DEFAULT_GCP_PROJECT)
     mdl = model or os.environ.get("VERTEX_GEMINI_MODEL", DEFAULT_VERTEX_MODEL)
-    url = (
-        f"https://aiplatform.googleapis.com/v1/projects/{proj}"
-        f"/locations/global/publishers/google/models/{mdl}:generateContent"
-    )
     gen_cfg: Dict[str, Any] = {
         "temperature": 0.1,
         "maxOutputTokens": int(max_output_tokens),
@@ -674,9 +675,15 @@ def _vertex_generate_json(
         }
     ).encode("utf-8")
 
-    backoffs = (2.0, 5.0)
+    backoffs = (4.0, 12.0, 28.0, 55.0)
     last_err: Optional[Exception] = None
     for attempt in range(len(backoffs) + 1):
+        loc = _ONLINE_LOCATIONS[attempt % len(_ONLINE_LOCATIONS)]
+        host = "aiplatform.googleapis.com" if loc == "global" else f"{loc}-aiplatform.googleapis.com"
+        url = (
+            f"https://{host}/v1/projects/{proj}"
+            f"/locations/{loc}/publishers/google/models/{mdl}:generateContent"
+        )
         token = _VERTEX_TOKEN_CACHE.get_token(force_refresh=(attempt > 0 and isinstance(last_err, urllib.error.HTTPError) and last_err.code == 401))
         req = urllib.request.Request(
             url,
@@ -702,7 +709,7 @@ def _vertex_generate_json(
                 _VERTEX_TOKEN_CACHE.invalidate()
                 continue
             if exc.code in {429, 500, 503} and attempt < len(backoffs):
-                time.sleep(backoffs[attempt])
+                time.sleep(backoffs[attempt] + random.uniform(0.0, 2.5))
                 continue
             detail = ""
             try:
@@ -713,7 +720,7 @@ def _vertex_generate_json(
         except (urllib.error.URLError, TimeoutError) as exc:
             last_err = exc
             if attempt < len(backoffs):
-                time.sleep(backoffs[attempt])
+                time.sleep(backoffs[attempt] + random.uniform(0.0, 2.5))
                 continue
             raise RuntimeError(f"Errore di rete Vertex AI: {exc}") from exc
 
@@ -1081,15 +1088,11 @@ def _extract_window(
                 if is_metadata_only:
                     ext = validate_v22_metadata_only(candidate)
                 else:
-                    ext = validate_block_extraction(
+                    ext = _validate_with_unit_salvage(
                         candidate,
                         block_content=str(row["content"]),
                         require_v22_metadata=require_v22_metadata,
                     )
-                    if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
-                        raise SchemaValidationError(
-                            "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...'"
-                        )
                 outputs.append((row, ext, r_in, r_out, None))
                 continue
             except (SchemaValidationError, KeyError, TypeError, ValueError) as exc:
@@ -1428,8 +1431,13 @@ def export_multiblock_batch_jsonl(
     pack_size: int = 8,
     include_v21_backfill: bool = False,
     book_pk: Optional[int] = None,
+    block_pks: Optional[Sequence[int]] = None,
+    shard_size: Optional[int] = None,
+    retry_notes: Optional[Mapping[int, str]] = None,
+    thinking_budget: int = 0,
 ) -> Dict[str, Any]:
-    """Esporta le finestre multi-blocco nel formato JSONL Vertex AI Batch Prediction (-50%)."""
+    """Esporta le finestre multi-blocco nel formato nativo Vertex AI `batchPredictionJobs` (-50%,
+    solo chiave radice `request` senza `custom_id`), opzionalmente suddiviso in shard JSONL."""
     pending = select_pending_blocks(
         conn,
         wave=wave,
@@ -1437,65 +1445,262 @@ def export_multiblock_batch_jsonl(
         pack_size=pack_size,
         include_v21_backfill=include_v21_backfill,
         book_pk=book_pk,
+        block_pks=block_pks,
     )
     windows = group_rows_into_book_windows(pending, pack_size=pack_size)
     out_path = Path(out_jsonl_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_map: Dict[str, List[int]] = {}
 
-    with out_path.open("w", encoding="utf-8") as fh:
-        for widx, wrows in enumerate(windows, start=1):
-            lead = wrows[0]
-            bpk_book = int(lead["book_pk"])
-            cid = f"win_{widx:06d}_bk{bpk_book}"
-            manifest_map[cid] = [int(r["block_pk"]) for r in wrows]
-            is_meta = all(
-                "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
+    eff_shard = int(shard_size) if (shard_size and int(shard_size) > 0) else 0
+    jsonl_paths: List[str] = []
+
+    def _build_record(widx: int, wrows: Sequence[sqlite3.Row]) -> str:
+        lead = wrows[0]
+        bpk_book = int(lead["book_pk"])
+        cid = f"win_{widx:06d}_bk{bpk_book}"
+        manifest_map[cid] = [int(r["block_pk"]) for r in wrows]
+        is_meta = all(
+            "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
+            for r in wrows
+        )
+        prompt_core = build_multiblock_extraction_prompt(
+            book_title=str(lead["book_title"] or ""),
+            surface_domain=str(lead["surface_domain"] or ""),
+            rows=wrows,
+            single_v22_only=False,
+            metadata_only=is_meta,
+        )
+        has_retry = False
+        if retry_notes:
+            notes = [
+                str(retry_notes[int(r["block_pk"])])
                 for r in wrows
-            )
-            prompt = build_multiblock_extraction_prompt(
-                book_title=str(lead["book_title"] or ""),
-                surface_domain=str(lead["surface_domain"] or ""),
-                rows=wrows,
-                single_v22_only=False,
-                metadata_only=is_meta,
-            )
-            record = {
-                "custom_id": cid,
-                "request": {
-                    "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-                    "generationConfig": {
-                        "temperature": 0.1,
-                        "maxOutputTokens": 4096 if is_meta else 8192,
-                        "responseMimeType": "application/json",
-                        "responseSchema": V22_METADATA_ONLY_RESPONSE_SCHEMA if is_meta else V22_COMPACT_RESPONSE_SCHEMA,
-                        "thinkingConfig": {"thinkingBudget": 0},
-                    },
+                if int(r["block_pk"]) in retry_notes
+            ]
+            if notes:
+                has_retry = True
+                prompt_core += (
+                    "\nATTENZIONE CORREZIONE OBBLIGATORIA DAL TENTATIVO PRECEDENTE:\n"
+                    + "\n".join(notes)
+                    + "\nREGOLE DI RIPARAZIONE: (1) NON sintetizzare o parafrasare a memoria: "
+                    "`q` DEVE essere copiata parola-per-parola esattamente come appare stampata nel brano sopra "
+                    "(5..14 parole contigue, inclusi eventuali refusi/spaziature OCR); "
+                    "(2) Se il brano contiene solo formule/codice senza frasi compiute, intestazioni/slide "
+                    "frammentarie, tabelle numeriche o codifica font corrotta/illeggibile (`*0!6...`, caratteri di "
+                    "controllo, testo capovolto), DEVI restituire `y`='low_or_paratext', `d`=[], `t`=[], `p`=[], "
+                    "`yr`=[], `u`=[], `s`=null.\n"
+                )
+        record = {
+            "request": {
+                "contents": [{"role": "user", "parts": [{"text": f"[WIN_ID={cid}]\n{prompt_core}"}]}],
+                "generationConfig": {
+                    "temperature": 0.25 if has_retry else 0.1,
+                    "maxOutputTokens": 4096 if is_meta else 8192,
+                    "responseMimeType": "application/json",
+                    "responseSchema": V22_METADATA_ONLY_RESPONSE_SCHEMA if is_meta else V22_COMPACT_RESPONSE_SCHEMA,
+                    "thinkingConfig": {"thinkingBudget": max(0, int(thinking_budget))},
                 },
             }
-            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+        }
+        return json.dumps(record, ensure_ascii=False)
+
+    if eff_shard == 0 or len(windows) <= eff_shard:
+        with out_path.open("w", encoding="utf-8") as fh:
+            for widx, wrows in enumerate(windows, start=1):
+                fh.write(_build_record(widx, wrows) + "\n")
+        jsonl_paths.append(str(out_path))
+    else:
+        for s_idx, start in enumerate(range(0, len(windows), eff_shard), start=1):
+            chunk = windows[start : start + eff_shard]
+            spath = out_path.with_name(f"{out_path.stem}_part{s_idx:02d}{out_path.suffix}")
+            with spath.open("w", encoding="utf-8") as fh:
+                for offset, wrows in enumerate(chunk, start=start + 1):
+                    fh.write(_build_record(offset, wrows) + "\n")
+            jsonl_paths.append(str(spath))
 
     manifest_path = out_path.with_suffix(".manifest.json")
     manifest_path.write_text(json.dumps(manifest_map, indent=2), encoding="utf-8")
     return {
-        "jsonl_path": str(out_path),
+        "jsonl_path": jsonl_paths[0],
+        "jsonl_paths": jsonl_paths,
         "manifest_path": str(manifest_path),
         "windows_exported": len(windows),
         "blocks_exported": len(pending),
     }
 
 
+def upload_file_to_gcs(local_path: Path, gcs_uri: str) -> None:
+    subprocess.run(
+        ["gcloud", "storage", "cp", str(local_path), gcs_uri],
+        env=_gcloud_env(),
+        capture_output=True,
+        text=True,
+        timeout=300,
+        check=True,
+    )
+
+
+def download_gcs_prefix(gcs_prefix: str, local_dir: Path) -> List[Path]:
+    local_dir = Path(local_dir)
+    local_dir.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        ["gcloud", "storage", "cp", "-r", f"{gcs_prefix.rstrip('/')}/*", str(local_dir)],
+        env=_gcloud_env(),
+        capture_output=True,
+        text=True,
+        timeout=600,
+        check=True,
+    )
+    return sorted(local_dir.rglob("*.jsonl"))
+
+
+def _vertex_batch_json(
+    url: str,
+    *,
+    project_id: str,
+    data: Optional[bytes] = None,
+    method: str = "GET",
+    timeout: int = 30,
+    err_prefix: str = "Vertex Batch",
+) -> Dict[str, Any]:
+    """Esegue una richiesta REST Vertex Batch con refresh automatico del token su 401."""
+    for attempt in range(2):
+        token = _VERTEX_TOKEN_CACHE.get_token(force_refresh=(attempt > 0))
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "x-goog-user-project": project_id,
+        }
+        if data is not None:
+            headers["Content-Type"] = "application/json"
+        req = urllib.request.Request(url, data=data, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            if exc.code == 401 and attempt == 0:
+                _VERTEX_TOKEN_CACHE.invalidate()
+                continue
+            detail = exc.read().decode("utf-8", errors="ignore")[:500]
+            raise RuntimeError(f"{err_prefix} HTTP {exc.code}: {detail}") from exc
+    raise RuntimeError(f"{err_prefix}: tentativi esauriti")
+
+
+def submit_vertex_batch_job(
+    gcs_input_uris: Sequence[str],
+    gcs_output_prefix: str,
+    display_name: str,
+    *,
+    project_id: str = DEFAULT_GCP_PROJECT,
+    location: str = DEFAULT_BATCH_LOCATION,
+    model: str = DEFAULT_VERTEX_MODEL,
+    labels: Optional[Mapping[str, str]] = None,
+) -> Dict[str, Any]:
+    """Invia un `batchPredictionJob` nativo a Vertex AI (`-50%` sui token Batch)."""
+    url = f"https://{location}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{location}/batchPredictionJobs"
+    job_labels = {"env": "datacloud_antigravity", **(dict(labels) if labels else {})}
+    payload = {
+        "displayName": display_name,
+        "model": f"publishers/google/models/{model}",
+        "inputConfig": {
+            "instancesFormat": "jsonl",
+            "gcsSource": {"uris": list(gcs_input_uris)},
+        },
+        "outputConfig": {
+            "predictionsFormat": "jsonl",
+            "gcsDestination": {"outputUriPrefix": gcs_output_prefix.rstrip("/") + "/"},
+        },
+        "labels": job_labels,
+    }
+    return _vertex_batch_json(
+        url,
+        project_id=project_id,
+        data=json.dumps(payload).encode("utf-8"),
+        method="POST",
+        timeout=60,
+        err_prefix="Vertex Batch submit",
+    )
+
+
+def get_vertex_batch_job(job_name: str, *, project_id: str = DEFAULT_GCP_PROJECT) -> Dict[str, Any]:
+    """Legge lo stato live (`JOB_STATE_*`, errori, outputInfo) di un `batchPredictionJob`."""
+    m = re.search(r"locations/([^/]+)/", job_name)
+    location = m.group(1) if m else DEFAULT_BATCH_LOCATION
+    url = f"https://{location}-aiplatform.googleapis.com/v1/{job_name}"
+    return _vertex_batch_json(
+        url,
+        project_id=project_id,
+        method="GET",
+        timeout=30,
+        err_prefix="Vertex Batch get",
+    )
+
+
+def _validate_with_unit_salvage(
+    ext_dict: Mapping[str, Any],
+    *,
+    block_content: str,
+    require_v22_metadata: bool,
+) -> BlockExtractionV21:
+    """Valida `BlockExtraction` provando prima il payload completo, poi azzerando `sig` se spurio
+    e infine salvando il sottoinsieme di `units` che superano tutti i gate deterministici."""
+
+    def _check_full(d: Mapping[str, Any]) -> BlockExtractionV21:
+        ext = validate_block_extraction(
+            d,
+            block_content=block_content,
+            require_v22_metadata=require_v22_metadata,
+        )
+        if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
+            raise SchemaValidationError(
+                "sig.mech non deve iniziare con formule meta come 'Il meccanismo descrive...'"
+            )
+        return ext
+
+    try:
+        return _check_full(ext_dict)
+    except SchemaValidationError as primary_exc:
+        if ext_dict.get("sig") is not None:
+            try:
+                return _check_full({**ext_dict, "sig": None})
+            except SchemaValidationError:
+                pass
+        raw_units = ext_dict.get("units")
+        if isinstance(raw_units, list) and len(raw_units) > 1:
+            good_units = []
+            for u in raw_units:
+                try:
+                    _check_full({**ext_dict, "units": [u], "sig": None})
+                    good_units.append(u)
+                except SchemaValidationError:
+                    continue
+            if good_units:
+                try:
+                    return _check_full({**ext_dict, "units": good_units})
+                except SchemaValidationError:
+                    return _check_full({**ext_dict, "units": good_units, "sig": None})
+        raise primary_exc
+
+
 def import_multiblock_batch_jsonl(
     conn: sqlite3.Connection,
-    predictions_jsonl_path: Path | str,
+    predictions_jsonl_path: Path | str | Sequence[Path | str],
     *,
     provider_model: str = "vertex-batch:gemini-2.5-flash",
     require_v22_metadata: bool = True,
 ) -> Dict[str, Any]:
-    """Valida e persiste idempotentemente i risultati restituiti da Vertex AI Batch Prediction JSONL."""
-    pred_path = Path(predictions_jsonl_path)
-    if not pred_path.exists():
-        raise FileNotFoundError(f"File JSONL predizioni non trovato: {pred_path}")
+    """Valida e persiste idempotentemente i risultati restituiti da uno o più file/cartelle
+    Vertex AI Batch Prediction JSONL."""
+    if isinstance(predictions_jsonl_path, (Path, str)):
+        p = Path(predictions_jsonl_path)
+        if not p.exists():
+            raise FileNotFoundError(f"File/cartella JSONL predizioni non trovato: {p}")
+        pred_files = sorted(p.rglob("*.jsonl")) if p.is_dir() else [p]
+    else:
+        pred_files = [Path(x) for x in predictions_jsonl_path]
+        for pf in pred_files:
+            if not pf.exists():
+                raise FileNotFoundError(f"File JSONL predizioni non trovato: {pf}")
 
     rows_by_pk: Dict[int, sqlite3.Row] = {}
     conn.row_factory = sqlite3.Row
@@ -1504,8 +1709,19 @@ def import_multiblock_batch_jsonl(
     existing_unit_pks = {
         int(r[0]) for r in conn.execute("SELECT DISTINCT block_pk FROM epistemic_units")
     }
+    already_done_pks = {
+        int(r[0])
+        for r in conn.execute(
+            """
+            SELECT l.block_pk FROM block_extraction_log l
+            WHERE l.yield = 'low_or_paratext'
+               OR EXISTS (SELECT 1 FROM block_metadata_v22 m WHERE m.block_pk = l.block_pk)
+            """
+        )
+    }
 
     windows_read = 0
+    windows_parse_failed = 0
     blocks_committed = 0
     blocks_rejected = 0
     units_written = 0
@@ -1515,45 +1731,64 @@ def import_multiblock_batch_jsonl(
     rejected: List[Dict[str, Any]] = []
     valid_pairs: List[Tuple[sqlite3.Row, BlockExtractionV21]] = []
 
-    with pred_path.open("r", encoding="utf-8") as fh:
-        for line in fh:
-            s = line.strip()
-            if not s:
-                continue
-            windows_read += 1
-            obj = json.loads(s)
-            resp = obj.get("response") if isinstance(obj, Mapping) else obj
-            if isinstance(resp, Mapping) and "candidates" in resp:
-                usage = resp.get("usageMetadata") or {}
-                in_tok += int(usage.get("promptTokenCount") or 0)
-                out_tok += int(usage.get("candidatesTokenCount") or 0)
-                txt = resp["candidates"][0]["content"]["parts"][0]["text"]
-                payload = _decode_json_tolerant(txt)
-            else:
-                payload = obj
-
-            by_pk = _parse_window_extractions_payload(payload)
-            for bpk, ext_dict in by_pk.items():
-                blk_row = rows_by_pk.get(bpk)
-                if blk_row is None:
-                    blocks_rejected += 1
-                    rejected.append({"block_pk": bpk, "error": "block_pk assente o inattivo"})
+    for pred_path in pred_files:
+        with pred_path.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                s = line.strip()
+                if not s:
                     continue
+                windows_read += 1
                 try:
-                    if "units" not in ext_dict and bpk in existing_unit_pks:
-                        ext = validate_v22_metadata_only(ext_dict)
+                    obj = json.loads(s)
+                    resp = obj.get("response") if isinstance(obj, Mapping) else obj
+                    if isinstance(resp, Mapping) and "candidates" in resp:
+                        usage = resp.get("usageMetadata") or {}
+                        in_tok += int(usage.get("promptTokenCount") or 0)
+                        out_tok += int(usage.get("candidatesTokenCount") or 0)
+                        txt = resp["candidates"][0]["content"]["parts"][0]["text"]
+                        payload = _decode_json_tolerant(txt)
                     else:
-                        ext = validate_block_extraction(
-                            ext_dict,
-                            block_content=str(blk_row["content"]),
-                            require_v22_metadata=require_v22_metadata,
-                        )
-                        if ext.sig is not None and _META_MECH_BOILERPLATE_RE.search(ext.sig.mech):
-                            raise SchemaValidationError("sig.mech boilerplate")
-                    valid_pairs.append((blk_row, ext))
-                except (SchemaValidationError, KeyError, TypeError, ValueError) as exc:
-                    blocks_rejected += 1
-                    rejected.append({"block_pk": bpk, "error": str(exc)})
+                        payload = obj
+                except Exception as exc:
+                    windows_parse_failed += 1
+                    rejected.append({"block_pk": -1, "error": f"window_parse_error: {exc}"})
+                    continue
+
+                by_pk = _parse_window_extractions_payload(payload)
+                req_obj = obj.get("request") if isinstance(obj, Mapping) else None
+                if isinstance(req_obj, Mapping) and len(by_pk) == 1:
+                    req_txt = "".join(
+                        str(pt.get("text") or "")
+                        for ct in (req_obj.get("contents") or [])
+                        if isinstance(ct, Mapping)
+                        for pt in (ct.get("parts") or [])
+                        if isinstance(pt, Mapping)
+                    )
+                    prompt_pks = [int(x) for x in re.findall(r"\[B:block_pk=(\d+)\|", req_txt)]
+                    if len(prompt_pks) == 1 and next(iter(by_pk)) not in rows_by_pk:
+                        only_val = next(iter(by_pk.values()))
+                        by_pk = {prompt_pks[0]: only_val}
+                for bpk, ext_dict in by_pk.items():
+                    if bpk in already_done_pks:
+                        continue
+                    blk_row = rows_by_pk.get(bpk)
+                    if blk_row is None:
+                        blocks_rejected += 1
+                        rejected.append({"block_pk": bpk, "error": "block_pk assente o inattivo"})
+                        continue
+                    try:
+                        if bpk in existing_unit_pks and not ext_dict.get("units"):
+                            ext = validate_v22_metadata_only(ext_dict)
+                        else:
+                            ext = _validate_with_unit_salvage(
+                                ext_dict,
+                                block_content=str(blk_row["content"]),
+                                require_v22_metadata=require_v22_metadata,
+                            )
+                        valid_pairs.append((blk_row, ext))
+                    except (SchemaValidationError, KeyError, TypeError, ValueError) as exc:
+                        blocks_rejected += 1
+                        rejected.append({"block_pk": bpk, "error": str(exc)})
 
     valid_pairs, dropped_cnt = _apply_anti_template_filter(valid_pairs, rejected)
     blocks_rejected += dropped_cnt
@@ -1564,6 +1799,14 @@ def import_multiblock_batch_jsonl(
         if ext.units == () and bpk in existing_unit_pks:
             if persist_v22_metadata_only(conn, block_pk=bpk, payload=ext):
                 v22_written += 1
+            if ext.block_yield is BlockYield.LOW_OR_PARATEXT:
+                _log_block_extraction(
+                    conn,
+                    block_pk=bpk,
+                    block_uid=buid,
+                    extraction=ext,
+                    provider_model=provider_model,
+                )
             blocks_committed += 1
             continue
         n_u = persist_block_extraction(conn, block_pk=bpk, block_uid=buid, extraction=ext)
@@ -1581,7 +1824,9 @@ def import_multiblock_batch_jsonl(
 
     conn.commit()
     return {
+        "files_read": len(pred_files),
         "windows_read": windows_read,
+        "windows_parse_failed": windows_parse_failed,
         "blocks_committed": blocks_committed,
         "blocks_rejected": blocks_rejected,
         "units_written": units_written,
@@ -1616,7 +1861,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Lista CSV di block_pk specifici da elaborare (es. 28052,28053,28054)",
     )
     parser.add_argument("--backfill-v22", action="store_true", help="Include blocchi v2.1 privi di metadati v2.2")
-    parser.add_argument("--export-batch-jsonl", type=Path, default=None, help="Esporta JSONL per Vertex AI Batch (-50%)")
+    parser.add_argument("--export-batch-jsonl", type=Path, default=None, help="Esporta JSONL per Vertex AI Batch (-50%%)")
     parser.add_argument("--import-batch-jsonl", type=Path, default=None, help="Importa JSONL predetto da Vertex AI Batch")
     parser.add_argument(
         "--discover-bridges",

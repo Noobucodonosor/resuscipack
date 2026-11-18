@@ -231,7 +231,7 @@ def test_wave0_real_db_counts_and_buchi_closed() -> None:
         "SELECT COUNT(*) AS n FROM blocks WHERE source_origin IN ('from_baidu_ocr', 'from_baidu_spliced') AND is_active = 1"
     ).fetchone()["n"]
     active_blocks = conn.execute("SELECT COUNT(*) AS n FROM blocks WHERE is_active = 1").fetchone()["n"]
-    fts_rows = conn.execute("SELECT COUNT(*) AS n FROM passages_fts").fetchone()["n"]
+    fts_rows = conn.execute("SELECT COUNT(*) AS n FROM passages_fts_docsize").fetchone()["n"]
     paratext_blocks = conn.execute(
         "SELECT COUNT(*) AS n FROM blocks WHERE block_role = 'paratext' AND is_active = 1"
     ).fetchone()["n"]
