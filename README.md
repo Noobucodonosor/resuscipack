@@ -1,5 +1,9 @@
 # resuscipack — Atlante Disciplinare & Workbench Editoriale
 
+[![Anteprima resuscipack — Atlante Disciplinare & Workbench Editoriale](./docs/preview/social-preview.png)](https://noobucodonosor.github.io/resuscipack/)
+
+**Anteprima Live (GitHub Pages — senza testi protetti da copyright):** [https://noobucodonosor.github.io/resuscipack/](https://noobucodonosor.github.io/resuscipack/)
+
 Motore Python di **indicizzazione, analisi epistemica e navigazione editoriale** progettato per organizzare e interrogare un corpus bibliografico multidisciplinare di oltre **1.370 volumi**, sviluppato con metodologia **ADR-Driven**.
 
 > **Nota sul copyright:** questo repository contiene esclusivamente il codice sorgente, gli schemi dati, le icone SVG e i test; **nessun libro o PDF protetto da copyright è presente nel repository**.
