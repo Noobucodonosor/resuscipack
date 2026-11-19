@@ -71,6 +71,25 @@ _EDITORIAL_DEIXIS_RE = re.compile(
 
 _MAPPING_ARROW_RE = re.compile(r"(?:↔|<->|↦|<==>|—>|->)")
 
+_BOOK_DEBUG_JARGON_RE = re.compile(
+    r"(?:\bblock_pk\s*=|\bblock_uid\s*=|\bStrato\s+[0-3]\b|\bGate\s+[1-6]\b"
+    r"|\bP[0-6]\.\d+\b|\bG[0-2]\d\b|\bscore\s*[:=]?\s*0\.\d+|\bop_tags?\b|\bTASK-[A-Z]+-\d+\b)",
+    flags=re.IGNORECASE,
+)
+_BOOK_CARD_HEADING_RE = re.compile(
+    r"^##\s+(?:Contesto|Concetti|Enunciati|Decisione|Alternative|Conseguenze)\s*$",
+    flags=re.IGNORECASE | re.MULTILINE,
+)
+_MD_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
+_LATEX_FORMULA_RE = re.compile(r"\$\$[^$]+\$\$|(?<!\$)\$(?!\$)[^\$\n]+?(?<!\$)\$(?!\$)", flags=re.DOTALL)
+
+
+def _strip_code_and_images_for_refs(text: str) -> str:
+    cleaned = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+    cleaned = re.sub(r"`[^`\n]+`", "", cleaned)
+    cleaned = re.sub(r"!\[[^\]]*\]\([^)]+\)", "", cleaned)
+    return cleaned
+
 
 def normalizza(testo: str) -> str:
     """Alias retrocompatibile della normalizzazione canonica."""
@@ -295,15 +314,16 @@ def verifica_scheda_report(
 
     # Gate 3: Zero note orfane e zero rimandi pendenti
     corpo_senza_def = _strip_note_definitions(corpo)
+    corpo_refs_scan = _strip_code_and_images_for_refs(corpo_senza_def)
     used_nums = {
-        int(m.group(1) or m.group(2)) for m in _FOOTNOTE_REF_RE.finditer(corpo_senza_def)
+        int(m.group(1) or m.group(2)) for m in _FOOTNOTE_REF_RE.finditer(corpo_refs_scan)
     }
     defined_nums = set(note_defs.keys()) | {r.note_num for r in refs}
 
     for r in refs:
         if r.note_num not in note_defs:
             report.gate_errors["gate3_no_orphan_footnotes"].append(
-                f"fonte [{r.note_num}] priva di riga definizione [^{r.note_num}]: nella sezione Note"
+                f"fonte [{r.note_num}] priva di riga definizione [^{r.note_num}]: nella sezione Note/Apparato"
             )
     for n in sorted(used_nums - defined_nums):
         report.gate_errors["gate3_no_orphan_footnotes"].append(
@@ -311,34 +331,97 @@ def verifica_scheda_report(
         )
     for n in sorted(defined_nums - used_nums):
         report.gate_errors["gate3_no_orphan_footnotes"].append(
-            f"nota [^{n}]: definita ma orfana (mai richiamata nel corpo della scheda)"
+            f"nota [^{n}]: definita ma orfana (mai richiamata nel corpo)"
         )
 
-    # Gate 4: 100% voci in `## Enunciati` etichettate + giustificate
-    sez_enunciati = _sezione(corpo, r"Enunciati")
-    if sez_enunciati is None:
-        report.gate_errors["gate4_labeled_enunciati"].append("Sezione '## Enunciati' mancante")
-    else:
-        voci = [v.strip() for v in re.split(r"\n(?=-\s+)", sez_enunciati.strip()) if v.strip().startswith("-")]
-        if not voci:
-            report.gate_errors["gate4_labeled_enunciati"].append("Sezione '## Enunciati' priva di voci '- '")
-        for idx, voce in enumerate(voci, start=1):
-            if not _ENUNCIATO_RE.match(voce):
-                preview = " ".join(voce.split())[:80]
+    is_book_chapter = str(meta.get("tipo", "")).strip().lower() == "capitolo_libro"
+
+    if is_book_chapter:
+        # Modalità Capitolo Continuo (TASK-BOOK-01): apparato a 3 colori, formalismo LaTeX, zero gergo interno, figure valide
+        sez_apparato = _sezione(corpo, r"Apparato\s+delle\s+fonti", level="##")
+        if sez_apparato is None:
+            report.gate_errors["gate4_labeled_enunciati"].append(
+                "Sezione '## Apparato delle fonti' mancante nel capitolo libro"
+            )
+        else:
+            required_colors = (
+                (r"\[\s*Verificato\s+sul\s+testo\s*\]", "### [Verificato sul testo]"),
+                (
+                    r"\[\s*Ricostruzione\s+matematica(?:\s*/\s*addestramento)?\s*\]",
+                    "### [Ricostruzione matematica / addestramento]",
+                ),
+                (r"\[\s*Esercizi\s+originali\s*\]", "### [Esercizi originali]"),
+            )
+            for pat_col, label_col in required_colors:
+                sub = _sezione(sez_apparato, pat_col, level="###")
+                if sub is None or not sub.strip():
+                    report.gate_errors["gate4_labeled_enunciati"].append(
+                        f"Sottosezione mancante o vuota in Apparato delle fonti: '{label_col}'"
+                    )
+
+        prose_before_app = re.split(
+            r"^##\s+Apparato\s+delle\s+fonti\b",
+            corpo_senza_def,
+            maxsplit=1,
+            flags=re.IGNORECASE | re.MULTILINE,
+        )[0]
+        if not _LATEX_FORMULA_RE.search(prose_before_app):
+            report.gate_errors["gate4_labeled_enunciati"].append(
+                "Capitolo libro privo di sviluppo simbolico/formale LaTeX ($...$ o $$...$$)"
+            )
+        m_jargon = _BOOK_DEBUG_JARGON_RE.search(prose_before_app)
+        if m_jargon:
+            report.gate_errors["gate4_labeled_enunciati"].append(
+                f"Gergo interno da sviluppatore rilevato nella prosa per il lettore: {m_jargon.group(0)!r}"
+            )
+        m_card_h = _BOOK_CARD_HEADING_RE.search(prose_before_app)
+        if m_card_h:
+            report.gate_errors["gate4_labeled_enunciati"].append(
+                f"Intestazione rigida da scheda legacy non ammessa nei capitoli continui: {m_card_h.group(0)!r}"
+            )
+
+        repo_root = Path(__file__).resolve().parents[2]
+        for m_img in _MD_IMAGE_RE.finditer(corpo):
+            raw_target = m_img.group(1).strip()
+            if raw_target.startswith(("http://", "https://", "data:")):
+                continue
+            cand_rel = (card_path.parent / raw_target).resolve()
+            cand_root = (repo_root / raw_target).resolve()
+            if not cand_rel.exists() and not cand_root.exists():
                 report.gate_errors["gate4_labeled_enunciati"].append(
-                    f"Enunciato #{idx} privo di etichetta [Definizione|Assioma|Teorema|Convenzione] "
-                    f"o di '*Giustificazione:*' non vuota: {preview!r}"
+                    f"Immagine/figura locale mancante su disco: {raw_target!r}"
                 )
 
-    # Gate 5: Zero deissi pendenti nel testo degli enunciati e delle sintesi
-    if sez_enunciati and _EDITORIAL_DEIXIS_RE.search(sez_enunciati):
-        report.gate_errors["gate5_zero_dangling_deixis"].append(
-            "Sezione '## Enunciati' contiene deissi editoriali opache o rinvii ciechi (es. 'il Nostro', 'ivi', 'ibidem')"
-        )
-    if _EDITORIAL_DEIXIS_RE.search(corpo_senza_def):
-        report.gate_errors["gate5_zero_dangling_deixis"].append(
-            "Il corpo della scheda contiene deissi editoriali opache ('il Nostro', 'suddetto autore', 'ivi', 'ibidem')"
-        )
+        if _EDITORIAL_DEIXIS_RE.search(corpo_refs_scan):
+            report.gate_errors["gate5_zero_dangling_deixis"].append(
+                "Il capitolo contiene deissi editoriali opache ('il Nostro', 'suddetto autore', 'ivi', 'ibidem')"
+            )
+    else:
+        # Gate 4 legacy (data/cards/*.md): 100% voci in `## Enunciati` etichettate + giustificate
+        sez_enunciati = _sezione(corpo, r"Enunciati")
+        if sez_enunciati is None:
+            report.gate_errors["gate4_labeled_enunciati"].append("Sezione '## Enunciati' mancante")
+        else:
+            voci = [v.strip() for v in re.split(r"\n(?=-\s+)", sez_enunciati.strip()) if v.strip().startswith("-")]
+            if not voci:
+                report.gate_errors["gate4_labeled_enunciati"].append("Sezione '## Enunciati' priva di voci '- '")
+            for idx, voce in enumerate(voci, start=1):
+                if not _ENUNCIATO_RE.match(voce):
+                    preview = " ".join(voce.split())[:80]
+                    report.gate_errors["gate4_labeled_enunciati"].append(
+                        f"Enunciato #{idx} privo di etichetta [Definizione|Assioma|Teorema|Convenzione] "
+                        f"o di '*Giustificazione:*' non vuota: {preview!r}"
+                    )
+
+        # Gate 5 legacy: Zero deissi pendenti nel testo degli enunciati e delle sintesi
+        if sez_enunciati and _EDITORIAL_DEIXIS_RE.search(sez_enunciati):
+            report.gate_errors["gate5_zero_dangling_deixis"].append(
+                "Sezione '## Enunciati' contiene deissi editoriali opache o rinvii ciechi (es. 'il Nostro', 'ivi', 'ibidem')"
+            )
+        if _EDITORIAL_DEIXIS_RE.search(corpo_senza_def):
+            report.gate_errors["gate5_zero_dangling_deixis"].append(
+                "Il corpo della scheda contiene deissi editoriali opache ('il Nostro', 'suddetto autore', 'ivi', 'ibidem')"
+            )
 
     # Gate 6: Rigore Ponte "Libro Sbagliato" (se presente in YAML o in sezione Markdown)
     wb_yaml = meta.get("libro_sbagliato") or meta.get("wrong_book")
