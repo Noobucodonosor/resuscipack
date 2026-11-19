@@ -1,0 +1,24 @@
+<dialog id="sourceDrawer" class="source-drawer" closedby="any" aria-labelledby="sourceDrawerTitle">
+  <div class="source-drawer__panel">
+    <header class="source-drawer__head">
+      <div class="source-drawer__titles">
+        <p class="source-drawer__kicker">Pagina autentica del testo citato</p>
+        <h2 id="sourceDrawerTitle" class="source-drawer__title">Fonte originale</h2>
+        <p id="sourceDrawerMeta" class="source-drawer__meta"></p>
+      </div>
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary source-drawer__close" aria-label="Chiudi finestra della fonte" autofocus>Chiudi</button>
+      </form>
+    </header>
+    <div id="sourceDrawerDisciplines" class="source-drawer__tags"></div>
+    <div class="source-drawer__scroll">
+      <div id="sourceDrawerBody" class="source-drawer__body"></div>
+      <div id="sourceDrawerFigures" class="source-drawer__figures"></div>
+    </div>
+    <footer class="source-drawer__foot">
+      <button type="button" class="btn btn--secondary" id="sourcePrevBtn" disabled>Pagina precedente</button>
+      <a id="sourceOpenInAtlasLink" class="link" href="/atlante" hidden>Vedi spettro dell'opera</a>
+      <button type="button" class="btn btn--secondary" id="sourceNextBtn" disabled>Pagina successiva</button>
+    </footer>
+  </div>
+</dialog>
