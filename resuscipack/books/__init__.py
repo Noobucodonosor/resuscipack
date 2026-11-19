@@ -17,7 +17,14 @@ from .author_engine import (
     compile_chapter_markdown,
     extract_verified_quote_span,
     generate_and_verify_chapter,
+    generate_volume,
     is_clean_editorial_quote,
+)
+from .catalog import (
+    VOL1_CHAPTER_SPECS,
+    VOL2_CHAPTER_SPECS,
+    export_ofa_30_real_questions,
+    get_volume_specs,
 )
 from .critique import (
     ADVERSARIAL_CRITIQUE_RESPONSE_SCHEMA,
@@ -55,6 +62,8 @@ __all__ = [
     "FigureAsset",
     "JsonLlmCallable",
     "PILOT_CHAPTER_SPEC",
+    "VOL1_CHAPTER_SPECS",
+    "VOL2_CHAPTER_SPECS",
     "VerifiedQuoteCandidate",
     "assemble_chapter_dossier",
     "audit_and_critique_chapter",
@@ -62,10 +71,13 @@ __all__ = [
     "build_author_chapter_prompt",
     "call_editorial_json_llm",
     "compile_chapter_markdown",
+    "export_ofa_30_real_questions",
     "extract_verified_quote_span",
     "find_corpus_figures_for_blocks",
     "generate_and_verify_chapter",
     "generate_controlled_svg",
+    "generate_volume",
+    "get_volume_specs",
     "is_clean_editorial_quote",
     "run_adversarial_llm_critique",
     "run_deterministic_chapter_audit",

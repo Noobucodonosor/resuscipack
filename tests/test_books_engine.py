@@ -6,6 +6,7 @@ Zero mock silenziosi: senza credenziali o callable iniettato il sistema solleva 
 
 from __future__ import annotations
 
+import json
 import sqlite3
 import subprocess
 import sys
@@ -19,10 +20,13 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from resuscipack.books import (
+    CONTROLLED_SVG_IDS,
     DEFAULT_ASSETS_DIR,
     DEFAULT_BOOKS_DIR,
     DEFAULT_FIGURES_DIR,
     PILOT_CHAPTER_SPEC,
+    VOL1_CHAPTER_SPECS,
+    VOL2_CHAPTER_SPECS,
     ChapterSpec,
     assemble_chapter_dossier,
     find_corpus_figures_for_blocks,
@@ -31,6 +35,8 @@ from resuscipack.books import (
     run_deterministic_chapter_audit,
     save_svg_diagram,
 )
+from resuscipack.curriculum.dag import load_unified_dag
+from resuscipack.curriculum.drills_sympy import generate_drill_set, grade_drill_answer
 from resuscipack.corpus.normalizer import make_block_uid, make_book_uid, normalize_for_match
 from resuscipack.corpus.schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db
 from resuscipack.epistemic import (
@@ -39,6 +45,7 @@ from resuscipack.epistemic import (
     verifica_scheda,
     verifica_scheda_report,
 )
+from resuscipack.epistemic.verifica_citazioni import leggi_scheda
 from resuscipack.epistemic.batch_cli import MissingCredentialsError, _VERTEX_TOKEN_CACHE
 
 
@@ -104,11 +111,13 @@ def _seed_book_block(
 
 
 def test_svg_diagrams_and_corpus_figure_finder() -> None:
-    svg_text = generate_controlled_svg("balance_and_number_line", title="Test Bilancia")
-    root = ET.fromstring(svg_text)
-    assert root.tag.endswith("svg")
-    assert root.attrib.get("viewBox")
-    assert root.find(".//{http://www.w3.org/2000/svg}title") is not None
+    assert len(CONTROLLED_SVG_IDS) == 18
+    for did in CONTROLLED_SVG_IDS:
+        svg_text = generate_controlled_svg(did, title=f"Diagramma {did}")
+        root = ET.fromstring(svg_text)
+        assert root.tag.endswith("svg")
+        assert root.attrib.get("viewBox")
+        assert root.find(".//{http://www.w3.org/2000/svg}title") is not None
 
     with pytest.raises(ValueError, match="non riconosciuto"):
         generate_controlled_svg("diagramma_inventato")
@@ -496,3 +505,57 @@ def test_live_pilot_dossier_assembly_and_published_chapter_verification() -> Non
     if pilot_path.exists():
         assert verifica_scheda(pilot_path, db_path=DEFAULT_DB_PATH) == []
         assert run_deterministic_chapter_audit(pilot_path, db_path=DEFAULT_DB_PATH) == []
+
+
+def test_catalog_full_dag_coverage_and_specific_sympy_drills() -> None:
+    dag = load_unified_dag()
+    non_g_nodes = {nid for nid, n in dag["nodes"].items() if n.get("layer", 3) < 3}
+    covered = {nid for sp in (*VOL1_CHAPTER_SPECS, *VOL2_CHAPTER_SPECS) for nid in sp.node_ids}
+    assert non_g_nodes - covered == set()
+
+    for sp in (*VOL1_CHAPTER_SPECS, *VOL2_CHAPTER_SPECS):
+        assert sp.svg_diagram_id in CONTROLLED_SVG_IDS
+        assert sp.drill_keys
+
+    # Verifica che ogni drill_key nel DAG produca esercizi specifici del proprio dominio (zero ripiego su equazione lineare)
+    for nid, node in dag["nodes"].items():
+        dk = node.get("drill_key")
+        if not dk:
+            continue
+        drills = generate_drill_set(nid, dk, count=3, seed=42)
+        assert len(drills) == 3
+        for d in drills:
+            assert grade_drill_answer(d["expected"], d["expected"])["is_correct"] is True
+            if dk not in {"drill_equality_balance", "drill_linear_equation"}:
+                assert "Isola x mantenendo in equilibrio" not in d["prompt"], (nid, dk, d["prompt"])
+
+
+@pytest.mark.skipif(not DEFAULT_DB_PATH.exists(), reason="pack_corpus.db non presente")
+def test_volume1_all_11_published_chapters_and_30_ofa_questions() -> None:
+    vol1_dir = DEFAULT_BOOKS_DIR / "vol1_ofa"
+    for sp in VOL1_CHAPTER_SPECS:
+        ch_path = vol1_dir / f"{sp.chapter_number:02d}_{sp.slug}.md"
+        assert ch_path.exists(), f"Capitolo Volume I mancante: {ch_path}"
+        meta, _ = leggi_scheda(ch_path)
+        assert meta.get("stato") == "pubblicato", f"{ch_path.name} ha stato={meta.get('stato')!r}"
+        assert verifica_scheda(ch_path, db_path=DEFAULT_DB_PATH) == []
+        assert run_deterministic_chapter_audit(ch_path, db_path=DEFAULT_DB_PATH) == []
+
+    ofa_path = vol1_dir / "ofa_30_quesiti_reali.json"
+    assert ofa_path.exists()
+    ofa_data = json.loads(ofa_path.read_text(encoding="utf-8"))
+    assert ofa_data["count"] == 30
+    assert len(ofa_data["questions"]) == 30
+
+    conn = connect_corpus_db(DEFAULT_DB_PATH, read_only=True)
+    try:
+        for q in ofa_data["questions"]:
+            row = conn.execute(
+                "SELECT is_active, block_uid, norm_content FROM blocks WHERE block_pk = ?",
+                (q["block_pk"],),
+            ).fetchone()
+            assert row is not None and int(row["is_active"]) == 1
+            assert row["block_uid"] == q["block_uid"]
+            assert normalize_for_match(q["question_excerpt"]) in row["norm_content"]
+    finally:
+        conn.close()

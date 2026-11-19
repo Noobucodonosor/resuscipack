@@ -19,6 +19,7 @@ Orchestra l'intera filiera editoriale su `pack_corpus.db`:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import re
 import sqlite3
@@ -31,11 +32,12 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 import yaml
 
 from ..corpus.schema import DEFAULT_DB_PATH, connect_corpus_db
-from ..curriculum.drills_sympy import generate_drill_set
+from ..curriculum.drills_sympy import PROOF_RUBRICS, generate_drill_set
 from ..epistemic.batch_cli import MissingCredentialsError  # noqa: F401
 from ..epistemic.bridge import get_bridges_for_node
 from ..epistemic.decompressor import decompress_concept
 from ..epistemic.schema_v21 import normalizza_testo
+from ..epistemic.verifica_citazioni import verifica_scheda
 from .critique import (
     CritiqueReport,
     JsonLlmCallable,
@@ -52,7 +54,10 @@ from .svg_diagrams import (
 
 DEFAULT_BOOKS_DIR = Path(__file__).resolve().parents[2] / "data" / "books"
 
-_OCR_GARBAGE_RE = re.compile(r"(?:[ëãõ■\ufffd]|_{3,}|\.{4,}|[a-z]{2,}[A-Z]\.[a-z]+)")
+_OCR_GARBAGE_RE = re.compile(
+    r"(?:[ëãõ■\ufffd]|_{3,}|\.{4,}|[a-z]{2,}[A-Z]\.[a-z]+|\b(?:matziale|clementi\s+dell)\b)",
+    flags=re.IGNORECASE,
+)
 _BLIND_DEIXIS_QUOTE_RE = re.compile(
     r"\b(?:ivi|ibidem|op\.\s*cit\.|loc\.\s*cit\.|vedi\s+sopra|vedi\s+sotto|suddetto)\b",
     flags=re.IGNORECASE,
@@ -97,6 +102,21 @@ _DANGLING_TAIL_WORDS = frozenset(
         "queste",
         "si",
         "se",
+        "non",
+        "cui",
+        "dal",
+        "dalla",
+        "dai",
+        "dalle",
+        "nei",
+        "sul",
+        "sulla",
+        "sui",
+        "sulle",
+        "degli",
+        "sono",
+        "è",
+        "cioè",
     }
 )
 
@@ -117,6 +137,12 @@ class ChapterSpec:
     svg_caption: str = ""
     extra_block_pks: Tuple[int, ...] = ()
     target_length_words: int = 1200
+    book_title_display: str = "Dall'Ovvio al Simbolo"
+    preferred_book_pks: Tuple[int, ...] = ()
+    preferred_book_uids: Tuple[str, ...] = ()
+    proof_rubric_id: Optional[str] = None
+    graph_invariant_id: Optional[str] = None
+    include_corpus_figures: bool = False
 
 
 def _clean_book_title_for_citation(book_title: str, author: Optional[str] = None) -> str:
@@ -404,11 +430,12 @@ def extract_verified_quote_span(
         if len(sw) < 6:
             continue
         if len(sw) <= 20:
-            cand = _check(" ".join(sw))
+            trimmed_sw = _trim_dangling(sw) if not s_clean.rstrip().endswith((".", "!", "?")) else sw
+            cand = _check(" ".join(trimmed_sw))
             if cand is not None:
                 return cand
         else:
-            cand = _check(" ".join(sw[:18]))
+            cand = _check(" ".join(_trim_dangling(sw[:18])))
             if cand is not None:
                 return cand
     return None
@@ -469,13 +496,103 @@ def assemble_chapter_dossier(
                     }
                 )
 
-    # 2. Ponti "Libro Sbagliato" validati dai nodi target
+    topic_tokens = {
+        tok
+        for txt in (spec.title, spec.subtitle, *spec.concept_queries)
+        for tok in re.findall(r"[a-zà-öø-ÿ]{4,}", normalizza_testo(txt))
+    }
+
+    def _append_book_candidates(book_pks_list: Sequence[int], *, slots: int, label: str) -> None:
+        if not book_pks_list:
+            return
+        per_book_rows: Dict[int, List[sqlite3.Row]] = {}
+        mode_rank = {"defines": 0, "proves": 1, "critiques": 2}
+        for bk_pk in book_pks_list:
+            rows_pref = conn.execute(
+                """
+                SELECT b.book_pk, eu.block_pk, eu.stmt, eu.verbatim_quote, eu.mode, eu.vs_dispute
+                FROM blocks b
+                JOIN epistemic_units eu ON eu.block_pk = b.block_pk
+                WHERE b.book_pk = ?
+                  AND b.is_active = 1
+                  AND b.block_role = 'body'
+                  AND length(COALESCE(eu.verbatim_quote, '')) >= 20
+                ORDER BY
+                  CASE WHEN eu.vs_dispute IS NOT NULL THEN 0 ELSE 1 END,
+                  CASE eu.mode
+                    WHEN 'defines' THEN 0
+                    WHEN 'proves' THEN 1
+                    WHEN 'critiques' THEN 2
+                    ELSE 3
+                  END,
+                  length(eu.verbatim_quote) DESC,
+                  eu.block_pk ASC
+                LIMIT 60
+                """,
+                (int(bk_pk),),
+            ).fetchall()
+
+            def _pref_rank(r: sqlite3.Row) -> Tuple[int, int, int, int, int]:
+                hay = normalizza_testo(f"{r['stmt'] or ''} {r['verbatim_quote'] or ''}")
+                tok_hits = sum(1 for t in topic_tokens if t in hay)
+                return (
+                    -tok_hits,
+                    0 if r["vs_dispute"] else 1,
+                    mode_rank.get(str(r["mode"]), 3),
+                    -len(str(r["verbatim_quote"] or "")),
+                    int(r["block_pk"]),
+                )
+
+            per_book_rows[int(bk_pk)] = sorted(rows_pref, key=_pref_rank)
+
+        for _ in range(slots):
+            for bk_pk in book_pks_list:
+                for r_p in per_book_rows.get(int(bk_pk), []):
+                    blk_pk = int(r_p["block_pk"])
+                    if blk_pk in seen_block_pks:
+                        continue
+                    if not is_clean_editorial_quote(str(r_p["verbatim_quote"] or "")):
+                        continue
+                    seen_block_pks.add(blk_pk)
+                    raw_candidates.append(
+                        {
+                            "block_pk": blk_pk,
+                            "hint_quote": str(r_p["verbatim_quote"] or ""),
+                            "stmt": str(r_p["stmt"] or ""),
+                            "mode": str(r_p["mode"] or "defines"),
+                            "when_label": label,
+                            "vs_dispute": str(r_p["vs_dispute"]) if r_p["vs_dispute"] else None,
+                            "is_wb": False,
+                        }
+                    )
+                    break
+
+    # 1b. Testi Open-Access (€0) dedicati alle lacune moderne (`preferred_book_uids`)
+    oa_book_pks: List[int] = []
+    if spec.preferred_book_uids:
+        clean_uids = [str(u).strip() for u in spec.preferred_book_uids if str(u).strip()]
+        if clean_uids:
+            ph_u = ",".join("?" for _ in clean_uids)
+            for r_u in conn.execute(
+                f"SELECT book_pk FROM books WHERE book_uid IN ({ph_u}) AND is_active = 1 ORDER BY book_pk ASC",
+                tuple(clean_uids),
+            ).fetchall():
+                oa_book_pks.append(int(r_u["book_pk"]))
+    _append_book_candidates(oa_book_pks, slots=2, label="Fonte Open-Access")
+
+    # 2. Ponti "Libro Sbagliato" validati dai nodi target (max 5 per capitolo per preservare i classici)
+    wb_added = 0
     for nid in spec.node_ids:
+        if wb_added >= 5:
+            break
         for br in get_bridges_for_node(conn, nid, only_validated=True, prefix_fallback=False):
+            if wb_added >= 5:
+                break
             bpk = int(br["block_pk"])
             if bpk in seen_block_pks:
                 continue
             seen_block_pks.add(bpk)
+            wb_added += 1
             raw_candidates.append(
                 {
                     "block_pk": bpk,
@@ -487,6 +604,9 @@ def assemble_chapter_dossier(
                     "is_wb": True,
                 }
             )
+
+    # 2b. Testi canonici prioritari (`preferred_book_pks`) in round-robin equo
+    _append_book_candidates([int(pk) for pk in spec.preferred_book_pks if int(pk) > 0], slots=2, label="Fonte canonica")
 
     # 3. Decompressore sinottico cronologico e modale per ciascun concetto chiave
     for cq in spec.concept_queries:
@@ -575,7 +695,7 @@ def assemble_chapter_dossier(
         if brow is None:
             continue
         book_pk = int(brow["book_pk"])
-        if book_use_count.get(book_pk, 0) >= 2:
+        if book_use_count.get(book_pk, 0) >= 3:
             continue
 
         hint = cand["hint_quote"]
@@ -623,18 +743,25 @@ def assemble_chapter_dossier(
             )
         )
 
-    # 4. Figure reali dal corpus (se disponibili per i blocchi) + SVG controllato del capitolo
-    corpus_figs = find_corpus_figures_for_blocks(
-        conn,
-        [q.block_pk for q in verified_quotes],
-        figures_root=figures_root,
-        chapter_dir=chapter_dir_path,
-        max_figures=1,
+    # 4. SVG controllato del capitolo (e figure reali dal corpus solo se richieste esplicitamente)
+    corpus_figs: List[FigureAsset] = []
+    if spec.include_corpus_figures:
+        corpus_figs = find_corpus_figures_for_blocks(
+            conn,
+            [q.block_pk for q in verified_quotes],
+            figures_root=figures_root,
+            chapter_dir=chapter_dir_path,
+            max_figures=1,
+        )
+    svg_filename = (
+        f"{spec.chapter_number:02d}_{spec.svg_diagram_id}.svg"
+        if (spec.volume_id == "vol1_ofa" and spec.chapter_number == 1)
+        else f"{spec.volume_id}_{spec.chapter_number:02d}_{spec.svg_diagram_id}.svg"
     )
     svg_asset = save_svg_diagram(
         spec.svg_diagram_id,
         assets_dir,
-        filename=f"{spec.chapter_number:02d}_{spec.svg_diagram_id}.svg",
+        filename=svg_filename,
         title=spec.title,
         caption=spec.svg_caption or spec.subtitle,
         chapter_dir=chapter_dir_path,
@@ -706,9 +833,26 @@ def build_author_chapter_prompt(
         else ""
     )
 
+    diagram_desc = spec.svg_caption or spec.title
+    special_modules: List[str] = []
+    if spec.proof_rubric_id and spec.proof_rubric_id in PROOF_RUBRICS:
+        lemma_lines = "\n".join(f"  - {item['label']}" for item in PROOF_RUBRICS[spec.proof_rubric_id])
+        special_modules.append(
+            "MODULO DIMOSTRAZIONE A LIBRO CHIUSO (da svolgere integralmente nella prosa o in un esempio svolto, e riprendere in un esercizio attivo senza usare sigle interne):\n"
+            f"{lemma_lines}"
+        )
+    if spec.graph_invariant_id == "abs_shifted_log":
+        special_modules.append(
+            "MODULO INVARIANTI GRAFICI (studio analitico a mano senza calcolatrice):\n"
+            "  Includi un esempio svolto o sezione dedicata alla funzione $f(x) = |\\ln(x - 2)| + 1$: "
+            "determinazione del dominio ($x > 2$), asintoto verticale ($x = 2$), punto angoloso/cuspide di minimo ($(3, 1)$), "
+            "valutazione esatta in $x = 2 + e$ ($f(2 + e) = 2$) e studio della monotonia (decrescente su $(2, 3)$, crescente su $(3, +\\infty)$)."
+        )
+    special_block = ("\n\n" + "\n\n".join(special_modules)) if special_modules else ""
+
     return (
         "Sei l'autore principale della collana scientifica di `resuscipack`: stai scrivendo un vero libro continuo\n"
-        "intitolato *Dall'Ovvio al Simbolo*, rivolto a studenti universitari e lettori adulti che vogliono capire la matematica\n"
+        f"intitolato *{spec.book_title_display}*, rivolto a studenti universitari e lettori adulti che vogliono capire la matematica e l'informatica\n"
         "dalle radici profonde fino al rigore formale (stile saggistico limpido, colto e concreto alla Bellissima / Frajese / Prodi).\n\n"
         f"TITOLO CAPITOLO {spec.chapter_number}: {spec.title}\n"
         f"SOTTOTITOLO: {spec.subtitle}\n"
@@ -720,18 +864,22 @@ def build_author_chapter_prompt(
         "   tono da sussidiario infantile, elenchi burocratici al posto del ragionamento e formule vuote da AI ('In questo capitolo scopriremo...').\n"
         "2. LA CARNE GENERA L'OSSO, ZERO SALTI LOGICI E RIGORE LATEX: parti sempre dalle idee concrete, storiche e dalle controversie vive nei testi del dossier,\n"
         "   e porta il lettore fino alle definizioni matematiche precise, al simbolismo formale e alle dimostrazioni complete.\n"
-        "   Definisci esplicitamente ogni nuovo concetto o notazione (`permutazione`, `fattoriale` $n!$, `relazione di equivalenza`, `notazione posizionale`, ecc.) dai principi primi PRIMA di usarlo nei calcoli.\n"
+        "   Copri esplicitamente ogni tema annunciato nel titolo e nel sottotitolo del capitolo (es. definizione formale di relazione $R \\subseteq A \\times B$, completezza dei numeri reali, dominio positivo di grandezze fisiche, natura geometrica vs analitica di $\\pi$) senza lasciare promesse scoperte.\n"
+        "   Definisci esplicitamente ogni nuovo concetto o notazione dai principi primi PRIMA di usarlo nei calcoli e verifica ogni passaggio algebrico senza errori di calcolo.\n"
         "   Scrivi OGNI espressione matematica in LaTeX pulito (`$6x + 3 = 51$`, `$2^4$`, `$3! = 6$`, `$\\{1, 2, 3\\}$`), mai con sintassi informatica ASCII come `6*x`.\n"
         "3. CITAZIONI RIGOROSAMENTE ANCORATE: integra nella prosa almeno 5 fonti distinte dal dossier qui sotto inserendo nel punto esatto del testo\n"
         "   il segnaposto fra parentesi quadre `[Q1]`, `[Q2]`, ecc. NON inventare altri tag tra quadre `[1]` o citazioni non presenti nel dossier.\n"
-        "   Sii rigorosamente fedele al significato letterale della citazione nel contesto della fonte: non forzarne l'interpretazione e non attribuirle tesi estranee.\n"
+        "   Sii rigorosamente fedele al significato letterale della citazione nel contesto della fonte (anche se in inglese, integrala in italiano o in citazione breve fedele senza forzarne il senso); scegli solo fonti pertinenti al tema del capitolo.\n"
+        "   Quando un classico antico è curato o tradotto da studiosi moderni (es. Euclide a cura di Frajese e Maccioni), distingui chiaramente le proposizioni dell'autore antico dalle note storico-critiche dei curatori.\n"
         "4. ZERO GERGO INTERNO E ZERO METATESTO EDITORIALE: è severamente vietato scrivere nel testo codici come `block_pk`, `block_uid`, `Strato`, `Gate`,\n"
-        "   `P0.5`, `G00`, `score 0.9`, `TASK-`, titoli da vecchia scheda (`Contesto`, `Enunciati`, `Decisione`, `Alternative`, `Conseguenze`),\n"
+        "   `P0.5`, `P3.2`, `G00`–`G20`, `score 0.9`, `TASK-`, `OA-01`, `Shadow Gate`, titoli da vecchia scheda (`Contesto`, `Enunciati`, `Decisione`, `Alternative`, `Conseguenze`),\n"
         "   o qualunque riferimento meta-editoriale a 'bozza precedente', 'correzione', 'revisore' o 'direttive editoriali': ogni riga deve leggere come un libro stampato finito.\n"
         "5. ZERO DEISSI OPACHE: mai scrivere 'il Nostro', 'suddetto autore', 'ivi', 'ibidem', 'op. cit.', 'vedi sopra'.\n"
-        "6. FIGURA EDITORIALE: in almeno una sezione imposta `include_figure: true` dove il testo introduce e commenta esplicitamente i contenuti del diagramma (bilancia simmetrica ed equilibrio, corrispondenza biunivoca, retta dei numeri).\n"
+        f"6. FIGURA EDITORIALE: in almeno una sezione imposta `include_figure: true` dove il testo introduce e commenta esplicitamente i contenuti del diagramma ({diagram_desc}).\n"
         "7. PALESTRA SIMBOLICA ANTI-POLTRONA E 3 COLORI: includi `worked_examples` (2–3 calcoli/dimostrazioni svolti passo passo senza salti logici),\n"
-        "   `original_exercises` (3–5 esercizi originali attivi e non ripetitivi coerenti coi modelli SymPy sotto, includendo almeno una verifica concettuale o controesempio — es. riconoscere quando una corrispondenza NON è biunivoca; in `solution_sketch` scrivi una traccia concisa senza ripetere 'Traccia di verifica:') e `reconstruction_notes` (2–4 note trasparenti e impersonali sulle scelte formali del capitolo).\n"
+        "   `original_exercises` (3–5 esercizi originali attivi e non ripetitivi coerenti coi modelli SymPy sotto, includendo almeno una verifica concettuale o controesempio;\n"
+        "   in `solution_sketch` scrivi una traccia concisa senza ripetere 'Traccia di verifica:') e `reconstruction_notes` (2–4 note trasparenti e impersonali sulle scelte formali del capitolo).\n"
+        f"{special_block}"
         f"{revision_block}\n"
         "RADAR CURRICOLARE SILENZIOSO (temi scolastici da coprire naturalmente, senza citarne i codici):\n"
         f"{radar_block}\n\n"
@@ -1048,13 +1196,99 @@ def generate_and_verify_chapter(
     )
 
 
+def _is_chapter_published(chapter_path: Path, *, db_path: Path | str) -> bool:
+    if not chapter_path.exists():
+        return False
+    text = chapter_path.read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---\n", text, flags=re.DOTALL)
+    if not m:
+        return False
+    meta = yaml.safe_load(m.group(1)) or {}
+    if str(meta.get("stato", "")).strip().lower() != "pubblicato":
+        return False
+    return verifica_scheda(chapter_path, db_path=db_path) == []
+
+
+def generate_volume(
+    specs: Sequence[ChapterSpec],
+    *,
+    db_path: Path | str = DEFAULT_DB_PATH,
+    output_dir: Optional[Path | str] = None,
+    assets_dir: Path | str = DEFAULT_ASSETS_DIR,
+    figures_root: Path | str = DEFAULT_FIGURES_DIR,
+    provider: str = "vertex",
+    author_model: str = "gemini-3.1-pro-preview",
+    critic_model: str = "gemini-3-flash-preview",
+    author_llm: Optional[JsonLlmCallable] = None,
+    critic_llm: Optional[JsonLlmCallable] = None,
+    max_revisions: int = 2,
+    workers: int = 4,
+    force: bool = False,
+) -> List[Dict[str, Any]]:
+    """Genera in parallelo i capitoli mancanti o non ancora pubblicati di un volume."""
+    pending: List[ChapterSpec] = []
+    results_by_num: Dict[int, Dict[str, Any]] = {}
+
+    for spec in specs:
+        dest_dir = Path(output_dir) if output_dir else (DEFAULT_BOOKS_DIR / spec.volume_id)
+        chapter_path = dest_dir / f"{spec.chapter_number:02d}_{spec.slug}.md"
+        if not force and _is_chapter_published(chapter_path, db_path=db_path):
+            results_by_num[spec.chapter_number] = {
+                "chapter_number": spec.chapter_number,
+                "chapter_path": str(chapter_path),
+                "status": "pubblicato",
+                "skipped_already_published": True,
+                "critique": {"approved": True},
+            }
+        else:
+            pending.append(spec)
+
+    def _run_one(sp: ChapterSpec) -> Tuple[int, Dict[str, Any]]:
+        res = generate_and_verify_chapter(
+            sp,
+            db_path=db_path,
+            output_dir=output_dir,
+            assets_dir=assets_dir,
+            figures_root=figures_root,
+            provider=provider,
+            author_model=author_model,
+            critic_model=critic_model,
+            author_llm=author_llm,
+            critic_llm=critic_llm,
+            max_revisions=max_revisions,
+        )
+        payload = res.to_dict()
+        payload["chapter_number"] = sp.chapter_number
+        payload["skipped_already_published"] = False
+        return sp.chapter_number, payload
+
+    if pending:
+        max_w = max(1, min(int(workers), len(pending)))
+        if max_w == 1:
+            for sp in pending:
+                ch_n, payload = _run_one(sp)
+                results_by_num[ch_n] = payload
+        else:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_w) as pool:
+                futs = [pool.submit(_run_one, sp) for sp in pending]
+                for fut in concurrent.futures.as_completed(futs):
+                    ch_n, payload = fut.result()
+                    results_by_num[ch_n] = payload
+
+    return [results_by_num[sp.chapter_number] for sp in specs if sp.chapter_number in results_by_num]
+
+
 def _main(argv: Optional[Iterable[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Motore Autoriale dei Nuovi Libri Continui (TASK-BOOK-01)."
+        description="Motore Autoriale dei Nuovi Libri Continui (TASK-BOOK-01 / 02 / 03)."
     )
     parser.add_argument("--db", type=Path, default=DEFAULT_DB_PATH, help="Percorso a pack_corpus.db")
     parser.add_argument("--out-dir", type=Path, default=None, help="Cartella di destinazione capitoli")
     parser.add_argument("--pilot", action="store_true", help="Genera e verifica il Capitolo 1 pilota del Volume I")
+    parser.add_argument("--volume", type=str, choices=("vol1_ofa", "vol2_secai"), default=None)
+    parser.add_argument("--chapter", type=int, action="append", default=None, help="Numero capitolo specifico (ripetibile)")
+    parser.add_argument("--workers", type=int, default=4, help="Worker paralleli per generazione volume")
+    parser.add_argument("--force", action="store_true", help="Rigenera anche i capitoli già `pubblicato`")
     parser.add_argument("--dossier-only", action="store_true", help="Ispeziona solo il dossier pre-verificato senza chiamare LLM")
     parser.add_argument("--provider", type=str, default="vertex", choices=("vertex", "gemini", "deepseek"))
     parser.add_argument("--author-model", type=str, default="gemini-3.1-pro-preview")
@@ -1062,8 +1296,56 @@ def _main(argv: Optional[Iterable[str]] = None) -> int:
     parser.add_argument("--max-revisions", type=int, default=2)
     args = parser.parse_args(list(argv) if argv is not None else None)
 
-    if not args.pilot and not args.dossier_only:
-        parser.error("Specifica `--pilot` o `--dossier-only`.")
+    if not args.pilot and not args.dossier_only and not args.volume:
+        parser.error("Specifica `--pilot`, `--volume` o `--dossier-only`.")
+
+    if args.volume:
+        from .catalog import get_volume_specs
+
+        target_specs = list(get_volume_specs(args.volume))
+        if args.chapter:
+            wanted = {int(c) for c in args.chapter}
+            target_specs = [s for s in target_specs if s.chapter_number in wanted]
+            if not target_specs:
+                parser.error(f"Nessun capitolo {sorted(wanted)} trovato in {args.volume}.")
+
+        if args.dossier_only:
+            conn = connect_corpus_db(args.db, read_only=True)
+            try:
+                dossiers_summary = []
+                for sp in target_specs:
+                    dos = assemble_chapter_dossier(conn, sp, chapter_dir=args.out_dir)
+                    dossiers_summary.append(
+                        {
+                            "chapter_number": sp.chapter_number,
+                            "slug": sp.slug,
+                            "title": sp.title,
+                            "quotes_count": len(dos.quotes),
+                            "distinct_books": len({q.book_pk for q in dos.quotes}),
+                            "book_titles": sorted({q.book_title for q in dos.quotes}),
+                            "figures": [f.rel_path for f in dos.figures],
+                            "sympy_drills_count": len(dos.sympy_drills),
+                        }
+                    )
+                print(json.dumps(dossiers_summary, ensure_ascii=False, indent=2))
+            finally:
+                conn.close()
+            return 0
+
+        results = generate_volume(
+            target_specs,
+            db_path=args.db,
+            output_dir=args.out_dir,
+            provider=args.provider,
+            author_model=args.author_model,
+            critic_model=args.critic_model,
+            max_revisions=args.max_revisions,
+            workers=args.workers,
+            force=args.force,
+        )
+        print(json.dumps(results, ensure_ascii=False, indent=2))
+        all_ok = all(r.get("status") == "pubblicato" and r.get("critique", {}).get("approved") for r in results)
+        return 0 if all_ok else 1
 
     if args.dossier_only:
         conn = connect_corpus_db(args.db, read_only=True)
@@ -1111,6 +1393,7 @@ __all__ = [
     "compile_chapter_markdown",
     "extract_verified_quote_span",
     "generate_and_verify_chapter",
+    "generate_volume",
     "is_clean_editorial_quote",
 ]
 

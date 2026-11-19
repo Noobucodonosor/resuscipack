@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Equazioni, disequazioni, valori assoluti e il corridoio di tolleranza</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="34" text-anchor="middle" class="title">Corridoio di tolleranza simmetrica: |x - x₀| &lt; δ</text>
+  <rect x="230" y="74" width="260" height="88" fill="#2c4f7c" fill-opacity="0.11" stroke="none"/>
+  <line x1="230" y1="68" x2="230" y2="178" stroke="#b86b2b" stroke-width="2" stroke-dasharray="5 3"/>
+  <line x1="490" y1="68" x2="490" y2="178" stroke="#b86b2b" stroke-width="2" stroke-dasharray="5 3"/>
+  <line x1="360" y1="58" x2="360" y2="180" stroke="#2d6a5b" stroke-width="2"/>
+  <line x1="70" y1="162" x2="650" y2="162" stroke="#1f2421" stroke-width="1.8"/>
+  <polygon points="650,162 640,157 640,167" fill="#1f2421"/>
+  <circle cx="230" cy="112" r="8" fill="#b86b2b"/>
+  <circle cx="490" cy="112" r="8" fill="#b86b2b"/>
+  <text x="230" y="198" text-anchor="middle" class="math">x₀ - δ</text>
+  <text x="360" y="198" text-anchor="middle" class="math">x₀ (asse)</text>
+  <text x="490" y="198" text-anchor="middle" class="math">x₀ + δ</text>
+  <text x="360" y="228" text-anchor="middle" class="muted">L’intervallo aperto (x₀ - δ, x₀ + δ) traduce la rotta sicura tra due boe simmetriche</text>
+</svg>

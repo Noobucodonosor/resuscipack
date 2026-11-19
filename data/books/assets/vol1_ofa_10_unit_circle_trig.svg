@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Angoli, circonferenza goniometrica e risoluzione dei triangoli</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Angoli, circonferenza goniometrica e risoluzione dei triangoli</text>
+  <line x1="120" y1="128" x2="340" y2="128" stroke="#1f2421" stroke-width="1.3"/>
+  <line x1="230" y1="42" x2="230" y2="214" stroke="#1f2421" stroke-width="1.3"/>
+  <circle cx="230" cy="128" r="74" fill="#2c4f7c" fill-opacity="0.06" stroke="#2c4f7c" stroke-width="2"/>
+  <line x1="230" y1="128" x2="290.6" y2="85.6" stroke="#1f2421" stroke-width="2"/>
+  <line x1="230" y1="128" x2="290.6" y2="128" stroke="#2d6a5b" stroke-width="2.5"/>
+  <line x1="290.6" y1="128" x2="290.6" y2="85.6" stroke="#b86b2b" stroke-width="2.5"/>
+  <circle cx="290.6" cy="85.6" r="4.5" fill="#b86b2b"/>
+  <text x="256" y="143" class="math" style="fill:#2d6a5b">cos α</text>
+  <text x="298" y="110" class="math" style="fill:#b86b2b">sen α</text>
+  <text x="248" y="117" class="muted">α</text>
+  <line x1="290.6" y1="85.6" x2="418" y2="85.6" stroke="#d9d2c5" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <line x1="395" y1="128" x2="660" y2="128" stroke="#1f2421" stroke-width="1.3"/>
+  <line x1="395" y1="54" x2="395" y2="202" stroke="#1f2421" stroke-width="1.3"/>
+  <polyline points="395.0,128.0 399.8,121.0 404.6,114.1 409.4,107.4 414.2,101.0 419.0,95.1 423.8,89.5 428.6,84.6 433.4,80.3 438.2,76.6 443.0,73.8 447.8,71.7 452.6,70.4 457.4,70.0 462.2,70.4 467.0,71.7 471.8,73.8 476.6,76.6 481.4,80.3 486.2,84.6 491.0,89.5 495.8,95.1 500.6,101.0 505.4,107.4 510.2,114.1 515.0,121.0 519.8,128.0 524.6,135.0 529.4,141.9 534.2,148.6 539.0,155.0 543.8,160.9 548.6,166.5 553.4,171.4 558.2,175.7 563.0,179.4 567.8,182.2 572.6,184.3 577.4,185.6 582.2,186.0 587.0,185.6 591.8,184.3 596.6,182.2 601.4,179.4 606.2,175.7 611.0,171.4 615.8,166.5 620.6,160.9 625.4,155.0 630.2,148.6 635.0,141.9 639.8,135.0 644.6,128.0" fill="none" stroke="#b86b2b" stroke-width="2.2"/>
+  <text x="528" y="214" text-anchor="middle" class="math">sen²α + cos²α = 1</text>
+  <text x="360" y="234" text-anchor="middle" class="muted">Dalla proiezione sul cerchio unitario all’onda periodica in radianti</text>
+</svg>

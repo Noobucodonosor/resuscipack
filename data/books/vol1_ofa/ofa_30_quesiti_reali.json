@@ -1,0 +1,306 @@
+{
+  "schema_version": "ofa-30-quesiti-reali.v1",
+  "count": 30,
+  "questions": [
+    {
+      "id": "OFA-REAL-01",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50634,
+      "block_uid": "blk_ef0179e9b402e3899025",
+      "page": 1,
+      "original_number": "2",
+      "question_excerpt": "Quale dei seguenti numeri c veriﬁca la condizione 3 < c < 4 ?"
+    },
+    {
+      "id": "OFA-REAL-02",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50634,
+      "block_uid": "blk_ef0179e9b402e3899025",
+      "page": 1,
+      "original_number": "3",
+      "question_excerpt": "Scrivendo per esteso il numero decimale 17,3 · 10−5, quale cifra si trova al quarto posto dopo la virgola?"
+    },
+    {
+      "id": "OFA-REAL-03",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50634,
+      "block_uid": "blk_ef0179e9b402e3899025",
+      "page": 1,
+      "original_number": "5",
+      "question_excerpt": "Il valore iniziale di una grandezza che a seguito dell’incremento del 20% ha assunto il valore di 30, era:"
+    },
+    {
+      "id": "OFA-REAL-04",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50634,
+      "block_uid": "blk_ef0179e9b402e3899025",
+      "page": 1,
+      "original_number": "8",
+      "question_excerpt": "Siano s e t le rette di equazione y = −3 2x e y = 1"
+    },
+    {
+      "id": "OFA-REAL-05",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50634,
+      "block_uid": "blk_ef0179e9b402e3899025",
+      "page": 1,
+      "original_number": "10",
+      "question_excerpt": "Considera l’equazione x2 −3x+c = 0,"
+    },
+    {
+      "id": "OFA-REAL-06",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "11",
+      "question_excerpt": "A volume costante, la pressione p di un gas perfetto varia secondo la legge p = p0(1+α ∆T)."
+    },
+    {
+      "id": "OFA-REAL-07",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "12",
+      "question_excerpt": "Per quali valori di x si ha x"
+    },
+    {
+      "id": "OFA-REAL-08",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "14",
+      "question_excerpt": "Se il punto P(c,3) appartiene al graﬁco della funzione f(x) = 2x, allora c"
+    },
+    {
+      "id": "OFA-REAL-09",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "16",
+      "question_excerpt": "Utilizzando solo i caratteri “0” e “1”, quante sequenze diverse di 5 caratteri si possono scrivere?"
+    },
+    {
+      "id": "OFA-REAL-10",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "17",
+      "question_excerpt": "Se quattro operatori allestiscono in laboratorio nove colture cellulari in venti minuti, quanti operatori sarebbero teoricamente necessari per allestire novanta colture cellulari in 100"
+    },
+    {
+      "id": "OFA-REAL-11",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "18",
+      "question_excerpt": "Agli studenti di un corso di laurea triennale"
+    },
+    {
+      "id": "OFA-REAL-12",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "19",
+      "question_excerpt": "Un’agenzia di viaggi adotta la seguente"
+    },
+    {
+      "id": "OFA-REAL-13",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "20",
+      "question_excerpt": "Dati gli insiemi A,B,C, sapendo che A ⊆B e A ⊆C, allora si"
+    },
+    {
+      "id": "OFA-REAL-14",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "21",
+      "question_excerpt": "Uno studente universitario, dopo aver superato tre esami, ha la media di 28. Nell’esame successivo lo studente prende 20. Qual"
+    },
+    {
+      "id": "OFA-REAL-15",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50635,
+      "block_uid": "blk_42fdd28224a7cdae7e52",
+      "page": 2,
+      "original_number": "22",
+      "question_excerpt": "Il prezzo di un biglietto del treno"
+    },
+    {
+      "id": "OFA-REAL-16",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50636,
+      "block_uid": "blk_2b37b54cb8216353ee79",
+      "page": 3,
+      "original_number": "23",
+      "question_excerpt": "Se la frase “tutti i direttori d’orchestra sanno suonare il piano o il violino” fosse FALSA, allora ne seguirebbe logicamente che:"
+    },
+    {
+      "id": "OFA-REAL-17",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50636,
+      "block_uid": "blk_2b37b54cb8216353ee79",
+      "page": 3,
+      "original_number": "24",
+      "question_excerpt": "In una libreria ci sono diversi scaffali con libri di ﬁsica e di biologia. Negli scaffali dove ci sono almeno due libri ce ne"
+    },
+    {
+      "id": "OFA-REAL-18",
+      "source_kind": "test_matematica_di_base",
+      "book_title": "Testmatbasesol",
+      "block_pk": 50636,
+      "block_uid": "blk_2b37b54cb8216353ee79",
+      "page": 3,
+      "original_number": "25",
+      "question_excerpt": "”La superﬁcie del lago di Garda supera di 12 km2 il doppio della superﬁcie complessiva dei laghi d’Iseo e di Bolsena.”"
+    },
+    {
+      "id": "OFA-REAL-19",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50615,
+      "block_uid": "blk_c3a08c2fb57b7b276661",
+      "page": 2,
+      "original_number": "1",
+      "question_excerpt": "Se elimino un collegamento dal Desktop che cosa succede?"
+    },
+    {
+      "id": "OFA-REAL-20",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50615,
+      "block_uid": "blk_c3a08c2fb57b7b276661",
+      "page": 2,
+      "original_number": "2",
+      "question_excerpt": "Si possono recuperare i file presenti nel cestino?"
+    },
+    {
+      "id": "OFA-REAL-21",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50615,
+      "block_uid": "blk_c3a08c2fb57b7b276661",
+      "page": 2,
+      "original_number": "3",
+      "question_excerpt": "Che cosa si può mettere in una cartella?"
+    },
+    {
+      "id": "OFA-REAL-22",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50615,
+      "block_uid": "blk_c3a08c2fb57b7b276661",
+      "page": 2,
+      "original_number": "4",
+      "question_excerpt": "Quale delle seguenti misure espresse in byte si avvicina di più a 1 megabyte?"
+    },
+    {
+      "id": "OFA-REAL-23",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50615,
+      "block_uid": "blk_c3a08c2fb57b7b276661",
+      "page": 2,
+      "original_number": "5",
+      "question_excerpt": "Quale delle seguenti è la memoria permanente tipicamente contenuta all’ interno di un"
+    },
+    {
+      "id": "OFA-REAL-24",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "8",
+      "question_excerpt": "Quale tra i seguenti URL non è corretto?"
+    },
+    {
+      "id": "OFA-REAL-25",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "9",
+      "question_excerpt": "In gergo informatico cosa si intende per spam?"
+    },
+    {
+      "id": "OFA-REAL-26",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "10",
+      "question_excerpt": "Quale delle seguenti affermazioni sulla posta elettronica non è corretta?"
+    },
+    {
+      "id": "OFA-REAL-27",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "11",
+      "question_excerpt": "Dopo aver selezionato un testo con quale dei seguenti comandi posso spostarlo?"
+    },
+    {
+      "id": "OFA-REAL-28",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "12",
+      "question_excerpt": "Per aumentare le dimensioni del carattere quale dei seguenti strumenti posso usare?"
+    },
+    {
+      "id": "OFA-REAL-29",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50616,
+      "block_uid": "blk_7db434f29d7b24af2419",
+      "page": 3,
+      "original_number": "13",
+      "question_excerpt": "In quale gruppo trovo il comando per allineare il testo a destra?"
+    },
+    {
+      "id": "OFA-REAL-30",
+      "source_kind": "test_ingresso_informatica",
+      "book_title": "Test-di-informatica-2015-2017",
+      "block_pk": 50617,
+      "block_uid": "blk_9788b9ad246d9863401d",
+      "page": 4,
+      "original_number": "15",
+      "question_excerpt": "Quale funzione devo usare per aggiungere un testo decorativo al documento?"
+    }
+  ]
+}

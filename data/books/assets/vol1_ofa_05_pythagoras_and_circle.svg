@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Geometria delle figure, isometrie, Pitagora e pi greco nello spazio</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Geometria delle figure, isometrie, Pitagora e pi greco nello spazio</text>
+  <polygon points="150,170 260,170 150,90" fill="#2d6a5b" fill-opacity="0.18" stroke="#1f2421" stroke-width="2"/>
+  <rect x="104" y="90" width="46" height="80" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <rect x="150" y="170" width="110" height="44" fill="#b86b2b" fill-opacity="0.12" stroke="#b86b2b" stroke-width="1.4"/>
+  <text x="127" y="134" text-anchor="middle" class="math">a²</text>
+  <text x="205" y="196" text-anchor="middle" class="math">b²</text>
+  <text x="220" y="122" class="math">c = √(a²+b²)</text>
+  <line x1="360" y1="48" x2="360" y2="212" stroke="#d9d2c5" stroke-width="1.2"/>
+  <circle cx="520" cy="126" r="66" fill="#2c4f7c" fill-opacity="0.08" stroke="#2c4f7c" stroke-width="2.2"/>
+  <line x1="520" y1="126" x2="586" y2="126" stroke="#b86b2b" stroke-width="2.2"/>
+  <circle cx="520" cy="126" r="4" fill="#1f2421"/>
+  <text x="553" y="118" text-anchor="middle" class="math" style="fill:#b86b2b">r</text>
+  <text x="520" y="210" text-anchor="middle" class="math">C = 2πr ,  A = πr²</text>
+  <text x="360" y="234" text-anchor="middle" class="muted">Invariante metrico euclideo sul piano cartesiano e misura del cerchio</text>
+</svg>
