@@ -35,9 +35,15 @@ from resuscipack.books import (
     run_deterministic_chapter_audit,
     save_svg_diagram,
 )
+from resuscipack.books.catalog import ALL_OA_BOOK_UIDS
 from resuscipack.curriculum.dag import load_unified_dag
 from resuscipack.curriculum.drills_sympy import generate_drill_set, grade_drill_answer
 from resuscipack.corpus.normalizer import make_block_uid, make_book_uid, normalize_for_match
+from resuscipack.corpus.open_access_ingest import (
+    OpenAccessBlockDraft,
+    OpenAccessWorkDraft,
+    ingest_open_access_sources,
+)
 from resuscipack.corpus.schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db
 from resuscipack.epistemic import (
     persist_block_extraction,
@@ -557,5 +563,137 @@ def test_volume1_all_11_published_chapters_and_30_ofa_questions() -> None:
             assert row is not None and int(row["is_active"]) == 1
             assert row["block_uid"] == q["block_uid"]
             assert normalize_for_match(q["question_excerpt"]) in row["norm_content"]
+    finally:
+        conn.close()
+
+
+def test_open_access_ingest_append_only_idempotent_offline() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = Path(tmp) / "corpus.db"
+        conn = init_corpus_db(db_path)
+        try:
+            existing_pk, existing_uid = _seed_book_block(
+                conn,
+                title="Testo Storico Esistente",
+                surface_domain="matematica",
+                content=(
+                    "Il principio di invarianza stabilisce che una relazione valida permane "
+                    "sotto tutte le trasformazioni ammissibili del sistema fisico considerato."
+                ),
+                quote="una relazione valida permane sotto tutte le trasformazioni ammissibili del sistema fisico",
+                stmt="Definizione storica di invarianza su trasformazioni ammissibili.",
+                page=12,
+            )
+        finally:
+            conn.close()
+
+        sample_work = OpenAccessWorkDraft(
+            book_uid="oa_test_append_only_work",
+            title="Manuale Aperto di Sicurezza e Testing (€0)",
+            author="Autori Open Access",
+            year=2025,
+            surface_domain="informatica",
+            language="it",
+            blocks=(
+                OpenAccessBlockDraft(
+                    page=1,
+                    section_title="Principi di testing sistematico",
+                    content=(
+                        "Ogni suite di verifica automatica deve isolare i casi limite "
+                        "e riprodurre deterministicamente le condizioni di errore senza effetti collaterali esterni."
+                    ),
+                ),
+                OpenAccessBlockDraft(
+                    page=2,
+                    section_title="Validazione degli ingressi HTTP",
+                    content=(
+                        "Le query parametrizzate separano in modo netto la struttura sintattica del comando SQL "
+                        "dai dati forniti dall'utente attraverso i moduli di rete."
+                    ),
+                ),
+            ),
+        )
+
+        first = ingest_open_access_sources(
+            db_path,
+            preloaded_works=[sample_work],
+            extract_v22=False,
+        )
+        assert first["works_processed"] == 1
+        assert first["books_inserted"] == 1
+        assert first["blocks_inserted"] == 2
+        assert first["oa_blocks_total"] == 2
+        assert first["oa_blocks_pending_v22"] == 2
+        assert first["active_blocks_after"] == 3
+        assert first["fts_rows_after"] == 3
+
+        second = ingest_open_access_sources(
+            db_path,
+            preloaded_works=[sample_work],
+            extract_v22=False,
+        )
+        assert second["books_inserted"] == 0
+        assert second["blocks_inserted"] == 0
+        assert second["oa_blocks_total"] == 2
+        assert second["oa_blocks_pending_v22"] == 2
+        assert second["active_blocks_after"] == 3
+        assert second["fts_rows_after"] == 3
+
+        check_conn = connect_corpus_db(db_path, read_only=True)
+        try:
+            orig = check_conn.execute(
+                "SELECT block_pk, block_uid, source_origin, is_active FROM blocks WHERE block_pk = ?",
+                (existing_pk,),
+            ).fetchone()
+            assert orig is not None
+            assert int(orig["block_pk"]) == existing_pk
+            assert orig["block_uid"] == existing_uid
+            assert orig["source_origin"] == "test"
+            assert int(orig["is_active"]) == 1
+
+            oa_rows = check_conn.execute(
+                "SELECT block_pk, source_origin FROM blocks WHERE source_origin = 'open_access_oa' ORDER BY block_pk"
+            ).fetchall()
+            assert len(oa_rows) == 2
+            assert all(r["source_origin"] == "open_access_oa" for r in oa_rows)
+        finally:
+            check_conn.close()
+
+
+@pytest.mark.skipif(not DEFAULT_DB_PATH.exists(), reason="pack_corpus.db non presente")
+def test_volume2_all_9_published_chapters_and_open_access_indexed() -> None:
+    vol2_dir = DEFAULT_BOOKS_DIR / "vol2_secai"
+    for sp in VOL2_CHAPTER_SPECS:
+        ch_path = vol2_dir / f"{sp.chapter_number:02d}_{sp.slug}.md"
+        assert ch_path.exists(), f"Capitolo Volume II mancante: {ch_path}"
+        meta, _ = leggi_scheda(ch_path)
+        assert meta.get("stato") == "pubblicato", f"{ch_path.name} ha stato={meta.get('stato')!r}"
+        assert verifica_scheda(ch_path, db_path=DEFAULT_DB_PATH) == []
+        assert run_deterministic_chapter_audit(ch_path, db_path=DEFAULT_DB_PATH) == []
+
+    conn = connect_corpus_db(DEFAULT_DB_PATH, read_only=True)
+    try:
+        assert len(ALL_OA_BOOK_UIDS) == 8
+        for uid in ALL_OA_BOOK_UIDS:
+            row = conn.execute(
+                """
+                SELECT bk.book_pk, bk.source_kind, bk.is_active,
+                       COUNT(DISTINCT bl.block_pk) AS n_blocks,
+                       COUNT(eu.unit_pk) AS n_units
+                FROM books bk
+                JOIN blocks bl ON bl.book_pk = bk.book_pk
+                             AND bl.is_active = 1
+                             AND bl.source_origin = 'open_access_oa'
+                JOIN epistemic_units eu ON eu.block_pk = bl.block_pk
+                WHERE bk.book_uid = ?
+                  AND bk.is_active = 1
+                  AND bk.source_kind = 'open_access'
+                GROUP BY bk.book_pk
+                """,
+                (uid,),
+            ).fetchone()
+            assert row is not None, f"Opera Open-Access mancante o senza unità epistemiche: {uid}"
+            assert int(row["n_blocks"]) >= 1
+            assert int(row["n_units"]) >= 1
     finally:
         conn.close()

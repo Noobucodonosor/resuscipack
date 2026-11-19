@@ -9,6 +9,7 @@ venv/
 data/*.db*
 data/wave*_status.json
 data/corpus_figures/
+data/open_access_cache/
 data/m1_batch/
 *.sqlite
 *.sqlite3
