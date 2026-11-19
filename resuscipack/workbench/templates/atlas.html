@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="it" data-type="software" data-radius="soft" data-ground="sky" data-buttons="tonal" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>resuscipack: atlante disciplinare e spettro percentuale della biblioteca</title>
+<meta name="description" content="Esplora 1.424 opere attraverso lo spettro percentuale delle discipline, i mosaici tematici dal basso e la cronologia dei concetti.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#ffffff">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+{% with is_home=False %}{% include '_design_tokens.html' %}{% endwith %}
+</head>
+<body data-initial-book-pk="{{ initial_book_pk or '' }}" data-initial-discipline="{{ initial_discipline or '' }}">
+{% with is_home=False, active_nav='atlante' %}{% include '_nav.html' %}{% endwith %}
+
+<main id="top" class="atlas-shell">
+  <div class="wrap">
+    <header class="atlas-head">
+      <h1>Atlante dei volumi e delle discipline</h1>
+      <p>Misura di quali materie è fatto ogni testo pagina per pagina, raccogli una disciplina dentro opere dedicate ad altro e confronta i passaggi in ordine cronologico.</p>
+    </header>
+
+    <div class="atlas-tabs" role="tablist" aria-label="Viste dell'atlante">
+      <button type="button" class="atlas-tab" role="tab" id="tabCatalogBtn" aria-selected="true" aria-controls="panelCatalog">Catalogo e spettro dei volumi</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabMosaicBtn" aria-selected="false" aria-controls="panelMosaic">Discipline dal basso</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabSearchBtn" aria-selected="false" aria-controls="panelSearch">Ricerca e cronologia dei concetti</button>
+    </div>
+
+    <!-- PANNELLO 1: CATALOGO E SPETTRO PERCENTUALE -->
+    <section id="panelCatalog" role="tabpanel" aria-labelledby="tabCatalogBtn">
+      <div class="atlas-filters">
+        <div class="atlas-field">
+          <label for="atlasSearchInput">Titolo o autore</label>
+          <input type="search" id="atlasSearchInput" class="atlas-input" placeholder="Es. Marconi, Euclide, Galileo…">
+        </div>
+        <div class="atlas-field">
+          <label for="atlasPrimarySelect">Disciplina dominante</label>
+          <select id="atlasPrimarySelect" class="atlas-select">
+            <option value="">Tutte le discipline dominanti</option>
+          </select>
+        </div>
+        <div class="atlas-field">
+          <label for="atlasContainsSelect">Contiene anche la disciplina</label>
+          <select id="atlasContainsSelect" class="atlas-select">
+            <option value="">Qualsiasi presenza</option>
+          </select>
+        </div>
+        <div class="atlas-field">
+          <label class="atlas-check">
+            <input type="checkbox" id="atlasSecondaryOnly">
+            <span>Solo libri di altre discipline</span>
+          </label>
+          <label class="atlas-check">
+            <input type="checkbox" id="atlasIncludeNoise">
+            <span>Includi tutti gli allegati tecnici</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="pill-row" aria-label="Percorsi rapidi">
+        <button type="button" class="quick-pill" id="shortcutMarconiBtn">Guglielmo Marconi (Masini)</button>
+        <button type="button" class="quick-pill" id="shortcutGeoSecondaryBtn">Geografia in opere non geografiche</button>
+        <button type="button" class="quick-pill" id="shortcutResetBtn">Mostra tutto il catalogo</button>
+      </div>
+
+      <p id="atlasCatalogCount" class="t-small muted" aria-live="polite"></p>
+
+      <div class="atlas-split">
+        <div>
+          <div id="atlasBookList" class="atlas-book-list"></div>
+          <div id="atlasListSentinel" style="margin-top: var(--s-4);">
+            <button type="button" id="atlasShowMoreBtn" class="btn btn--secondary" hidden>Carica altri volumi</button>
+          </div>
+        </div>
+
+        <aside id="atlasBookDetail" class="atlas-detail-pane" aria-live="polite">
+          <p class="muted">Seleziona un volume a sinistra per ispezionare il suo Spettro Disciplinare Percentuale e leggere i relativi passaggi originali.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PANNELLO 2: RICOSTRUZIONE DELLE DISCIPLINE DAL BASSO -->
+    <section id="panelMosaic" role="tabpanel" aria-labelledby="tabMosaicBtn" hidden>
+      <div class="atlas-filters">
+        <div class="atlas-field">
+          <label for="mosaicDisciplineSelect">Scegli una disciplina da ricostruire dal basso</label>
+          <select id="mosaicDisciplineSelect" class="atlas-select"></select>
+        </div>
+        <div class="atlas-field">
+          <label for="mosaicMinCov">Copertura minima nel libro (%)</label>
+          <input type="number" id="mosaicMinCov" class="atlas-input" value="0.5" min="0" max="50" step="0.5">
+        </div>
+        <div class="atlas-field">
+          <button type="button" id="mosaicLoadBtn" class="btn btn--primary">Raccogli dai testi</button>
+        </div>
+      </div>
+
+      <div class="pill-row">
+        <button type="button" class="quick-pill" data-mosaic-disc="geografia_cartografia_territorio">Geografia nei non geografici</button>
+        <button type="button" class="quick-pill" data-mosaic-disc="musica_acustica">Musica e acustica</button>
+        <button type="button" class="quick-pill" data-mosaic-disc="logica">Logica</button>
+        <button type="button" class="quick-pill" data-mosaic-disc="nautica_navigazione_meteo">Nautica e navigazione</button>
+        <button type="button" class="quick-pill" data-mosaic-disc="filosofia_epistemologia">Filosofia ed epistemologia</button>
+      </div>
+
+      <div id="mosaicResultBox" aria-live="polite"></div>
+    </section>
+
+    <!-- PANNELLO 3: RICERCA E CRONOLOGIA SINOTTICA -->
+    <section id="panelSearch" role="tabpanel" aria-labelledby="tabSearchBtn" hidden>
+      <form id="atlasSearchForm" class="atlas-filters">
+        <div class="atlas-field">
+          <label for="conceptQueryInput">Concetto o parola esatta nei testi</label>
+          <input type="search" id="conceptQueryInput" class="atlas-input" placeholder="Es. infinitesimale, probabilità, parallele…" required>
+        </div>
+        <div class="atlas-field">
+          <label for="conceptSearchMode">Modalità di lettura</label>
+          <select id="conceptSearchMode" class="atlas-select">
+            <option value="decompress">Cronologia sinottica (Chi · Come · Dove · Quando)</option>
+            <option value="fts">Ricerca testuale integrale</option>
+          </select>
+        </div>
+        <div class="atlas-field">
+          <label for="conceptModalFilter">Funzione argomentativa</label>
+          <select id="conceptModalFilter" class="atlas-select">
+            <option value="">Tutte le funzioni</option>
+            <option value="defines">Definisce</option>
+            <option value="proves">Dimostra</option>
+            <option value="applies">Applica</option>
+            <option value="critiques">Critica / Contesta</option>
+            <option value="extends">Estende</option>
+          </select>
+        </div>
+        <div class="atlas-field">
+          <button type="submit" class="btn btn--primary">Cerca nella biblioteca</button>
+        </div>
+      </form>
+
+      <div class="pill-row">
+        <button type="button" class="quick-pill" data-concept="infinitesimale">Infinitesimale</button>
+        <button type="button" class="quick-pill" data-concept="probabilità">Probabilità</button>
+        <button type="button" class="quick-pill" data-concept="entropia">Entropia</button>
+        <button type="button" class="quick-pill" data-concept="parallele">Postulato delle parallele</button>
+      </div>
+
+      <div id="conceptResultsBox" aria-live="polite"></div>
+    </section>
+  </div>
+</main>
+
+{% include '_source_drawer.html' %}
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<script type="module" src="/assets/system.js"></script>
+<script type="module" src="/assets/motion/motion.js"></script>
+<script type="module" src="/static/atlas.js"></script>
+</body>
+</html>

@@ -250,12 +250,53 @@ def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
     assert st["state"] == "running"
     assert st["live_wave"]["blocks_completed"] == 40
 
-    # 1. Pagina principale HTML + Bussola Hero
+    # 1. Pagina principale HTML anti-slop (TASK-UI-01): design system coerente e zero gergo interno
     r_index = client.get("/")
     assert r_index.status_code == 200
     html_text = r_index.get_data(as_text=True)
-    assert "heroCompassBar" in html_text
-    assert "bookReaderContainer" in html_text
+    assert 'href="/assets/system.css"' in html_text
+    assert 'href="/libro"' in html_text
+    assert 'href="/atlante"' in html_text
+    assert 'data-enter' in html_text
+    for forbidden_jargon in ("Strato 0", "P0.5", "G00", "block_pk=", "score 0."):
+        assert forbidden_jargon not in html_text
+
+    # 1b. Lettore Continuo dei Nuovi Libri (TASK-UI-02)
+    r_reader = client.get("/libro/vol1_ofa/dall_ovvio_al_numero")
+    assert r_reader.status_code == 200
+    reader_html = r_reader.get_data(as_text=True)
+    assert 'id="sourceDrawer"' in reader_html
+    assert 'id="chapterHeading"' in reader_html
+
+    r_books = client.get("/api/books")
+    assert r_books.status_code == 200
+    books_data = r_books.get_json()
+    assert books_data["total_chapters"] == 20
+    assert len(books_data["volumes"]) == 2
+    assert all(
+        ch["status"] == "pubblicato"
+        for vol in books_data["volumes"]
+        for ch in vol["chapters"]
+    )
+
+    r_ch1 = client.get("/api/books/vol1_ofa/dall_ovvio_al_numero")
+    assert r_ch1.status_code == 200
+    ch1 = r_ch1.get_json()
+    assert ch1["volume_id"] == "vol1_ofa"
+    assert len(ch1["footnotes"]) == 7
+    assert len(ch1["drills"]) >= 4
+    assert 'data-block-pk="13576"' in ch1["html"]
+    assert "/books-assets/01_balance_and_number_line.svg" in ch1["html"]
+
+    r_svg = client.get("/books-assets/01_balance_and_number_line.svg")
+    assert r_svg.status_code == 200
+    assert b"<svg" in r_svg.data
+
+    r_ofa = client.get("/api/books/ofa-questions")
+    assert r_ofa.status_code == 200
+    ofa_payload = r_ofa.get_json()
+    assert ofa_payload["count"] == 30
+    assert len(ofa_payload["questions"]) == 30
 
     # 2. Overview del grafo a 4 strati
     r_ov = client.get("/api/overview")
@@ -319,3 +360,64 @@ def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
     for src_file in (REPO_ROOT / "resuscipack" / "workbench").rglob("*"):
         if src_file.is_file() and src_file.suffix in {".py", ".js", ".html"}:
             assert ".slice(" not in src_file.read_text(encoding="utf-8")
+
+
+def test_atlas_and_spectrum_endpoints(tmp_path: Path) -> None:
+    app = create_app(
+        corpus_db_path=CORPUS_DB,
+        state_db_path=tmp_path / "atlas_state.db",
+    )
+    client = app.test_client()
+
+    # Pagina Atlante HTML + route diretta a un libro
+    r_page = client.get("/atlante")
+    assert r_page.status_code == 200
+    atlas_html = r_page.get_data(as_text=True)
+    assert 'id="panelCatalog"' in atlas_html
+    assert 'id="sourceDrawer"' in atlas_html
+
+    r_marconi_page = client.get("/atlante/libro/514?discipline=geografia")
+    assert r_marconi_page.status_code == 200
+
+    # Tutte le 22 discipline
+    r_discs = client.get("/api/atlas/disciplines")
+    assert r_discs.status_code == 200
+    assert len(r_discs.get_json()["disciplines"]) == 22
+
+    # Catalogo integrale senza troncamento (.slice()) inclusi tutti gli oltre 1.420 libri attivi
+    r_books = client.get("/api/atlas/books?include_noise=1")
+    assert r_books.status_code == 200
+    bdata = r_books.get_json()
+    assert bdata["total"] >= 1420
+    assert bdata["total"] == len(bdata["books"])
+
+    # Spettro percentuale di Guglielmo Marconi (Masini, book_pk=514) e passaggi geografici
+    r_m = client.get("/api/atlas/book/514")
+    assert r_m.status_code == 200
+    marconi = r_m.get_json()
+    assert "Marconi" in marconi["clean_title"]
+    assert abs(marconi["share_sum_pct"] - 100.0) <= 0.15
+
+    r_geo_p = client.get("/api/atlas/book/514/passages?discipline=geografia")
+    assert r_geo_p.status_code == 200
+    geo_passages = r_geo_p.get_json()
+    assert geo_passages["count"] >= 5
+    assert len(geo_passages["passages"]) == geo_passages["count"]
+
+    # Ricostruzione dal basso (Geografia nei libri non geografici)
+    r_rec = client.get("/api/atlas/reconstruct/geografia")
+    assert r_rec.status_code == 200
+    rec = r_rec.get_json()
+    assert rec["total_wrong_books"] >= 50
+    assert rec["total_passages"] >= 500
+    assert any(b["book_pk"] == 514 for b in rec["books"])
+
+    # Decompressore sinottico cronologico
+    r_dec = client.get("/api/atlas/decompress?q=energia")
+    assert r_dec.status_code == 200
+    dec = r_dec.get_json()
+    assert dec["total_entries"] >= 10
+    assert dec["distinct_books"] >= 2
+    assert len(dec["timeline"]) >= 10
+    assert dec["timeline"][0].get("clean_book_title")
+    assert dec["timeline"][0].get("verbatim_quote")
