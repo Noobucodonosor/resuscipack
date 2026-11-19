@@ -159,6 +159,34 @@ CREATE TABLE IF NOT EXISTS block_metadata_v22 (
     updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS book_discipline_spectrum (
+    book_pk INTEGER NOT NULL REFERENCES books(book_pk),
+    macro_discipline TEXT NOT NULL,
+    block_count INTEGER NOT NULL,
+    char_count INTEGER NOT NULL,
+    coverage_pct REAL NOT NULL,
+    share_pct REAL NOT NULL,
+    block_pks_json TEXT NOT NULL,
+    top_topics_json TEXT NOT NULL DEFAULT '[]',
+    top_places_json TEXT NOT NULL DEFAULT '[]',
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (book_pk, macro_discipline)
+);
+
+CREATE TABLE IF NOT EXISTS book_spectrum_meta (
+    book_pk INTEGER PRIMARY KEY REFERENCES books(book_pk),
+    active_blocks_count INTEGER NOT NULL,
+    v22_blocks_count INTEGER NOT NULL,
+    total_v22_chars INTEGER NOT NULL,
+    distinct_disciplines INTEGER NOT NULL,
+    primary_discipline TEXT,
+    primary_share_pct REAL NOT NULL DEFAULT 0.0,
+    shannon_entropy_norm REAL NOT NULL DEFAULT 0.0,
+    quality_tier TEXT NOT NULL DEFAULT 'canonical_book',
+    noise_reason TEXT,
+    updated_at TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
 CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
 CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
@@ -166,6 +194,8 @@ CREATE INDEX IF NOT EXISTS idx_epistemic_units_block ON epistemic_units(block_pk
 CREATE INDEX IF NOT EXISTS idx_curiosity_bridges_node ON curiosity_bridges(node_id, status);
 CREATE INDEX IF NOT EXISTS idx_extraction_log_yield ON block_extraction_log(yield);
 CREATE INDEX IF NOT EXISTS idx_block_meta_v22_ver ON block_metadata_v22(schema_version);
+CREATE INDEX IF NOT EXISTS idx_book_spectrum_disc_cov ON book_discipline_spectrum(macro_discipline, coverage_pct DESC, block_count DESC);
+CREATE INDEX IF NOT EXISTS idx_book_spectrum_meta_tier ON book_spectrum_meta(quality_tier, primary_discipline);
 """
 
 
