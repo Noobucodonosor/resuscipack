@@ -3,6 +3,8 @@
 - Schema polimorfico `BlockExtraction v2.1`/`v2.2` a zero leakage e anti-template (`schema_v21.py`)
 - Spettro Disciplinare Percentuale per Libro (`spectrum.py`)
 - Ricostruzione delle Discipline dal Basso e Ponte "Il Libro Sbagliato" (`discipline_reconstructor.py`, `bridge.py`)
+- Decompressore Sinottico Cronologico e Modale (`decompressor.py`)
+- Mappatura Bidirezionale Ontologia Ministeriale v6 (`curriculum_mapper.py`)
 - Validatore deterministico a 6 Gate per le schede studio (`verifica_citazioni.py`)
 - CLI batch idempotente fail-honest per Wave 1..4 (`batch_cli.py`)
 """
@@ -16,6 +18,27 @@ from .bridge import (
     get_bridges_for_node,
     seed_verified_empirical_bridges,
     validate_and_upsert_bridge,
+)
+from .curriculum_mapper import (
+    DEFAULT_COVERAGE_REPORT_PATH,
+    ONTOLOGY_TO_CORPUS_DISCIPLINES,
+    build_volume1_gap_report,
+    extract_objective_query_terms,
+    find_objectives_for_block,
+    find_objectives_for_book,
+    get_objective_corpus_mapping,
+    map_ontology_to_corpus,
+    save_corpus_coverage_report,
+)
+from .decompressor import (
+    CANONICAL_AUTHOR_EPOCH,
+    MODE_LABELS_IT,
+    SynopticDisputeHighlight,
+    SynopticEntry,
+    SynopticReport,
+    decompress_concept,
+    parse_historical_year,
+    resolve_entry_chronology,
 )
 from .discipline_reconstructor import (
     DISCIPLINE_NATIVE_SURFACE_DOMAINS,
@@ -71,12 +94,16 @@ __all__ = [
     "AtomicEpistemicUnit",
     "BlockExtractionV21",
     "BlockYield",
+    "CANONICAL_AUTHOR_EPOCH",
+    "DEFAULT_COVERAGE_REPORT_PATH",
     "DEFAULT_NODE_ARCHETYPES",
     "DISCIPLINE_ALIASES",
     "DISCIPLINE_NATIVE_SURFACE_DOMAINS",
     "GeneratorArchetype",
     "MACRO_DISCIPLINE_LABELS_IT",
+    "MODE_LABELS_IT",
     "MacroDiscipline",
+    "ONTOLOGY_TO_CORPUS_DISCIPLINES",
     "OP_TAG_DESCRIPTIONS",
     "OpTag",
     "ReconstructedBookContribution",
@@ -86,26 +113,39 @@ __all__ = [
     "SCHEMA_VERSION_V22",
     "SchemaValidationError",
     "StructuralSignature",
+    "SynopticDisputeHighlight",
+    "SynopticEntry",
+    "SynopticReport",
     "UnitKind",
     "UnitMode",
     "ValidationReport",
     "WrongBookCandidate",
+    "build_volume1_gap_report",
     "classify_book_quality_tier",
     "compute_all_book_spectra",
+    "decompress_concept",
     "discover_and_validate_bridges",
+    "extract_objective_query_terms",
+    "find_objectives_for_block",
+    "find_objectives_for_book",
     "find_wrong_book_candidates",
     "get_book_spectrum",
     "get_bridges_for_node",
+    "get_objective_corpus_mapping",
     "is_residual_paratext_block",
     "label_for_discipline",
     "list_books_by_discipline",
+    "map_ontology_to_corpus",
     "normalizza",
     "normalizza_testo",
+    "parse_historical_year",
     "persist_block_extraction",
     "persist_v22_metadata_only",
     "quote_matches_block_ocr_tolerant",
     "reconstruct_discipline",
+    "resolve_entry_chronology",
     "resolve_macro_discipline",
+    "save_corpus_coverage_report",
     "seed_verified_empirical_bridges",
     "validate_and_upsert_bridge",
     "validate_batch_anti_template",

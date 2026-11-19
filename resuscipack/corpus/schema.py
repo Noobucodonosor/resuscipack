@@ -187,6 +187,37 @@ CREATE TABLE IF NOT EXISTS book_spectrum_meta (
     updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS objective_corpus_map (
+    objective_uid TEXT PRIMARY KEY,
+    cycle TEXT NOT NULL,
+    school TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    grade TEXT NOT NULL,
+    nucleus TEXT NOT NULL,
+    target_macro_discipline TEXT NOT NULL,
+    epistemic_layer TEXT NOT NULL DEFAULT 'corpus_learnable',
+    coverage_status TEXT NOT NULL,
+    matched_blocks_count INTEGER NOT NULL,
+    distinct_books_count INTEGER NOT NULL,
+    wrong_book_evidence_count INTEGER NOT NULL DEFAULT 0,
+    linked_bridge_count INTEGER NOT NULL DEFAULT 0,
+    mapped_dag_node_ids_json TEXT NOT NULL DEFAULT '[]',
+    evidence_blocks_json TEXT NOT NULL DEFAULT '[]',
+    linked_bridge_pks_json TEXT NOT NULL DEFAULT '[]',
+    matched_terms_json TEXT NOT NULL DEFAULT '[]',
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS objective_block_evidence (
+    objective_uid TEXT NOT NULL REFERENCES objective_corpus_map(objective_uid),
+    block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    book_pk INTEGER NOT NULL REFERENCES books(book_pk),
+    match_score REAL NOT NULL,
+    is_wrong_book INTEGER NOT NULL DEFAULT 0,
+    matched_terms_json TEXT NOT NULL DEFAULT '[]',
+    PRIMARY KEY (objective_uid, block_pk)
+);
+
 CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
 CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
 CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
@@ -196,6 +227,9 @@ CREATE INDEX IF NOT EXISTS idx_extraction_log_yield ON block_extraction_log(yiel
 CREATE INDEX IF NOT EXISTS idx_block_meta_v22_ver ON block_metadata_v22(schema_version);
 CREATE INDEX IF NOT EXISTS idx_book_spectrum_disc_cov ON book_discipline_spectrum(macro_discipline, coverage_pct DESC, block_count DESC);
 CREATE INDEX IF NOT EXISTS idx_book_spectrum_meta_tier ON book_spectrum_meta(quality_tier, primary_discipline);
+CREATE INDEX IF NOT EXISTS idx_obj_corpus_status ON objective_corpus_map(coverage_status, cycle, target_macro_discipline);
+CREATE INDEX IF NOT EXISTS idx_obj_block_ev_block ON objective_block_evidence(block_pk);
+CREATE INDEX IF NOT EXISTS idx_obj_block_ev_book ON objective_block_evidence(book_pk, is_wrong_book);
 """
 
 

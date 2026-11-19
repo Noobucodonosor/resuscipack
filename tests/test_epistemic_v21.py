@@ -25,10 +25,13 @@ from resuscipack.epistemic import (
     GeneratorArchetype,
     OpTag,
     SchemaValidationError,
+    decompress_concept,
     discover_and_validate_bridges,
     find_wrong_book_candidates,
     get_bridges_for_node,
+    parse_historical_year,
     persist_block_extraction,
+    resolve_entry_chronology,
     seed_verified_empirical_bridges,
     validate_and_upsert_bridge,
     validate_batch_anti_template,
@@ -857,5 +860,178 @@ def test_canonical_cards_pass_all_6_gates_readonly() -> None:
     for card in cards:
         errs = verifica_scheda(card, db_path=canon_db)
         assert errs == [], f"Errori su {card.name}: {errs}"
+
+
+# ---------------------------------------------------------------------------
+# TASK-SPEC-03: Decompressore Sinottico Cronologico e Modale
+# ---------------------------------------------------------------------------
+
+
+def test_decompressor_historical_year_parser_and_chronology() -> None:
+    assert parse_historical_year("1638") == (1638, "1638")
+    assert parse_historical_year("1635-1647") == (1635, "1635-1647")
+    assert parse_historical_year("2001/2002") == (2001, "2001/2002")
+    assert parse_historical_year("300 a.C.") == (-300, "300 a.C.")
+    assert parse_historical_year("III sec. a.C.") == (-250, "III sec. a.C.")
+    assert parse_historical_year("585 BC") == (-585, "585 a.C.")
+    assert parse_historical_year("XVII") == (1650, "XVII sec.")
+    assert parse_historical_year("XIX secolo") == (1850, "XIX sec.")
+    assert parse_historical_year("Seicento") == (1650, "Seicento")
+    assert parse_historical_year("Ottocento") == (1850, "Ottocento")
+    assert parse_historical_year("1970s") == (1970, "1970s")
+    assert parse_historical_year("anni '80") == (1980, "anni '80")
+    assert parse_historical_year("anni Ottanta") == (1980, "anni Ottanta")
+
+    # Rumore non cronologico deve essere scartato
+    for junk in ("C++11", "12/06/14", "20", "4500", ""):
+        assert parse_historical_year(junk) is None, f"{junk!r} non dovrebbe essere parsato come anno"
+
+    # Priorità cronologica: blocco v2.2 -> epoca autore -> anno pubblicazione -> undated
+    assert resolve_entry_chronology(["1638"], ["Galileo"], "Titolo", None, 1964) == (
+        1638,
+        "1638",
+        "block_metadata_year",
+    )
+    assert resolve_entry_chronology(["C++11"], ["Euclide"], "Elementi", "Attilio Frajese", 1970) == (
+        -300,
+        "~300 a.C.",
+        "author_epoch",
+    )
+    assert resolve_entry_chronology([], ["Autore Moderno"], "Libro", None, 1974) == (
+        1974,
+        "1974",
+        "book_publication_year",
+    )
+    assert resolve_entry_chronology([], [], "Senza data", None, None)[0] is None
+
+
+def test_decompressor_synthetic_chronological_modal_and_disputes() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        db_path = Path(tmp) / "decomp.db"
+        conn = init_corpus_db(db_path)
+
+        specs = [
+            (
+                "Euclide - Elementi",
+                "matematica",
+                1970,
+                "Le grandezze incommensurabili non ammettono una misura comune finita per il calcolo infinitesimale geometrico.",
+                "defines",
+                "def",
+                ["Euclide"],
+                None,
+                ["300 a.C."],
+                "Le grandezze incommensurabili non ammettono una misura comune finita",
+                "Euclide definisce le grandezze incommensurabili come prive di misura comune finita.",
+            ),
+            (
+                "Bonaventura Cavalieri - Geometria degli indivisibili",
+                "matematica",
+                1966,
+                "Il metodo degli indivisibili considera i continui composti di infinite linee per il calcolo infinitesimale, ma Roberval propone un fondamento diverso.",
+                "critiques",
+                "dispute",
+                ["Bonaventura Cavalieri", "Roberval"],
+                "Roberval contesta l'impostazione geometrica pura degli indivisibili di Cavalieri",
+                ["1635"],
+                "Il metodo degli indivisibili considera i continui composti di infinite linee",
+                "Bonaventura Cavalieri difende il calcolo degli indivisibili contro le critiche di Roberval.",
+            ),
+            (
+                "Giovanni Prodi - Analisi Matematica",
+                "matematica",
+                1977,
+                "La definizione rigorosa di limite elimina le difficoltà dell'analisi infinitesimale classica mediante intervalli arbitrariamente piccoli.",
+                "proves",
+                "thm",
+                ["Giovanni Prodi"],
+                None,
+                ["1970"],
+                "elimina le difficoltà dell'analisi infinitesimale classica mediante intervalli",
+                "Giovanni Prodi dimostra come i limiti formalizzino l'analisi infinitesimale.",
+            ),
+            (
+                "PRIMIGI",
+                "miscellanea_tecnica",
+                2018,
+                "Catalogo calzature disponibile in lotto infinitesimale a magazzino per il 2018.",
+                "applies",
+                "claim",
+                ["PRIMIGI"],
+                None,
+                ["2018"],
+                "lotto infinitesimale a magazzino",
+                "Listino commerciale PRIMIGI per la stagione 2018.",
+            ),
+        ]
+
+        for idx, (title, dom, yr, content, mode, kind, who, vs, hist_yrs, quote, stmt) in enumerate(specs, start=1):
+            bk_pk, blk_uid = _insert_book_and_block(conn, title=title, surface_domain=dom, content=content, page=idx * 10)
+            ext = validate_block_extraction(
+                {
+                    "yield": "high",
+                    "macro_disciplines": ["matematica"],
+                    "topics": ["infinitesimale"],
+                    "places": ["Bologna"] if "Cavalieri" in title else [],
+                    "years": hist_yrs,
+                    "units": [
+                        {
+                            "kind": kind,
+                            "mode": mode,
+                            "stmt": stmt,
+                            "quote": quote,
+                            "who": who,
+                            "vs": vs,
+                            "concepts": ["calcolo infinitesimale", "indivisibili"],
+                        }
+                    ],
+                    "sig": None,
+                },
+                block_content=content,
+                require_v22_metadata=True,
+            )
+            persist_block_extraction(conn, block_pk=bk_pk, block_uid=blk_uid, extraction=ext)
+
+        from resuscipack.epistemic import compute_all_book_spectra
+
+        compute_all_book_spectra(conn)
+        report = decompress_concept(conn, "infinitesimale")
+
+        assert report.total_entries == 3
+        assert report.distinct_books == 3
+        assert [e.sort_year for e in report.timeline] == [-300, 1635, 1970]
+        assert [e.mode for e in report.timeline] == ["defines", "critiques", "proves"]
+        assert all("PRIMIGI" not in e.book_title for e in report.timeline)
+        assert report.disputes_count == 1
+        assert "Roberval" in report.disputes[0].vs_dispute
+        assert set(report.by_mode.keys()) == {"defines", "critiques", "proves"}
+        for e in report.timeline:
+            assert e.block_pk > 0 and e.verbatim_quote and e.stmt
+        conn.close()
+
+
+@pytest.mark.skipif(
+    not (Path(__file__).resolve().parents[1] / "data" / "pack_corpus.db").exists(),
+    reason="pack_corpus.db non presente",
+)
+def test_decompressor_live_corpus_concepts() -> None:
+    canon_db = Path(__file__).resolve().parents[1] / "data" / "pack_corpus.db"
+    conn = sqlite3.connect(f"file:{canon_db}?mode=ro", uri=True)
+    try:
+        for concept in ("infinitesimale", "probabilità", "entropia", "parallele"):
+            report = decompress_concept(conn, concept, max_entries=20, max_per_book=2)
+            assert report.total_entries >= 4, f"Poche voci per {concept!r}: {report.total_entries}"
+            assert report.distinct_books >= 3, f"Pochi libri per {concept!r}: {report.distinct_books}"
+            assert report.disputes_count >= 1, f"Nessuna controversia `vs_dispute` per {concept!r}"
+
+            dated = [e.sort_year for e in report.timeline if e.sort_year is not None]
+            assert dated == sorted(dated), f"Timeline non monotona per {concept!r}: {dated}"
+            for e in report.timeline:
+                assert e.block_pk > 0
+                assert e.verbatim_quote.strip()
+                assert e.stmt.strip()
+                assert e.mode in {"defines", "proves", "applies", "critiques", "extends", "presupposes", "narrates"}
+    finally:
+        conn.close()
 
 
