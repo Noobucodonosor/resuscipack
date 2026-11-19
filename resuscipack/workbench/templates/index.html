@@ -1,101 +1,317 @@
-<!DOCTYPE html>
-<html lang="it">
+<!doctype html>
+<html lang="it" data-type="software" data-radius="soft" data-ground="sky" data-buttons="tonal" data-motion>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>resuscipack · Tavolo di Studio SecAI (L-31 UniMi)</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/static/style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>resuscipack: libri matematici e atlante per studenti di informatica</title>
+<meta name="description" content="Due volumi continui in 20 capitoli e un atlante disciplinare su {{ books_count }} opere originali con citazioni verificabili ed esercizi simbolici.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="resuscipack: libri matematici e atlante per studenti di informatica">
+<meta property="og:description" content="Venti capitoli continui dalle fonti autentiche e spettro percentuale di {{ books_count }} volumi.">
+<meta property="og:image" content="/assets/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#ffffff">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+{% with is_home=True %}{% include '_design_tokens.html' %}{% endwith %}
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="/assets/moments/moments.js">
+<link rel="modulepreload" href="/assets/moments/lib.js">
+<link rel="modulepreload" href="/assets/moments/liquid-type/moment.js">
 </head>
 <body>
-  <!-- BARRA FISSA SUPERIORE: LA BUSSOLA DELL'HERO (1 RIGA SEMPRE VISIBILE) -->
-  <header class="hero-compass-bar" id="heroCompassBar">
-    <div class="brand-pill">resuscipack · SecAI</div>
-    <div class="compass-chain" id="compassChain">Caricamento Bussola dell'Hero…</div>
-    <div class="compass-stats" id="compassStats"></div>
-  </header>
+<!-- type: software | deal: hero collage, nav nav-mega, close close-type, footer footer-dark, rhythm space, buttons tonal, mark stack, ground sky, palette white-link-blue, type geist, moment liquid-type -->
+{% with is_home=True %}{% include '_nav.html' %}{% endwith %}
 
-  <!-- SELETTORE COMPATTO PERCORSO (4 STRATI + NODI FRONTIERA) -->
-  <nav class="spine-toolbar">
-    <div class="layer-tabs" id="layerTabs">
-      <button type="button" class="layer-tab active" data-filter="frontier">⚡ Nodi Frontiera</button>
-      <button type="button" class="layer-tab" data-filter="0">Strato 0 · Elementari→Medie (45)</button>
-      <button type="button" class="layer-tab" data-filter="1">Strato 1 · Gate OFA (11)</button>
-      <button type="button" class="layer-tab" data-filter="2">Strato 2 · Ponti Shadow (12)</button>
-      <button type="button" class="layer-tab" data-filter="3">Strato 3 · Esami SecAI (21)</button>
-    </div>
-    <div class="node-strip" id="nodeStrip"></div>
-  </nav>
+<main id="top">
+  <section class="hero hero--collage" data-enter aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text grid hero__grid">
+      <div class="hero__text span-5">
+        <h1 id="hero-h">Libri matematici da {{ "{:,}".format(books_count).replace(",", ".") }} testi</h1>
+        <p class="hero__lead">Due volumi continui in {{ chapters_count }} capitoli per studenti di informatica, costruiti sulle parole di {{ "{:,}".format(books_count).replace(",", ".") }} opere con esercizi simbolici.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/libro">Apri i libri</a>
+          <a class="btn btn--secondary" href="/atlante">Apri l'atlante</a>
+        </div>
+        <p class="hero__proof">Ogni nota apre la pagina originale con la frase evidenziata.</p>
+      </div>
+      <div class="hero__art span-6 start-7" role="img" aria-label="Anteprima del lettore continuo con citazioni di Frajese ed Euclide">
+        <div class="ly-piece ly-piece--main ed-win" aria-hidden="true">
+          <div class="ed-win__bar"><span class="ed-win__dots"><i></i><i></i><i></i></span><span>resuscipack · Vol. I, Cap. 1</span></div>
+          <div class="ed-win__body">
+            <div class="ed-side">
+              <span class="is-on">1. Numero</span>
+              <span>2. Operazioni</span>
+              <span>3. Frazioni</span>
+              <span>4. Rapporti</span>
+              <span>5. Geometria</span>
+              <span class="ed-side__label">Volume II</span>
+              <span>1. Discreto</span>
+              <span>6. Crittografia</span>
+            </div>
+            <div class="ed-main">
+              <div class="ed-main__head"><h4>Corrispondenza e numero</h4><span class="ed-chip">Verificato</span></div>
+              <div class="ed-rows">
+                <div class="ed-row"><div><b>Attilio Frajese</b><small>Matematica moderna, 1968 · p. 100</small></div><span class="ed-chip">Fonte 1</span></div>
+                <div class="ed-row"><div><b>Euclide</b><small>Elementi, Nozioni comuni · p. 82</small></div><span class="ed-chip">Fonte 5</span></div>
+                <div class="ed-row"><div><b>Glynn Winskel</b><small>Semantica formale · Cantor</small></div><span class="ed-chip">Fonte 3</span></div>
+                <div class="ed-row"><div><b>Paul e Harvey Deitel</b><small>Il linguaggio C · esadecimale</small></div><span class="ed-chip">Fonte 7</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ly-piece ly-piece--note ed-card" aria-hidden="true" data-ly-steps="700">
+          <div class="ed-card__row"><h5>Apparato delle fonti</h5><span class="ed-chip" data-step data-step-at="3">7 note</span></div>
+          <div class="ed-note__line" data-step><i>✓</i><span><b>Citazione esatta</b> controllata sul testo</span></div>
+          <div class="ed-note__line" data-step><i>✓</i><span><b>Pagina originale</b> apribile al clic</span></div>
+          <div class="ed-note__line" data-step><i>✓</i><span><b>{{ chapters_count }} capitoli</b> in due volumi continui</span></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
 
-  <!-- TAVOLO DI STUDIO A 2 COLONNE: 60% STUDIO ATTIVO | 40% LIBRO VERO -->
-  <main class="study-table">
-    <!-- COLONNA SINISTRA (60%): FAST-FORWARD, SCHEDA DECISIONE v3, PROVA HERO -->
-    <section class="left-pane" id="leftPane">
-      <div class="node-header">
+  <section class="section" id="biblioteca" aria-labelledby="biblioteca-h">
+    <div class="wrap">
+      <div class="section-head section-head--split">
         <div>
-          <span class="node-layer-badge" id="nodeLayerBadge"></span>
-          <h1 id="nodeTitle">Seleziona un nodo</h1>
-          <p class="node-decision" id="nodeDecision"></p>
+          <h2 id="biblioteca-h">Biblioteca in {{ chapters_count }} capitoli e libri originali</h2>
+          <p>I testi scorrono come un libro continuo dal contare a calcolo, probabilità e crittografia.</p>
         </div>
-        <div class="node-status-pill" id="nodeStatusPill"></div>
+        <a class="link" href="/libro">Capitolo 1</a>
       </div>
-
-      <div class="mode-tabs">
-        <button type="button" class="mode-btn active" data-mode="card" id="btnModeCard">📖 Scheda Decisione di Progetto v3</button>
-        <button type="button" class="mode-btn" data-mode="drill" id="btnModeDrill">⚡ Fast-Forward Diagnostico (SymPy)</button>
-        <button type="button" class="mode-btn" data-mode="hero" id="btnModeHero">🏆 Artefatto dell'Hero &amp; Lacune</button>
-      </div>
-
-      <!-- PANNELLO 1: SCHEDA + PONTI "LIBRO SBAGLIATO" -->
-      <div class="mode-panel" id="panelCard">
-        <div id="wrongBookBridgesBox"></div>
-        <article class="card-body" id="cardContent"></article>
-        <div class="footnotes-box" id="footnotesBox"></div>
-        <div class="card-governance-bar" id="cardGovernanceBar">
-          <span id="governanceBadge"></span>
-          <button type="button" class="secondary-btn" id="btnFlagCard">Segnala passaggio oscuro (non bloccante)</button>
+      <div class="ui ui-app app fill" role="img" aria-label="Finestra del lettore continuo con l'indice dei venti capitoli a sinistra e la pagina evidenziata a destra" data-ui-pause-host>
+        <div class="app__pane app__pane--list">
+          <div class="ui ui-panel ui-win" data-ui="window" data-open="Pubblicato" data-work="In studio" data-done="Completato">
+            <div class="ui-win__bar">
+              <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="ui-win__crumb">Biblioteca <i>/</i> <b>20 capitoli</b></span>
+              <span class="ui-spacer"></span>
+              <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Cerca</span></span>
+            </div>
+            <div class="ui-win__body">
+              <nav class="ui-win__side" aria-hidden="true">
+                <span class="ui-win__nav is-on">Volume I<em>11</em></span>
+                <span class="ui-win__nav">Volume II<em>9</em></span>
+                <span class="ui-win__nav">Quesiti reali<em>30</em></span>
+                <span class="ui-win__label">Atlante</span>
+                <span class="ui-win__nav">Volumi attivi</span>
+                <span class="ui-win__nav">Discipline</span>
+              </nav>
+              <div class="ui-win__main">
+                <div class="ui-win__cols" aria-hidden="true"><span>Cap.</span><span>Titolo</span><span>Stato</span><span>Note</span></div>
+                <ul class="ui-win__rows">
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">01</span><span class="ui-win__who">Il numero</span><span class="ui-win__sub">Galileo, Cantor</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">7</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="2">03</span><span class="ui-win__who">Primi e mcd</span><span class="ui-win__sub">Eratostene, modulo</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">6</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">05</span><span class="ui-win__who">Geometria</span><span class="ui-win__sub">Euclide, Pitagora</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">7</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">06</span><span class="ui-win__who">Logica</span><span class="ui-win__sub">Boole e circuiti</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">6</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="5">14</span><span class="ui-win__who">Probabilità</span><span class="ui-win__sub">Laplace e Bayes</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">7</span></li>
+                  <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">17</span><span class="ui-win__who">Crittografia</span><span class="ui-win__sub">Eulero e RSA</span><span class="ui-win__st is-done" data-st>Verificato</span><span class="ui-win__age">5</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <!-- PANNELLO 2: FAST-FORWARD SYMPY -->
-      <div class="mode-panel hidden" id="panelDrill">
-        <div class="drill-intro">
-          <strong>Scansione Padronanza &amp; Memoria Procedurale (`SymPy`):</strong>
-          risolvi 4 quesiti su 5 per chiudere il nodo in Fast-Forward (forme equivalenti come <code>7/20</code> e <code>0.35</code> sono entrambe accettate).
-        </div>
-        <div id="drillList"></div>
-      </div>
-
-      <!-- PANNELLO 3: ARTEFATTO HERO (GRAFICI / RUBRICHE DIMOSTRAZIONE / TESTI OPEN-ACCESS) -->
-      <div class="mode-panel hidden" id="panelHero">
-        <div id="heroProofContainer"></div>
-        <div id="openAccessBox"></div>
-      </div>
-    </section>
-
-    <!-- COLONNA DESTRA (40%): LETTORE DEL LIBRO VERO + RICERCA FTS5 -->
-    <aside class="right-pane" id="rightPane">
-      <div class="reader-toolbar">
-        <strong>📚 Lettore del Libro Vero (`pack_corpus.db` · sola lettura)</strong>
-        <form id="librarySearchForm" class="search-form">
-          <input type="search" id="librarySearchInput" placeholder="Cerca nei 1.372 volumi (es. Marconi Santa Margherita)…" />
-          <button type="submit">Cerca</button>
-        </form>
-      </div>
-
-      <div id="searchResultsBox" class="search-results hidden"></div>
-
-      <div id="bookReaderContainer" class="book-reader">
-        <div class="reader-placeholder">
-          Clicca su qualsiasi pedice <code>[^n]</code> nella scheda o su un ponte <em>«Dal Libro Sbagliato»</em>
-          per aprire qui la pagina integrale originale del libro con la citazione evidenziata e sfogliare i blocchi adiacenti.
+        <div class="app__pane app__pane--open" data-ui-loop>
+          <div class="ui ui-doc" data-ui="doc">
+            <article class="ui-doc__page">
+              <div class="ui-doc__label">Volume I · Capitolo 1</div>
+              <div class="ui-doc__title">L'astrazione del contare e la corrispondenza biunivoca</div>
+              <div class="ui-doc__text">La matematica afferma che due insiemi hanno la <mark class="ui-doc__mark is-on">stessa potenza</mark> quando è possibile porre i loro elementi in corrispondenza biunivoca.</div>
+              <div class="ui-doc__text">Già nell'antichità, nelle <mark class="ui-doc__mark" data-kind="Pagina 108" data-msg="Nelle Nozioni comuni Euclide enuncia le proprietà logiche dell'uguaglianza senza ricorrere al movimento fisico." data-where="Attilio Frajese, Le Monnier (1969)">Nozioni comuni</mark> Euclide enuncia le proprietà dell'uguaglianza separandole dal moto dei corpi.</div>
+              <div class="ui-doc__text">Ogni trasformazione algebrica conserva l'equilibrio tra i due membri dell'uguale senza appoggiarsi all'intuizione meccanica.</div>
+            </article>
+            <aside class="ui-doc__note ui-panel is-on" aria-live="polite">
+              <div class="ui-doc__kind"><span class="ui-doc__dot"></span><span data-doc-kind>Pagina 100</span></div>
+              <div class="ui-doc__msg" data-doc-msg>Citazione riscontrata parola per parola nel volume citato, con accesso diretto alla pagina completa.</div>
+              <div class="ui-doc__where" data-doc-where>Attilio Frajese · Le Monnier, 1968</div>
+            </aside>
+          </div>
         </div>
       </div>
-    </aside>
-  </main>
+    </div>
+  </section>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
-  <script defer src="/static/app.js"></script>
+  <section class="section statement" id="metodo" aria-labelledby="metodo-h">
+    <div class="wrap method-wrap">
+      <h2 id="metodo-h" class="mo-lt__type" data-moment="liquid-type" data-moment-opts='{"strength": 0.9}'>Metodo vivo dai libri</h2>
+      <p class="method-sub">Ogni concetto nasce da un passaggio autentico della biblioteca di {{ "{:,}".format(books_count).replace(",", ".") }} opere e arriva fino alla verifica simbolica in locale.</p>
+      <div class="method-pillars">
+        <div class="method-pillar">
+          <h3>Prosa dai libri originali</h3>
+          <p>Euclide, Galileo, Cantor, Marconi, Frajese e Deitel entrano nel discorso continuo senza riassunti superficiali.</p>
+        </div>
+        <div class="method-pillar">
+          <h3>Pagine dei libri verificabili</h3>
+          <p>Ogni apice apre la pagina estratta dall'archivio locale con il passo esatto evidenziato e le pagine vicine.</p>
+        </div>
+        <div class="method-pillar">
+          <h3>Esercizi di matematica e informatica</h3>
+          <p>Equivalenze algebriche, studio del grafico e dimostrazioni guidate si controllano in locale senza rete.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="atlante" aria-labelledby="atlante-h">
+    <div class="wrap">
+      <div class="grid grid--top fill">
+        <div class="span-5 split-col">
+          <h2 id="atlante-h">Atlante per disciplina su {{ "{:,}".format(books_count).replace(",", ".") }} volumi</h2>
+          <p class="t-lead">Ogni opera misura la percentuale reale delle sue materie: in Marconi convivono storia, telecomunicazioni, fisica e {{ geo_passages }} passaggi geografici.</p>
+          <div class="btn-row">
+            <a class="btn btn--secondary" href="/atlante/libro/514">Apri atlante Marconi</a>
+          </div>
+          <p class="split-col__end"><a class="link" href="/atlante?discipline=geografia">Esplora Geografia in {{ geo_books }} volumi</a></p>
+        </div>
+        <div class="frame frame--fill ed-lit-frame span-6 start-7">
+          <div class="ui ui-panel spectrum-preview" role="img" aria-label="Spettro disciplinare percentuale dell'opera Guglielmo Marconi">
+            <div class="spectrum-preview__head">
+              <div class="spectrum-preview__title">{{ marconi_title }}</div>
+              <div class="spectrum-preview__meta">{{ marconi_meta }}</div>
+            </div>
+            <div class="spectrum-stack">
+              {% for sl in marconi_bar_slices %}
+              <span class="spectrum-stack__seg" style="width: {{ sl.share_pct }}%; background-color: var(--sp-c{{ loop.index }});" title="{{ sl.label }}: {{ sl.share_pct }}%"></span>
+              {% endfor %}
+            </div>
+            <ul class="spectrum-rows">
+              {% for sl in marconi_slices %}
+              <li class="spectrum-row-item">
+                <span class="spectrum-dot" style="background-color: var(--sp-c{{ loop.index }});" aria-hidden="true"></span>
+                <span>{{ sl.label }}</span>
+                <span class="spectrum-pct">{{ "%.1f"|format(sl.share_pct) }}% · {{ sl.block_count }} passaggi</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="domande" aria-labelledby="domande-h">
+    <div class="wrap">
+      <div class="grid grid--top fill">
+        <div class="span-5 split-col">
+          <h2 id="domande-h">Domande sui libri e sull'atlante</h2>
+          <div class="faq">
+            <div class="faq__item">
+              <h3>Come controllate i {{ chapters_count }} capitoli?</h3>
+              <p>Ogni nota apre il blocco originale con il passo evidenziato.</p>
+            </div>
+            <div class="faq__item">
+              <h3>Cosa coprono i due libri di informatica?</h3>
+              <p>Da Euclide e 30 quesiti fino a calcolo, RSA e sicurezza web.</p>
+            </div>
+            <div class="faq__item">
+              <h3>A cosa serve lo spettro nell'atlante?</h3>
+              <p>Mostra quanta fisica, logica o geografia si cela in altri volumi.</p>
+            </div>
+          </div>
+        </div>
+        <div class="frame frame--fill ed-lit-frame span-6 start-7">
+          <div class="ui ui-panel ed-verify-card" role="img" aria-label="Verifica incrociata fra pagina citata ed esercizio simbolico">
+            <div class="ed-verify-card__head">
+              <span class="ed-verify-card__kicker">Controllo simultaneo · Fonte e simbolo</span>
+              <span class="ed-chip">Verificato</span>
+            </div>
+            <div class="ed-verify-card__quote">
+              <div class="ed-verify-card__src">Attilio Frajese · Introduzione alla matematica moderna, p. 100</div>
+              <p>Due insiemi hanno la <mark class="ed-mark-inline">stessa potenza</mark> quando è possibile porre i loro elementi in corrispondenza biunivoca.</p>
+            </div>
+            <div class="ed-verify-card__sympy">
+              <div class="ed-verify-card__src">Verifica simbolica locale</div>
+              <div class="ed-verify-card__eq"><code>6·x + 3 = 51</code><span>x = 8 · Equivalente</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse" id="contatti" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Apri i libri matematici</h2>
+        <p>{{ chapters_count }} capitoli continui, 30 quesiti reali e {{ "{:,}".format(books_count).replace(",", ".") }} opere navigabili in locale.</p>
+      </div>
+      <a class="btn btn--primary btn--xl btn--wide" href="/libro">Apri i libri<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+      <dl class="closing__facts">
+        <div><dt>Volume I</dt><dd>11 capitoli dai fondamenti ai quesiti d'ingresso</dd></div>
+        <div><dt>Volume II</dt><dd>9 capitoli verso analisi, dati, crittografia e rete</dd></div>
+        <div><dt>Atlante locale</dt><dd>{{ "{:,}".format(books_count).replace(",", ".") }} opere analizzate per spettro disciplinare</dd></div>
+      </dl>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-6 stack-4">
+          <a class="nav__logo" href="/"><span class="mark" data-mark="stack" aria-hidden="true"></span>resuscipack</a>
+          <p class="footer__lede">Libri continui e atlante disciplinare su {{ "{:,}".format(books_count).replace(",", ".") }} testi.</p>
+        </div>
+        <div class="span-3 start-7 footer__col">
+          <h3>I Libri</h3>
+          <ul>
+            <li><a href="/libro/vol1_ofa/dall_ovvio_al_numero">Volume I</a></li>
+            <li><a href="/libro/vol2_secai/induzione_ricorsione_e_discreto">Volume II</a></li>
+            <li><a href="/libro/vol1_ofa/successioni_analisi_dati_e_stime_ofa">Quesiti reali</a></li>
+            <li><a href="/libro">Indice completo</a></li>
+          </ul>
+        </div>
+        <div class="span-3 footer__col">
+          <h3>Atlante</h3>
+          <ul>
+            <li><a href="/atlante">Catalogo opere</a></li>
+            <li><a href="/atlante/libro/514">Spettro Marconi</a></li>
+            <li><a href="/atlante?discipline=geografia">Geografia trasversale</a></li>
+            <li><a href="/atlante?discipline=matematica">Matematica pura</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 resuscipack</span>
+        <div class="socials"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/system.js"></script>
+<script type="module" src="/assets/motion/motion.js"></script>
+<script type="module" src="/assets/layout/layout.js"></script>
+<script type="module">
+(() => {
+  const navLinks = [...document.querySelectorAll('.nav__links a.nav__link[href^="#"]')];
+  const pairs = navLinks
+    .map((link) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      return target ? { link, target } : null;
+    })
+    .filter(Boolean);
+  if (!pairs.length) return;
+  const setCurrent = (activeTarget) => {
+    pairs.forEach(({ link, target }) => {
+      const isHit = target === activeTarget;
+      link.classList.toggle('is-current', isHit);
+      if (isHit) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+  const sync = () => {
+    const mid = window.innerHeight * 0.42;
+    const hit = pairs.find(({ target }) => {
+      const r = target.getBoundingClientRect();
+      return r.top <= mid && r.bottom >= mid;
+    });
+    if (hit) setCurrent(hit.target);
+    else if (window.scrollY < window.innerHeight * 0.5) setCurrent(null);
+  };
+  window.addEventListener('scroll', sync, { passive: true });
+  sync();
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/system.css">
+<link rel="stylesheet" href="/assets/ui/cards.css">
+<link rel="stylesheet" href="/assets/motion/motion.css">
+{% if is_home %}
+<link rel="stylesheet" href="/assets/layout/layout.css">
+<link rel="stylesheet" href="/assets/ui/base.css">
+<link rel="stylesheet" href="/assets/ui/window/fragment.css">
+<link rel="stylesheet" href="/assets/ui/doc/fragment.css">
+<link rel="stylesheet" href="/assets/moments/liquid-type/moment.css">
+{% endif %}
+<style>
+:root {
+  --p-bg: #ffffff; --p-surface: #f4f4f4; --p-ink: #111111; --p-muted: #6b6b6b;
+  --p-accent: #1a4be0; --p-accent-ink: #ffffff; --p-action: #1a4be0; --p-action-ink: #ffffff;
+  --p-inv-bg: #111111; --p-inv-surface: #1e1e1e; --p-inv-ink: #ffffff; --p-inv-muted: #9a9a9a;
+  --p-inv-accent: #ffffff; --p-inv-accent-ink: #111111; --p-inv-action: #1a4be0; --p-inv-action-ink: #ffffff;
+  --font-display: "Geist", system-ui, sans-serif;
+  --font-text: "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.045em;
+}
+</style>
+<link rel="stylesheet" href="/static/editorial.css">
+{% if not is_home %}
+<link rel="stylesheet" href="/static/reader_atlas.css">
+{% endif %}
