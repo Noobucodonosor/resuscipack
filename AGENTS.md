@@ -47,7 +47,7 @@
    - `P2-medium`: Arricchimenti batch Wave 1–4, esportazione Anki, estensioni future multi-dominio (`SPEC.md`).
 4. **Sviluppo & Commit Atomici:**
    - Lavora su un `TASK-<MODULO>-XX` alla volta, esclusivamente dentro `.venv`.
-   - Mantieni **STRICT READ-ONLY** su tutte le cartelle storiche esterne (`/Users/dany/from_baidu`, `/Users/dany/Desktop/PACK copy 4`, `/Users/dany/Documents/ChatGPT/pack-next`, `/Users/dany/Desktop/pc4`).
+   - Mantieni **STRICT READ-ONLY** su tutte le cartelle storiche esterne (`~/from_baidu`, `~/Desktop/PACK copy 4`, `~/Documents/ChatGPT/pack-next`, `~/Desktop/pc4`).
    - Esegui sempre il **Verification Step** prima di concludere e usa commit strutturati:
      ```bash
      git commit -m "feat(TASK-SECAI-01): descrizione sintetica della modifica"
@@ -59,7 +59,7 @@
 
 - **Mai committare segreti o database:** Il file `.env`, l'ambiente `.venv/` e i database SQLite (`data/*.db*`, `*.sqlite*`) devono restare sempre in `.gitignore`.
 - **Zero Mock & Zero Troncamenti:** Nessun fallback deterministico finto su fallimento API; nessun `.slice(0, 10)` sui risultati mostrati all'utente.
-- **Regola Frontend Anti-Slop (MANDATORY per `TASK-UI-*`):** Ogni intervento HTML/CSS/JS sul frontend DEVE caricare ed eseguire prima le skill **`design-taste-frontend`** (`/Users/dany/.gemini/config/skills/design-taste-frontend/SKILL.md`, incl. `copy-lint.mjs`, `consistency.mjs`, `gate.mjs`) e **`modern-web-guidance`**. È severamente vietato esporre all'utente codici interni da sviluppatore (`block_pk`, `score`, `Strato`, `P0.x`, `G00`, `Gate`) nelle schermate di lettura: il prodotto deve apparire come un libro e un atlante culturale curati, mai come un cruscotto di debug.
+- **Regola Frontend Anti-Slop (MANDATORY per `TASK-UI-*`):** Ogni intervento HTML/CSS/JS sul frontend DEVE caricare ed eseguire prima le skill **`design-taste-frontend`** (`~/.gemini/config/skills/design-taste-frontend/SKILL.md`, incl. `copy-lint.mjs`, `consistency.mjs`, `gate.mjs`) e **`modern-web-guidance`**. È severamente vietato esporre all'utente codici interni da sviluppatore (`block_pk`, `score`, `Strato`, `P0.x`, `G00`, `Gate`) nelle schermate di lettura: il prodotto deve apparire come un libro e un atlante culturale curati, mai come un cruscotto di debug.
 - **Verifica Pre-Release:** Prima di generare commit di rilascio o fare push, esegui:
   ```bash
   python3 ~/.gemini/config/skills/adr-github-methodology/scripts/pre_release_check.py

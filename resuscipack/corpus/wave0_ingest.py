@@ -38,8 +38,8 @@ from .normalizer import (
 )
 from .schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db
 
-DEFAULT_FROM_BAIDU_ROOT = Path("/Users/dany/from_baidu")
-DEFAULT_SOURCE_PDF_DIR = Path("/Users/dany/Desktop/PACK copy 4/source_pdf")
+DEFAULT_FROM_BAIDU_ROOT = Path.home() / "from_baidu"
+DEFAULT_SOURCE_PDF_DIR = Path.home() / "Desktop/PACK copy 4/source_pdf"
 DEFAULT_LEGACY_FTS_DB = DEFAULT_FROM_BAIDU_ROOT / "atomic_iceberg" / "data" / "biblioteca_fts5.db"
 DEFAULT_LEGACY_CARDS_DIR = DEFAULT_FROM_BAIDU_ROOT / "grafo" / "elementari"
 DEFAULT_MIGRATION_JSON = Path(__file__).resolve().parents[2] / "data" / "legacy_card_migration.json"

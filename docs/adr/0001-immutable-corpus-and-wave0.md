@@ -28,10 +28,10 @@ Le iterazioni storiche di PACK hanno sofferto di quattro patologie strutturali s
    - Indice full-text `passages_fts` dichiarato con `content='blocks', content_rowid='block_pk'` e mantenuto in sincrono automatico da trigger SQL `AFTER INSERT` e `AFTER UPDATE` su `blocks`: `fts_rowid` coincide **sempre** con `block_pk` e non slitta mai tra Wave 0 e Wave 4.
    - Quando un blocco sporco viene sostituito in un'ondata successiva da OCR migliore, il nuovo blocco viene accodato con nuovo `block_pk`, mentre il vecchio viene marcato `is_active = 0, superseded_by_pk = <new_pk>` (uscendo dall'indice FTS5 attivo ma restando risolvibile per tutte le citazioni storiche).
 2. **Pipeline Wave 0 Locale a Costo €0 (`resuscipack/corpus/wave0_ingest.py`):**
-   - Opera in **STRICT READ-ONLY** sulle cartelle storiche (`/Users/dany/from_baidu`, `/Users/dany/Desktop/PACK copy 4`, `/Users/dany/Documents/ChatGPT/pack-next`, `/Users/dany/Desktop/pc4`).
+   - Opera in **STRICT READ-ONLY** sulle cartelle storiche (`~/from_baidu`, `~/Desktop/PACK copy 4`, `~/Documents/ChatGPT/pack-next`, `~/Desktop/pc4`).
    - Esegue il **page-level splicing** delle 4.162 pagine Baidu OCR sui 176 volumi ibridi di `from_before`, ingerisce nativamente l'XHTML dei **32 `.epub`**, filtra i manuali ASUS/rumore amministrativo e deduplica i cloni `.split('.')[0]`.
    - Segmenta onestamente il testo senza troncamenti, classificando deterministicamente `block_role` (`'body'`, `'footnote'`, `'paratext'`) per non sprecare chiamate LLM sugli indici analitici nei batch successivi.
-   - Migra deterministicamente in `legacy_rowid_map` e `data/legacy_card_migration.json` tutti i vecchi `rowid` usati nelle schede di `/Users/dany/from_baidu/grafo/elementari/` verificando il match normalizzato della citazione verbatim.
+   - Migra deterministicamente in `legacy_rowid_map` e `data/legacy_card_migration.json` tutti i vecchi `rowid` usati nelle schede di `~/from_baidu/grafo/elementari/` verificando il match normalizzato della citazione verbatim.
 3. **Pianificazione Ondate OCR e Batch Cloud (`data/ocr_wave_manifest.json`):**
    - Censisce esattamente le ~19.226 pagine mancanti/sotto-estratte (Buchi B, C e 7 `.djvu`) ripartendole in `wave_1` (Nucleo Aureo + Canonici Matematici/SecAI, 4.549 pag. eseguibili in `<18 GPU-h` su singolo account Kaggle gratuito o Vision Batch) fino a `wave_4` (100% del corpus).
 

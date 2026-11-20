@@ -47,7 +47,7 @@ from resuscipack.epistemic.batch_cli import (
     select_nucleo_aureo_book_pks,
 )
 
-HISTORICAL_FTS5_DB = Path("/Users/dany/from_baidu/atomic_iceberg/data/biblioteca_fts5.db")
+HISTORICAL_FTS5_DB = Path.home() / "from_baidu/atomic_iceberg/data/biblioteca_fts5.db"
 
 
 def _insert_book_and_block(

@@ -1,7 +1,7 @@
 """Pipeline append-only per OCR Vision (PDF e `.djvu`) e importazione pagine GCS (`TASK-CORPUS-04`).
 
 Principi non negoziabili:
-- STRICT READ-ONLY su `/Users/dany/Desktop/PACK copy 4/source_pdf/`: qualsiasi file temporaneo
+- STRICT READ-ONLY su `~/Desktop/PACK copy 4/source_pdf/`: qualsiasi file temporaneo
   (`pdftoppm`, `ddjvu`, `sips`, `gcloud storage cp`) vive esclusivamente in `TemporaryDirectory()`.
 - Append-only reale su `pack_corpus.db`: i vecchi `block_pk` non vengono mai eliminati; sui volumi
   sotto-estratti i blocchi degradati vengono disattivati con `supersede_block()`.
@@ -47,10 +47,10 @@ from .schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db, supersed
 
 DEFAULT_MANIFEST_PATH = Path(__file__).resolve().parents[2] / "data" / "ocr_wave_manifest.json"
 DEFAULT_FIGURES_DIR = Path(__file__).resolve().parents[2] / "data" / "corpus_figures"
-DEFAULT_GCP_PROJECT = "macro-authority-492722-u7"
+DEFAULT_GCP_PROJECT = os.getenv("GCP_PROJECT", os.getenv("GOOGLE_CLOUD_PROJECT", ""))
 DEFAULT_VISION_MODEL = "gemini-2.5-flash"
-DEFAULT_GCS_OCR_PREFIX = "gs://macro-authority-492722-u7-unlimited-ocr/output"
-DEFAULT_GCS_BATCH_PREFIX = "gs://macro-authority-492722-u7-unlimited-ocr/m1_batch"
+DEFAULT_GCS_OCR_PREFIX = os.getenv("RESUSCIPACK_GCS_OCR_PREFIX", f"gs://{DEFAULT_GCP_PROJECT}-unlimited-ocr/output")
+DEFAULT_GCS_BATCH_PREFIX = os.getenv("RESUSCIPACK_GCS_BATCH_PREFIX", f"gs://{DEFAULT_GCP_PROJECT}-unlimited-ocr/m1_batch")
 
 VISION_OCR_RESPONSE_SCHEMA: Mapping[str, Any] = {
     "type": "OBJECT",

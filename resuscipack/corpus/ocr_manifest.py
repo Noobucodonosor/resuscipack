@@ -14,9 +14,9 @@ from typing import Any
 from .normalizer import canonical_stem_key, is_excluded_noise_title
 from .schema import DEFAULT_DB_PATH, connect_corpus_db
 
-DEFAULT_PACK_NEXT_DB = Path("/Users/dany/Documents/ChatGPT/pack-next/state/library.sqlite3")
-DEFAULT_PC4_MANIFEST = Path("/Users/dany/Desktop/pc4/ocr_priority_manifest.json")
-DEFAULT_SOURCE_PDF_DIR = Path("/Users/dany/Desktop/PACK copy 4/source_pdf")
+DEFAULT_PACK_NEXT_DB = Path.home() / "Documents/ChatGPT/pack-next/state/library.sqlite3"
+DEFAULT_PC4_MANIFEST = Path.home() / "Desktop/pc4/ocr_priority_manifest.json"
+DEFAULT_SOURCE_PDF_DIR = Path.home() / "Desktop/PACK copy 4/source_pdf"
 DEFAULT_OCR_MANIFEST_OUT = Path(__file__).resolve().parents[2] / "data" / "ocr_wave_manifest.json"
 
 WAVE1_CANONICAL_KEYWORDS = (

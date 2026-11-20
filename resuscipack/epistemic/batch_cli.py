@@ -2,7 +2,7 @@
 """CLI Batch Idempotente per l'estrazione `BlockExtraction v2.1` a ondate (Wave 1..4).
 
 Principi non negoziabili (ADR-0002, TASK-EPIST-03, TASK-EPIST-04):
-- Provider primario `vertex`: usa i crediti Google Cloud attivi (`macro-authority-492722-u7`)
+- Provider primario `vertex`: usa i crediti Google Cloud attivi (`$GCP_PROJECT`)
   tramite `gcloud auth print-access-token` in memoria (zero segreti su disco, attribuzione
   `CLOUDSDK_METRICS_ENVIRONMENT` conforme a `enforcing-resource-attribution`).
 - Provider secondari `gemini` / `deepseek`: leggono API key esclusivamente da `os.environ`.
@@ -55,7 +55,7 @@ from .schema_v21 import (
 
 DEFAULT_DB_PATH = Path(__file__).resolve().parents[2] / "data" / "pack_corpus.db"
 DEFAULT_STATUS_PATH = Path(__file__).resolve().parents[2] / "data" / "wave1_status.json"
-DEFAULT_GCP_PROJECT = "macro-authority-492722-u7"
+DEFAULT_GCP_PROJECT = os.getenv("GCP_PROJECT", os.getenv("GOOGLE_CLOUD_PROJECT", ""))
 DEFAULT_VERTEX_MODEL = "gemini-2.5-flash"
 DEFAULT_BATCH_LOCATION = "us-central1"
 

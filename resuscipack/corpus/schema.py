@@ -1,4 +1,4 @@
-"""Schema relazionale canonico append-only per `/Users/dany/resuscipack/data/pack_corpus.db`
+"""Schema relazionale canonico append-only per `data/pack_corpus.db`
 con indice full-text `passages_fts` (`content='blocks'`, `content_rowid='block_pk'`) e trigger SQL."""
 
 from __future__ import annotations
