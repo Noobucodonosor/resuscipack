@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Macchina, memoria, rappresentazione binaria e reti</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Macchina, memoria, rappresentazione binaria e reti</text>
+  <rect x="58" y="72" width="38" height="44" rx="4" fill="#b86b2b" fill-opacity="0.12" stroke="#b86b2b" stroke-width="1.4"/>
+  <text x="77" y="64" text-anchor="middle" class="muted">-128</text>
+  <text x="77" y="101" text-anchor="middle" class="title">1</text>
+  <rect x="100" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="119" y="64" text-anchor="middle" class="muted">+64</text>
+  <text x="119" y="101" text-anchor="middle" class="title">0</text>
+  <rect x="142" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="161" y="64" text-anchor="middle" class="muted">+32</text>
+  <text x="161" y="101" text-anchor="middle" class="title">1</text>
+  <rect x="184" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="203" y="64" text-anchor="middle" class="muted">+16</text>
+  <text x="203" y="101" text-anchor="middle" class="title">0</text>
+  <rect x="226" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="245" y="64" text-anchor="middle" class="muted">+8</text>
+  <text x="245" y="101" text-anchor="middle" class="title">1</text>
+  <rect x="268" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="287" y="64" text-anchor="middle" class="muted">+4</text>
+  <text x="287" y="101" text-anchor="middle" class="title">0</text>
+  <rect x="310" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="329" y="64" text-anchor="middle" class="muted">+2</text>
+  <text x="329" y="101" text-anchor="middle" class="title">1</text>
+  <rect x="352" y="72" width="38" height="44" rx="4" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <text x="371" y="64" text-anchor="middle" class="muted">+1</text>
+  <text x="371" y="101" text-anchor="middle" class="title">0</text>
+  <text x="225" y="142" text-anchor="middle" class="math">Complemento a 2 (8 bit): -128 + 42 = -86</text>
+  <rect x="440" y="64" width="220" height="40" rx="5" fill="#b86b2b" fill-opacity="0.14" stroke="#b86b2b"/>
+  <text x="550" y="89" text-anchor="middle" class="label">Stack ↓ (frame &amp; indirizzi ritorno)</text>
+  <rect x="440" y="114" width="220" height="40" rx="5" fill="#2d6a5b" fill-opacity="0.14" stroke="#2d6a5b"/>
+  <text x="550" y="139" text-anchor="middle" class="label">Heap ↑ (allocazione dinamica)</text>
+  <rect x="440" y="164" width="220" height="32" rx="5" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c"/>
+  <text x="550" y="185" text-anchor="middle" class="label">Testo / Dati statici</text>
+  <text x="360" y="232" text-anchor="middle" class="muted">Rappresentazione binaria con segno, rischio di overflow e geografia della memoria virtuale</text>
+</svg>

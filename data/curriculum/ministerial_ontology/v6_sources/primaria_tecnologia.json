@@ -1,0 +1,41 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Tecnologia",
+  "anni": [
+    {
+      "anno": "Scuola Primaria",
+      "nuclei_tematici": [
+        {
+          "nome": "Sperimentazione e procedure tecnologiche",
+          "argomenti": [
+            "Utilizzare semplici procedure per eseguire prove sperimentali nei vari settori della tecnologia (ad esempio: preparazione e cottura degli alimenti)"
+          ]
+        },
+        {
+          "nome": "Rappresentazione e rilievo",
+          "argomenti": [
+            "Rilevare e disegnare la propria abitazione o altri luoghi anche avvalendosi di software specifici"
+          ]
+        },
+        {
+          "nome": "Manutenzione e riparazione",
+          "argomenti": [
+            "Eseguire interventi di riparazione e manutenzione sugli oggetti dell'arredo scolastico o casalingo"
+          ]
+        },
+        {
+          "nome": "Costruzione di oggetti",
+          "argomenti": [
+            "Costruire oggetti con materiali facilmente reperibili a partire da esigenze e bisogni concreti"
+          ]
+        },
+        {
+          "nome": "Programmazione e robotica",
+          "argomenti": [
+            "Programmare ambienti informatici e elaborare semplici istruzioni per controllare il comportamento di un robot"
+          ]
+        }
+      ]
+    }
+  ]
+}

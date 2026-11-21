@@ -1,0 +1,87 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Matematica",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Numeri",
+          "argomenti": [
+            "Contare oggetti o eventi, a voce e mentalmente, in senso progressivo e regressivo e per salti di due, tre…",
+            "Leggere e scrivere i numeri naturali in notazione decimale, avendo consapevolezza della notazione posizionale; confrontarli e ordinarli, anche rappresentandoli sulla retta.",
+            "Eseguire mentalmente semplici operazioni con i numeri naturali e verbalizzare le procedure di calcolo.",
+            "Conoscere con sicurezza le tabelline della moltiplicazione dei numeri fino a 10. Eseguire le operazioni con i numeri naturali con gli algoritmi scritti usuali.",
+            "Leggere, scrivere, confrontare numeri decimali, rappresentarli sulla retta ed eseguire semplici addizioni e sottrazioni, anche con riferimento alle monete o ai risultati di semplici misure."
+          ]
+        },
+        {
+          "nome": "Spazio e figure",
+          "argomenti": [
+            "Percepire la propria posizione nello spazio e stimare distanze e volumi a partire dal proprio corpo.",
+            "Comunicare la posizione di oggetti nello spazio fisico, sia rispetto al soggetto, sia rispetto ad altre persone o oggetti, usando termini adeguati (sopra/sotto, davanti/dietro, destra/sinistra, dentro/fuori).",
+            "Eseguire un semplice percorso partendo dalla descrizione verbale o dal disegno, descrivere un percorso che si sta facendo e dare le istruzioni a qualcuno perché compia un percorso desiderato.",
+            "Riconoscere, denominare e descrivere figure geometriche.",
+            "Disegnare figure geometriche e costruire modelli materiali anche nello spazio."
+          ]
+        },
+        {
+          "nome": "Relazioni, dati e previsioni",
+          "argomenti": [
+            "Classificare numeri, figure, oggetti in base a una o più proprietà, utilizzando rappresentazioni opportune, a seconda dei contesti e dei fini.",
+            "Argomentare sui criteri che sono stati usati per realizzare classificazioni e ordinamenti assegnati.",
+            "Leggere e rappresentare relazioni e dati con diagrammi, schemi e tabelle.",
+            "Misurare grandezze (lunghezze, tempo, ecc.) utilizzando sia unità arbitrarie sia unità e strumenti convenzionali (metro, orologio, ecc.)."
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Numeri",
+          "argomenti": [
+            "Leggere, scrivere, confrontare numeri decimali.",
+            "Eseguire le quattro operazioni con sicurezza, valutando l'opportunità di ricorrere al calcolo mentale, scritto o con la calcolatrice a seconda delle situazioni.",
+            "Eseguire la divisione con resto fra numeri naturali; individuare multipli e divisori di un numero.",
+            "Stimare il risultato di una operazione.",
+            "Operare con le frazioni e riconoscere frazioni equivalenti.",
+            "Utilizzare numeri decimali, frazioni e percentuali per descrivere situazioni quotidiane.",
+            "Interpretare i numeri interi negativi in contesti concreti.",
+            "Rappresentare i numeri conosciuti sulla retta e utilizzare scale graduate in contesti significativi per le scienze e per la tecnica.",
+            "Conoscere sistemi di notazione dei numeri che sono o sono stati in uso in luoghi, tempi e culture diverse dalla nostra."
+          ]
+        },
+        {
+          "nome": "Spazio e figure",
+          "argomenti": [
+            "Descrivere, denominare e classificare figure geometriche, identificando elementi significativi e simmetrie, anche al fine di farle riprodurre da altri.",
+            "Riprodurre una figura in base a una descrizione, utilizzando gli strumenti opportuni (carta a quadretti, riga e compasso, squadre, software di geometria).",
+            "Utilizzare il piano cartesiano per localizzare punti.",
+            "Costruire e utilizzare modelli materiali nello spazio e nel piano come supporto a una prima capacità di visualizzazione.",
+            "Riconoscere figure ruotate, traslate e riflesse.",
+            "Confrontare e misurare angoli utilizzando proprietà e strumenti.",
+            "Utilizzare e distinguere fra loro i concetti di perpendicolarità, parallelismo, orizzontalità, verticalità.",
+            "Riprodurre in scala una figura assegnata (utilizzando, ad esempio, la carta a quadretti).",
+            "Determinare il perimetro di una figura utilizzando le più comuni formule o altri procedimenti.",
+            "Determinare l'area di rettangoli e triangoli e di altre figure per scomposizione o utilizzando le più comuni formule.",
+            "Riconoscere rappresentazioni piane di oggetti tridimensionali, identificare punti di vista diversi di uno stesso oggetto (dall'alto, di fronte, ecc.)."
+          ]
+        },
+        {
+          "nome": "Relazioni, dati e previsioni",
+          "argomenti": [
+            "Rappresentare relazioni e dati e, in situazioni significative, utilizzare le rappresentazioni per ricavare informazioni, formulare giudizi e prendere decisioni.",
+            "Usare le nozioni di frequenza, di moda e di media aritmetica, se adeguata alla tipologia dei dati a disposizione.",
+            "Rappresentare problemi con tabelle e grafici che ne esprimono la struttura.",
+            "Utilizzare le principali unità di misura per lunghezze, angoli, aree, volumi/capacità, intervalli temporali, masse, pesi per effettuare misure e stime.",
+            "Passare da un'unità di misura a un'altra, limitatamente alle unità di uso più comune, anche nel contesto del sistema monetario.",
+            "In situazioni concrete, di una coppia di eventi intuire e cominciare ad argomentare qual è il più probabile, dando una prima quantificazione nei casi più semplici, oppure riconoscere se si tratta di eventi ugualmente probabili.",
+            "Riconoscere e descrivere regolarità in una sequenza di numeri o di figure."
+          ]
+        }
+      ]
+    }
+  ]
+}

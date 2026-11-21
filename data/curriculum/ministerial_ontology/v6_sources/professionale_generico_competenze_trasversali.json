@@ -1,0 +1,231 @@
+{
+  "scuola": "Istituto Professionale",
+  "materia": "Competenze Area Generale",
+  "anni": [
+    {
+      "anno": "Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza 1 - Valori e Costituzione",
+          "argomenti": [
+            "Saper valutare fatti e orientare i propri comportamenti personali in ambito familiare, scolastico e sociale"
+          ]
+        },
+        {
+          "nome": "Competenza 2 - Lingua italiana",
+          "argomenti": [
+            "Gestire l'interazione comunicativa, orale e scritta, in relazione agli interlocutori e al contesto",
+            "Comprendere i punti principali di testi orali e scritti di varia tipologia, provenienti da fonti diverse, anche digitali",
+            "Elaborare testi funzionali, orali e scritti, di varie tipologie, per descrivere esperienze, spiegare fenomeni e concetti, raccontare eventi, con un uso corretto del lessico di base e un uso appropriato delle competenze espressive"
+          ]
+        },
+        {
+          "nome": "Competenza 3 - Geografia e territorio",
+          "argomenti": [
+            "Acquisire informazioni sulle caratteristiche geomorfologiche e antropiche del territorio e delle sue trasformazioni nel tempo, applicando strumenti e metodi adeguati"
+          ]
+        },
+        {
+          "nome": "Competenza 4 - Tradizioni culturali",
+          "argomenti": [
+            "Acquisire informazioni sulle tradizioni culturali locali utilizzando strumenti e metodi adeguati",
+            "Illustrare le caratteristiche della cultura locale e nazionale di appartenenza, anche a soggetti di altre culture"
+          ]
+        },
+        {
+          "nome": "Competenza 5 - Lingue straniere",
+          "argomenti": [
+            "Utilizzare la lingua straniera, in ambiti inerenti alla sfera personale e sociale, per comprendere i punti principali di testi orali e scritti",
+            "Produrre semplici e brevi testi orali e scritti per descrivere e raccontare esperienze ed eventi",
+            "Interagire in situazioni semplici e di routine e partecipare a brevi conversazioni"
+          ]
+        },
+        {
+          "nome": "Competenza 6 - Beni artistici e ambientali",
+          "argomenti": [
+            "Acquisire informazioni sulle testimonianze artistiche e sui beni ambientali del territorio di appartenenza utilizzando strumenti e metodi adeguati"
+          ]
+        },
+        {
+          "nome": "Competenza 7 - Comunicazione visiva e multimediale",
+          "argomenti": [
+            "Identificare le forme di comunicazione e utilizzare le informazioni per produrre semplici testi multimediali in contesti strutturati, sia in italiano sia nelle lingue straniere oggetto di studio, verificando l'attendibilità delle fonti"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Terzo Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza 1 - Valori e Costituzione",
+          "argomenti": [
+            "Saper valutare fatti e orientare i propri comportamenti in situazioni sociali e professionali strutturate che possono richiedere un adattamento del proprio operato nel rispetto di regole condivise"
+          ]
+        },
+        {
+          "nome": "Competenza 2 - Lingua italiana",
+          "argomenti": [
+            "Gestire l'interazione comunicativa, orale e scritta, con particolare attenzione al contesto professionale e al controllo dei lessici specialistici",
+            "Comprendere e interpretare testi letterari e non letterari di varia tipologia e genere con riferimenti ai periodi culturali",
+            "Produrre diverse forme di scrittura, anche di tipo argomentativo, e realizzare forme di riscrittura intertestuale (sintesi, parafrasi esplicativa e interpretativa), con un uso appropriato e pertinente del lessico anche specialistico, adeguato ai vari contesti"
+          ]
+        },
+        {
+          "nome": "Competenza 3 - Geografia e territorio",
+          "argomenti": [
+            "Identificare le relazioni tra le caratteristiche geomorfologiche e lo sviluppo del proprio territorio, anche in prospettiva storica",
+            "Utilizzare idonei strumenti di rappresentazione dei dati acquisiti"
+          ]
+        },
+        {
+          "nome": "Competenza 4 - Tradizioni culturali",
+          "argomenti": [
+            "Riconoscere somiglianze e differenze tra la cultura nazionale e altre culture in prospettiva interculturale",
+            "Rapportarsi attraverso linguaggi e sistemi di relazione adeguati anche con culture diverse"
+          ]
+        },
+        {
+          "nome": "Competenza 5 - Lingue straniere",
+          "argomenti": [
+            "Utilizzare la lingua straniera, in ambiti inerenti alla sfera personale e sociale, per comprendere in modo globale e selettivo testi orali e scritti",
+            "Produrre testi orali e scritti chiari e lineari, per descrivere e raccontare esperienze ed eventi",
+            "Interagire in situazioni semplici di routine e anche più generali e partecipare a conversazioni",
+            "Utilizzare i linguaggi settoriali degli ambiti professionali per comprendere in modo globale e selettivo testi orali e scritti",
+            "Produrre semplici e brevi testi orali e scritti utilizzando il lessico specifico, per descrivere situazioni e presentare esperienze",
+            "Interagire in situazioni semplici e di routine e partecipare a brevi conversazioni in ambito professionale"
+          ]
+        },
+        {
+          "nome": "Competenza 6 - Beni artistici e ambientali",
+          "argomenti": [
+            "Correlare le informazioni acquisite sui beni artistici e ambientali alle attività economiche presenti nel territorio, ai loro possibili sviluppi in termini di fruibilità, anche in relazione all'area professionale di riferimento"
+          ]
+        },
+        {
+          "nome": "Competenza 7 - Comunicazione visiva e multimediale",
+          "argomenti": [
+            "Utilizzare le forme di comunicazione visiva e multimediale in vari contesti anche professionali, valutando in modo critico l'attendibilità delle fonti",
+            "Produrre in autonomia testi inerenti alla sfera personale e sociale e all'ambito professionale di appartenenza, sia in italiano sia in lingua straniera"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quarto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza 1 - Valori e Costituzione",
+          "argomenti": [
+            "Saper valutare fatti e orientare i propri comportamenti in situazioni sociali e professionali soggette a cambiamenti che possono richiedere un adattamento del proprio operato nel rispetto di regole condivise e della normativa specifica di settore"
+          ]
+        },
+        {
+          "nome": "Competenza 2 - Lingua italiana",
+          "argomenti": [
+            "Gestire l'interazione comunicativa, in modo pertinente e appropriato, cogliendo i diversi punti di vista",
+            "Gestire discorsi orali di tipo espositivo e argomentativo, in modo chiaro e ordinato e in forma adeguata ai contesti, utilizzando anche adeguati supporti multimediali",
+            "Comprendere e interpretare testi di varia tipologia e genere, letterari e non letterari, contestualizzandoli nei diversi periodi culturali",
+            "Elaborare forme testuali per scopi diversi, anche confrontando documenti di varia provenienza, con un uso controllato delle fonti",
+            "Utilizzare modalità di scrittura e riscrittura intertestuali, in particolare sintesi e argomentazione, con un uso pertinente del patrimonio lessicale e delle strutture della lingua italiana"
+          ]
+        },
+        {
+          "nome": "Competenza 3 - Geografia e territorio",
+          "argomenti": [
+            "Utilizzare criteri di scelta di dati che riguardano il contesto sociale, culturale, economico di un territorio per rappresentare in modo efficace le trasformazioni intervenute nel corso del tempo"
+          ]
+        },
+        {
+          "nome": "Competenza 4 - Tradizioni culturali",
+          "argomenti": [
+            "Interpretare e spiegare documenti ed eventi della propria cultura e metterli in relazione con quelli di altre culture utilizzando metodi e strumenti adeguati"
+          ]
+        },
+        {
+          "nome": "Competenza 5 - Lingue straniere",
+          "argomenti": [
+            "Utilizzare la lingua straniera, nell'ambito di argomenti di interesse generale e di attualità, per comprendere in modo globale e analitico testi orali e scritti poco complessi di diversa tipologia e genere",
+            "Produrre testi orali e scritti, chiari e lineari, di diversa tipologia e genere, utilizzando un registro adeguato",
+            "Interagire in semplici conversazioni e partecipare a brevi discussioni, utilizzando un registro adeguato",
+            "Utilizzare i linguaggi settoriali degli ambiti professionali per comprendere in modo globale e analitico testi orali e scritti poco complessi di diversa tipologia e genere",
+            "Produrre testi orali e scritti chiari e lineari di diversa tipologia e genere in ambito professionale, utilizzando un registro adeguato",
+            "Interagire in semplici conversazioni e partecipare a brevi discussioni in ambito professionale, utilizzando un registro adeguato"
+          ]
+        },
+        {
+          "nome": "Competenza 6 - Beni artistici e ambientali",
+          "argomenti": [
+            "Stabilire collegamenti tra informazioni, dati, eventi e strumenti relativi ai beni artistici e ambientali e l'ambito professionale di appartenenza"
+          ]
+        },
+        {
+          "nome": "Competenza 7 - Comunicazione visiva e multimediale",
+          "argomenti": [
+            "Utilizzare strumenti di comunicazione visiva e multimediale per produrre documenti complessi",
+            "Scegliere le strategie comunicative più efficaci rispetto ai diversi contesti inerenti alla sfera sociale e all'ambito professionale di appartenenza, sia in italiano sia in lingua straniera"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Competenza 1 - Valori e Costituzione",
+          "argomenti": [
+            "Saper valutare fatti e orientare i propri comportamenti personali, sociali e professionali per costruire un progetto di vita orientato allo sviluppo culturale, sociale ed economico di sé e della propria comunità"
+          ]
+        },
+        {
+          "nome": "Competenza 2 - Lingua italiana",
+          "argomenti": [
+            "Gestire forme di interazione orale, monologica e dialogica, secondo specifici scopi comunicativi",
+            "Comprendere e interpretare tipi e generi testuali, letterari e non letterari, contestualizzandoli nei diversi periodi culturali",
+            "Utilizzare differenti tecniche compositive per scrivere testi con finalità e scopi professionali diversi utilizzando anche risorse multimodali",
+            "Utilizzare il patrimonio lessicale ed espressivo e le strutture della lingua italiana secondo le esigenze comunicative nei vari contesti (sociali, culturali, scientifici, economici, tecnologici e professionali)"
+          ]
+        },
+        {
+          "nome": "Competenza 3 - Geografia e territorio",
+          "argomenti": [
+            "Valutare soluzioni ecosostenibili nelle attività professionali di settore, dopo aver analizzato gli aspetti geografici, ecologici, territoriali dell'ambiente naturale ed antropico",
+            "Analizzare le connessioni con le strutture demografiche, economiche, sociali, culturali e le trasformazioni intervenute nel corso del tempo"
+          ]
+        },
+        {
+          "nome": "Competenza 4 - Tradizioni culturali",
+          "argomenti": [
+            "Stabilire collegamenti tra le tradizioni culturali locali, nazionali e internazionali, sia in una prospettiva interculturale sia ai fini della mobilità di studio e di lavoro",
+            "Individuare possibili traguardi di sviluppo personale e professionale"
+          ]
+        },
+        {
+          "nome": "Competenza 5 - Lingue straniere",
+          "argomenti": [
+            "Utilizzare la lingua straniera, nell'ambito di argomenti di interesse generale e di attualità, per comprendere in modo globale e analitico testi orali e scritti abbastanza complessi di diversa tipologia e genere",
+            "Produrre testi orali e scritti, chiari e dettagliati, di diversa tipologia e genere utilizzando un registro adeguato",
+            "Interagire in conversazioni e partecipare a discussioni, utilizzando un registro adeguato",
+            "Utilizzare i linguaggi settoriali degli ambiti professionali per comprendere in modo globale e analitico testi orali e scritti abbastanza complessi di diversa tipologia e genere",
+            "Produrre testi orali e scritti, chiari e dettagliati, di diversa tipologia e genere utilizzando il lessico specifico e un registro adeguato",
+            "Interagire in conversazioni e partecipare a discussioni utilizzando il lessico specifico e un registro adeguato"
+          ]
+        },
+        {
+          "nome": "Competenza 6 - Beni artistici e ambientali",
+          "argomenti": [
+            "Riconoscere e valutare, anche in una cornice storico-culturale, il valore e le potenzialità dei beni artistici e ambientali",
+            "Inserire i beni artistici e ambientali in una prospettiva di sviluppo professionale"
+          ]
+        },
+        {
+          "nome": "Competenza 7 - Comunicazione visiva e multimediale",
+          "argomenti": [
+            "Utilizzare le reti e gli strumenti informatici nelle attività di studio e di lavoro",
+            "Scegliere le forme di comunicazione visiva e multimediale maggiormente adatte all'area professionale di riferimento per produrre testi complessi, sia in italiano sia in lingua straniera"
+          ]
+        }
+      ]
+    }
+  ]
+}

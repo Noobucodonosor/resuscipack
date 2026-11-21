@@ -1,0 +1,57 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Storia",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Uso delle fonti",
+          "argomenti": [
+            "Conoscere alcune procedure e tecniche di lavoro nei siti archeologici, nelle biblioteche e negli archivi",
+            "Usare fonti di diverso tipo (documentarie, iconografiche, narrative, materiali, orali, digitali, ecc.) per produrre conoscenze su temi definiti"
+          ]
+        },
+        {
+          "nome": "Organizzazione delle informazioni",
+          "argomenti": [
+            "Selezionare e organizzare le informazioni con mappe, schemi, tabelle, grafici e risorse digitali",
+            "Costruire grafici e mappe spazio-temporali, per organizzare le conoscenze studiate",
+            "Collocare la storia locale in relazione con la storia italiana, europea, mondiale",
+            "Formulare e verificare ipotesi sulla base delle informazioni prodotte e delle conoscenze elaborate"
+          ]
+        },
+        {
+          "nome": "Strumenti concettuali",
+          "argomenti": [
+            "Comprendere aspetti e strutture dei processi storici italiani, europei e mondiali",
+            "Conoscere il patrimonio culturale collegato con i temi affrontati",
+            "Usare le conoscenze apprese per comprendere problemi ecologici, interculturali e di convivenza civile"
+          ]
+        },
+        {
+          "nome": "Produzione scritta e orale",
+          "argomenti": [
+            "Produrre testi, utilizzando conoscenze selezionate da fonti di informazione diverse, manualistiche e non, cartacee e digitali",
+            "Argomentare su conoscenze e concetti appresi usando il linguaggio specifico della disciplina"
+          ]
+        },
+        {
+          "nome": "Traguardi per lo sviluppo delle competenze",
+          "argomenti": [
+            "Informarsi in modo autonomo su fatti e problemi storici anche mediante l'uso di risorse digitali",
+            "Produrre informazioni storiche con fonti di vario genere, anche digitali, e organizzarle in testi",
+            "Comprendere testi storici e rielaborarli con un personale metodo di studio",
+            "Esporre oralmente e con scritture, anche digitali, le conoscenze storiche acquisite operando collegamenti e argomentando le proprie riflessioni",
+            "Usare le conoscenze e le abilità per orientarsi nella complessità del presente, comprendere opinioni e culture diverse, capire i problemi fondamentali del mondo contemporaneo",
+            "Comprendere aspetti, processi e avvenimenti fondamentali della storia italiana dalle forme di insediamento e di potere medievali alla formazione dello stato unitario fino alla nascita della Repubblica, anche con possibilità di aperture e confronti con il mondo antico",
+            "Conoscere aspetti e processi fondamentali della storia europea medievale, moderna e contemporanea, anche con possibilità di aperture e confronti con il mondo antico",
+            "Conoscere aspetti e processi fondamentali della storia mondiale, dalla civilizzazione neolitica alla rivoluzione industriale, alla globalizzazione",
+            "Conoscere aspetti e processi essenziali della storia del suo ambiente",
+            "Conoscere aspetti del patrimonio culturale, italiano e dell'umanità, e saperli mettere in relazione con i fenomeni storici studiati"
+          ]
+        }
+      ]
+    }
+  ]
+}

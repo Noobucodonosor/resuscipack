@@ -1,0 +1,145 @@
+{
+  "scuola": "Istituto Tecnico Informatica (Aggiornato)",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di Matematica",
+          "argomenti": [
+            "Potenze ad esponente reale",
+            "Logaritmi in base 'e'",
+            "Numeri complessi",
+            "Analisi di Fourier delle funzioni periodiche",
+            "Modelli e metodi matematici discreti (calcolo con matrici, risoluzione algoritmica di sistemi lineari, risoluzione approssimata di una equazione, interpolazione, successioni, modelli della Ricerca operativa)",
+            "Derivate parziali e differenziale totale",
+            "Popolazione e campione",
+            "Statistiche, Distribuzioni campionarie e stimatori",
+            "Algoritmi statistici"
+          ]
+        },
+        {
+          "nome": "Sistemi e Reti",
+          "argomenti": [
+            "Struttura, architettura e componenti dei sistemi di elaborazione",
+            "Organizzazione del software di rete in livelli; modelli standard di riferimento",
+            "Tipologie e tecnologie delle reti locali e geografiche",
+            "Protocolli per la comunicazione in rete e analisi degli strati",
+            "Dispositivi per la realizzazione di reti locali; apparati e sistemi per la connettività ad Internet",
+            "Dispositivi di instradamento e relativi protocolli; tecniche di gestione dell'indirizzamento di rete",
+            "Problematiche di instradamento e sistemi di interconnessione nelle reti geografiche",
+            "Normativa relativa alla sicurezza dei dati",
+            "Tecnologie informatiche per garantire la sicurezza e l'integrità dei dati e dei sistemi",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese"
+          ]
+        },
+        {
+          "nome": "Tecnologie e Progettazione di Sistemi Informatici e di Telecomunicazioni",
+          "argomenti": [
+            "Principi di teoria e di codifica dell'informazione",
+            "Classificazione, struttura e funzionamento generale dei sistemi operativi",
+            "Struttura e organizzazione di un sistema operativo; politiche di gestione dei processi",
+            "Classificazione e moduli di gestione delle risorse del sistema operativo",
+            "Tecniche e tecnologie per la programmazione concorrente e la sincronizzazione dell'accesso a risorse condivise",
+            "Casi significativi di funzionalità programmabili di un sistema operativo",
+            "Fasi e modelli di gestione di un ciclo di sviluppo",
+            "Tecniche e strumenti per la gestione delle specifiche e dei requisiti di un progetto",
+            "Tipologie di rappresentazione e documentazione dei requisiti, dell'architettura dei componenti di un sistema e delle loro relazioni ed interazioni",
+            "Rappresentazione e documentazione delle scelte progettuali e di implementazione in riferimento a standard di settore",
+            "Normative di settore nazionale e comunitaria sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Informatica",
+          "argomenti": [
+            "Relazioni fondamentali tra macchine, problemi, informazioni e linguaggi",
+            "Linguaggi e macchine a vari livelli di astrazione",
+            "Paradigmi di programmazione",
+            "Logica iterativa e ricorsiva",
+            "Principali strutture dati e loro implementazione",
+            "File di testo",
+            "Teoria della complessità algoritmica",
+            "Programmazione ad oggetti",
+            "Programmazione guidata dagli eventi e interfacce grafiche",
+            "Strumenti per lo sviluppo del software e supporti per la robustezza dei programmi",
+            "Linguaggi per la definizione delle pagine web",
+            "Linguaggio di programmazione lato client per la gestione locale di eventi in pagine web",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese",
+            "Normative di settore nazionale e comunitaria sulla sicurezza"
+          ]
+        },
+        {
+          "nome": "Telecomunicazioni",
+          "argomenti": [
+            "Caratterizzazione nel dominio del tempo delle forme d'onda periodiche",
+            "Reti elettriche in regime continuo e in regime alternato",
+            "Elettronica digitale in logica cablata",
+            "Modelli e rappresentazioni di componenti e sistemi di telecomunicazione",
+            "Decibel e unità di misura",
+            "Analisi di segnali periodici e non periodici",
+            "Portanti fisici e tecniche di interconnessione tra apparati e dispositivi",
+            "Ricetrasmissione e propagazione delle onde elettromagnetiche",
+            "Principi di elettronica analogica per le telecomunicazioni",
+            "Tecniche di modulazione nei sistemi di trasmissione analogica",
+            "Reti a commutazione di circuito e tecniche di multiplazione e commutazione",
+            "Apparati e tecniche per sistemi di trasmissione digitali in banda base e in banda traslata",
+            "Parametri di qualità di un segnale in un collegamento di telecomunicazioni",
+            "Architettura, servizi e tendenze evolutive dei sistemi per la comunicazione in mobilità",
+            "Architettura e servizi delle reti convergenti multi servizio",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese",
+            "Normative di settore nazionale e comunitaria sulla sicurezza"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Sistemi e Reti",
+          "argomenti": [
+            "Tecniche di filtraggio del traffico di rete",
+            "Tecniche crittografiche applicate alla protezione dei sistemi e delle reti",
+            "Reti private virtuali",
+            "Modello client/server e distribuito per i servizi di rete",
+            "Funzionalità e caratteristiche dei principali servizi di rete",
+            "Strumenti e protocolli per la gestione ed il monitoraggio delle reti",
+            "Macchine e servizi virtuali, reti per la loro implementazione"
+          ]
+        },
+        {
+          "nome": "Tecnologie e Progettazione di Sistemi Informatici e di Telecomunicazioni",
+          "argomenti": [
+            "Metodi e tecnologie per la programmazione di rete",
+            "Protocolli e linguaggi di comunicazione a livello applicativo",
+            "Tecnologie per la realizzazione di web-service"
+          ]
+        },
+        {
+          "nome": "Gestione Progetto, Organizzazione di Impresa",
+          "argomenti": [
+            "Tecniche per la pianificazione, previsione e controllo di costi, risorse e software per lo sviluppo di un progetto",
+            "Manualistica e strumenti per la generazione della documentazione di un progetto",
+            "Tecniche e metodologie di testing a livello di singolo componente e di sistema",
+            "Norme e standard settoriali per la verifica e la validazione del risultato di un progetto",
+            "Normativa internazionale, comunitaria e nazionale di settore relativa alla sicurezza e alla prevenzione degli infortuni",
+            "Elementi di economia e di organizzazione di impresa con particolare riferimento al settore ICT",
+            "Processi aziendali generali e specifici del settore ICT, modelli di rappresentazione dei processi e delle loro interazioni e figure professionali",
+            "Ciclo di vita di un prodotto/servizio",
+            "Metodologie certificate per l'assicurazione della qualità di progettazione, realizzazione ed erogazione di prodotti/servizi"
+          ]
+        },
+        {
+          "nome": "Informatica",
+          "argomenti": [
+            "Modello concettuale, logico e fisico di una base di dati",
+            "Linguaggi e tecniche per l'interrogazione e la manipolazione delle basi di dati",
+            "Linguaggi per la programmazione lato server a livello applicativo",
+            "Tecniche per la realizzazione di pagine web dinamiche"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Algebra lineare operativa: vettori, matrici e trasformazioni</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Algebra lineare operativa: vettori, matrici e trasformazioni</text>
+  <rect x="90" y="88" width="110" height="84" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c" stroke-width="1.4"/>
+  <line x1="90" y1="172" x2="200" y2="172" stroke="#2c4f7c" stroke-width="2.6"/>
+  <line x1="90" y1="172" x2="90" y2="88" stroke="#2d6a5b" stroke-width="2.6"/>
+  <text x="145" y="192" text-anchor="middle" class="math">e₁</text>
+  <text x="72" y="132" class="math" style="fill:#2d6a5b">e₂</text>
+  <text x="305" y="132" text-anchor="middle" class="math">T(v) = Av</text>
+  <line x1="255" y1="142" x2="355" y2="142" stroke="#1f2421" stroke-width="2"/>
+  <polygon points="355,142 345,137 345,147" fill="#1f2421"/>
+  <polygon points="420,176 540,152 595,74 475,98" fill="#b86b2b" fill-opacity="0.16" stroke="#b86b2b" stroke-width="1.8"/>
+  <line x1="420" y1="176" x2="540" y2="152" stroke="#2c4f7c" stroke-width="2.6"/>
+  <line x1="420" y1="176" x2="475" y2="98" stroke="#2d6a5b" stroke-width="2.6"/>
+  <line x1="420" y1="176" x2="595" y2="74" stroke="#b86b2b" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="530" y="196" text-anchor="middle" class="math">Av = λv ,  Area = |det(A)|</text>
+  <text x="360" y="232" text-anchor="middle" class="muted">Deformazione lineare della base canonica, determinante e direzioni invarianti (autovettori)</text>
+</svg>

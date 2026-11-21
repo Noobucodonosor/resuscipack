@@ -1,0 +1,113 @@
+{
+  "scuola": "Liceo Musicale e Coreutico",
+  "materia": "Discipline Musicali e Coreutiche",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Esecuzione e Interpretazione",
+          "argomenti": [
+            "Rapporto tra gestualità e produzione del suono",
+            "Uso dei sistemi di notazione",
+            "Familiarità con le principali formule idiomatiche specifiche dello strumento",
+            "Nozioni musicali di tipo morfologico (dinamica, timbrica, ritmica, metrica, agogica, melodia, polifonia, armonia, fraseggio)",
+            "Metodi di studio e memorizzazione",
+            "Conoscenza della storia e tecnologia degli strumenti utilizzati",
+            "Capacità esecutive di composizioni di epoche, generi, stili e tradizioni diverse per il primo strumento",
+            "Semplici procedimenti analitici pertinenti ai repertori studiati per il primo strumento",
+            "Elementi essenziali di tecnica strumentale per il secondo strumento"
+          ]
+        },
+        {
+          "nome": "Teoria, Analisi e Composizione",
+          "argomenti": [
+            "Sviluppo dell'orecchio musicale",
+            "Padronanza dei codici di notazione",
+            "Acquisizione dei principali concetti del linguaggio musicale",
+            "Lettura con la voce e con lo strumento di brani monodici di media difficoltà",
+            "Rispetto delle indicazioni agogiche e dinamiche nella lettura",
+            "Trascrizione all'ascolto di bicordi, triadi e semplici frammenti polifonici a due parti",
+            "Cogliere all'ascolto e in partitura gli elementi fondamentali e le principali relazioni sintattico-formali",
+            "Fondamenti dell'armonia funzionale",
+            "Produzione di semplici arrangiamenti e brani originali",
+            "Improvvisazione e composizione individuale o in piccolo gruppo",
+            "Linguaggi contemporanei come base per improvvisazione e composizione",
+            "Riproduzione e improvvisazione di sequenze ritmiche e frasi musicali",
+            "Semplici poliritmi e canoni con uso della voce, del corpo e del movimento",
+            "Percorsi tematici su scale, modi, metri, timbri, forme",
+            "Percorsi multidisciplinari (musica/parola, musica/immagini)"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Esecuzione e Interpretazione",
+          "argomenti": [
+            "Mantenimento di un adeguato equilibrio psicofisico in diverse situazioni di performance (respirazione, percezione corporea, rilassamento, postura, coordinazione)",
+            "Tecniche funzionali alla lettura a prima vista",
+            "Memorizzazione ed esecuzione estemporanea",
+            "Adattamento di metodologie di studio alla soluzione di problemi esecutivi",
+            "Autonomia di studio",
+            "Ascolto e valutazione di sé e degli altri nelle esecuzioni solistiche e di gruppo",
+            "Esecuzione con scioltezza anche in pubblico di brani di adeguato livello di difficoltà per il primo strumento",
+            "Esecuzione di semplici brani per il secondo strumento",
+            "Competenze adeguate e funzionali alla specifica pratica strumentale per il secondo strumento"
+          ]
+        },
+        {
+          "nome": "Teoria, Analisi e Composizione",
+          "argomenti": [
+            "Approfondimento dei concetti e temi affrontati in precedenza in prospettiva storico-culturale",
+            "Continuità e discontinuità nell'evoluzione dei sistemi di regole e delle modalità di trasmissione della musica",
+            "Modalità, contrappunto, canone, evoluzione dell'armonia funzionale, storia delle forme musicali",
+            "Lettura e trascrizione polifonica e armonica applicata a partiture di crescente complessità",
+            "Analisi all'ascolto e in partitura di brani appartenenti a differenti repertori, stili, generi, epoche",
+            "Improvvisazione e composizione con tecniche contrappuntistiche e armoniche storicamente e stilisticamente caratterizzate",
+            "Conoscenza delle caratteristiche e delle possibilità dei diversi strumenti musicali",
+            "Tecniche informatiche applicate alla musica",
+            "Composizione e arrangiamento con o senza testo dato, anche a supporto di altri linguaggi espressivi",
+            "Riproduzione di sequenze ritmiche complesse, poliritmi e polimetrie con uso del corpo e del movimento",
+            "Armonizzazione e composizione di melodie mediamente complesse con modulazione a toni vicini e lontani",
+            "Uso di progressioni, appoggiature, ritardi, settime e none"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Esecuzione e Interpretazione",
+          "argomenti": [
+            "Consolidamento delle competenze già acquisite e sviluppo dell'autonomia di studio anche in un tempo dato",
+            "Conoscenza e interpretazione dei capisaldi della letteratura solistica e d'insieme",
+            "Repertori rappresentativi dei diversi momenti e contesti della storia della musica fino all'età contemporanea",
+            "Mantenimento di un adeguato equilibrio psicofisico nell'esecuzione anche mnemonica di opere complesse",
+            "Motivazione delle proprie scelte espressive",
+            "Strategie per la lettura a prima vista, il trasporto, la memorizzazione e l'improvvisazione",
+            "Apprendimento di un brano in un tempo dato",
+            "Tecniche adeguate all'esecuzione di composizioni significative di epoche, generi, stili e tradizioni musicali diverse",
+            "Conoscenze storiche e stilistiche relative ai repertori studiati",
+            "Comprensione delle poetiche dei diversi autori"
+          ]
+        },
+        {
+          "nome": "Teoria, Analisi e Composizione",
+          "argomenti": [
+            "Affinamento delle capacità di lettura e trascrizione all'ascolto di brani con diversi organici strumentali e vocali",
+            "Strumenti analitici applicati prevalentemente a brani del XX secolo appartenenti a differenti generi e stili",
+            "Tradizioni musicali extraeuropee",
+            "Approfondimento dell'armonia tardo-ottocentesca e novecentesca",
+            "Uso dell'armonia tardo-ottocentesca e novecentesca in improvvisazioni, arrangiamenti e composizioni",
+            "Tecniche compositive funzionali alla realizzazione di prodotti multimediali",
+            "Composizione di brani elettroacustici ed elettronici"
+          ]
+        }
+      ]
+    }
+  ]
+}

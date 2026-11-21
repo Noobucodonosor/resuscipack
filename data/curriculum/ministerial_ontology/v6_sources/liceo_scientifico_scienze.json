@@ -1,0 +1,62 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Scienze Naturali",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Scienze della Terra",
+          "argomenti": [
+            "Completamento e approfondimento di contenuti già acquisiti",
+            "Ampliamento del quadro esplicativo dei moti della Terra",
+            "Studio geomorfologico di strutture della superficie terrestre (fiumi, laghi, ghiacciai, mari)"
+          ]
+        },
+        {
+          "nome": "Biologia",
+          "argomenti": [
+            "Osservazione delle caratteristiche degli organismi viventi",
+            "Costituzione fondamentale degli organismi: la cellula",
+            "Biodiversità e forme di manifestazione della vita",
+            "Tecniche sperimentali di base in campo biologico",
+            "Osservazione microscopica",
+            "Evoluzione e sistematica",
+            "Genetica mendeliana",
+            "Rapporti organismi-ambiente",
+            "Valorizzazione e mantenimento della biodiversità"
+          ]
+        },
+        {
+          "nome": "Chimica",
+          "argomenti": [
+            "Osservazione e descrizione di fenomeni e reazioni semplici",
+            "Riconoscimento e rappresentazione delle reazioni chimiche",
+            "Esempi tratti dalla vita quotidiana",
+            "Stati di aggregazione della materia e relative trasformazioni",
+            "Modello particellare della materia",
+            "Classificazione della materia: miscugli omogenei ed eterogenei, sostanze semplici e composte",
+            "Definizioni operative delle classi di materia",
+            "Leggi fondamentali della chimica",
+            "Modello atomico di Dalton",
+            "Formula chimica e suoi significati",
+            "Prima classificazione degli elementi: sistema periodico di Mendeleev"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Contenuti disciplinari integrati",
+          "argomenti": [
+            "Ampliamento, consolidamento e messa in relazione dei contenuti disciplinari",
+            "Introduzione graduale ma sistematica di concetti, modelli e formalismo propri delle discipline",
+            "Spiegazione approfondita dei fenomeni naturali"
+          ]
+        }
+      ]
+    }
+  ]
+}

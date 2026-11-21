@@ -1,0 +1,136 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Lingua e Cultura Greca",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Competenze linguistiche",
+          "argomenti": [
+            "Lettura scorrevole",
+            "Conoscenza delle strutture morfosintattiche (flessione nominale e verbale)",
+            "Funzioni dei casi nella frase e delle frasi nel periodo",
+            "Formazione delle parole",
+            "Conoscenza articolata del lessico (per famiglie semantiche e per ambiti lessicali)",
+            "Riconoscimento delle strutture morfosintattiche, dei connettivi testuali e delle parole-chiave",
+            "Formulazione e verifica di ipotesi di traduzione e motivazione delle scelte",
+            "Comprensione del testo greco nel suo complesso anche senza l'ausilio del vocabolario"
+          ]
+        },
+        {
+          "nome": "Lingua - Traduzione",
+          "argomenti": [
+            "Traduzione di testi d'autore prevalentemente in prosa",
+            "Testi di argomento mitologico, storico, narrativo",
+            "Utilizzo di testi corredati da note di contestualizzazione (informazioni relative all'autore, all'opera, al brano o al tema trattato)"
+          ]
+        },
+        {
+          "nome": "Cultura - Lettura antologica",
+          "argomenti": [
+            "A partire dal secondo anno: lettura antologica di testi d'autore secondo percorsi tematici o di genere",
+            "Potenziamento delle competenze linguistiche",
+            "Introduzione graduale alla lettura diretta dei classici"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Traduzione e competenze avanzate",
+          "argomenti": [
+            "Prosecuzione dell'allenamento alla traduzione del testo d'autore",
+            "Terzo anno: testo narrativo e storico (Erodoto, Plutarco, Luciano)",
+            "Quarto anno: testo retorico (Lisia); testo storico (Tucidide, Polibio)",
+            "Consolidamento delle competenze linguistiche con la complessità della costruzione sintattica",
+            "Lessico della storiografia, della retorica, della politica e della filosofia",
+            "Varietà delle lingue letterarie greche e loro connessione con i vari generi testuali",
+            "Cogliere le varianti diacroniche della lingua e la specificità dei lessici settoriali",
+            "Rendere nella traduzione lo specifico letterario del testo",
+            "Motivare le scelte di traduzione sulla base dell'interpretazione complessiva del testo",
+            "Eventuale proposta di testi poetici alla traduzione con gradualità e corredo di note"
+          ]
+        },
+        {
+          "nome": "Cultura - Storia della letteratura greca dalle origini all'età classica",
+          "argomenti": [
+            "Le origini della letteratura greca",
+            "L'epica: Omero, Esiodo",
+            "L'elegia: Tirteo",
+            "Il giambo: Archiloco",
+            "La lirica arcaica monodica e corale",
+            "La tragedia: Eschilo, Sofocle, Euripide",
+            "La commedia antica: Aristofane",
+            "La storiografia: Erodoto, Tucidide, Senofonte",
+            "L'oratoria: Lisia, Demostene"
+          ]
+        },
+        {
+          "nome": "Cultura - Lettura in lingua originale (terzo anno)",
+          "argomenti": [
+            "Antologia omerica",
+            "Antologia di storici: Erodoto, Senofonte, Tucidide, Polibio, Plutarco"
+          ]
+        },
+        {
+          "nome": "Cultura - Lettura in lingua originale (quarto anno)",
+          "argomenti": [
+            "Antologia di lirici",
+            "Un'orazione o antologia di una o più orazioni: Lisia, Demostene, Isocrate"
+          ]
+        },
+        {
+          "nome": "Cultura - Competenze di analisi e interpretazione",
+          "argomenti": [
+            "Lettura espressiva e, in metrica, almeno l'esametro",
+            "Traduzione rispettando il senso e la specificità letteraria e retorica",
+            "Interpretazione con strumenti dell'analisi testuale e conoscenze relative all'autore e al contesto storico-culturale",
+            "Cogliere elementi di alterità e continuità tra cultura letteraria greco-romana e cultura attuale",
+            "Confronti di genere o tematici con le letterature moderne",
+            "Lettura di pagine critiche",
+            "Lettura in traduzione per offrire un quadro più ampio e quando possibile integrale dell'opera"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua - Traduzione e competenze avanzate",
+          "argomenti": [
+            "Testo filosofico: Platone, Aristotele",
+            "Testo retorico: Isocrate, Demostene",
+            "Consolidamento e rafforzamento delle competenze linguistiche",
+            "Motivare le scelte di traduzione sulla base dell'interpretazione complessiva del testo"
+          ]
+        },
+        {
+          "nome": "Cultura - Storia della letteratura greca dall'età classica all'età imperiale",
+          "argomenti": [
+            "Filosofia ed educazione: Platone, Isocrate, Aristotele",
+            "La Commedia Nuova e Menandro",
+            "La poesia ellenistica",
+            "Polibio",
+            "Plutarco",
+            "La Seconda Sofistica",
+            "Il romanzo",
+            "Il Nuovo Testamento"
+          ]
+        },
+        {
+          "nome": "Cultura - Lettura in lingua originale",
+          "argomenti": [
+            "Testo o antologia di testi filosofici: Platone, Aristotele, Epicuro, gli Stoici",
+            "Una tragedia integrale (integrando con parti lette in traduzione quanto non letto in lingua originale) oppure antologia di una o più tragedie di età classica (Eschilo, Sofocle, Euripide)",
+            "Lettura metrica del trimetro giambico",
+            "Lettura di almeno un saggio critico"
+          ]
+        }
+      ]
+    }
+  ]
+}

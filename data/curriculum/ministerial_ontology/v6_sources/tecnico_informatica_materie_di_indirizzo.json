@@ -1,0 +1,80 @@
+{
+  "scuola": "Istituto Tecnico - Settore Tecnologico - Indirizzo: Informatica e telecomunicazioni - Articolazione: Informatica",
+  "materia": "Informatica",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Fondamenti di programmazione e algoritmi",
+          "argomenti": [
+            "Relazioni fondamentali tra macchine, problemi, informazioni e linguaggi",
+            "Linguaggi e macchine a vari livelli di astrazione",
+            "Paradigmi di programmazione",
+            "Logica iterativa e ricorsiva",
+            "Teoria della complessità algoritmica",
+            "Progettare e implementare algoritmi utilizzando diverse strutture di dati",
+            "Analizzare e confrontare algoritmi diversi per la soluzione dello stesso problema"
+          ]
+        },
+        {
+          "nome": "Strutture dati e file",
+          "argomenti": [
+            "Principali strutture dati e loro implementazione",
+            "File di testo",
+            "Scegliere il tipo di organizzazione dei dati più adatto a gestire le informazioni in una situazione data",
+            "Gestire file di testo"
+          ]
+        },
+        {
+          "nome": "Programmazione ad oggetti e interfacce grafiche",
+          "argomenti": [
+            "Programmazione ad oggetti",
+            "Programmazione guidata dagli eventi e interfacce grafiche",
+            "Strumenti per lo sviluppo del software e supporti per la robustezza dei programmi",
+            "Progettare e implementare applicazioni secondo il paradigma ad oggetti",
+            "Progettare e realizzare interfacce utente"
+          ]
+        },
+        {
+          "nome": "Sviluppo web lato client",
+          "argomenti": [
+            "Linguaggi per la definizione delle pagine web",
+            "Linguaggio di programmazione lato client per la gestione locale di eventi in pagine web",
+            "Progettare, realizzare e gestire pagine web statiche con interazione locale"
+          ]
+        },
+        {
+          "nome": "Lessico, normativa e sicurezza",
+          "argomenti": [
+            "Lessico e terminologia tecnica di settore anche in lingua inglese",
+            "Normative di settore nazionale e comunitaria sulla sicurezza",
+            "Utilizzare il lessico e la terminologia tecnica di settore anche in lingua inglese",
+            "Applicare le normative di settore sulla sicurezza"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Basi di dati",
+          "argomenti": [
+            "Modello concettuale, logico e fisico di una base di dati",
+            "Linguaggi e tecniche per l'interrogazione e la manipolazione delle basi di dati",
+            "Progettare e realizzare applicazioni informatiche con basi di dati"
+          ]
+        },
+        {
+          "nome": "Sviluppo web lato server e pagine dinamiche",
+          "argomenti": [
+            "Linguaggi per la programmazione lato server a livello applicativo",
+            "Tecniche per la realizzazione di pagine web dinamiche",
+            "Sviluppare applicazioni web-based integrando anche basi di dati"
+          ]
+        }
+      ]
+    }
+  ]
+}

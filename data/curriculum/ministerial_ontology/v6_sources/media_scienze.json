@@ -1,0 +1,39 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Scienze",
+  "anni": [
+    {
+      "anno": "Classe Terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Fisica e chimica",
+          "argomenti": [
+            "Utilizzare i concetti fisici fondamentali quali: pressione, volume, velocità, peso, peso specifico, forza, temperatura, calore, carica elettrica, ecc., in varie situazioni di esperienza; in alcuni casi raccogliere dati su variabili rilevanti di differenti fenomeni, trovarne relazioni quantitative ed esprimerle con rappresentazioni formali di tipo diverso. Realizzare esperienze quali ad esempio: piano inclinato, galleggiamento, vasi comunicanti, riscaldamento dell'acqua, fusione del ghiaccio, costruzione di un circuito pila-interruttore-lampadina.",
+            "Costruire e utilizzare correttamente il concetto di energia come quantità che si conserva; individuare la sua dipendenza da altre variabili; riconoscere l'inevitabile produzione di calore nelle catene energetiche reali. Realizzare esperienze quali ad esempio: mulino ad acqua, dinamo, elica rotante sul termosifone, riscaldamento dell'acqua con il frullatore.",
+            "Padroneggiare concetti di trasformazione chimica; sperimentare reazioni (non pericolose) anche con prodotti chimici di uso domestico e interpretarle sulla base di modelli semplici di struttura della materia; osservare e descrivere lo svolgersi delle reazioni e i prodotti ottenuti. Realizzare esperienze quali ad esempio: soluzioni in acqua, combustione di una candela, bicarbonato di sodio + aceto."
+          ]
+        },
+        {
+          "nome": "Astronomia e Scienze della Terra",
+          "argomenti": [
+            "Osservare, modellizzare e interpretare i più evidenti fenomeni celesti attraverso l'osservazione del cielo notturno e diurno, utilizzando anche planetari o simulazioni al computer. Ricostruire i movimenti della Terra da cui dipendono il dì e la notte e l'alternarsi delle stagioni. Costruire modelli tridimensionali anche in connessione con l'evoluzione storica dell'astronomia.",
+            "Spiegare, anche per mezzo di simulazioni, i meccanismi delle eclissi di Sole e di Luna. Realizzare esperienze quali ad esempio: costruzione di una meridiana, registrazione della traiettoria del Sole e della sua altezza a mezzogiorno durante l'arco dell'anno.",
+            "Riconoscere, con ricerche sul campo ed esperienze concrete, i principali tipi di rocce ed i processi geologici da cui hanno avuto origine.",
+            "Conoscere la struttura della Terra e i suoi movimenti interni (tettonica a placche); individuare i rischi sismici, vulcanici e idrogeologici della propria regione per pianificare eventuali attività di prevenzione. Realizzare esperienze quali ad esempio la raccolta e i saggi di rocce diverse."
+          ]
+        },
+        {
+          "nome": "Biologia",
+          "argomenti": [
+            "Riconoscere le somiglianze e le differenze nel funzionamento delle diverse specie di viventi.",
+            "Comprendere il senso delle grandi classificazioni, riconoscere nei fossili indizi per ricostruire nel tempo le trasformazioni dell'ambiente fisico, la successione e l'evoluzione delle specie. Realizzare esperienze quali ad esempio: in coltivazioni e allevamenti, osservare la variabilità in individui della stessa specie.",
+            "Sviluppare progressivamente la capacità di spiegare il funzionamento macroscopico dei viventi con un modello cellulare (collegando per esempio: la respirazione con la respirazione cellulare, l'alimentazione con il metabolismo cellulare, la crescita e lo sviluppo con la duplicazione delle cellule, la crescita delle piante con la fotosintesi). Realizzare esperienze quali ad esempio: dissezione di una pianta, modellizzazione di una cellula, osservazione di cellule vegetali al microscopio, coltivazione di muffe e microorganismi.",
+            "Conoscere le basi biologiche della trasmissione dei caratteri ereditari acquisendo le prime elementari nozioni di genetica.",
+            "Acquisire corrette informazioni sullo sviluppo puberale e la sessualità; sviluppare la cura e il controllo della propria salute attraverso una corretta alimentazione; evitare consapevolmente i danni prodotti dal fumo e dalle droghe.",
+            "Assumere comportamenti e scelte personali ecologicamente sostenibili. Rispettare e preservare la biodiversità nei sistemi ambientali. Realizzare esperienze quali ad esempio: costruzione di nidi per uccelli selvatici, adozione di uno stagno o di un bosco."
+          ]
+        }
+      ]
+    }
+  ]
+}

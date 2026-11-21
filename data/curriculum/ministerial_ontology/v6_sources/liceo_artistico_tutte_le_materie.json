@@ -1,0 +1,117 @@
+{
+  "scuola": "Liceo Artistico",
+  "materia": "Tutte le materie (Metodologie Progettuali, Storia dell'Arte, etc.)",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia dell'Arte - Arte preistorica e antica",
+          "argomenti": [
+            "Introduzione alla lettura dell'opera d'arte e dello spazio architettonico",
+            "Definizioni e classificazioni delle arti e categorie formali del fatto artistico e architettonico",
+            "Arte preistorica: architettura megalitica e sistema costruttivo trilitico",
+            "Arte greca (periodo classico): il tempio, gli ordini architettonici, decorazione scultorea con particolare riferimento al Partenone, il teatro",
+            "Arte romana: opere di ingegneria (strade, ponti, acquedotti), tecniche costruttive, principali tipologie architettoniche (terme, anfiteatri, fori), principali monumenti celebrativi"
+          ]
+        },
+        {
+          "nome": "Storia dell'Arte - Arte medievale",
+          "argomenti": [
+            "Architettura romanica: tecniche e modalità costruttive, materiali e stili per edificare chiese e cattedrali",
+            "Architettura gotica: tecniche e modalità costruttive, materiali e stili per edificare chiese e cattedrali",
+            "Decorazione pittorica e scultorea romanica e gotica",
+            "Personalità artistiche del periodo: da Wiligelmo fino a Giotto e ai grandi maestri attivi tra Duecento e Trecento"
+          ]
+        },
+        {
+          "nome": "Disegno tecnico - Fondamenti",
+          "argomenti": [
+            "Uso degli strumenti per il disegno tecnico",
+            "Costruzione di figure geometriche piane",
+            "Proiezioni Ortogonali: proiezione di punti, segmenti, figure piane, solidi geometrici in posizioni diverse rispetto ai tre piani",
+            "Ribaltamenti e sezioni nelle proiezioni ortogonali",
+            "Rappresentazione di figure geometriche semplici e di oggetti a mano libera e con strumenti (riga, squadra e compasso)",
+            "Rappresentazione assonometrica di solidi geometrici semplici e volumi architettonici",
+            "Rappresentazione assonometrica di edifici antichi studiati nell'ambito della storia dell'arte",
+            "Fondamenti dello studio delle ombre: sorgente luminosa propria e impropria, ombra portata, chiaroscuro"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia dell'Arte - Rinascimento (XV e XVI secolo)",
+          "argomenti": [
+            "Il primo Rinascimento a Firenze: Brunelleschi, Donatello, Masaccio",
+            "L'invenzione della prospettiva e le conseguenze per l'architettura e le arti figurative",
+            "Opere e riflessione teorica di Leon Battista Alberti",
+            "Centri artistici italiani e principali protagonisti: Piero della Francesca, Mantegna, Antonello, Bellini",
+            "La città ideale, il palazzo, la villa",
+            "Gli iniziatori della 'terza maniera': Bramante, Leonardo, Michelangelo, Raffaello",
+            "Il Manierismo in architettura e nelle arti figurative",
+            "La grande stagione dell'arte veneziana",
+            "L'architettura di Palladio"
+          ]
+        },
+        {
+          "nome": "Storia dell'Arte - Barocco e Settecento (XVII e XVIII secolo)",
+          "argomenti": [
+            "Le novità proposte da Caravaggio",
+            "Opere esemplari del Barocco romano: Bernini, Borromini, Pietro da Cortona",
+            "La tipologia della reggia: Versailles, Juvara (Stupinigi), Vanvitelli (Caserta)"
+          ]
+        },
+        {
+          "nome": "Storia dell'Arte - Neoclassicismo, Romanticismo e Ottocento",
+          "argomenti": [
+            "L'architettura del Neoclassicismo",
+            "Il paesaggio in età romantica: 'pittoresco' e 'sublime'",
+            "Il 'Gothic revival'",
+            "Le conseguenze della Rivoluzione industriale: nuovi materiali e tecniche costruttive",
+            "La città borghese e le grandi ristrutturazioni urbanistiche",
+            "La pittura del Realismo e dell'Impressionismo"
+          ]
+        },
+        {
+          "nome": "Disegno tecnico - Teoria delle ombre e Prospettiva",
+          "argomenti": [
+            "Studio sistematico della Teoria delle ombre: figure piane, solidi geometrici e volumi architettonici",
+            "Rappresentazione dello spazio attraverso la prospettiva centrale e accidentale",
+            "Prospettiva di figure piane, solidi geometrici e volumi architettonici in rapporto alle opere d'arte",
+            "Fondamenti per l'analisi tipologica, strutturale, funzionale e distributiva dell'architettura",
+            "Studio della composizione delle facciate e loro disegno materico con le ombre",
+            "Conoscenza e uso degli strumenti informatici per la rappresentazione grafica e la progettazione (programmi CAD)"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Storia dell'Arte - Dal Post-Impressionismo all'Arte Contemporanea",
+          "argomenti": [
+            "Ricerche post-impressioniste come premesse allo sviluppo dei movimenti d'avanguardia del XX secolo",
+            "Nuovi materiali (ferro e vetro) e nuove tipologie costruttive in architettura: dalle Esposizioni universali all'Art Nouveau",
+            "Sviluppo del disegno industriale: da William Morris all'esperienza del Bauhaus",
+            "Principali avanguardie artistiche del Novecento",
+            "Il Movimento moderno in architettura: principali protagonisti e sviluppi nella cultura architettonica e urbanistica contemporanea",
+            "La crisi del funzionalismo e le urbanizzazioni del dopoguerra",
+            "Nuovi sistemi costruttivi basati su tecnologie e materiali finalizzati a un uso ecosostenibile"
+          ]
+        },
+        {
+          "nome": "Disegno e Progettazione",
+          "argomenti": [
+            "Analisi e conoscenza dell'ambiente costruito (spazio urbano, edificio, monumento) mediante rilievo grafico-fotografico e schizzi dal vero",
+            "Elaborazione di semplici proposte progettuali di modifica dell'esistente o da realizzare ex-novo",
+            "Uso del disegno in funzione dell'analisi e come strumento di ricerca progettuale"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Complessità, invarianti di ciclo e scrittura tecnica dalle fonti</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Complessità, invarianti di ciclo e scrittura tecnica dalle fonti</text>
+  <rect x="60" y="72" width="130" height="44" rx="6" fill="#2c4f7c" fill-opacity="0.12" stroke="#2c4f7c"/>
+  <text x="125" y="99" text-anchor="middle" class="label">Inizializzazione (I₀)</text>
+  <rect x="240" y="72" width="145" height="44" rx="6" fill="#2d6a5b" fill-opacity="0.14" stroke="#2d6a5b"/>
+  <text x="312" y="99" text-anchor="middle" class="label">Mantenimento (Iₖ⇒Iₖ₊₁)</text>
+  <rect x="240" y="148" width="145" height="44" rx="6" fill="#b86b2b" fill-opacity="0.14" stroke="#b86b2b"/>
+  <text x="312" y="175" text-anchor="middle" class="label">Terminazione &amp; Verifica</text>
+  <line x1="190" y1="94" x2="240" y2="94" stroke="#1f2421" stroke-width="1.8"/>
+  <line x1="312" y1="116" x2="312" y2="148" stroke="#1f2421" stroke-width="1.8"/>
+  <line x1="425" y1="48" x2="425" y2="206" stroke="#d9d2c5" stroke-width="1.2"/>
+  <polygon points="480,184 650,184 610,144 520,144" fill="#2c4f7c" fill-opacity="0.14" stroke="#2c4f7c"/>
+  <polygon points="520,144 610,144 590,104 540,104" fill="#2d6a5b" fill-opacity="0.18" stroke="#2d6a5b"/>
+  <polygon points="540,104 590,104 565,64" fill="#b86b2b" fill-opacity="0.22" stroke="#b86b2b"/>
+  <text x="565" y="169" text-anchor="middle" class="muted">Test unitari &amp; proprietà</text>
+  <text x="565" y="129" text-anchor="middle" class="muted">Integrazione</text>
+  <text x="565" y="95" text-anchor="middle" class="muted">E2E</text>
+  <text x="360" y="232" text-anchor="middle" class="muted">Dimostrazione di correttezza tramite invariante di ciclo e piramide di verifica automatica</text>
+</svg>

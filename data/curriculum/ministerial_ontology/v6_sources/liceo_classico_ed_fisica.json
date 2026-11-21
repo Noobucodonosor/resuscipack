@@ -1,0 +1,117 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Scienze Motorie e Sportive",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "La percezione di sé ed il completamento dello sviluppo funzionale delle capacità motorie ed espressive",
+          "argomenti": [
+            "Conoscenza del proprio corpo e della sua funzionalità",
+            "Ampliamento delle capacità coordinative e condizionali",
+            "Realizzazione di schemi motori complessi utili ad affrontare attività sportive",
+            "Comprensione e produzione consapevole dei messaggi non verbali",
+            "Lettura critica e decodificazione dei messaggi corporei propri e altrui"
+          ]
+        },
+        {
+          "nome": "Lo sport, le regole e il fair play",
+          "argomenti": [
+            "Pratica degli sport individuali e di squadra con componente educativa",
+            "Sperimentazione dei diversi ruoli e relative responsabilità, inclusi arbitraggio e giuria",
+            "Applicazione di strategie efficaci per la risoluzione di situazioni problematiche negli sport di squadra",
+            "Confronto e assunzione di responsabilità personali negli sport individuali",
+            "Collaborazione con i compagni all'interno del gruppo"
+          ]
+        },
+        {
+          "nome": "Salute, benessere, sicurezza e prevenzione",
+          "argomenti": [
+            "Principi fondamentali di prevenzione per la sicurezza personale in palestra, a casa e negli spazi aperti, compreso quello stradale",
+            "Principi igienici e scientifici essenziali per mantenere lo stato di salute e migliorare l'efficienza fisica",
+            "Norme sanitarie e alimentari per il mantenimento del benessere",
+            "Effetti benefici dei percorsi di preparazione fisica",
+            "Effetti dannosi dei prodotti farmacologici tesi esclusivamente al risultato immediato"
+          ]
+        },
+        {
+          "nome": "Relazione con l'ambiente naturale e tecnologico",
+          "argomenti": [
+            "Pratiche motorie e sportive realizzate in ambiente naturale",
+            "Orientamento in contesti diversificati",
+            "Recupero di un rapporto corretto con l'ambiente",
+            "Sintesi delle conoscenze derivanti da diverse discipline scolastiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "La percezione di sé ed il completamento dello sviluppo funzionale delle capacità motorie ed espressive",
+          "argomenti": [
+            "Maggior padronanza di sé e ampliamento delle capacità coordinative, condizionali ed espressive",
+            "Realizzazione di movimenti complessi",
+            "Conoscenza e applicazione di alcune metodiche di allenamento per attività motorie e sportive di alto livello",
+            "Approfondimenti culturali e tecnico-tattici",
+            "Valutazione delle proprie capacità e prestazioni confrontandole con appropriate tabelle di riferimento",
+            "Svolgimento di attività di diversa durata e intensità",
+            "Distinzione delle variazioni fisiologiche indotte dalla pratica motoria e sportiva",
+            "Sperimentazione di varie tecniche espressivo-comunicative in lavori individuali e di gruppo"
+          ]
+        },
+        {
+          "nome": "Lo sport, le regole e il fair play",
+          "argomenti": [
+            "Cooperazione in équipe valorizzando le propensioni individuali e l'attitudine a ruoli definiti",
+            "Osservazione e interpretazione dei fenomeni legati al mondo sportivo e all'attività fisica",
+            "Partecipazione e organizzazione di competizioni scolastiche nelle diverse specialità sportive o attività espressive",
+            "Pratica degli sport con approfondimento di teoria, tecnica e tattica"
+          ]
+        },
+        {
+          "nome": "Salute, benessere, sicurezza e prevenzione",
+          "argomenti": [
+            "Presa di coscienza della propria corporeità per il perseguimento del benessere individuale quotidiano",
+            "Adozione di comportamenti idonei a prevenire infortuni nelle diverse attività",
+            "Rispetto della propria e dell'altrui incolumità",
+            "Conoscenza delle informazioni relative all'intervento di primo soccorso"
+          ]
+        },
+        {
+          "nome": "Relazione con l'ambiente naturale e tecnologico",
+          "argomenti": [
+            "Attività in ambiente naturale con esperienze motorie e organizzative di maggior difficoltà",
+            "Stimolazione del piacere di vivere esperienze diversificate individualmente e nel gruppo",
+            "Utilizzo di attrezzi, materiali ed eventuali strumenti tecnologici e/o informatici nell'attività motoria e sportiva"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "La percezione di sé ed il completamento dello sviluppo funzionale delle capacità motorie ed espressive",
+          "argomenti": [
+            "Sviluppo di un'attività motoria complessa adeguata ad una completa maturazione personale",
+            "Piena conoscenza e consapevolezza degli effetti positivi generati dai percorsi di preparazione fisica specifici",
+            "Osservazione e interpretazione dei fenomeni connessi al mondo dell'attività motoria e sportiva nel contesto socioculturale attuale",
+            "Prospettiva di pratica motoria lungo tutto l'arco della vita"
+          ]
+        },
+        {
+          "nome": "Lo sport, le regole e il fair play",
+          "argomenti": [
+            "Conoscenza e applicazione delle strategie tecnico-tattiche dei giochi sportivi",
+            "Affrontare il confronto agonistico con etica corretta, rispetto delle regole e fair play",
+            "Svolgimento di ruoli di direzione dell'attività sportiva",
+            "Organizzazione e gestione di eventi sportivi nel tempo scuola ed extra-scuola"
+          ]
+        }
+      ]
+    }
+  ]
+}

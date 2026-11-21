@@ -1,0 +1,323 @@
+"""Schema relazionale canonico append-only per `data/pack_corpus.db`
+con indice full-text `passages_fts` (`content='blocks'`, `content_rowid='block_pk'`) e trigger SQL."""
+
+from __future__ import annotations
+
+import sqlite3
+from pathlib import Path
+
+DEFAULT_DB_PATH = Path(__file__).resolve().parents[2] / "data" / "pack_corpus.db"
+
+SCHEMA_DDL = """
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS books (
+    book_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    book_uid TEXT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    author TEXT,
+    year INTEGER,
+    surface_domain TEXT NOT NULL,
+    language TEXT,
+    source_kind TEXT NOT NULL,
+    source_path TEXT,
+    page_count INTEGER,
+    is_active INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS blocks (
+    block_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    block_uid TEXT UNIQUE NOT NULL,
+    book_pk INTEGER NOT NULL REFERENCES books(book_pk),
+    book_title TEXT NOT NULL DEFAULT '',
+    is_active INTEGER NOT NULL DEFAULT 1,
+    superseded_by_pk INTEGER REFERENCES blocks(block_pk),
+    block_role TEXT NOT NULL DEFAULT 'body',
+    page_start INTEGER,
+    page_end INTEGER,
+    printed_page TEXT,
+    section_title TEXT NOT NULL DEFAULT '',
+    content TEXT NOT NULL,
+    norm_content TEXT NOT NULL,
+    char_count INTEGER NOT NULL,
+    est_tokens INTEGER NOT NULL,
+    source_origin TEXT NOT NULL
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS passages_fts USING fts5(
+    book_title,
+    section_title,
+    content,
+    content='blocks',
+    content_rowid='block_pk',
+    tokenize='unicode61'
+);
+
+-- Immutabilità fisica: nessun blocco emesso può essere cancellato (evita riciclo o buchi distruttivi)
+CREATE TRIGGER IF NOT EXISTS trg_blocks_forbid_delete
+BEFORE DELETE ON blocks
+BEGIN
+    SELECT RAISE(ABORT, 'blocks table is append-only: set is_active=0 and superseded_by_pk instead of DELETE');
+END;
+
+-- Sincronizzazione automatica FTS5 su INSERT
+CREATE TRIGGER IF NOT EXISTS trg_blocks_ai
+AFTER INSERT ON blocks
+WHEN NEW.is_active = 1
+BEGIN
+    INSERT INTO passages_fts(rowid, book_title, section_title, content)
+    VALUES (NEW.block_pk, NEW.book_title, COALESCE(NEW.section_title, ''), NEW.content);
+END;
+
+-- Sincronizzazione automatica FTS5 su UPDATE (es. superseding is_active 1 -> 0)
+CREATE TRIGGER IF NOT EXISTS trg_blocks_au_deactivate
+AFTER UPDATE ON blocks
+WHEN OLD.is_active = 1 AND NEW.is_active = 0
+BEGIN
+    INSERT INTO passages_fts(passages_fts, rowid, book_title, section_title, content)
+    VALUES ('delete', OLD.block_pk, OLD.book_title, COALESCE(OLD.section_title, ''), OLD.content);
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_blocks_au_reactivate
+AFTER UPDATE ON blocks
+WHEN OLD.is_active = 0 AND NEW.is_active = 1
+BEGIN
+    INSERT INTO passages_fts(rowid, book_title, section_title, content)
+    VALUES (NEW.block_pk, NEW.book_title, COALESCE(NEW.section_title, ''), NEW.content);
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_blocks_au_modify
+AFTER UPDATE OF book_title, section_title, content ON blocks
+WHEN OLD.is_active = 1 AND NEW.is_active = 1
+BEGIN
+    INSERT INTO passages_fts(passages_fts, rowid, book_title, section_title, content)
+    VALUES ('delete', OLD.block_pk, OLD.book_title, COALESCE(OLD.section_title, ''), OLD.content);
+    INSERT INTO passages_fts(rowid, book_title, section_title, content)
+    VALUES (NEW.block_pk, NEW.book_title, COALESCE(NEW.section_title, ''), NEW.content);
+END;
+
+CREATE TABLE IF NOT EXISTS epistemic_units (
+    unit_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    unit_uid TEXT UNIQUE NOT NULL,
+    block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    kind TEXT NOT NULL,
+    mode TEXT NOT NULL,
+    stmt TEXT NOT NULL,
+    verbatim_quote TEXT NOT NULL,
+    actors_json TEXT,
+    vs_dispute TEXT,
+    concepts_json TEXT,
+    created_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS structural_signatures (
+    sig_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    block_pk INTEGER UNIQUE NOT NULL REFERENCES blocks(block_pk),
+    mech TEXT NOT NULL,
+    op_tags_json TEXT NOT NULL,
+    anti_sudoku_role TEXT NOT NULL,
+    created_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS curiosity_bridges (
+    bridge_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    node_id TEXT NOT NULL,
+    block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    target_op_tags_json TEXT NOT NULL,
+    mapping_json TEXT NOT NULL,
+    chain_steps_json TEXT NOT NULL,
+    score REAL NOT NULL,
+    status TEXT NOT NULL DEFAULT 'validated',
+    UNIQUE(node_id, block_pk)
+);
+
+CREATE TABLE IF NOT EXISTS legacy_rowid_map (
+    legacy_fts_rowid INTEGER PRIMARY KEY,
+    block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    block_uid TEXT NOT NULL,
+    match_method TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS block_extraction_log (
+    block_pk INTEGER PRIMARY KEY REFERENCES blocks(block_pk),
+    block_uid TEXT NOT NULL,
+    yield TEXT NOT NULL,
+    provider_model TEXT NOT NULL,
+    units_count INTEGER NOT NULL,
+    has_sig INTEGER NOT NULL,
+    processed_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS block_metadata_v22 (
+    block_pk INTEGER PRIMARY KEY REFERENCES blocks(block_pk),
+    macro_disciplines_json TEXT NOT NULL,
+    emergent_topics_json TEXT NOT NULL,
+    places_json TEXT NOT NULL,
+    historical_years_json TEXT NOT NULL,
+    schema_version TEXT NOT NULL DEFAULT 'block-extraction.v2.2',
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS book_discipline_spectrum (
+    book_pk INTEGER NOT NULL REFERENCES books(book_pk),
+    macro_discipline TEXT NOT NULL,
+    block_count INTEGER NOT NULL,
+    char_count INTEGER NOT NULL,
+    coverage_pct REAL NOT NULL,
+    share_pct REAL NOT NULL,
+    block_pks_json TEXT NOT NULL,
+    top_topics_json TEXT NOT NULL DEFAULT '[]',
+    top_places_json TEXT NOT NULL DEFAULT '[]',
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (book_pk, macro_discipline)
+);
+
+CREATE TABLE IF NOT EXISTS book_spectrum_meta (
+    book_pk INTEGER PRIMARY KEY REFERENCES books(book_pk),
+    active_blocks_count INTEGER NOT NULL,
+    v22_blocks_count INTEGER NOT NULL,
+    total_v22_chars INTEGER NOT NULL,
+    distinct_disciplines INTEGER NOT NULL,
+    primary_discipline TEXT,
+    primary_share_pct REAL NOT NULL DEFAULT 0.0,
+    shannon_entropy_norm REAL NOT NULL DEFAULT 0.0,
+    quality_tier TEXT NOT NULL DEFAULT 'canonical_book',
+    noise_reason TEXT,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS objective_corpus_map (
+    objective_uid TEXT PRIMARY KEY,
+    cycle TEXT NOT NULL,
+    school TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    grade TEXT NOT NULL,
+    nucleus TEXT NOT NULL,
+    target_macro_discipline TEXT NOT NULL,
+    epistemic_layer TEXT NOT NULL DEFAULT 'corpus_learnable',
+    coverage_status TEXT NOT NULL,
+    matched_blocks_count INTEGER NOT NULL,
+    distinct_books_count INTEGER NOT NULL,
+    wrong_book_evidence_count INTEGER NOT NULL DEFAULT 0,
+    linked_bridge_count INTEGER NOT NULL DEFAULT 0,
+    mapped_dag_node_ids_json TEXT NOT NULL DEFAULT '[]',
+    evidence_blocks_json TEXT NOT NULL DEFAULT '[]',
+    linked_bridge_pks_json TEXT NOT NULL DEFAULT '[]',
+    matched_terms_json TEXT NOT NULL DEFAULT '[]',
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS objective_block_evidence (
+    objective_uid TEXT NOT NULL REFERENCES objective_corpus_map(objective_uid),
+    block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    book_pk INTEGER NOT NULL REFERENCES books(book_pk),
+    match_score REAL NOT NULL,
+    is_wrong_book INTEGER NOT NULL DEFAULT 0,
+    matched_terms_json TEXT NOT NULL DEFAULT '[]',
+    PRIMARY KEY (objective_uid, block_pk)
+);
+
+CREATE TABLE IF NOT EXISTS bibliographic_citations (
+    citation_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    verbatim_quote TEXT NOT NULL,
+    cited_author TEXT NOT NULL,
+    cited_work TEXT NOT NULL,
+    cited_year TEXT,
+    source_layer TEXT NOT NULL,
+    stance TEXT NOT NULL,
+    appraisal_note TEXT NOT NULL,
+    transmission_from TEXT,
+    resolved_book_pk INTEGER REFERENCES books(book_pk),
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS units_fts USING fts5(
+    stmt,
+    verbatim_quote,
+    concepts_json,
+    vs_dispute,
+    tokenize='unicode61'
+);
+
+CREATE TABLE IF NOT EXISTS concept_edges (
+    concept_a TEXT NOT NULL,
+    concept_b TEXT NOT NULL,
+    weight INTEGER NOT NULL DEFAULT 1,
+    sample_unit_pk INTEGER,
+    PRIMARY KEY (concept_a, concept_b)
+);
+
+CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
+CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
+CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
+CREATE INDEX IF NOT EXISTS idx_epistemic_units_block ON epistemic_units(block_pk);
+CREATE INDEX IF NOT EXISTS idx_curiosity_bridges_node ON curiosity_bridges(node_id, status);
+CREATE INDEX IF NOT EXISTS idx_extraction_log_yield ON block_extraction_log(yield);
+CREATE INDEX IF NOT EXISTS idx_block_meta_v22_ver ON block_metadata_v22(schema_version);
+CREATE INDEX IF NOT EXISTS idx_book_spectrum_disc_cov ON book_discipline_spectrum(macro_discipline, coverage_pct DESC, block_count DESC);
+CREATE INDEX IF NOT EXISTS idx_book_spectrum_meta_tier ON book_spectrum_meta(quality_tier, primary_discipline);
+CREATE INDEX IF NOT EXISTS idx_obj_corpus_status ON objective_corpus_map(coverage_status, cycle, target_macro_discipline);
+CREATE INDEX IF NOT EXISTS idx_obj_block_ev_block ON objective_block_evidence(block_pk);
+CREATE INDEX IF NOT EXISTS idx_obj_block_ev_book ON objective_block_evidence(book_pk, is_wrong_book);
+CREATE INDEX IF NOT EXISTS idx_biblio_source_block ON bibliographic_citations(source_block_pk);
+CREATE INDEX IF NOT EXISTS idx_biblio_author ON bibliographic_citations(cited_author);
+CREATE INDEX IF NOT EXISTS idx_biblio_resolved_book ON bibliographic_citations(resolved_book_pk);
+CREATE INDEX IF NOT EXISTS idx_concept_edges_a ON concept_edges(concept_a, weight DESC);
+CREATE INDEX IF NOT EXISTS idx_concept_edges_b ON concept_edges(concept_b, weight DESC);
+"""
+
+
+def connect_corpus_db(db_path: Path | str = DEFAULT_DB_PATH, read_only: bool = False) -> sqlite3.Connection:
+    """Apre una connessione SQLite a `pack_corpus.db` (in URI `mode=ro` quando `read_only=True`)."""
+    path = Path(db_path).resolve()
+    if read_only:
+        conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        conn = sqlite3.connect(str(path))
+        conn.execute("PRAGMA journal_mode = WAL;")
+        conn.execute("PRAGMA synchronous = NORMAL;")
+    conn.execute("PRAGMA busy_timeout = 15000;")
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON;")
+    return conn
+
+
+def init_corpus_db(db_path: Path | str = DEFAULT_DB_PATH) -> sqlite3.Connection:
+    """Inizializza idempotentemente lo schema completo di `pack_corpus.db`."""
+    conn = connect_corpus_db(db_path=db_path, read_only=False)
+    conn.executescript(SCHEMA_DDL)
+    conn.execute(
+        """
+        INSERT OR IGNORE INTO block_extraction_log (
+            block_pk, block_uid, yield, provider_model, units_count, has_sig, processed_at
+        )
+        SELECT
+            bl.block_pk,
+            bl.block_uid,
+            'high',
+            'legacy-seed',
+            COUNT(eu.unit_pk),
+            CASE WHEN EXISTS (
+                SELECT 1 FROM structural_signatures ss WHERE ss.block_pk = bl.block_pk
+            ) THEN 1 ELSE 0 END,
+            COALESCE(MIN(eu.created_at), datetime('now'))
+        FROM blocks bl
+        JOIN epistemic_units eu ON eu.block_pk = bl.block_pk
+        GROUP BY bl.block_pk, bl.block_uid
+        """
+    )
+    conn.commit()
+    return conn
+
+
+def supersede_block(conn: sqlite3.Connection, old_block_pk: int, new_block_pk: int) -> None:
+    """Disattiva un blocco sostituito da OCR superiore mantenendo intatto il suo `block_pk` storico."""
+    if old_block_pk == new_block_pk:
+        raise ValueError("old_block_pk and new_block_pk must differ")
+    conn.execute(
+        "UPDATE blocks SET is_active = 0, superseded_by_pk = ? WHERE block_pk = ?",
+        (new_block_pk, old_block_pk),
+    )

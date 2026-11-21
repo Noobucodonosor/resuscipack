@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="it" data-type="software" data-radius="soft" data-ground="sky" data-buttons="tonal" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>resuscipack: i venti capitoli dei nuovi libri matematici</title>
+<meta name="description" content="Lettura continua di Volume I e Volume II con formule matematiche, diagrammi, note sulla pagina autentica ed esercizi simbolici.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#ffffff">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+{% with is_home=False %}{% include '_design_tokens.html' %}{% endwith %}
+</head>
+<body data-initial-volume="{{ initial_volume_id }}" data-initial-slug="{{ initial_slug }}">
+{% with is_home=False, active_nav='libro' %}{% include '_nav.html' %}{% endwith %}
+
+<main id="top" class="book-shell">
+  <div class="wrap">
+    <div class="book-toc-trigger-row">
+      <button type="button" class="btn btn--secondary" id="openTocBtn">Indice dei capitoli</button>
+      <a class="link" href="/atlante">Vai all'atlante</a>
+    </div>
+
+    <div class="book-layout">
+      <aside class="book-toc-rail" aria-label="Indice dei volumi">
+        <div id="tocDesktopContainer"></div>
+      </aside>
+
+      <div class="reader-column">
+        <article id="chapterArticle" aria-labelledby="chapterHeading">
+          <header class="reader-head">
+            <p id="chapterVolumeLabel" class="reader-head__eyebrow">Caricamento volume…</p>
+            <h1 id="chapterHeading" class="reader-head__title" tabindex="-1">Caricamento capitolo…</h1>
+            <p id="chapterSubtitle" class="reader-head__subtitle"></p>
+            <div class="reader-head__actions">
+              <button type="button" class="btn btn--secondary" id="openManualProbeBtn">Interroga una frase nei libri</button>
+            </div>
+          </header>
+
+          <div id="chapterProse" class="reader-prose"></div>
+        </article>
+
+        <section class="reader-extras" aria-label="Fonti ed esercizi del capitolo">
+          <details id="apparatusDetails" class="editorial-details">
+            <summary>
+              <span>Apparato delle fonti e tracce di verifica</span>
+              <span id="apparatusSummaryCount" class="t-small muted"></span>
+            </summary>
+            <div class="editorial-details__body" id="apparatusContainer"></div>
+          </details>
+
+          <details id="practiceDetails" class="editorial-details">
+            <summary>
+              <span>Area pratica e verifica simbolica</span>
+              <span id="practiceSummaryCount" class="t-small muted"></span>
+            </summary>
+            <div class="editorial-details__body" id="practiceContainer"></div>
+          </details>
+
+          <details id="ofaQuestionsDetails" class="editorial-details" hidden>
+            <summary>
+              <span>30 quesiti reali d'ingresso dalle prove universitarie</span>
+              <span class="t-small muted">Con apertura della pagina d'esame</span>
+            </summary>
+            <div class="editorial-details__body" id="ofaQuestionsContainer"></div>
+          </details>
+        </section>
+
+        <nav class="chapter-pager" aria-label="Navigazione tra capitoli">
+          <button type="button" class="btn btn--secondary" id="prevChapterBtn" hidden>Capitolo precedente</button>
+          <button type="button" class="btn btn--primary" id="nextChapterBtn" hidden>Capitolo successivo</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</main>
+
+<dialog id="tocDrawer" class="toc-drawer" closedby="any" aria-labelledby="tocDrawerTitle">
+  <div class="toc-drawer__panel">
+    <header class="toc-drawer__head">
+      <h2 id="tocDrawerTitle" class="source-drawer__title">Indice dei volumi</h2>
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary" aria-label="Chiudi indice" autofocus>Chiudi</button>
+      </form>
+    </header>
+    <div class="toc-drawer__scroll" id="tocMobileContainer"></div>
+  </div>
+</dialog>
+
+<dialog id="probeDrawer" class="source-drawer" closedby="any" aria-labelledby="probeDrawerTitle">
+  <div class="source-drawer__panel">
+    <header class="source-drawer__head">
+      <div>
+        <p class="source-drawer__kicker">Sonda viva nella biblioteca</p>
+        <h2 id="probeDrawerTitle" class="source-drawer__title">Confronto nei testi</h2>
+      </div>
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary" aria-label="Chiudi sonda">Chiudi</button>
+      </form>
+    </header>
+    <div class="source-drawer__tags" id="probeBridgeTags"></div>
+    <div class="source-drawer__scroll">
+      <form id="probeManualForm" class="probe-form">
+        <label for="probeQueryInput" class="t-small">Sintagma o proposizione da verificare</label>
+        <div class="probe-form__row">
+          <input type="search" id="probeQueryInput" class="atlas-input" placeholder="Seleziona un passo o scrivi una frase…">
+          <button type="submit" class="btn btn--primary">Verifica</button>
+        </div>
+      </form>
+      <div id="probeResultsBox" aria-live="polite"></div>
+    </div>
+    <footer class="source-drawer__foot">
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary">Torna al capitolo</button>
+      </form>
+    </footer>
+  </div>
+</dialog>
+
+<div id="selectionProbeBar" class="selection-probe-bar" hidden>
+  <button type="button" id="selectionProbeBtn" class="btn btn--primary">Interroga nei libri</button>
+</div>
+
+{% include '_source_drawer.html' %}
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<script type="module" src="/assets/system.js"></script>
+<script type="module" src="/assets/motion/motion.js"></script>
+<script type="module" src="/static/reader.js"></script>
+</body>
+</html>

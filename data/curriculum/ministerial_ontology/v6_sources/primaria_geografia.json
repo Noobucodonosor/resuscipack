@@ -1,0 +1,78 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Geografia",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Orientamento",
+          "argomenti": [
+            "Muoversi consapevolmente nello spazio circostante, orientandosi attraverso punti di riferimento",
+            "Utilizzare gli indicatori topologici (avanti, dietro, sinistra, destra, ecc.)",
+            "Utilizzare le mappe di spazi noti che si formano nella mente (carte mentali)"
+          ]
+        },
+        {
+          "nome": "Linguaggio della geo-graficità",
+          "argomenti": [
+            "Rappresentare in prospettiva verticale oggetti e ambienti noti (pianta dell'aula, ecc.)",
+            "Tracciare percorsi effettuati nello spazio circostante",
+            "Leggere e interpretare la pianta dello spazio vicino"
+          ]
+        },
+        {
+          "nome": "Paesaggio",
+          "argomenti": [
+            "Conoscere il territorio circostante attraverso l'approccio percettivo e l'osservazione diretta",
+            "Individuare e descrivere gli elementi fisici e antropici che caratterizzano i paesaggi dell'ambiente di vita della propria regione"
+          ]
+        },
+        {
+          "nome": "Regione e sistema territoriale",
+          "argomenti": [
+            "Comprendere che il territorio è uno spazio organizzato e modificato dalle attività umane",
+            "Riconoscere, nel proprio ambiente di vita, le funzioni dei vari spazi e le loro connessioni",
+            "Riconoscere gli interventi positivi e negativi dell'uomo e progettare soluzioni, esercitando la cittadinanza attiva"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Orientamento",
+          "argomenti": [
+            "Orientarsi utilizzando la bussola e i punti cardinali anche in relazione al Sole",
+            "Estendere le proprie carte mentali al territorio italiano, all'Europa e ai diversi continenti attraverso gli strumenti dell'osservazione indiretta (filmati e fotografie, documenti cartografici, immagini da telerilevamento, elaborazioni digitali, ecc.)"
+          ]
+        },
+        {
+          "nome": "Linguaggio della geo-graficità",
+          "argomenti": [
+            "Analizzare i principali caratteri fisici del territorio, fatti e fenomeni locali e globali, interpretando carte geografiche di diversa scala, carte tematiche, grafici, elaborazioni digitali, repertori statistici relativi a indicatori socio-demografici ed economici",
+            "Localizzare sulla carta geografica dell'Italia le regioni fisiche, storiche e amministrative",
+            "Localizzare sul planisfero e sul globo la posizione dell'Italia in Europa e nel mondo",
+            "Localizzare le regioni fisiche principali e i grandi caratteri dei diversi continenti e degli oceani"
+          ]
+        },
+        {
+          "nome": "Paesaggio",
+          "argomenti": [
+            "Conoscere gli elementi che caratterizzano i principali paesaggi italiani, europei e mondiali",
+            "Individuare analogie e differenze tra paesaggi anche in relazione ai quadri socio-storici del passato",
+            "Individuare elementi di particolare valore ambientale e culturale da tutelare e valorizzare"
+          ]
+        },
+        {
+          "nome": "Regione e sistema territoriale",
+          "argomenti": [
+            "Acquisire il concetto di regione geografica (fisica, climatica, storico-culturale, amministrativa) e utilizzarlo a partire dal contesto italiano",
+            "Individuare problemi relativi alla tutela e valorizzazione del patrimonio naturale e culturale, proponendo soluzioni idonee nel proprio contesto di vita"
+          ]
+        }
+      ]
+    }
+  ]
+}

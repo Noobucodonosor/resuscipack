@@ -1,0 +1,140 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Storia",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Civiltà antiche e altomedievale",
+          "argomenti": [
+            "Le principali civiltà dell'Antico vicino Oriente",
+            "La civiltà giudaica",
+            "La civiltà greca",
+            "La civiltà romana",
+            "L'avvento del Cristianesimo",
+            "L'Europa romano-barbarica",
+            "Società ed economia nell'Europa altomedioevale",
+            "La Chiesa nell'Europa altomedievale",
+            "La nascita e la diffusione dell'Islam",
+            "Impero e regni nell'altomedioevo",
+            "Il particolarismo signorile e feudale"
+          ]
+        },
+        {
+          "nome": "Metodologia storica",
+          "argomenti": [
+            "La natura delle fonti utilizzate nello studio della storia antica e medievale",
+            "Il contributo dell'archeologia",
+            "Il contributo dell'epigrafia",
+            "Il contributo della paleografia"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Formazione dell'Europa e dimensione globale tra Medioevo ed età moderna (XI secolo - soglie del Novecento)",
+          "argomenti": [
+            "I diversi aspetti della rinascita dell'XI secolo",
+            "I poteri universali (Papato e Impero), comuni e monarchie",
+            "La Chiesa e i movimenti religiosi",
+            "Società ed economia nell'Europa basso medievale",
+            "La crisi dei poteri universali e l'avvento delle monarchie territoriali e delle Signorie",
+            "Le scoperte geografiche e le loro conseguenze",
+            "La definitiva crisi dell'unità religiosa dell'Europa",
+            "La costruzione degli stati moderni e l'assolutismo",
+            "Lo sviluppo dell'economia fino alla rivoluzione industriale",
+            "Le rivoluzioni politiche del Sei-Settecento (inglese, americana, francese)",
+            "L'età napoleonica e la Restaurazione",
+            "Il problema della nazionalità nell'Ottocento, il Risorgimento italiano e l'Italia unita",
+            "L'Occidente degli Stati-Nazione",
+            "La questione sociale e il movimento operaio",
+            "La seconda rivoluzione industriale",
+            "L'imperialismo e il nazionalismo",
+            "Lo sviluppo dello Stato italiano fino alla fine dell'Ottocento"
+          ]
+        },
+        {
+          "nome": "Temi interdisciplinari",
+          "argomenti": [
+            "Società e cultura del Medioevo",
+            "Il Rinascimento",
+            "La nascita della cultura scientifica nel Seicento",
+            "L'Illuminismo",
+            "Il Romanticismo"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Epoca contemporanea - Prima metà del Novecento",
+          "argomenti": [
+            "L'inizio della società di massa in Occidente",
+            "L'età giolittiana",
+            "La prima guerra mondiale",
+            "La rivoluzione russa e l'URSS da Lenin a Stalin",
+            "La crisi del dopoguerra",
+            "Il fascismo",
+            "La crisi del '29 e le sue conseguenze negli Stati Uniti e nel mondo",
+            "Il nazismo",
+            "La shoah e gli altri genocidi del XX secolo",
+            "La seconda guerra mondiale",
+            "L'Italia dal Fascismo alla Resistenza e le tappe di costruzione della democrazia repubblicana"
+          ]
+        },
+        {
+          "nome": "Secondo Novecento - Guerra fredda e svolte di fine secolo",
+          "argomenti": [
+            "Dalla guerra fredda alle svolte di fine Novecento",
+            "L'ONU",
+            "La questione tedesca",
+            "I due blocchi",
+            "L'età di Kruscev e Kennedy",
+            "Il crollo del sistema sovietico",
+            "Il processo di formazione dell'Unione Europea",
+            "I processi di globalizzazione",
+            "La rivoluzione informatica",
+            "Le nuove conflittualità del mondo globale"
+          ]
+        },
+        {
+          "nome": "Secondo Novecento - Decolonizzazione e sviluppo",
+          "argomenti": [
+            "Decolonizzazione e lotta per lo sviluppo in Asia, Africa e America latina",
+            "La nascita dello stato d'Israele e la questione palestinese",
+            "Il movimento dei non-allineati",
+            "La rinascita della Cina e dell'India come potenze mondiali"
+          ]
+        },
+        {
+          "nome": "Storia d'Italia nel secondo dopoguerra",
+          "argomenti": [
+            "La ricostruzione",
+            "Il boom economico",
+            "Le riforme degli anni Sessanta e Settanta",
+            "Il terrorismo",
+            "Tangentopoli e la crisi del sistema politico all'inizio degli anni 90"
+          ]
+        },
+        {
+          "nome": "Temi geografici e interdisciplinari del mondo contemporaneo",
+          "argomenti": [
+            "La distribuzione delle risorse naturali ed energetiche",
+            "Le dinamiche migratorie",
+            "Le caratteristiche demografiche delle diverse aree del pianeta",
+            "Le relazioni tra clima ed economia",
+            "L'esperienza della guerra",
+            "Società e cultura nell'epoca del totalitarismo",
+            "Il rapporto fra intellettuali e potere politico"
+          ]
+        }
+      ]
+    }
+  ]
+}

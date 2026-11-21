@@ -1,0 +1,140 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Storia dell'Arte",
+  "anni": [
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Arte greca",
+          "argomenti": [
+            "Opere più significative dei diversi periodi",
+            "Concezione estetica alla radice dell'arte occidentale"
+          ]
+        },
+        {
+          "nome": "Arte romana",
+          "argomenti": [
+            "Stretto legame con la dimensione politica dell'arte e dell'architettura a Roma"
+          ]
+        },
+        {
+          "nome": "Prima arte cristiana",
+          "argomenti": [
+            "Dimensione simbolica delle immagini"
+          ]
+        },
+        {
+          "nome": "Arte alto-medievale",
+          "argomenti": [
+            "Elementi essenziali della produzione artistica alto-medievale",
+            "Arte suntuaria"
+          ]
+        },
+        {
+          "nome": "Arte romanica",
+          "argomenti": [
+            "Costanti formali",
+            "Principali centri di sviluppo"
+          ]
+        },
+        {
+          "nome": "Architettura gotica",
+          "argomenti": [
+            "Invenzioni strutturali dell'architettura gotica",
+            "Nuova spazialità"
+          ]
+        },
+        {
+          "nome": "Nascita dell'arte italiana",
+          "argomenti": [
+            "Giotto e i grandi maestri attivi tra la seconda metà del Duecento e la prima metà del Trecento"
+          ]
+        },
+        {
+          "nome": "Rinascimento",
+          "argomenti": [
+            "Il primo Rinascimento a Firenze e gli artisti precursori",
+            "La scoperta della prospettiva e le conseguenze per le arti figurative",
+            "Il classicismo in architettura e i suoi sviluppi nella cultura architettonica europea",
+            "I principali centri artistici italiani",
+            "I rapporti tra arte italiana e arte fiamminga",
+            "Gli iniziatori della terza maniera: Leonardo, Michelangelo, Raffaello",
+            "La dialettica Classicismo-Manierismo nell'arte del Cinquecento",
+            "La grande stagione dell'arte veneziana"
+          ]
+        },
+        {
+          "nome": "Seicento e Settecento",
+          "argomenti": [
+            "Il naturalismo di Caravaggio",
+            "Il classicismo di Annibale Carracci e l'influenza esercitata sulla produzione successiva",
+            "Le opere esemplari del Barocco romano e dei suoi più importanti maestri",
+            "Arte e illusione nella decorazione tardo-barocca e rococò",
+            "Il vedutismo"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Neoclassicismo",
+          "argomenti": [
+            "La riscoperta dell'antico come ideale civile ed estetico nel movimento neoclassico"
+          ]
+        },
+        {
+          "nome": "Romanticismo",
+          "argomenti": [
+            "L'arte del Romanticismo e i suoi legami con il contesto storico",
+            "Legami con la produzione letteraria e il pensiero filosofico"
+          ]
+        },
+        {
+          "nome": "Realismo",
+          "argomenti": [
+            "I riflessi del clima politico e sociale di metà Ottocento nella pittura dei realisti"
+          ]
+        },
+        {
+          "nome": "Impressionismo",
+          "argomenti": [
+            "L'importanza della fotografia e degli studi sulla luce e sul colore per la nascita dell'Impressionismo"
+          ]
+        },
+        {
+          "nome": "Postimpressionismo e Avanguardie storiche",
+          "argomenti": [
+            "La ricerca artistica dal Postimpressionismo alla rottura con la tradizione operata dalle avanguardie storiche"
+          ]
+        },
+        {
+          "nome": "Futurismo",
+          "argomenti": [
+            "Il clima storico e culturale in cui nasce e si sviluppa il movimento futurista"
+          ]
+        },
+        {
+          "nome": "Arte tra le due guerre",
+          "argomenti": [
+            "L'arte tra le due guerre e il ritorno all'ordine"
+          ]
+        },
+        {
+          "nome": "Architettura moderna",
+          "argomenti": [
+            "La nascita e gli sviluppi del Movimento Moderno in architettura"
+          ]
+        },
+        {
+          "nome": "Arte contemporanea",
+          "argomenti": [
+            "Le principali linee di ricerca dell'arte contemporanea"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "scuola": "Scuola Primaria",
+  "materia": "Scienze",
+  "anni": [
+    {
+      "anno": "Classe terza",
+      "nuclei_tematici": [
+        {
+          "nome": "Esplorare e descrivere oggetti e materiali",
+          "argomenti": [
+            "Individuare, attraverso l'interazione diretta, la struttura di oggetti semplici, analizzarne qualità e proprietà, descriverli nella loro unitarietà e nelle loro parti, scomporli e ricomporli, riconoscerne funzioni e modi d'uso.",
+            "Seriare e classificare oggetti in base alle loro proprietà.",
+            "Individuare strumenti e unità di misura appropriati alle situazioni problematiche in esame, fare misure e usare la matematica conosciuta per trattare i dati.",
+            "Descrivere semplici fenomeni della vita quotidiana legati ai liquidi, al cibo, alle forze e al movimento, al calore, ecc."
+          ]
+        },
+        {
+          "nome": "Osservare e sperimentare sul campo",
+          "argomenti": [
+            "Osservare i momenti significativi nella vita di piante e animali, realizzando allevamenti in classe di piccoli animali, semine in terrari e orti, ecc. Individuare somiglianze e differenze nei percorsi di sviluppo di organismi animali e vegetali.",
+            "Osservare, con uscite all'esterno, le caratteristiche dei terreni e delle acque.",
+            "Osservare e interpretare le trasformazioni ambientali naturali (ad opera del Sole, di agenti atmosferici, dell'acqua, ecc.) e quelle ad opera dell'uomo (urbanizzazione, coltivazione, industrializzazione, ecc.).",
+            "Avere familiarità con la variabilità dei fenomeni atmosferici (venti, nuvole, pioggia, ecc.) e con la periodicità dei fenomeni celesti (dì/notte, percorsi del Sole, stagioni)."
+          ]
+        },
+        {
+          "nome": "L'uomo i viventi e l'ambiente",
+          "argomenti": [
+            "Riconoscere e descrivere le caratteristiche del proprio ambiente.",
+            "Osservare e prestare attenzione al funzionamento del proprio corpo (fame, sete, dolore, movimento, freddo e caldo, ecc.) per riconoscerlo come organismo complesso, proponendo modelli elementari del suo funzionamento.",
+            "Riconoscere in altri organismi viventi, in relazione con i loro ambienti, bisogni analoghi ai propri."
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Classe quinta",
+      "nuclei_tematici": [
+        {
+          "nome": "Oggetti, materiali e trasformazioni",
+          "argomenti": [
+            "Individuare, nell'osservazione di esperienze concrete, alcuni concetti scientifici quali: dimensioni spaziali, peso, peso specifico, forza, movimento, pressione, temperatura, calore, ecc.",
+            "Cominciare a riconoscere regolarità nei fenomeni e a costruire in modo elementare il concetto di energia.",
+            "Osservare, utilizzare e, quando è possibile, costruire semplici strumenti di misura: recipienti per misure di volumi/capacità (bilance a molla, ecc.) imparando a servirsi di unità convenzionali.",
+            "Individuare le proprietà di alcuni materiali come, ad esempio: la durezza, il peso, l'elasticità, la trasparenza, la densità, ecc.; realizzare sperimentalmente semplici soluzioni in acqua (acqua e zucchero, acqua e inchiostro, ecc.).",
+            "Osservare e schematizzare alcuni passaggi di stato, costruendo semplici modelli interpretativi e provando ad esprimere in forma grafica le relazioni tra variabili individuate (temperatura in funzione del tempo, ecc.)."
+          ]
+        },
+        {
+          "nome": "Osservare e sperimentare sul campo",
+          "argomenti": [
+            "Proseguire nelle osservazioni frequenti e regolari, a occhio nudo o con appropriati strumenti, con i compagni e autonomamente, di una porzione di ambiente vicino; individuare gli elementi che lo caratterizzano e i loro cambiamenti nel tempo.",
+            "Conoscere la struttura del suolo sperimentando con rocce, sassi e terricci; osservare le caratteristiche dell'acqua e il suo ruolo nell'ambiente.",
+            "Ricostruire e interpretare il movimento dei diversi oggetti celesti, rielaborandoli anche attraverso giochi col corpo."
+          ]
+        },
+        {
+          "nome": "L'uomo i viventi e l'ambiente",
+          "argomenti": [
+            "Descrivere e interpretare il funzionamento del corpo come sistema complesso situato in un ambiente; costruire modelli plausibili sul funzionamento dei diversi apparati, elaborare primi modelli intuitivi di struttura cellulare.",
+            "Avere cura della propria salute anche dal punto di vista alimentare e motorio. Acquisire le prime informazioni sulla riproduzione e la sessualità.",
+            "Riconoscere, attraverso l'esperienza di coltivazioni, allevamenti, ecc. che la vita di ogni organismo è in relazione con altre e differenti forme di vita.",
+            "Elaborare i primi elementi di classificazione animale e vegetale sulla base di osservazioni personali.",
+            "Proseguire l'osservazione e l'interpretazione delle trasformazioni ambientali, ivi comprese quelle globali, in particolare quelle conseguenti all'azione modificatrice dell'uomo."
+          ]
+        }
+      ]
+    }
+  ]
+}

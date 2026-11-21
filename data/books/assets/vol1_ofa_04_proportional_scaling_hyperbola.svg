@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Rapporti, proporzioni, misure e il linguaggio delle lettere</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Rapporti, proporzioni, misure e il linguaggio delle lettere</text>
+  <line x1="70" y1="186" x2="310" y2="186" stroke="#1f2421" stroke-width="1.5"/>
+  <line x1="90" y1="54" x2="90" y2="200" stroke="#1f2421" stroke-width="1.5"/>
+  <line x1="90" y1="186" x2="290" y2="66" stroke="#2c4f7c" stroke-width="2.5"/>
+  <text x="195" y="154" class="math">y = k·x</text>
+  <text x="195" y="210" text-anchor="middle" class="muted">Rapporto costante (y/x = k)</text>
+  <line x1="390" y1="186" x2="650" y2="186" stroke="#1f2421" stroke-width="1.5"/>
+  <line x1="410" y1="54" x2="410" y2="200" stroke="#1f2421" stroke-width="1.5"/>
+  <polyline points="428,97.1 436,124.5 444,138.9 452,147.9 460,154.0 468,158.4 476,161.8 484,164.4 492,166.5 500,168.2 508,169.7 516,170.9 524,172.0 532,172.9 540,173.7 548,174.4 556,175.0 564,175.6 572,176.1 580,176.6 588,177.0 596,177.4 604,177.8 612,178.1" fill="none" stroke="#b86b2b" stroke-width="2.5"/>
+  <rect x="410" y="122" width="25" height="64" fill="#2d6a5b" fill-opacity="0.16" stroke="#2d6a5b" stroke-dasharray="3 2"/>
+  <text x="540" y="114" class="math" style="fill:#b86b2b">x · y = k</text>
+  <text x="530" y="210" text-anchor="middle" class="muted">Prodotto costante: area invariante</text>
+  <text x="360" y="232" text-anchor="middle" class="muted">Confronto tra variazione lineare diretta e legge iperbolica inversa</text>
+</svg>

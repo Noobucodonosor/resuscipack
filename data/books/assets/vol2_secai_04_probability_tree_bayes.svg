@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="svg-title">
+  <title id="svg-title">Probabilità: colmare il vuoto prima del Machine Learning</title>
+  <style>
+    .title { font: 600 15px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .label { font: 500 13px Georgia, "Times New Roman", serif; fill: #1f2421; }
+    .math { font: italic 600 14px Georgia, "Times New Roman", serif; fill: #2c4f7c; }
+    .muted { font: 400 11.5px -apple-system, BlinkMacSystemFont, sans-serif; fill: #5d645f; }
+  </style>
+  <rect x="1" y="1" width="718" height="248" rx="8" fill="#faf7f2" stroke="#d9d2c5" stroke-width="1.5"/>
+  <text x="360" y="30" text-anchor="middle" class="title">Probabilità: colmare il vuoto prima del Machine Learning</text>
+  <circle cx="90" cy="126" r="7" fill="#1f2421"/>
+  <line x1="97" y1="122" x2="260" y2="76" stroke="#2c4f7c" stroke-width="2.2"/>
+  <line x1="97" y1="130" x2="260" y2="176" stroke="#b86b2b" stroke-width="2.2"/>
+  <text x="172" y="88" class="math">P(H)</text>
+  <text x="172" y="172" class="math" style="fill:#b86b2b">P(¬H)</text>
+  <rect x="260" y="60" width="54" height="30" rx="5" fill="#2c4f7c" fill-opacity="0.14" stroke="#2c4f7c"/>
+  <text x="287" y="80" text-anchor="middle" class="math">H</text>
+  <rect x="260" y="160" width="54" height="30" rx="5" fill="#b86b2b" fill-opacity="0.14" stroke="#b86b2b"/>
+  <text x="287" y="180" text-anchor="middle" class="math">¬H</text>
+  <line x1="314" y1="70" x2="475" y2="54" stroke="#2d6a5b" stroke-width="2"/>
+  <line x1="314" y1="80" x2="475" y2="98" stroke="#5d645f" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="314" y1="170" x2="475" y2="148" stroke="#2d6a5b" stroke-width="2"/>
+  <line x1="314" y1="180" x2="475" y2="196" stroke="#5d645f" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="394" y="54" class="muted">P(E|H)</text>
+  <text x="394" y="150" class="muted">P(E|¬H)</text>
+  <text x="484" y="58" class="math">H ∩ E</text>
+  <text x="484" y="102" class="muted">H ∩ ¬E</text>
+  <text x="484" y="152" class="math">¬H ∩ E</text>
+  <text x="484" y="200" class="muted">¬H ∩ ¬E</text>
+  <text x="360" y="232" text-anchor="middle" class="math">P(H|E) = P(E|H)P(H) / [P(E|H)P(H) + P(E|¬H)P(¬H)]</text>
+</svg>

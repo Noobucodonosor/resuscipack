@@ -1,0 +1,250 @@
+{
+  "scuola": "Istituto Tecnico - Settore Tecnologico - Indirizzo Meccanica, Meccatronica ed Energia - Articolazione Meccanica e Meccatronica",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di Matematica",
+          "argomenti": [
+            "Operazioni e trasformazioni vettoriali",
+            "Luoghi geometrici; equazioni delle coniche e di altre curve notevoli; formule parametriche di alcune curve",
+            "Analisi di Fourier delle funzioni periodiche",
+            "Proprietà delle rappresentazioni polari e logaritmiche",
+            "Equazioni differenziali lineari",
+            "Derivate parziali e differenziale totale",
+            "Metodo dei minimi quadrati",
+            "Popolazione e campione",
+            "Statistiche, distribuzioni campionarie e stimatori"
+          ]
+        },
+        {
+          "nome": "Meccanica, Macchine ed Energia",
+          "argomenti": [
+            "Equazioni d'equilibrio della statica",
+            "Equazioni dei moti piani di un punto e di sistemi rigidi",
+            "Equazioni che legano i moti alle cause che li provocano",
+            "Resistenze passive",
+            "Relazioni che legano le sollecitazioni alle deformazioni",
+            "Procedure di calcolo delle sollecitazioni semplici e composte",
+            "Resistenza dei materiali: metodologie di calcolo di progetto e di verifica di elementi meccanici",
+            "Sistemi per la trasmissione, variazione e conversione del moto",
+            "Forme di energia e fonti tradizionali",
+            "Tipologie di consumo e fabbisogni di energia",
+            "Problema ambientale e risparmio energetico",
+            "Tipologia delle fonti innovative di energia",
+            "Sistema energetico europeo ed italiano",
+            "Leggi generali dell'idrostatica",
+            "Leggi del moto dei liquidi reali nelle condotte, perdite di carico",
+            "Macchine idrauliche motrici e operatrici",
+            "Principi di termometria e calorimetria, trasmissione del calore",
+            "Principi della termodinamica",
+            "Cicli termodinamici diretti ed inversi di gas, vapori e miscele",
+            "Principi della combustione e tipologia di combustibili",
+            "Funzionalità e struttura di caldaie ad uso civile ed industriale",
+            "Proprietà e utilizzazioni del vapore acqueo",
+            "Impianti termici per turbine a vapore: organi fissi e mobili, applicazioni terrestri e navali",
+            "Sistema Internazionale di Misura",
+            "Strumenti di misura meccanici, elettrici ed elettronici principali a bordo di mezzi terrestri e aeronavali",
+            "Strumentazione di misura",
+            "Principi di funzionamento e struttura dei principali apparati di propulsione",
+            "Organi fissi e mobili dei motori a combustione interna, delle turbine a gas e a vapore",
+            "Organi principali ed ausiliari",
+            "Apparecchiature elettriche ed elettroniche di servizio"
+          ]
+        },
+        {
+          "nome": "Sistemi e Automazione",
+          "argomenti": [
+            "Funzioni e porte logiche elementari",
+            "Sistemi digitali fondamentali, combinatori e sequenziali",
+            "Metodi di sintesi delle reti logiche",
+            "Grandezze elettriche, magnetiche e loro misura; componenti; leggi fondamentali di circuiti elettrici e magnetici",
+            "Comportamento dei circuiti in c.c. e in c.a.",
+            "Metodi di studio dei circuiti al variare della frequenza e delle forme d'onda. Filtri passivi",
+            "Sistemi monofase e trifase; potenza elettrica",
+            "Tipologie di strumentazione analogica e digitale",
+            "Principi e funzionamento di semiconduttori e loro applicazioni; circuiti raddrizzatori",
+            "Amplificatori operazionali e loro uso in automazione",
+            "Principi, caratteristiche e parametri di macchine elettriche",
+            "Sistemi di trattamento dei segnali; conversione AD e DA",
+            "Principi e funzionamento di alimentatori in c.a. e c.c.",
+            "Principi di teoria dei sistemi",
+            "Definizioni di processo, sistema e controllo",
+            "Analogie tra modelli di sistemi elettrici, meccanici; fluidica",
+            "Sistemi pneumatici e oleodinamici",
+            "Logica di comando e componentistica logica",
+            "Circuiti logici pneumatici ed elettropneumatici",
+            "Normative di settore attinenti la sicurezza personale e ambientale"
+          ]
+        },
+        {
+          "nome": "Tecnologie Meccaniche di Processo e di Prodotto",
+          "argomenti": [
+            "Microstruttura dei metalli, proprietà chimiche, tecnologiche, meccaniche, termiche ed elettriche",
+            "Processi per l'ottenimento dei principali metalli ferrosi e non ferrosi",
+            "Processi di solidificazione e di deformazione plastica",
+            "Materiali ceramici, vetri e refrattari, polimerici, compositi e nuovi materiali; processi di giunzione dei materiali",
+            "Materiali e leghe, ferrose e non ferrose",
+            "Designazione degli acciai, delle ghise e dei materiali non ferrosi",
+            "Metallurgia delle polveri: produzione, sinterizzazione e trattamenti. Norme di progetto dei sinterizzati",
+            "Diagrammi di equilibrio dei materiali e delle leghe di interesse industriale. Analisi metallografica",
+            "Trattamenti termici degli acciai, delle ghise e delle leghe non ferrose",
+            "Trattamenti termochimici",
+            "Unità di misura nei diversi sistemi normativi nazionali e internazionali",
+            "Principi di funzionamento della strumentazione di misura e di prova",
+            "Teoria degli errori di misura, il calcolo delle incertezze",
+            "Protocolli UNI, ISO e ISO-EN",
+            "Prove meccaniche, tecnologiche",
+            "Prove su fluidi e su macchine",
+            "Misure geometriche, termiche, elettriche, elettroniche, di tempo, di frequenza e acustiche",
+            "Lavorazioni per fusione e per deformazione plastica; lavorazioni eseguibili alle macchine utensili",
+            "Tecniche di taglio dei materiali e parametri tecnologici di lavorazione",
+            "Proprietà tecnologiche dei materiali, truciolabilità e finitura superficiale",
+            "Rugosità ottenibile in funzione del tipo di lavorazione e dei parametri tecnologici",
+            "Tipologia e struttura delle macchine utensili",
+            "Trasmissione, trasformazione, controllo e regolazione dei moti",
+            "Tipologia, materiali, forme e designazione di utensili",
+            "Attrezzature caratteristiche per il posizionamento degli utensili e dei pezzi",
+            "Leggi e normative nazionali e comunitarie su sicurezza, salute e prevenzione infortuni e malattie sul lavoro",
+            "Sistemi e mezzi per la prevenzione dagli infortuni negli ambienti di lavoro",
+            "Tecniche di valutazione d'impatto ambientale",
+            "Effetti delle emissioni idriche, gassose, termiche, acustiche ed elettromagnetiche ai fini della sicurezza e della minimizzazione dell'impatto ambientale",
+            "Il recupero e/o lo smaltimento dei residui e dei sottoprodotti delle lavorazioni",
+            "Metodologie per lo stoccaggio dei materiali pericolosi"
+          ]
+        },
+        {
+          "nome": "Disegno, Progettazione e Organizzazione Industriale",
+          "argomenti": [
+            "Tecniche e regole di rappresentazione",
+            "Tolleranze di lavorazione, di forma e di posizione",
+            "Rappresentazione convenzionale dei principali sistemi di giunzione",
+            "Elementi per la trasmissione del moto",
+            "Elementi meccanici generici",
+            "CAD 2D/3D e modellazione solida",
+            "Rappresentazione convenzionale o codificata di elementi normalizzati o unificati",
+            "Vision e mission dell'azienda",
+            "Modelli organizzativi aziendali e relativi processi funzionali",
+            "Processi di selezione, formazione, sviluppo, organizzazione e retribuzione delle risorse umane",
+            "Funzioni aziendali e contratti di lavoro",
+            "Strumenti di contabilità industriale/gestionale",
+            "Elementi di marketing, analisi di mercato, della concorrenza e di posizionamento aziendale",
+            "Tecniche di approccio sistemico al cliente e al mercato",
+            "Gli strumenti di comunicazione efficace e le tecniche di negoziazione",
+            "Metodi per la scomposizione del progetto in attività e task",
+            "Tecniche di Problem Solving",
+            "Organigrammi delle responsabilità e delle relazioni organizzative",
+            "Matrici Compiti/Responsabilità",
+            "Strumenti e metodi di pianificazione, monitoraggio e coordinamento del progetto",
+            "Normative di settore nazionali e comunitarie sulla sicurezza personale e ambientale"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Meccanica, Macchine ed Energia",
+          "argomenti": [
+            "Sistemi di trasformazione e conversione del moto",
+            "Sistemi di bilanciamento degli alberi e velocità critiche",
+            "Tecniche di regolazione delle macchine",
+            "Apparecchi di sollevamento e trasporto",
+            "Metodologie per la progettazione e calcolo di organi meccanici",
+            "Sistemi di simulazione per la progettazione e l'esercizio",
+            "Cicli, particolari costruttivi, organi fissi e mobili e applicazioni di turbine a gas in impianti termici",
+            "Turbine per aeromobili ed endoreattori",
+            "Impianti combinati gas-vapore, impianti di cogenerazione",
+            "Impianti termici a combustibile nucleare",
+            "Principi di funzionamento, curve caratteristiche, installazione ed esercizio di compressori, ventilatori, soffianti",
+            "Tecniche delle basse temperature",
+            "Impianti frigoriferi e di climatizzazione in applicazioni civili e industriali",
+            "Principi di funzionamento e struttura di motori alternativi a combustione interna; applicazioni navali",
+            "Principi di funzionamento e struttura di turbine a gas e a vapore",
+            "Sistemi di regolazione e controllo",
+            "Sistemi antincendio ed antinquinamento",
+            "Normative di settore nazionali e comunitarie"
+          ]
+        },
+        {
+          "nome": "Sistemi e Automazione",
+          "argomenti": [
+            "Elementi di un sistema di controllo. Sistemi a catena aperta e chiusa",
+            "Modelli matematici e loro rappresentazione schematica",
+            "Le tecnologie dei controlli: attuatori, sensori e trasduttori",
+            "Azionamenti elettrici ed oleodinamici",
+            "Regolatori industriali: regolazione proporzionale, integrale, derivativa e miste",
+            "Automazione di sistemi discreti mediante PLC: struttura, funzioni, linguaggi",
+            "Robotica: l'automazione di un processo produttivo, dal CAM alla robotizzazione",
+            "Architettura, classificazione, tipologie, programmazione di un robot, calcolo delle traiettorie",
+            "Automazione integrata"
+          ]
+        },
+        {
+          "nome": "Tecnologie Meccaniche di Processo e di Prodotto",
+          "argomenti": [
+            "Meccanismi della corrosione",
+            "Sostanze e ambienti corrosivi",
+            "Metodi di protezione dalla corrosione",
+            "Nanotecnologie, materiali a memoria di forma",
+            "Sistemi automatici di misura",
+            "Controllo computerizzato dei processi",
+            "Prove con metodi non distruttivi",
+            "Controlli statistici",
+            "Prove sulle macchine termiche",
+            "Misure geometriche, termiche, elettriche, elettroniche, di tempo, di frequenza e acustiche",
+            "Attrezzature per la lavorazione dei manufatti",
+            "Programmazione delle macchine CNC",
+            "Metodi di prototipazione rapida e attrezzaggio rapido",
+            "Lavorazioni speciali",
+            "Deposizione fisica e chimica gassosa",
+            "Lavorazioni elettrochimiche e tranciatura fotochimica",
+            "Plasturgia",
+            "Trasformazione del vetro",
+            "Strumenti di pianificazione dei processi produttivi assistita dal calcolatore",
+            "Sistema di gestione per la qualità",
+            "Metodi di collaudo, criteri e piani di campionamento",
+            "Certificazione dei prodotti e dei processi",
+            "Enti e soggetti preposti alla prevenzione",
+            "Obblighi dei datori di lavoro e doveri dei lavoratori",
+            "Sistemi di gestione per la salute e la sicurezza sul lavoro; documento di valutazione del rischio",
+            "Norme tecniche e leggi sulla prevenzione incendi",
+            "Sistemi di sicurezza e impatto ambientale degli impianti di produzione energetica"
+          ]
+        },
+        {
+          "nome": "Disegno, Progettazione e Organizzazione Industriale",
+          "argomenti": [
+            "Innovazione e ciclo di vita di un sistema produttivo",
+            "Tipi di produzione e di processi",
+            "Tipologie e scelta dei livelli di automazione",
+            "Piano di produzione",
+            "Attrezzature di bloccaggio, per la lavorazione delle lamiere, oleodinamiche e pneumatiche, elementi normalizzati",
+            "Strumenti della produzione assistita",
+            "Funzione delle macchine utensili, parametri tecnologici",
+            "Abbinamento di macchine e attrezzature alle lavorazioni",
+            "Funzione del cartellino e del foglio analisi operazione",
+            "Tecniche e strumenti del controllo qualità",
+            "Strumenti della programmazione operativa",
+            "Lotto economico di produzione o di acquisto",
+            "Gestione dei magazzini, sistemi di approvvigionamento e gestione delle scorte",
+            "Caratteristiche della catena e del contratto di fornitura",
+            "Ciclo di vita del prodotto/impianto",
+            "Tecniche di trasferimento tecnologico per l'innovazione di processo e prodotto/impianto",
+            "Normativa sulla proprietà industriale e convenzioni internazionali su marchi, design e brevetti",
+            "Certificazioni aziendali relative a qualità, ambiente e sicurezza",
+            "Diagramma dei vincoli, tecniche e strumenti di programmazione, controllo e verifica degli obiettivi. Diagrammi causa-effetto",
+            "Tecniche di simulazione e procedure di collaudo con software dedicati",
+            "Prototipazione rapida e attrezzaggio rapido",
+            "Mappe concettuali per sintetizzare e rappresentare le informazioni e la conoscenza di progetto",
+            "Normativa nazionale e comunitaria e sistemi di prevenzione e gestione della sicurezza nei luoghi di lavoro",
+            "Terminologia tecnica di settore, anche in lingua inglese"
+          ]
+        }
+      ]
+    }
+  ]
+}

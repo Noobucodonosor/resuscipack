@@ -1,0 +1,74 @@
+{
+  "scuola": "Istituto Tecnico - Settore Economico - Indirizzo Turismo",
+  "materia": "Diritto e Legislazione Turistica",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Obbligazioni e contratti",
+          "argomenti": [
+            "Obbligazioni e contratti tipici e atipici",
+            "Tipologie di contratti dell'impresa del settore turistico"
+          ]
+        },
+        {
+          "nome": "Impresa e concorrenza",
+          "argomenti": [
+            "Imprenditore e Società",
+            "Disciplina della concorrenza",
+            "Aspetti giuridici delle imprese turistiche"
+          ]
+        },
+        {
+          "nome": "Normativa del settore turistico",
+          "argomenti": [
+            "Normativa specifica del settore turistico",
+            "Diritto tributario e disciplina tributaria delle imprese turistiche"
+          ]
+        },
+        {
+          "nome": "Lavoro e professioni turistiche",
+          "argomenti": [
+            "Politiche del personale",
+            "Figure professionali del settore turistico e relativa normativa",
+            "Struttura e contenuti dei contratti di lavoro nel settore turistico"
+          ]
+        },
+        {
+          "nome": "Sicurezza, privacy e qualità",
+          "argomenti": [
+            "Normativa sul trattamento dei dati personali e sulla sicurezza",
+            "Normativa sulla qualità dell'impresa turistica"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Istituzioni e soggetti del settore turistico",
+          "argomenti": [
+            "Compiti e funzioni delle istituzioni locali, nazionali ed internazionali nei rapporti con le imprese turistiche",
+            "Rapporti tra enti e soggetti che operano nel settore turistico"
+          ]
+        },
+        {
+          "nome": "Finanziamento e beni culturali",
+          "argomenti": [
+            "Fonti nazionali e comunitarie di finanziamento del settore",
+            "Legislazione in materia di beni culturali ed ambientali"
+          ]
+        },
+        {
+          "nome": "Commercio elettronico e tutela del consumatore",
+          "argomenti": [
+            "Disciplina giuridica del commercio elettronico",
+            "Normativa nazionale, comunitaria e internazionale per la tutela del consumatore"
+          ]
+        }
+      ]
+    }
+  ]
+}

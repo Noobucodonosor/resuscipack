@@ -1,0 +1,137 @@
+{
+  "scuola": "Istituto Tecnico Moda",
+  "materia": "Discipline d'indirizzo",
+  "anni": [
+    {
+      "anno": "Secondo biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Complementi di Matematica",
+          "argomenti": [
+            "Teorema del limite centrale",
+            "Caratteristiche di enti geometrici dello spazio",
+            "Caratteristiche dei poliedri",
+            "Caratteristiche dei solidi di rotazione con particolare riferimento a cilindro, cono, sfera",
+            "Popolazione e campione",
+            "Stime dei parametri di una popolazione",
+            "Stime per intervalli di una media per grandi e piccoli campioni (t di Student)",
+            "Verifica delle ipotesi",
+            "Test di significatività per la media",
+            "Indagine campionaria"
+          ]
+        },
+        {
+          "nome": "Chimica Applicata e Nobilitazione dei Materiali per i Prodotti Moda",
+          "argomenti": [
+            "Proprietà dell'atomo di carbonio tetravalente",
+            "Caratteristiche fisiche e chimiche degli idrocarburi",
+            "Caratteristiche fisiche e chimiche dei composti organici ossigenati e azotati",
+            "Struttura e proprietà dei polimeri",
+            "Proprietà morfologiche, fisiche e chimiche delle fibre tessili naturali e chimiche",
+            "Settori d'impiego delle fibre tessili",
+            "Caratteristiche e impiego dei tessili tecnici e delle fibre innovative",
+            "Normativa nazionale e comunitaria sulla sicurezza e la tutela ambientale"
+          ]
+        },
+        {
+          "nome": "Economia e Marketing delle Aziende di Moda",
+          "argomenti": [
+            "Disciplina giuridica dell'impresa, delle società di persone e di capitali",
+            "Strutture organizzative aziendali",
+            "Gruppi aziendali e poli del lusso",
+            "Segni distintivi delle aziende di moda",
+            "Attributi e benefici della Marca",
+            "Fattori di competitività dei brevetti industriali",
+            "Tipologie di contratti commerciali e bancari",
+            "Pianificazione aziendale e pianificazione di marketing",
+            "Marketing Management e marketing strategico",
+            "Strategie e processi di segmentazione del mercato",
+            "Tecniche per la costruzione delle mappe di posizionamento"
+          ]
+        },
+        {
+          "nome": "Tecnologie dei Materiali e dei Processi Produttivi e Organizzativi della Moda",
+          "argomenti": [
+            "Tipologie e caratteristiche delle fibre",
+            "Titolazione dei filati",
+            "Tipologia e processi di lavorazione dei filati",
+            "Caratteristiche e proprietà dei tessuti in relazione a struttura e composizione",
+            "Macchine per filatura",
+            "Macchine per tessitura e maglieria",
+            "Macchine per confezione, stiro, finissaggio del capo finito",
+            "Cicli tecnologici di produzione",
+            "Dati e parametri produttivi",
+            "Principi di organizzazione, gestione e controllo della produzione e dei processi produttivi"
+          ]
+        },
+        {
+          "nome": "Ideazione Progettazione e Industrializzazione dei Prodotti Moda",
+          "argomenti": [
+            "Evoluzione storica della moda con particolare riferimento alle tendenze della prima metà del Novecento",
+            "Sviluppo storico delle strategie e tecniche di comunicazione",
+            "Simbologia tessile per la rappresentazione grafica del tessuto",
+            "Struttura tecnica dei tessuti ortogonali e a maglia",
+            "Progettazione al CAD",
+            "Tendenze moda",
+            "Tecniche di disegno e rappresentazione grafica",
+            "Tendenze nella progettazione di collezioni",
+            "Lessico e terminologia tecnica di settore anche in lingua inglese"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Chimica Applicata e Nobilitazione dei Materiali per i Prodotti Moda",
+          "argomenti": [
+            "Caratteristiche chimiche e modalità di impiego delle sostanze ausiliarie",
+            "Teoria del colore e sistemi di misura",
+            "Principi di tintura e stampa dei prodotti tessili",
+            "Operazioni di preparazione alla tintura e alla stampa dei prodotti tessili",
+            "Strumenti per la valutazione delle solidità di tintura",
+            "Tipologie di coloranti per fibre tessili",
+            "Tipologia di macchine di tintura e stampa",
+            "Operazioni e macchinari di finissaggio tradizionale",
+            "Metodi ed effetti dei finissaggi innovativi"
+          ]
+        },
+        {
+          "nome": "Economia e Marketing delle Aziende di Moda",
+          "argomenti": [
+            "Struttura del patrimonio aziendale",
+            "Budget e costi",
+            "Analisi di convenienza economica",
+            "Marketing operativo",
+            "Piano di marketing"
+          ]
+        },
+        {
+          "nome": "Tecnologie dei Materiali e dei Processi Produttivi e Organizzativi della Moda",
+          "argomenti": [
+            "Processi di lavorazione dei filati",
+            "Caratteristiche dei tessili tecnici",
+            "Supporti interni/accessori",
+            "Calcoli e documentazione per la produzione",
+            "Approfondimento dei principi di controllo dei processi produttivi",
+            "Normative sulla sicurezza del lavoro e sulla tutela dell'ambiente",
+            "Controllo di qualità dei prodotti moda"
+          ]
+        },
+        {
+          "nome": "Ideazione Progettazione e Industrializzazione dei Prodotti Moda",
+          "argomenti": [
+            "Canoni stilistici di nomi e marchi della moda",
+            "Analisi della comunicazione nella moda",
+            "Storia della moda con particolare riferimento alla seconda metà del 900",
+            "Classificazione e progettazione dei tessuti",
+            "Software di progettazione CAD",
+            "Elementi e fasi della progettazione di una collezione",
+            "Disegno di moda per la progettazione di capi e collezioni di abbigliamento"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Filosofia",
+  "anni": [
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Filosofia antica",
+          "argomenti": [
+            "Indagine dei filosofi presocratici",
+            "La sofistica",
+            "Socrate",
+            "Platone",
+            "Aristotele",
+            "Sviluppi del pensiero in età ellenistico-romana",
+            "Neoplatonismo",
+            "Incontro tra filosofia greca e religioni bibliche"
+          ]
+        },
+        {
+          "nome": "Tarda antichità e Medioevo",
+          "argomenti": [
+            "Riflessione patristica",
+            "Agostino d'Ippona",
+            "Sviluppo della filosofia Scolastica dalle origini",
+            "Riscoperta di Aristotele",
+            "Crisi della Scolastica nel XIV secolo",
+            "Tommaso d'Aquino"
+          ]
+        },
+        {
+          "nome": "Filosofia moderna",
+          "argomenti": [
+            "Umanesimo-Rinascimento",
+            "La rivoluzione scientifica e Galilei",
+            "Il problema del metodo e della conoscenza",
+            "Cartesio",
+            "Bacone",
+            "Pascal",
+            "Spinoza",
+            "Leibniz",
+            "L'empirismo di Hume",
+            "Kant",
+            "Vico",
+            "Il pensiero politico moderno",
+            "Hobbes",
+            "Locke",
+            "Rousseau",
+            "Illuminismo e Diderot",
+            "Romanticismo",
+            "L'idealismo tedesco e Hegel",
+            "Sviluppi della logica e della riflessione scientifica",
+            "Nuovi statuti filosofici della psicologia, della biologia, della fisica e della filosofia della storia"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Filosofia ottocentesca e reazioni all'hegelismo",
+          "argomenti": [
+            "Schopenhauer",
+            "Kierkegaard",
+            "Marx",
+            "Nietzsche",
+            "Il Positivismo",
+            "Reazioni e discussioni al Positivismo",
+            "Sviluppi delle scienze e delle teorie della conoscenza"
+          ]
+        },
+        {
+          "nome": "Filosofia del Novecento",
+          "argomenti": [
+            "Husserl e la fenomenologia",
+            "Freud e la psicanalisi",
+            "Heidegger e l'esistenzialismo",
+            "Il neoidealismo italiano",
+            "Wittgenstein e la filosofia analitica",
+            "Vitalismo e pragmatismo",
+            "La filosofia d'ispirazione cristiana e la nuova teologia",
+            "Interpretazioni e sviluppi del marxismo, in particolare di quello italiano",
+            "Temi e problemi di filosofia politica",
+            "Gli sviluppi della riflessione epistemologica",
+            "La filosofia del linguaggio",
+            "L'ermeneutica filosofica"
+          ]
+        }
+      ]
+    }
+  ]
+}

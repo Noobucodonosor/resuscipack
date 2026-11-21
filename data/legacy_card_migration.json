@@ -1,0 +1,501 @@
+{
+  "generated_at": "2026-11-16T02:20:10.547378+00:00",
+  "total_cards_inspected": 6,
+  "unique_legacy_rowids_mapped": 17,
+  "rowid_map": {
+    "16653": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 16653,
+      "block_pk": 13401,
+      "block_uid": "blk_54b1d80e96f4d15f1788",
+      "book_title": "Attilio Frajese - Introduzione alla matematica (1965, Studium) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1965,
+      "page_start": 71,
+      "citazione": "dà lo stesso risultato se s’inverte l'ordine dei termini stessi",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16761": {
+      "footnote_index": 3,
+      "legacy_fts_rowid": 16761,
+      "block_pk": 13509,
+      "block_uid": "blk_28381db92423d6bbfb27",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 33,
+      "citazione": "si possono associare gli addendi come si vuole, perchè il risultato è sempre lo stesso",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16818": {
+      "footnote_index": 7,
+      "legacy_fts_rowid": 16818,
+      "block_pk": 13566,
+      "block_uid": "blk_272f532d1899e1322a58",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 90,
+      "citazione": "Eppure AB è di lunghezza doppia di DE",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16833": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 16833,
+      "block_pk": 13581,
+      "block_uid": "blk_a96a0243502d4911da96",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 105,
+      "citazione": "una corrispondenza biunivoca tra gli elementi di due insiemi finiti può aversi SE E SOLTANTO SE i due insiemi hanno lo stesso numero di elementi",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16838": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 16838,
+      "block_pk": 13586,
+      "block_uid": "blk_d7e812c2ff3c4e8f8db2",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 110,
+      "citazione": "B può mettersi in corrispondenza biunivoca con una parte (propria) di A",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16856": {
+      "footnote_index": 2,
+      "legacy_fts_rowid": 16856,
+      "block_pk": 13604,
+      "block_uid": "blk_a7503139086c7573d860",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 129,
+      "citazione": "la somma resta la stessa se si scambiano i termini tra loro",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16875": {
+      "footnote_index": 4,
+      "legacy_fts_rowid": 16875,
+      "block_pk": 13623,
+      "block_uid": "blk_b745da3a725ca7c69582",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 148,
+      "citazione": "Proviamo a moltiplicare quella somma per 7 (denominatore comune delle due frazioni)",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16876": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 16876,
+      "block_pk": 13624,
+      "block_uid": "blk_cf2bf5d58638e88d9709",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 149,
+      "citazione": "supponiamo che per la moltiplicazione e l'addizione dei numeri razionali debba valere la proprietà distributiva",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "16888": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 16888,
+      "block_pk": 13636,
+      "block_uid": "blk_b083ca8e9fa024dc9719",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 161,
+      "citazione": "è maggiore del sottraendo (numero che si sottrae) o tutt'al più ad esso uguale, la sottrazione è possibile",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "17047": {
+      "footnote_index": 4,
+      "legacy_fts_rowid": 17047,
+      "block_pk": 13795,
+      "block_uid": "blk_61f37ff5165663c9d789",
+      "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+      "author": "Attilio Frajese",
+      "year": 1968,
+      "page_start": 320,
+      "citazione": "detta addizione speciale gode della proprietà associativa e di quella commutativa",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "32554": {
+      "footnote_index": 2,
+      "legacy_fts_rowid": 32554,
+      "block_pk": 28506,
+      "block_uid": "blk_b6649475b70a00c35b46",
+      "book_title": "Giovanni Prodi - Analisi Matematica (1970,2003, Bollati Boringhieri) - libgen.lc",
+      "author": "Giovanni Prodi",
+      "year": 1970,
+      "page_start": 47,
+      "citazione": "Si deve a G. Peano una presentazione assiomatica degli interi naturali basata sulle nozioni primitive di “numero”, “zero” e “successivo”",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "43613": {
+      "footnote_index": 1,
+      "legacy_fts_rowid": 43613,
+      "block_pk": 39085,
+      "block_uid": "blk_a366f03bf4bf8aa2e912",
+      "book_title": "NUMERAZIONI e LOGICA DI BASE",
+      "author": null,
+      "year": null,
+      "page_start": 1,
+      "citazione": "la posizione di una cifra all'interno di un numero ne stabilisce il valore",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "47131": {
+      "footnote_index": 4,
+      "legacy_fts_rowid": 47131,
+      "block_pk": 41511,
+      "block_uid": "blk_07cf62094c2a30e86fcf",
+      "book_title": "Paolo Casalegno, Mauro Mariani - Teoria degli insiemi (2004, Carocci) - libgen.lc",
+      "author": "Paolo Casalegno, Mauro Mariani",
+      "year": 2004,
+      "page_start": 98,
+      "citazione": "i numeri naturali svolgono, rispetto agli insiemi finiti, un doppio ruolo: da un lato ne caratterizzano la cardinalità",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "61273": {
+      "footnote_index": 2,
+      "legacy_fts_rowid": 61273,
+      "block_pk": 53594,
+      "block_uid": "blk_3a701adb097a696d6fe6",
+      "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+      "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+      "year": 1996,
+      "page_start": 155,
+      "citazione": "Per poter eseguire ogni possibile sottrazione tra i numeri naturali è necessario",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "61418": {
+      "footnote_index": 5,
+      "legacy_fts_rowid": 61418,
+      "block_pk": 53739,
+      "block_uid": "blk_04649d3b923e115ce9ff",
+      "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+      "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+      "year": 1996,
+      "page_start": 300,
+      "citazione": "per eseguire la somma di più frazioni algebriche occorre, per prima cosa, ridurle allo stesso denominatore",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "61696": {
+      "footnote_index": 3,
+      "legacy_fts_rowid": 61696,
+      "block_pk": 54017,
+      "block_uid": "blk_fd054ff99c5d6501da5f",
+      "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+      "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+      "year": 1996,
+      "page_start": 578,
+      "citazione": "le norme per eseguire le operazioni aritmetiche con i numeri decimali scritti mediante le cifre arabe",
+      "match_method": "exact_book_verbatim_quote"
+    },
+    "70081": {
+      "footnote_index": 2,
+      "legacy_fts_rowid": 70081,
+      "block_pk": 60835,
+      "block_uid": "blk_9b590aa35c56ecad2cb8",
+      "book_title": "[Universale Bollati Boringhieri, 573] Ludovico Ge…infinitesimale (2008, Bollati Boringhieri) libgen",
+      "author": null,
+      "year": 2008,
+      "page_start": 104,
+      "citazione": "con gli elementi in corrispondenza biunivoca, due insiemi cioè «egualmente numerosi»",
+      "match_method": "exact_book_verbatim_quote"
+    }
+  },
+  "cards": {
+    "frazioni.denominatore-comune": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 16876,
+        "block_pk": 13624,
+        "block_uid": "blk_cf2bf5d58638e88d9709",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 149,
+        "citazione": "supponiamo che per la moltiplicazione e l'addizione dei numeri razionali debba valere la proprietà distributiva",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 16876,
+        "block_pk": 13624,
+        "block_uid": "blk_cf2bf5d58638e88d9709",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 149,
+        "citazione": "si addizionano i numeratori, lasciando invariato il denominatore",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 3,
+        "legacy_fts_rowid": 16876,
+        "block_pk": 13624,
+        "block_uid": "blk_cf2bf5d58638e88d9709",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 149,
+        "citazione": "Se poi le frazioni non hanno lo stesso denominatore si riducono ad averlo",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 4,
+        "legacy_fts_rowid": 16875,
+        "block_pk": 13623,
+        "block_uid": "blk_b745da3a725ca7c69582",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 148,
+        "citazione": "Proviamo a moltiplicare quella somma per 7 (denominatore comune delle due frazioni)",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 5,
+        "legacy_fts_rowid": 61418,
+        "block_pk": 53739,
+        "block_uid": "blk_04649d3b923e115ce9ff",
+        "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+        "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+        "year": 1996,
+        "page_start": 300,
+        "citazione": "per eseguire la somma di più frazioni algebriche occorre, per prima cosa, ridurle allo stesso denominatore",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ],
+    "numeri.ordine": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 16838,
+        "block_pk": 13586,
+        "block_uid": "blk_d7e812c2ff3c4e8f8db2",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 110,
+        "citazione": "B può mettersi in corrispondenza biunivoca con una parte (propria) di A",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 32554,
+        "block_pk": 28506,
+        "block_uid": "blk_b6649475b70a00c35b46",
+        "book_title": "Giovanni Prodi - Analisi Matematica (1970,2003, Bollati Boringhieri) - libgen.lc",
+        "author": "Giovanni Prodi",
+        "year": 1970,
+        "page_start": 47,
+        "citazione": "Si deve a G. Peano una presentazione assiomatica degli interi naturali basata sulle nozioni primitive di “numero”, “zero” e “successivo”",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ],
+    "numeri.posizionale": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 43613,
+        "block_pk": 39085,
+        "block_uid": "blk_a366f03bf4bf8aa2e912",
+        "book_title": "NUMERAZIONI e LOGICA DI BASE",
+        "author": null,
+        "year": null,
+        "page_start": 1,
+        "citazione": "la posizione di una cifra all'interno di un numero ne stabilisce il valore",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 43613,
+        "block_pk": 39085,
+        "block_uid": "blk_a366f03bf4bf8aa2e912",
+        "book_title": "NUMERAZIONI e LOGICA DI BASE",
+        "author": null,
+        "year": null,
+        "page_start": 1,
+        "citazione": "La notazione posizionale fu una grande invenzione (probabilmente fu inventato in India e arrivò in Europa attraverso gli arabi)",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 3,
+        "legacy_fts_rowid": 61696,
+        "block_pk": 54017,
+        "block_uid": "blk_fd054ff99c5d6501da5f",
+        "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+        "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+        "year": 1996,
+        "page_start": 578,
+        "citazione": "le norme per eseguire le operazioni aritmetiche con i numeri decimali scritti mediante le cifre arabe",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ],
+    "numeri.quantita": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 16833,
+        "block_pk": 13581,
+        "block_uid": "blk_a96a0243502d4911da96",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 105,
+        "citazione": "una corrispondenza biunivoca tra gli elementi di due insiemi finiti può aversi SE E SOLTANTO SE i due insiemi hanno lo stesso numero di elementi",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 70081,
+        "block_pk": 60835,
+        "block_uid": "blk_9b590aa35c56ecad2cb8",
+        "book_title": "[Universale Bollati Boringhieri, 573] Ludovico Ge…infinitesimale (2008, Bollati Boringhieri) libgen",
+        "author": null,
+        "year": 2008,
+        "page_start": 104,
+        "citazione": "con gli elementi in corrispondenza biunivoca, due insiemi cioè «egualmente numerosi»",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 3,
+        "legacy_fts_rowid": 70081,
+        "block_pk": 60835,
+        "block_uid": "blk_9b590aa35c56ecad2cb8",
+        "book_title": "[Universale Bollati Boringhieri, 573] Ludovico Ge…infinitesimale (2008, Bollati Boringhieri) libgen",
+        "author": null,
+        "year": 2008,
+        "page_start": 104,
+        "citazione": "Definisce poi come potenza di un insieme M la proprieta comune ad esso e agli insiemi equipotenti a M",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 4,
+        "legacy_fts_rowid": 47131,
+        "block_pk": 41511,
+        "block_uid": "blk_07cf62094c2a30e86fcf",
+        "book_title": "Paolo Casalegno, Mauro Mariani - Teoria degli insiemi (2004, Carocci) - libgen.lc",
+        "author": "Paolo Casalegno, Mauro Mariani",
+        "year": 2004,
+        "page_start": 98,
+        "citazione": "i numeri naturali svolgono, rispetto agli insiemi finiti, un doppio ruolo: da un lato ne caratterizzano la cardinalità",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 5,
+        "legacy_fts_rowid": 47131,
+        "block_pk": 41511,
+        "block_uid": "blk_07cf62094c2a30e86fcf",
+        "book_title": "Paolo Casalegno, Mauro Mariani - Teoria degli insiemi (2004, Carocci) - libgen.lc",
+        "author": "Paolo Casalegno, Mauro Mariani",
+        "year": 2004,
+        "page_start": 98,
+        "citazione": "quando dagli insiemi finiti si passa a quelli infiniti, questi due ruoli devono essere separati",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 6,
+        "legacy_fts_rowid": 32554,
+        "block_pk": 28506,
+        "block_uid": "blk_b6649475b70a00c35b46",
+        "book_title": "Giovanni Prodi - Analisi Matematica (1970,2003, Bollati Boringhieri) - libgen.lc",
+        "author": "Giovanni Prodi",
+        "year": 1970,
+        "page_start": 47,
+        "citazione": "Si deve a G. Peano una presentazione assiomatica degli interi naturali basata sulle nozioni primitive di “numero”, “zero” e “successivo”",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 7,
+        "legacy_fts_rowid": 16818,
+        "block_pk": 13566,
+        "block_uid": "blk_272f532d1899e1322a58",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 90,
+        "citazione": "Eppure AB è di lunghezza doppia di DE",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ],
+    "operazioni.addizione": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 16653,
+        "block_pk": 13401,
+        "block_uid": "blk_54b1d80e96f4d15f1788",
+        "book_title": "Attilio Frajese - Introduzione alla matematica (1965, Studium) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1965,
+        "page_start": 71,
+        "citazione": "dà lo stesso risultato se s’inverte l'ordine dei termini stessi",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 16856,
+        "block_pk": 13604,
+        "block_uid": "blk_a7503139086c7573d860",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 129,
+        "citazione": "la somma resta la stessa se si scambiano i termini tra loro",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 3,
+        "legacy_fts_rowid": 16761,
+        "block_pk": 13509,
+        "block_uid": "blk_28381db92423d6bbfb27",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 33,
+        "citazione": "si possono associare gli addendi come si vuole, perchè il risultato è sempre lo stesso",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 4,
+        "legacy_fts_rowid": 17047,
+        "block_pk": 13795,
+        "block_uid": "blk_61f37ff5165663c9d789",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 320,
+        "citazione": "detta addizione speciale gode della proprietà associativa e di quella commutativa",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ],
+    "operazioni.sottrazione": [
+      {
+        "footnote_index": 1,
+        "legacy_fts_rowid": 16888,
+        "block_pk": 13636,
+        "block_uid": "blk_b083ca8e9fa024dc9719",
+        "book_title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "author": "Attilio Frajese",
+        "year": 1968,
+        "page_start": 161,
+        "citazione": "è maggiore del sottraendo (numero che si sottrae) o tutt'al più ad esso uguale, la sottrazione è possibile",
+        "match_method": "exact_book_verbatim_quote"
+      },
+      {
+        "footnote_index": 2,
+        "legacy_fts_rowid": 61273,
+        "block_pk": 53594,
+        "block_uid": "blk_3a701adb097a696d6fe6",
+        "book_title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+        "author": "Nella Dodero, Paolo Baroncini, Dante Trezzi",
+        "year": 1996,
+        "page_start": 155,
+        "citazione": "Per poter eseguire ogni possibile sottrazione tra i numeri naturali è necessario",
+        "match_method": "exact_book_verbatim_quote"
+      }
+    ]
+  }
+}

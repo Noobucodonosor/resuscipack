@@ -1,0 +1,1317 @@
+{
+  "schema_version": "ministerial-corpus-coverage.v1",
+  "epistemic_layer": "corpus_learnable",
+  "epistemic_principle": "R4: Report empirico corpus_learnable separato da ontology_v6_consolidated.json (institutional_declared).",
+  "generated_at": "2026-11-19T11:48:22.555867+00:00",
+  "total_objectives": 2828,
+  "by_status": {
+    "covered": 2578,
+    "gap": 42,
+    "partial": 208
+  },
+  "by_cycle": {
+    "primaria": {
+      "covered": 176,
+      "partial": 24
+    },
+    "secondaria_i_grado": {
+      "covered": 113,
+      "partial": 32
+    },
+    "secondaria_ii_grado_licei": {
+      "covered": 936,
+      "gap": 33,
+      "partial": 83
+    },
+    "secondaria_ii_grado_professionali": {
+      "covered": 80,
+      "partial": 5
+    },
+    "secondaria_ii_grado_tecnici": {
+      "covered": 1273,
+      "gap": 9,
+      "partial": 64
+    }
+  },
+  "by_discipline": {
+    "arte_architettura": {
+      "covered": 177,
+      "gap": 1,
+      "partial": 30
+    },
+    "diritto_societa": {
+      "covered": 18
+    },
+    "discipline_generali_e_indirizzo": {
+      "covered": 344,
+      "gap": 23,
+      "partial": 66
+    },
+    "filosofia_scienze_umane": {
+      "covered": 155,
+      "gap": 2,
+      "partial": 2
+    },
+    "fisica": {
+      "covered": 47
+    },
+    "geografia_territorio": {
+      "covered": 22,
+      "partial": 5
+    },
+    "informatica_tecnologia": {
+      "covered": 576,
+      "partial": 3
+    },
+    "letteratura_lingue": {
+      "covered": 183,
+      "gap": 1,
+      "partial": 21
+    },
+    "matematica": {
+      "covered": 205
+    },
+    "musica_acustica": {
+      "covered": 51,
+      "gap": 6,
+      "partial": 14
+    },
+    "scienze_chimica_biologia": {
+      "covered": 353,
+      "gap": 4,
+      "partial": 34
+    },
+    "storia_economia": {
+      "covered": 447,
+      "gap": 5,
+      "partial": 33
+    }
+  },
+  "objectives_with_wrong_book_evidence": 2106,
+  "volume1_gap_radar": {
+    "k13_math_total": 152,
+    "k13_status_counts": {
+      "covered": 152
+    },
+    "by_cycle_grade": {
+      "primaria :: Classe quinta": {
+        "covered": 27
+      },
+      "primaria :: Classe terza": {
+        "covered": 14
+      },
+      "secondaria_i_grado :: Triennio (classi 1-3)": {
+        "covered": 37
+      },
+      "secondaria_ii_grado_licei :: Primo Biennio": {
+        "covered": 41
+      },
+      "secondaria_ii_grado_licei :: Quinto Anno": {
+        "covered": 15
+      },
+      "secondaria_ii_grado_licei :: Secondo Biennio": {
+        "covered": 18
+      }
+    },
+    "gaps_count": 0,
+    "gaps": [],
+    "partials_count": 0,
+    "partials": [],
+    "top_canonical_books": [
+      {
+        "book_pk": 1275,
+        "title": "temp_medie",
+        "objective_hits": 112
+      },
+      {
+        "book_pk": 974,
+        "title": "[1] Nella Dodero, Paolo Baroncini, Dante Trezzi - Nuovi elementi di matematica. Vol. 1 1(1996, Ghisetti e Corvi) - libgen.lc",
+        "objective_hits": 85
+      },
+      {
+        "book_pk": 209,
+        "title": "Attilio Frajese - Introduzione elementare alla matematica moderna (1968, Le Monnier) - libgen.lc",
+        "objective_hits": 65
+      },
+      {
+        "book_pk": 1310,
+        "title": "AAVV - Matematica _ manuale di teoria (2018, Hoepli) - libgen.lc",
+        "objective_hits": 46
+      },
+      {
+        "book_pk": 1,
+        "title": "(Classici UTET) Bonaventura Cavalieri, Lucio Lombardo-Radice (ed.) - Geometria degli indivisibili-UTET (1966)",
+        "objective_hits": 39
+      },
+      {
+        "book_pk": 1379,
+        "title": "Berzolari Luigi, Vivanti Giulio, Gigli Duilio (eds.) - Enciclopedia delle matematiche elementari II parte I(1937, Ulrico Hoepli) - libgen.lc",
+        "objective_hits": 32
+      },
+      {
+        "book_pk": 1143,
+        "title": "ortolani g._ venturi e",
+        "objective_hits": 30
+      },
+      {
+        "book_pk": 1371,
+        "title": "caligaris luigi_ fava stefano_ tomasello carlo - MANUALE DI MECCANICA (2016, Hoepli) - libgen.lc",
+        "objective_hits": 29
+      },
+      {
+        "book_pk": 1345,
+        "title": "Attilio Frajese Attraverso la storia della matematica (1969, Le Monnier) libgen",
+        "objective_hits": 27
+      },
+      {
+        "book_pk": 206,
+        "title": "Attilio Frajese - Attraverso la storia della matematica (1969, Le Monnier) - libgen.lc",
+        "objective_hits": 27
+      },
+      {
+        "book_pk": 1144,
+        "title": "ortolani g._ venturi e. - Manuale di elettrotecnica e automazione (2010, Hoepli) - libgen.lc",
+        "objective_hits": 26
+      },
+      {
+        "book_pk": 1391,
+        "title": "Tom Apostol - Calcolo - Analisi 1. 1-Bollati Boringhieri (1987)",
+        "objective_hits": 25
+      },
+      {
+        "book_pk": 1388,
+        "title": "Luigi Amerio - Analisi matematica, Vol I 1(1990, UTET) - libgen.lc",
+        "objective_hits": 22
+      },
+      {
+        "book_pk": 515,
+        "title": "Giovanni Prodi - Analisi Matematica (1970,2003, Bollati Boringhieri) - libgen.lc",
+        "objective_hits": 22
+      },
+      {
+        "book_pk": 898,
+        "title": "Soardi P. M. - Analisi matematica (, CittàStudi) - libgen.lc",
+        "objective_hits": 21
+      },
+      {
+        "book_pk": 1373,
+        "title": "Euclide, a cura di Attilio Frajese e Lamberto Maccioni - Elementi (1970, UTET) - libgen.lc",
+        "objective_hits": 21
+      },
+      {
+        "book_pk": 1346,
+        "title": "Attilio Frajese Introduzione alla matematica (1965, Studium) libgen",
+        "objective_hits": 20
+      },
+      {
+        "book_pk": 1361,
+        "title": "Sheldon M. Ross - Calcolo delle probabilità-Apogeo",
+        "objective_hits": 19
+      },
+      {
+        "book_pk": 985,
+        "title": "[Le bussole, 325] Fabio Bellissima - Fondamenti di matematica (2008, Carocci) - libgen.lc",
+        "objective_hits": 18
+      },
+      {
+        "book_pk": 1324,
+        "title": "Massaron, Luca_Mueller, John, Paul - Machine learning for dummies (2019, Hoepli) - libgen.lc",
+        "objective_hits": 17
+      }
+    ],
+    "wrong_book_discoveries": [
+      {
+        "objective_uid": "ont_6dcf9cdfd697124f",
+        "grade": "Primo Biennio",
+        "statement": "Calcolo con numeri interi, razionali (frazioni e decimali) e proprietà delle operazioni",
+        "book_pk": 1275,
+        "book_title": "temp_medie",
+        "primary_discipline": "psicologia_pedagogia_societa",
+        "block_pk": 90328,
+        "page_start": 69,
+        "printed_page": "69",
+        "verbatim_quote": "L’alunno si muove con sicurezza nel calcolo anche con i numeri razionali"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1112,
+        "book_title": "lezione 5 - Algoritmi e diagrammi di flusso",
+        "primary_discipline": "informatica",
+        "block_pk": 80717,
+        "page_start": 18,
+        "printed_page": "18",
+        "verbatim_quote": "mcd(m,n)=m=n se n=M mcd(m,n)=mcd(m-n,n) se m>n mcd(m,n)=mcd(m,n-m)"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1112,
+        "book_title": "lezione 5 - Algoritmi e diagrammi di flusso",
+        "primary_discipline": "informatica",
+        "block_pk": 80718,
+        "page_start": 19,
+        "printed_page": "19",
+        "verbatim_quote": "Massimo comune divisore tra due numeri interi M ed N letti da input"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1403,
+        "book_title": "[8] Andrea Domenici, Graziano Frosini - Introduzione alla programmazione ed elementi di strutture dati con il linguaggio C++ (2013, Franco Angeli) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 119950,
+        "page_start": 45,
+        "printed_page": "91",
+        "verbatim_quote": "La forma sintattica dell'istruzione while è la seguente: basic-while-statement while ( condition ) statement"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1082,
+        "book_title": "giorgi+msc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 71668,
+        "page_start": 4407,
+        "printed_page": "4407",
+        "verbatim_quote": "Calcolare il massimo comune divisore tra due numeri interi letti da input"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1082,
+        "book_title": "giorgi+msc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 71669,
+        "page_start": 4408,
+        "printed_page": "4408",
+        "verbatim_quote": "Massimo comune divisore tra due numeri interi M ed N letti da input"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 1403,
+        "book_title": "[8] Andrea Domenici, Graziano Frosini - Introduzione alla programmazione ed elementi di strutture dati con il linguaggio C++ (2013, Franco Angeli) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 119951,
+        "page_start": 46,
+        "printed_page": "93",
+        "verbatim_quote": "L'algoritmo di Euclide può essere realizzato in maniera più efficiente, calcolando ciclicamente il resto della divisione intera"
+      },
+      {
+        "objective_uid": "ont_89674d606d7d46b7",
+        "grade": "Primo Biennio",
+        "statement": "Algoritmo euclideo per il MCD e struttura dei numeri interi",
+        "book_pk": 164,
+        "book_title": "Alan Albert Bertossi_ Alberto Montresor - Algoritmi e Strutture di Dati (2014, CittàStudi) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 8804,
+        "page_start": 328,
+        "printed_page": "328",
+        "verbatim_quote": "L'intero b è un testimone che n è composto (cioè non primo) se almeno una delle condizioni (1) e (2) è falsa."
+      },
+      {
+        "objective_uid": "ont_2b1fd7fa2354eaef",
+        "grade": "Primo Biennio",
+        "statement": "Dimostrazione dell'irrazionalità di √2 e di altri numeri",
+        "book_pk": 1390,
+        "book_title": "Galileo Galilei - Opere Vol. 1(1964, UTET) - libgen.lc",
+        "primary_discipline": "fisica",
+        "block_pk": 113353,
+        "page_start": 218,
+        "printed_page": "217",
+        "verbatim_quote": "Per estrar dunque e trovar la radice quadrata di un numero mezano proposto"
+      },
+      {
+        "objective_uid": "ont_040fb0bee0e8d7cf",
+        "grade": "Primo Biennio",
+        "statement": "Studio dei numeri irrazionali e approssimazione",
+        "book_pk": 489,
+        "book_title": "Flavia Marcacci Alle origini dell'assiomatica_ gli Eleati, Aristotele, Euclide (2008, Aracne) libgen",
+        "primary_discipline": "filosofia_epistemologia",
+        "block_pk": 27104,
+        "page_start": 28,
+        "printed_page": null,
+        "verbatim_quote": "L’elenco dei matematici anteriori ad Euclide è ricchissimo, fornitoci per la maggior parte da Proclo,"
+      },
+      {
+        "objective_uid": "ont_0e4f0a6d122fe755",
+        "grade": "Primo Biennio",
+        "statement": "Calcolo dei radicali",
+        "book_pk": 983,
+        "book_title": "[Informatica] Paul J. Deitel, Harvey M. Deitel Il… C. Fondamenti e tecniche di programmazione. Ediz",
+        "primary_discipline": "informatica",
+        "block_pk": 58137,
+        "page_start": 44,
+        "printed_page": null,
+        "verbatim_quote": "La divisione intera restituisce un risultato intero. Ad esempio, l’espressione 7 / 4"
+      },
+      {
+        "objective_uid": "ont_baf9b116114ea3dd",
+        "grade": "Primo Biennio",
+        "statement": "Elementi di base del calcolo letterale, proprietà dei polinomi e operazioni tra polinomi",
+        "book_pk": 983,
+        "book_title": "[Informatica] Paul J. Deitel, Harvey M. Deitel Il… C. Fondamenti e tecniche di programmazione. Ediz",
+        "primary_discipline": "informatica",
+        "block_pk": 58139,
+        "page_start": 46,
+        "printed_page": null,
+        "verbatim_quote": "I numeri cerchiati sotto l’istruzione indicano l’ordine in cui vengono eseguite le operazioni"
+      },
+      {
+        "objective_uid": "ont_baf9b116114ea3dd",
+        "grade": "Primo Biennio",
+        "statement": "Elementi di base del calcolo letterale, proprietà dei polinomi e operazioni tra polinomi",
+        "book_pk": 1371,
+        "book_title": "caligaris luigi_ fava stefano_ tomasello carlo - MANUALE DI MECCANICA (2016, Hoepli) - libgen.lc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 104988,
+        "page_start": 79,
+        "printed_page": "79",
+        "verbatim_quote": "Monomio: espressione nella forma axn, dove a, coefficiente numerico, e x, parte letterale"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 1144,
+        "book_title": "ortolani g._ venturi e. - Manuale di elettrotecnica e automazione (2010, Hoepli) - libgen.lc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 84280,
+        "page_start": 30,
+        "printed_page": "30",
+        "verbatim_quote": "si divide il primo termine 3x5 del dividendo per il primo termine x2"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 1371,
+        "book_title": "caligaris luigi_ fava stefano_ tomasello carlo - MANUALE DI MECCANICA (2016, Hoepli) - libgen.lc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 104989,
+        "page_start": 80,
+        "printed_page": "80",
+        "verbatim_quote": "Si definisce equazione un’uguaglianza tra due espressioni algebriche A(x) = B(x) dette membri"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 982,
+        "book_title": "[Informatica] Paul J. Deitel, Harvey M. Deitel - Il linguaggio C. Fondamenti e tecniche di programmazione. Ediz. mylab. Con espansione online (2016, Pearson) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 57089,
+        "page_start": 70,
+        "printed_page": "70",
+        "verbatim_quote": "Le parentesi sono richieste per raggruppare le addizioni, perché la divisione ha una precedenza"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 765,
+        "book_title": "Paul J. Deitel, Harvey M. Deitel - C - Corso completo di programmazione (2007, Apogeo) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 43859,
+        "page_start": 60,
+        "printed_page": "60",
+        "verbatim_quote": "I numeri cerchiati sotto l’istruzione indicano l’ordine in cui il C valuterà"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 983,
+        "book_title": "[Informatica] Paul J. Deitel, Harvey M. Deitel Il… C. Fondamenti e tecniche di programmazione. Ediz",
+        "primary_discipline": "informatica",
+        "block_pk": 58137,
+        "page_start": 44,
+        "printed_page": null,
+        "verbatim_quote": "La divisione intera restituisce un risultato intero. Ad esempio, l’espressione 7 / 4"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 1144,
+        "book_title": "ortolani g._ venturi e. - Manuale di elettrotecnica e automazione (2010, Hoepli) - libgen.lc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 84281,
+        "page_start": 31,
+        "printed_page": "31",
+        "verbatim_quote": "i cui coefficienti sono dati dalla seguente regola: il coefficiente q1 è uguale ad a0"
+      },
+      {
+        "objective_uid": "ont_b6b78828c0ef0b29",
+        "grade": "Primo Biennio",
+        "statement": "Fattorizzazione di semplici polinomi e divisione con resto fra polinomi",
+        "book_pk": 983,
+        "book_title": "[Informatica] Paul J. Deitel, Harvey M. Deitel Il… C. Fondamenti e tecniche di programmazione. Ediz",
+        "primary_discipline": "informatica",
+        "block_pk": 58139,
+        "page_start": 46,
+        "printed_page": null,
+        "verbatim_quote": "I numeri cerchiati sotto l’istruzione indicano l’ordine in cui vengono eseguite le operazioni"
+      },
+      {
+        "objective_uid": "ont_40a2968019c59567",
+        "grade": "Primo Biennio",
+        "statement": "Equazioni, disequazioni e sistemi come rappresentazione di problemi",
+        "book_pk": 26,
+        "book_title": "03I-Terze Inform Matematica 1819",
+        "primary_discipline": "informatica",
+        "block_pk": 3260,
+        "page_start": 1,
+        "printed_page": null,
+        "verbatim_quote": "Questo programma è un consuntivo di tutte le classi terze"
+      },
+      {
+        "objective_uid": "ont_40a2968019c59567",
+        "grade": "Primo Biennio",
+        "statement": "Equazioni, disequazioni e sistemi come rappresentazione di problemi",
+        "book_pk": 1371,
+        "book_title": "caligaris luigi_ fava stefano_ tomasello carlo - MANUALE DI MECCANICA (2016, Hoepli) - libgen.lc",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 104993,
+        "page_start": 84,
+        "printed_page": "84",
+        "verbatim_quote": "Si definiscono disequazioni o disuguaglianze algebriche le espressioni del tipo A < B"
+      },
+      {
+        "objective_uid": "ont_dcbca005df4423ac",
+        "grade": "Primo Biennio",
+        "statement": "Vettori, dipendenza e indipendenza lineare, prodotto scalare e vettoriale nel piano e nello spazio",
+        "book_pk": 1143,
+        "book_title": "ortolani g._ venturi e",
+        "primary_discipline": "ingegneria_meccanica_elettronica",
+        "block_pk": 82831,
+        "page_start": 50,
+        "printed_page": null,
+        "verbatim_quote": "Si chiama prodotto scalare il numero reale che si ottiene"
+      },
+      {
+        "objective_uid": "ont_ea7ce9dfe607de2e",
+        "grade": "Primo Biennio",
+        "statement": "Elementi del calcolo matriciale",
+        "book_pk": 765,
+        "book_title": "Paul J. Deitel, Harvey M. Deitel - C - Corso completo di programmazione (2007, Apogeo) - libgen.lc",
+        "primary_discipline": "informatica",
+        "block_pk": 43857,
+        "page_start": 58,
+        "printed_page": "58",
+        "verbatim_quote": "quando un valore è letto da una locazione di memoria, tale processo è detto lettura non distruttiva."
+      },
+      {
+        "objective_uid": "ont_d6be67f804c87cce",
+        "grade": "Primo Biennio",
+        "statement": "Fondamenti della geometria euclidea del piano: postulato, assioma, definizione, teorema, dimostrazione",
+        "book_pk": 489,
+        "book_title": "Flavia Marcacci Alle origini dell'assiomatica_ gli Eleati, Aristotele, Euclide (2008, Aracne) libgen",
+        "primary_discipline": "filosofia_epistemologia",
+        "block_pk": 27218,
+        "page_start": 142,
+        "printed_page": null,
+        "verbatim_quote": "Ma il postulato più discusso è ovviamente il V, tanto che Proclo ne proponeva la definitiva eliminazione"
+      },
+      {
+        "objective_uid": "ont_d6be67f804c87cce",
+        "grade": "Primo Biennio",
+        "statement": "Fondamenti della geometria euclidea del piano: postulato, assioma, definizione, teorema, dimostrazione",
+        "book_pk": 489,
+        "book_title": "Flavia Marcacci Alle origini dell'assiomatica_ gli Eleati, Aristotele, Euclide (2008, Aracne) libgen",
+        "primary_discipline": "filosofia_epistemologia",
+        "block_pk": 27229,
+        "page_start": 153,
+        "printed_page": null,
+        "verbatim_quote": "egli snatura l’opera euclidea inquadrandola in una riflessione filosofica sulla matematica"
+      },
+      {
+        "objective_uid": "ont_6f58ff930cf87196",
+        "grade": "Primo Biennio",
+        "statement": "Teorema di Pitagora: aspetti geometrici e implicazioni nella teoria dei numeri",
+        "book_pk": 1275,
+        "book_title": "temp_medie",
+        "primary_discipline": "psicologia_pedagogia_societa",
+        "block_pk": 90329,
+        "page_start": 70,
+        "printed_page": "70",
+        "verbatim_quote": "Utilizzare frazioni equivalenti e numeri decimali per denotare uno stesso numero"
+      },
+      {
+        "objective_uid": "ont_6f58ff930cf87196",
+        "grade": "Primo Biennio",
+        "statement": "Teorema di Pitagora: aspetti geometrici e implicazioni nella teoria dei numeri",
+        "book_pk": 489,
+        "book_title": "Flavia Marcacci Alle origini dell'assiomatica_ gli Eleati, Aristotele, Euclide (2008, Aracne) libgen",
+        "primary_discipline": "filosofia_epistemologia",
+        "block_pk": 27104,
+        "page_start": 28,
+        "printed_page": null,
+        "verbatim_quote": "L’elenco dei matematici anteriori ad Euclide è ricchissimo, fornitoci per la maggior parte da Proclo,"
+      },
+      {
+        "objective_uid": "ont_97bb057f1cc81ad5",
+        "grade": "Primo Biennio",
+        "statement": "Principali trasformazioni geometriche: traslazioni, rotazioni, simmetrie, similitudini e teorema di Talete",
+        "book_pk": 296,
+        "book_title": "Caldirola, Piero_ Cirelli, Renzo_ Prosperi, Giovanni M. - Introduzione alla fisica teorica (1982, UTET) - libgen.lc",
+        "primary_discipline": "fisica",
+        "block_pk": 17058,
+        "page_start": 283,
+        "printed_page": null,
+        "verbatim_quote": "i generatori delle traslazioni e delle rotazioni infinitesimali coincidono"
+      },
+      {
+        "objective_uid": "ont_d0aa6a4d6b04e9d0",
+        "grade": "Primo Biennio",
+        "statement": "Proprietà fondamentali della circonferenza",
+        "book_pk": 165,
+        "book_title": "Albert Einstein, Leopold Infeld - L'evoluzione della fisica (2007, Bollati Boringhieri) - libgen.lc",
+        "primary_discipline": "fisica",
+        "block_pk": 9089,
+        "page_start": 217,
+        "printed_page": "217",
+        "verbatim_quote": "La lunghezza della circonferenza grande sarà diversa per i due osservatori. Il"
+      }
+    ],
+    "validated_bridges_linked_count": 167,
+    "volume1_dag_nodes_summary": {
+      "layer0_count": 64,
+      "ofa_p0_count": 8,
+      "total_nodes": 72,
+      "readiness_counts": {
+        "needs_attention": 1,
+        "ready": 71
+      }
+    },
+    "volume1_dag_nodes": [
+      {
+        "node_id": "numeri.quantita",
+        "layer": 0,
+        "title": "Contare e il numero come quantità",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 6,
+        "validated_bridges_count": 7,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "numeri.ordine",
+        "layer": 0,
+        "title": "Confrontare e ordinare i numeri",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 76,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "numeri.posizionale",
+        "layer": 0,
+        "title": "Sistema posizionale decimale e zero",
+        "linked_objectives_count": 2,
+        "covered_objectives_count": 2,
+        "empirical_blocks_total": 49,
+        "validated_bridges_count": 7,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.addizione",
+        "layer": 0,
+        "title": "Addizione come riunire",
+        "linked_objectives_count": 6,
+        "covered_objectives_count": 6,
+        "empirical_blocks_total": 166,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.sottrazione",
+        "layer": 0,
+        "title": "Sottrazione come togliere e come differenza",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 104,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.colonna",
+        "layer": 0,
+        "title": "Addizione e sottrazione in colonna",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 104,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.moltiplicazione",
+        "layer": 0,
+        "title": "Moltiplicazione come addizione ripetuta e schieramento",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 104,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.distributiva",
+        "layer": 0,
+        "title": "Proprietà distributiva",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 134,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.divisione",
+        "layer": 0,
+        "title": "Divisione come ripartire e contenere, e il resto",
+        "linked_objectives_count": 7,
+        "covered_objectives_count": 7,
+        "empirical_blocks_total": 188,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "frazioni.significato",
+        "layer": 0,
+        "title": "La frazione come parti uguali di un intero",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 132,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "frazioni.equivalenza",
+        "layer": 0,
+        "title": "Frazioni equivalenti",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 132,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "frazioni.denominatore-comune",
+        "layer": 0,
+        "title": "Somma di frazioni con il denominatore comune",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 132,
+        "validated_bridges_count": 9,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "frazioni.moltiplicazione-divisione",
+        "layer": 0,
+        "title": "Moltiplicazione, reciproco e divisione tra frazioni",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 82,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "numeri.decimali",
+        "layer": 0,
+        "title": "Numeri decimali e approssimazione",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 107,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "divisibilita.multipli-primi",
+        "layer": 0,
+        "title": "Divisibilità, numeri primi e fattorizzazione unica",
+        "linked_objectives_count": 6,
+        "covered_objectives_count": 6,
+        "empirical_blocks_total": 174,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "divisibilita.mcm",
+        "layer": 0,
+        "title": "Minimo comune multiplo (mcm)",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 119,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "divisibilita.mcd",
+        "layer": 0,
+        "title": "Massimo comune divisore (MCD) e frazioni irriducibili",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 119,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "numeri.relativi",
+        "layer": 0,
+        "title": "Numeri interi relativi (Z) e regola dei segni",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 31,
+        "validated_bridges_count": 13,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.potenze-base",
+        "layer": 0,
+        "title": "Potenze e proprietà degli esponenti",
+        "linked_objectives_count": 2,
+        "covered_objectives_count": 2,
+        "empirical_blocks_total": 45,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "operazioni.radici-base",
+        "layer": 0,
+        "title": "Radice quadrata ed estrazione inversa della potenza",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 96,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "rapporti.proporzioni-percentuali",
+        "layer": 0,
+        "title": "Rapporti, proporzioni e percentuali",
+        "linked_objectives_count": 8,
+        "covered_objectives_count": 8,
+        "empirical_blocks_total": 179,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "misure.confronto-unita",
+        "layer": 0,
+        "title": "Misurare: scegliere un'unità campione",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 63,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "misure.equivalenze-decimali",
+        "layer": 0,
+        "title": "Sistema metrico decimale ed equivalenze",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 85,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.punti-rette-segmenti",
+        "layer": 0,
+        "title": "Punti, rette, segmenti e distanza minima",
+        "linked_objectives_count": 11,
+        "covered_objectives_count": 11,
+        "empirical_blocks_total": 226,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.angoli-rotazioni",
+        "layer": 0,
+        "title": "Angolo come cambio di direzione e rotazione",
+        "linked_objectives_count": 7,
+        "covered_objectives_count": 7,
+        "empirical_blocks_total": 179,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.parallelismo-perpendicolarita",
+        "layer": 0,
+        "title": "Rette parallele, perpendicolari e distanza punto-retta",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 94,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.poligoni-perimetro",
+        "layer": 0,
+        "title": "Poligoni, triangoli e disuguaglianza triangolare",
+        "linked_objectives_count": 13,
+        "covered_objectives_count": 13,
+        "empirical_blocks_total": 271,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.area-rettangolo-schieramento",
+        "layer": 0,
+        "title": "Area del rettangolo e unità quadrate",
+        "linked_objectives_count": 8,
+        "covered_objectives_count": 8,
+        "empirical_blocks_total": 213,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.area-triangolo-poligoni",
+        "layer": 0,
+        "title": "Equiscomponibilità e area di triangoli e poligoni",
+        "linked_objectives_count": 8,
+        "covered_objectives_count": 8,
+        "empirical_blocks_total": 213,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.simmetrie-traslazioni",
+        "layer": 0,
+        "title": "Isometrie: traslazioni, rotazioni e simmetrie",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 84,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.pitagora",
+        "layer": 0,
+        "title": "Teorema di Pitagora e distanza euclidea",
+        "linked_objectives_count": 2,
+        "covered_objectives_count": 2,
+        "empirical_blocks_total": 61,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.cerchio-pi-greco",
+        "layer": 0,
+        "title": "Circonferenza, cerchio e la costante pi greco",
+        "linked_objectives_count": 7,
+        "covered_objectives_count": 7,
+        "empirical_blocks_total": 215,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.similitudine-scala",
+        "layer": 0,
+        "title": "Figure simili, riduzioni in scala e teorema di Talete",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 73,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.solidi-volume",
+        "layer": 0,
+        "title": "Solidi nello spazio, volume e principio delle fette",
+        "linked_objectives_count": 8,
+        "covered_objectives_count": 8,
+        "empirical_blocks_total": 159,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "geometria.coordinate-griglia",
+        "layer": 0,
+        "title": "Piano cartesiano: punti e distanze come coppie di numeri",
+        "linked_objectives_count": 12,
+        "covered_objectives_count": 12,
+        "empirical_blocks_total": 259,
+        "validated_bridges_count": 1,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "logica.classificare-attributi",
+        "layer": 0,
+        "title": "Classificare oggetti per attributi (insiemi intuitivi)",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 56,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "logica.vero-falso-non-e-o",
+        "layer": 0,
+        "title": "Enunciati vero/falso e connettivi NON, E, O",
+        "linked_objectives_count": 0,
+        "covered_objectives_count": 0,
+        "empirical_blocks_total": 0,
+        "validated_bridges_count": 1,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "logica.tutti-qualcuno-controesempio",
+        "layer": 0,
+        "title": "Tutti, esiste almeno uno, e la forza del controesempio",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 7,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "relazioni.uguaglianza-bilancia",
+        "layer": 0,
+        "title": "Il segno '=' come equilibrio di bilancia (non 'fa')",
+        "linked_objectives_count": 0,
+        "covered_objectives_count": 0,
+        "empirical_blocks_total": 0,
+        "validated_bridges_count": 0,
+        "readiness": "needs_attention"
+      },
+      {
+        "node_id": "relazioni.sequenze-regole",
+        "layer": 0,
+        "title": "Sequenze, regolarità e passi ricorsivi",
+        "linked_objectives_count": 9,
+        "covered_objectives_count": 9,
+        "empirical_blocks_total": 190,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "relazioni.lettere-formule",
+        "layer": 0,
+        "title": "Dalle parole alle lettere: variabili ed espressioni letterali",
+        "linked_objectives_count": 6,
+        "covered_objectives_count": 6,
+        "empirical_blocks_total": 154,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "relazioni.proporzionalita-diretta-inversa",
+        "layer": 0,
+        "title": "Leggi di proporzionalità diretta (y = kx) e inversa (x·y = k)",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 110,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "relazioni.equazione-primo-grado-base",
+        "layer": 0,
+        "title": "Equazioni lineari: isolare l'incognita disfacendo le operazioni",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 19,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "dati.tabelle-grafici",
+        "layer": 0,
+        "title": "Raccogliere dati, frequenze e rappresentazioni grafiche",
+        "linked_objectives_count": 14,
+        "covered_objectives_count": 14,
+        "empirical_blocks_total": 231,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "dati.media-frequenza-incertezza",
+        "layer": 0,
+        "title": "Media, moda, mediana e primi passi nell'incertezza",
+        "linked_objectives_count": 19,
+        "covered_objectives_count": 19,
+        "empirical_blocks_total": 357,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.polinomi-prodotti-notevoli",
+        "layer": 0,
+        "title": "Polinomi e prodotti notevoli (geometria dell'algebra)",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 82,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.fattorizzazione-frazioni-algebriche",
+        "layer": 0,
+        "title": "Scomposizione di polinomi, Ruffini e frazioni algebriche",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 82,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.geometria-sintetica-congruenza",
+        "layer": 0,
+        "title": "Geometria euclidea assiomatica: congruenza dei triangoli e rette parallele",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 145,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.sistemi-lineari-retta",
+        "layer": 0,
+        "title": "Sistemi lineari e retta nel piano cartesiano",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 131,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.radicali-equazioni-secondo-grado",
+        "layer": 0,
+        "title": "Radicali, razionalizzazione ed equazioni di secondo grado",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 156,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.circonferenza-euclide-talete",
+        "layer": 0,
+        "title": "Circonferenza, teoremi di Euclide e similitudine di Talete",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 131,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.equazioni-fratte-irrazionali-modulo",
+        "layer": 0,
+        "title": "Disequazioni fratte, sistemi di disequazioni, irrazionali e moduli",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 76,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.coniche-luoghi-geometrici",
+        "layer": 0,
+        "title": "Coniche come luoghi geometrici ed equazioni (parabola, ellisse, iperbole)",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 112,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.successioni-progressioni",
+        "layer": 0,
+        "title": "Successioni numeriche, progressioni aritmetiche e geometriche",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 24,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.goniometria-formule-equazioni",
+        "layer": 0,
+        "title": "Funzioni goniometriche, formule di addizione ed equazioni periodiche",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 68,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.trigonometria-triangoli",
+        "layer": 0,
+        "title": "Trigonometria piana e risoluzione di triangoli qualunque",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 68,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.esponenziali-logaritmi",
+        "layer": 0,
+        "title": "Funzioni esponenziali, logaritmi e scale multiplicativo-additive",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 74,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.numeri-complessi-gauss",
+        "layer": 0,
+        "title": "Numeri complessi, piano di Gauss, De Moivre e radici n-esime",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 27,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.combinatoria-probabilita-composta",
+        "layer": 0,
+        "title": "Calcolo combinatorio, binomio di Newton e probabilità composta/Bayes",
+        "linked_objectives_count": 2,
+        "covered_objectives_count": 2,
+        "empirical_blocks_total": 55,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.geometria-spazio-vettori",
+        "layer": 0,
+        "title": "Vettori, matrici 2×2/3×3 e geometria analitica nello spazio 3D",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 111,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.limiti-continuita-asintoti",
+        "layer": 0,
+        "title": "Limiti, continuità, asintoti e teoremi globali (Weierstrass, valori intermedi)",
+        "linked_objectives_count": 7,
+        "covered_objectives_count": 7,
+        "empirical_blocks_total": 186,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.derivata-studio-funzione",
+        "layer": 0,
+        "title": "Derivata, teoremi del calcolo differenziale (Rolle/Lagrange) e studio di funzione",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 115,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.integrali-teorema-fondamentale",
+        "layer": 0,
+        "title": "Integrali indefiniti/definiti e Teorema Fondamentale del Calcolo",
+        "linked_objectives_count": 4,
+        "covered_objectives_count": 4,
+        "empirical_blocks_total": 115,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "superiori.equazioni-differenziali-modelli",
+        "layer": 0,
+        "title": "Equazioni differenziali del 1° e 2° ordine e modelli dinamici",
+        "linked_objectives_count": 1,
+        "covered_objectives_count": 1,
+        "empirical_blocks_total": 25,
+        "validated_bridges_count": 0,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.1",
+        "layer": 1,
+        "title": "Che cosa è una dimostrazione",
+        "linked_objectives_count": 6,
+        "covered_objectives_count": 6,
+        "empirical_blocks_total": 169,
+        "validated_bridges_count": 20,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.2",
+        "layer": 1,
+        "title": "Logica proposizionale e dei predicati",
+        "linked_objectives_count": 0,
+        "covered_objectives_count": 0,
+        "empirical_blocks_total": 0,
+        "validated_bridges_count": 11,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.3",
+        "layer": 1,
+        "title": "Insiemi, relazioni, funzioni come oggetti",
+        "linked_objectives_count": 13,
+        "covered_objectives_count": 13,
+        "empirical_blocks_total": 285,
+        "validated_bridges_count": 10,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.4",
+        "layer": 1,
+        "title": "Numeri: dagli interi ai reali",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 160,
+        "validated_bridges_count": 13,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.5",
+        "layer": 1,
+        "title": "Calcolo simbolico: equazioni e disequazioni",
+        "linked_objectives_count": 7,
+        "covered_objectives_count": 7,
+        "empirical_blocks_total": 158,
+        "validated_bridges_count": 13,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.6",
+        "layer": 1,
+        "title": "Funzioni elementari e loro grafici",
+        "linked_objectives_count": 17,
+        "covered_objectives_count": 17,
+        "empirical_blocks_total": 389,
+        "validated_bridges_count": 17,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.7",
+        "layer": 1,
+        "title": "Trigonometria essenziale",
+        "linked_objectives_count": 3,
+        "covered_objectives_count": 3,
+        "empirical_blocks_total": 68,
+        "validated_bridges_count": 17,
+        "readiness": "ready"
+      },
+      {
+        "node_id": "P0.8",
+        "layer": 1,
+        "title": "Logica elementare applicata: problemi e stime a tempo",
+        "linked_objectives_count": 5,
+        "covered_objectives_count": 5,
+        "empirical_blocks_total": 127,
+        "validated_bridges_count": 16,
+        "readiness": "ready"
+      }
+    ]
+  }
+}

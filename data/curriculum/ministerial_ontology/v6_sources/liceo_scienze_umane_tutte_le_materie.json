@@ -1,0 +1,117 @@
+{
+  "scuola": "Liceo delle Scienze Umane",
+  "materia": "Tutte le materie (Psicologia, Sociologia, Antropologia, Pedagogia)",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Pedagogia - Educazione nel mondo antico e medievale",
+          "argomenti": [
+            "Il sorgere delle civiltà della scrittura e l'educazione nelle società del mondo antico (Egitto, Grecia, Israele)",
+            "La paideia greco-ellenistica contestualizzata nella vita sociale, politica e militare del tempo con le relative tipologie delle pratiche educative e organizzative",
+            "L'humanitas romana, il ruolo educativo della famiglia, le scuole a Roma, la formazione dell'oratore",
+            "L'educazione cristiana dei primi secoli",
+            "L'educazione e la vita monastica",
+            "L'educazione aristocratica e cavalleresca",
+            "Analisi di documenti, testimonianze e opere: poemi omerici, Bibbia, Platone, Isocrate, Aristotele, Cicerone, Quintiliano, Seneca, Agostino, Benedetto da Norcia"
+          ]
+        },
+        {
+          "nome": "Psicologia - Fondamenti e relazione educativa",
+          "argomenti": [
+            "La specificità della psicologia come disciplina scientifica rispetto alla psicologia del senso comune",
+            "I diversi aspetti della relazione educativa dal punto di vista teorico: teorie di derivazione psicoanalitica, umanistica e sistemica",
+            "Comunicazione verbale e non verbale, ruoli e funzioni di insegnanti e allievi, emozioni e sentimenti nella relazione educativa",
+            "Concetti e teorie relative all'apprendimento: comportamentismo, cognitivismo, costruttivismo, socio-costruttivismo",
+            "Intelligenza, linguaggio, differenze individuali e apprendimento, stili di pensiero e apprendimento, motivazione e apprendimento",
+            "Il metodo di studio: metacognizione, strategie di studio, immagine di sé, emozioni e metodo di studio, ambienti di apprendimento"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Antropologia",
+          "argomenti": [
+            "Le diverse teorie antropologiche e i diversi modi di intendere il concetto di cultura",
+            "Le diverse culture e le loro poliedricità e specificità riguardo all'adattamento all'ambiente, alle modalità di conoscenza, all'immagine di sé e degli altri",
+            "Le forme di famiglia e di parentela, la dimensione religiosa e rituale, l'organizzazione dell'economia e della vita politica",
+            "Le grandi culture-religioni mondiali e la particolare razionalizzazione del mondo che ciascuna di esse produce",
+            "I metodi di ricerca in campo antropologico",
+            "Lettura di un classico degli studi antropologici (eventualmente in forma antologizzata)"
+          ]
+        },
+        {
+          "nome": "Pedagogia - Dal Medioevo all'Ottocento",
+          "argomenti": [
+            "La rinascita intorno al Mille: gli ordini religiosi, la civiltà comunale, le corporazioni, la cultura teologica",
+            "La nascita dell'Università",
+            "L'ideale educativo umanistico e il sorgere del modello scolastico collegiale",
+            "L'educazione nell'epoca della Controriforma",
+            "L'educazione dell'uomo borghese e la nascita della scuola popolare",
+            "L'Illuminismo e il diritto all'istruzione",
+            "La valorizzazione dell'infanzia in quanto età specifica dell'uomo",
+            "Educazione, pedagogia e scuola nel primo Ottocento italiano",
+            "Pedagogia, scuola e società nel positivismo europeo ed italiano",
+            "Riferimenti ad autori: Tommaso d'Aquino, Erasmo, Vittorino da Feltre, Silvio Antoniano, Calasanzio, Comenio, Locke, Rousseau, Pestalozzi, Fröbel, Aporti, Rosmini, Durkheim, Gabelli"
+          ]
+        },
+        {
+          "nome": "Psicologia - Metodi e sviluppo",
+          "argomenti": [
+            "I principali metodi di indagine della psicologia: tipi di dati (osservativi, introspettivi ecc.) e relative procedure di acquisizione (test, intervista, colloquio ecc.)",
+            "Le principali teorie sullo sviluppo cognitivo, emotivo e sociale lungo l'intero arco della vita",
+            "Lo sviluppo inserito nei contesti relazionali: famiglia, gruppi, comunità sociale",
+            "Ricerche classiche ed esercitazioni pratiche",
+            "Lettura di testi originali (anche antologizzati) di autori significativi: Allport, Bruner, Erickson, Freud, Lewin, Piaget, Vygotskij"
+          ]
+        },
+        {
+          "nome": "Sociologia - Origini e teorie classiche",
+          "argomenti": [
+            "Il contesto storico-culturale nel quale nasce la sociologia: la rivoluzione industriale e quella scientifico-tecnologica",
+            "Le diverse teorie sociologiche e i diversi modi di intendere individuo e società",
+            "Lettura di pagine significative dei principali classici: Comte, Marx, Durkheim, Weber, Pareto, Parsons",
+            "Lettura di un classico del pensiero sociologico (eventualmente in forma antologizzata)"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Pedagogia - Il Novecento e i temi contemporanei",
+          "argomenti": [
+            "La cultura pedagogica moderna in connessione con le altre scienze umane",
+            "Autori di riferimento: Claparède, Dewey, Gentile, Montessori, Freinet, Maritain",
+            "Lettura integrale di almeno un'opera di uno degli autori indicati",
+            "Le connessioni tra il sistema scolastico italiano e le politiche dell'istruzione a livello europeo (formazione continua, documenti internazionali sull'educazione e sui diritti dei minori)",
+            "La questione della formazione alla cittadinanza e dell'educazione ai diritti umani",
+            "L'educazione e la formazione in età adulta e i servizi di cura alla persona",
+            "I media, le tecnologie e l'educazione",
+            "L'educazione in prospettiva multiculturale",
+            "L'integrazione dei disabili e la didattica inclusiva",
+            "Semplice ricerca empirica con strumenti della metodologia della ricerca in prospettiva multidisciplinare (psicologia, antropologia, sociologia)"
+          ]
+        },
+        {
+          "nome": "Sociologia - Problemi e temi contemporanei",
+          "argomenti": [
+            "L'istituzione, la socializzazione, la devianza, la mobilità sociale",
+            "La comunicazione e i mezzi di comunicazione di massa",
+            "La secolarizzazione, la critica della società di massa, la società totalitaria, la società democratica",
+            "I processi di globalizzazione",
+            "Il contesto socio-culturale in cui nasce e si sviluppa il modello occidentale di welfare state",
+            "Gli elementi essenziali dell'indagine sociologica sul campo",
+            "L'applicazione della sociologia alle politiche di cura e di servizio alla persona: politiche della salute, per la famiglia, l'istruzione e l'attenzione ai disabili in ambito scolastico",
+            "Lettura di pagine significative tratte da autori classici e contemporanei"
+          ]
+        }
+      ]
+    }
+  ]
+}

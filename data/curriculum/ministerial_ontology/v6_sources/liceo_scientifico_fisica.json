@@ -1,0 +1,118 @@
+{
+  "scuola": "Liceo Scientifico",
+  "materia": "Fisica",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Metodo Sperimentale e Misura",
+          "argomenti": [
+            "Grandezze fisiche e loro misura",
+            "Incertezza della misura e cifre significative",
+            "Sistemi di unità di misura (Sistema Internazionale)",
+            "Rappresentazione di dati (tabelle e grafici)"
+          ]
+        },
+        {
+          "nome": "Vettori e Cinematica",
+          "argomenti": [
+            "Grandezze scalari e vettoriali",
+            "Operazioni con i vettori",
+            "Posizione, spostamento e velocità",
+            "Accelerazione",
+            "Moto rettilineo uniforme",
+            "Moto uniformemente accelerato"
+          ]
+        },
+        {
+          "nome": "Forze ed Equilibrio",
+          "argomenti": [
+            "Concetto di forza",
+            "Equilibrio del punto materiale",
+            "Equilibrio dei corpi rigidi",
+            "Forza peso, forza elastica",
+            "Attrito",
+            "Statica dei fluidi: pressione, leggi di Stevino, Pascal e Archimede"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Meccanica Classica",
+          "argomenti": [
+            "Leggi del moto di Newton",
+            "Sistemi di riferimento inerziali e non inerziali",
+            "Principio di relatività di Galilei",
+            "Lavoro ed energia meccanica",
+            "Principio di conservazione dell'energia",
+            "Quantità di moto e momento angolare",
+            "Gravitazione universale e leggi di Keplero"
+          ]
+        },
+        {
+          "nome": "Termodinamica",
+          "argomenti": [
+            "Temperatura e calore",
+            "Leggi dei gas e teoria cinetica",
+            "Modello del gas perfetto",
+            "Primo e secondo principio della termodinamica",
+            "Entropia e trasformazioni energetiche"
+          ]
+        },
+        {
+          "nome": "Onde e Ottica",
+          "argomenti": [
+            "Onde meccaniche: propagazione e parametri",
+            "Sovrapposizione, interferenza e diffrazione",
+            "Acustica: natura del suono",
+            "Ottica: natura ondulatoria della luce"
+          ]
+        },
+        {
+          "nome": "Elettromagnetismo (Introduzione)",
+          "argomenti": [
+            "Carica elettrica e legge di Coulomb",
+            "Campo elettrico e potenziale",
+            "Corrente elettrica e circuiti DC",
+            "Campo magnetico e forze magnetiche"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Elettromagnetismo Avanzato",
+          "argomenti": [
+            "Induzione elettromagnetica",
+            "Equazioni di Maxwell (sintesi concettuale)",
+            "Onde elettromagnetiche e spettro"
+          ]
+        },
+        {
+          "nome": "Relatività Ristretta",
+          "argomenti": [
+            "Simultaneità, dilatazione dei tempi e contrazione delle lunghezze",
+            "Equivalenza massa-energia (E=mc^2)"
+          ]
+        },
+        {
+          "nome": "Fisica Moderna e dei Quanti",
+          "argomenti": [
+            "Radiazione termica e ipotesi di Planck",
+            "Effetto fotoelettrico e fotoni (Einstein)",
+            "Modelli atomici e livelli energetici discreti",
+            "Natura ondulatoria della materia (De Broglie)",
+            "Principio di indeterminazione di Heisenberg",
+            "Fisica nucleare: radioattività, fissione e fusione"
+          ]
+        }
+      ]
+    }
+  ]
+}

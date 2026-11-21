@@ -1,0 +1,68 @@
+{
+  "scuola": "Scuola Secondaria di Primo Grado",
+  "materia": "Musica, Arte e Tecnologia",
+  "anni": [
+    {
+      "anno": "Termine della classe terza della scuola secondaria di primo grado",
+      "nuclei_tematici": [
+        {
+          "nome": "Musica - Esecuzione",
+          "argomenti": [
+            "Eseguire in modo espressivo, collettivamente e individualmente, brani vocali e strumentali di diversi generi e stili, anche avvalendosi di strumentazioni elettroniche"
+          ]
+        },
+        {
+          "nome": "Musica - Composizione e improvvisazione",
+          "argomenti": [
+            "Improvvisare, rielaborare, comporre brani musicali vocali e strumentali, utilizzando sia strutture aperte, sia semplici schemi ritmico-melodici"
+          ]
+        },
+        {
+          "nome": "Musica - Analisi e comprensione",
+          "argomenti": [
+            "Riconoscere e classificare anche stilisticamente i più importanti elementi costitutivi del linguaggio musicale",
+            "Conoscere, descrivere e interpretare in modo critico opere d'arte musicali e progettare/realizzare eventi sonori che integrino altre forme artistiche, quali danza, teatro, arti visive e multimediali"
+          ]
+        },
+        {
+          "nome": "Musica - Notazione e scrittura",
+          "argomenti": [
+            "Decodificare e utilizzare la notazione tradizionale e altri sistemi di scrittura"
+          ]
+        },
+        {
+          "nome": "Musica - Identità musicale e tecnologia",
+          "argomenti": [
+            "Orientare la costruzione della propria identità musicale, ampliarne l'orizzonte valorizzando le proprie esperienze, il percorso svolto e le opportunità offerte dal contesto",
+            "Accedere alle risorse musicali presenti in rete e utilizzare software specifici per elaborazioni sonore e musicali"
+          ]
+        },
+        {
+          "nome": "Arte e Immagine - Esprimersi e comunicare",
+          "argomenti": [
+            "Elaborare creativamente produzioni personali e autentiche per esprimere sensazioni ed emozioni; rappresentare e comunicare la realtà percepita",
+            "Trasformare immagini e materiali ricercando soluzioni figurative originali",
+            "Sperimentare strumenti e tecniche diverse per realizzare prodotti grafici, plastici, pittorici e multimediali",
+            "Introdurre nelle proprie produzioni creative elementi linguistici e stilistici scoperti osservando immagini e opere d'arte"
+          ]
+        },
+        {
+          "nome": "Arte e Immagine - Osservare e leggere le immagini",
+          "argomenti": [
+            "Guardare e osservare con consapevolezza un'immagine e gli oggetti presenti nell'ambiente descrivendo gli elementi formali, utilizzando le regole della percezione visiva e l'orientamento nello spazio",
+            "Riconoscere in un testo iconico-visivo gli elementi grammaticali e tecnici del linguaggio visivo (linee, colori, forme, volume, spazio) individuando il loro significato espressivo",
+            "Individuare nel linguaggio del fumetto, filmico e audiovisivo le diverse tipologie di codici, le sequenze narrative e decodificare in forma elementare i diversi significati"
+          ]
+        },
+        {
+          "nome": "Arte e Immagine - Comprendere e apprezzare le opere d'arte",
+          "argomenti": [
+            "Individuare in un'opera d'arte, sia antica sia moderna, gli elementi essenziali della forma, del linguaggio, della tecnica e dello stile dell'artista per comprenderne il messaggio e la funzione",
+            "Familiarizzare con alcune forme di arte e di produzione artigianale appartenenti alla propria e ad altre culture",
+            "Riconoscere e apprezzare nel proprio territorio gli aspetti più caratteristici del patrimonio ambientale e urbanistico e i principali monumenti storico-artistici"
+          ]
+        }
+      ]
+    }
+  ]
+}

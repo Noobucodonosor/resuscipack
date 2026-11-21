@@ -1,0 +1,76 @@
+{
+  "scuola": "Liceo Classico",
+  "materia": "Lingua e Cultura Straniera",
+  "anni": [
+    {
+      "anno": "Primo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua",
+          "argomenti": [
+            "Comprensione globale e selettiva di testi orali e scritti su argomenti noti inerenti alla sfera personale e sociale",
+            "Produzione di testi orali e scritti, lineari e coesi per riferire fatti e descrivere situazioni inerenti ad ambienti vicini e a esperienze personali",
+            "Partecipazione a conversazioni e interazione nella discussione, anche con parlanti nativi, in maniera adeguata al contesto",
+            "Riflessione sul sistema (fonologia, morfologia, sintassi, lessico, ecc.) e sugli usi linguistici (funzioni, varietà di registri e testi, ecc.), anche in ottica comparativa con la lingua italiana",
+            "Riflessione sulle strategie di apprendimento della lingua straniera al fine di sviluppare autonomia nello studio"
+          ]
+        },
+        {
+          "nome": "Cultura",
+          "argomenti": [
+            "Comprensione di aspetti relativi alla cultura dei paesi in cui si parla la lingua, con particolare riferimento all'ambito sociale",
+            "Analisi di semplici testi orali, scritti, iconico-grafici (documenti di attualità, testi letterari di facile comprensione, film, video, ecc.) per coglierne le principali specificità formali e culturali",
+            "Riconoscimento di similarità e diversità tra fenomeni culturali di paesi in cui si parlano lingue diverse (cultura lingua straniera vs cultura lingua italiana)"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Secondo Biennio",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua",
+          "argomenti": [
+            "Comprensione globale, selettiva e dettagliata di testi orali e scritti attinenti ad aree di interesse di ciascun liceo",
+            "Produzione di testi orali e scritti strutturati e coesi per riferire fatti, descrivere fenomeni e situazioni, sostenere opinioni con le opportune argomentazioni",
+            "Partecipazione a conversazioni e interazione nella discussione, anche con parlanti nativi, in maniera adeguata sia agli interlocutori sia al contesto",
+            "Riflessione sul sistema (fonologia, morfologia, sintassi, lessico, ecc.) e sugli usi linguistici (funzioni, varietà di registri e testi, aspetti pragmatici, ecc.), anche in ottica comparativa tra lingua straniera e lingua italiana",
+            "Riflessione su conoscenze, abilità e strategie acquisite nella lingua straniera in funzione della trasferibilità ad altre lingue"
+          ]
+        },
+        {
+          "nome": "Cultura",
+          "argomenti": [
+            "Comprensione di aspetti relativi alla cultura dei paesi in cui si parla la lingua con particolare riferimento agli ambiti di più immediato interesse di ciascun liceo (letterario, artistico, musicale, scientifico, sociale, economico)",
+            "Comprensione e contestualizzazione di testi letterari di epoche diverse, con priorità per generi o tematiche motivanti per lo studente",
+            "Analisi e confronto di testi letterari e produzioni artistiche provenienti da lingue/culture diverse (italiane e straniere)",
+            "Utilizzo della lingua straniera nello studio di argomenti provenienti da discipline non linguistiche",
+            "Utilizzo delle nuove tecnologie dell'informazione e della comunicazione per approfondire argomenti di studio"
+          ]
+        }
+      ]
+    },
+    {
+      "anno": "Quinto Anno",
+      "nuclei_tematici": [
+        {
+          "nome": "Lingua",
+          "argomenti": [
+            "Acquisizione di competenze linguistico-comunicative corrispondenti almeno al Livello B2 del Quadro Comune Europeo di Riferimento per le lingue",
+            "Produzione di testi orali e scritti (per riferire, descrivere, argomentare) e riflessione sulle caratteristiche formali dei testi prodotti al fine di pervenire ad un accettabile livello di padronanza linguistica",
+            "Consolidamento del metodo di studio della lingua straniera per l'apprendimento di contenuti non linguistici, coerentemente con l'asse culturale caratterizzante ciascun liceo e in funzione dello sviluppo di interessi personali o professionali"
+          ]
+        },
+        {
+          "nome": "Cultura",
+          "argomenti": [
+            "Approfondimento di aspetti della cultura relativi alla lingua di studio e alla caratterizzazione liceale (letteraria, artistica, musicale, scientifica, sociale, economica), con particolare riferimento alle problematiche e ai linguaggi propri dell'epoca moderna e contemporanea",
+            "Analisi e confronto di testi letterari provenienti da lingue e culture diverse (italiane e straniere)",
+            "Comprensione e interpretazione di prodotti culturali di diverse tipologie e generi, su temi di attualità, cinema, musica, arte",
+            "Utilizzo delle nuove tecnologie per fare ricerche, approfondire argomenti di natura non linguistica, esprimersi creativamente e comunicare con interlocutori stranieri"
+          ]
+        }
+      ]
+    }
+  ]
+}
