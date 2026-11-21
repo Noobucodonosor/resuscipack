@@ -52,9 +52,11 @@ from resuscipack.curriculum.student_state import (
     record_drill_attempt,
     record_hero_artifact,
 )
+from resuscipack.epistemic.biblio_extractor import select_biblio_rich_blocks
 from resuscipack.epistemic.bridge import get_bridges_for_node
 from resuscipack.epistemic.decompressor import decompress_concept
 from resuscipack.epistemic.discipline_reconstructor import reconstruct_discipline
+from resuscipack.epistemic.phrase_analyzer import probe_selection
 from resuscipack.epistemic.schema_v21 import ALL_MACRO_DISCIPLINES
 from resuscipack.epistemic.spectrum import (
     get_book_spectrum,
@@ -1101,6 +1103,179 @@ def create_app(
                 )
                 results.append(d)
             return jsonify({"query": raw_q, "sanitized_query": fts_q, "count": len(results), "results": results})
+        finally:
+            cconn.close()
+
+    @app.post("/api/probe/selection")
+    def api_probe_selection():
+        payload = request.get_json(force=True, silent=True) or {}
+        text = str(payload.get("text") or "").strip()
+        chapter_context = str(payload.get("chapter_context") or "").strip()
+        limit = min(max(int(payload.get("limit") or 10), 1), 24)
+        if not text:
+            return jsonify({"mode": "empty", "query": "", "terms": [], "confirmations": [], "rivals": [], "bridges": []})
+
+        cconn = _corpus_ro_conn()
+        if cconn is None:
+            abort(503, description="Database pack_corpus.db non disponibile")
+        try:
+            res = probe_selection(cconn, text, chapter_context=chapter_context, limit=limit)
+            return jsonify(res)
+        finally:
+            cconn.close()
+
+    @app.get("/api/atlas/bibliographic-citations")
+    def api_atlas_bibliographic_citations():
+        limit = min(max(request.args.get("limit", default=40, type=int), 1), 100)
+        book_pk = request.args.get("book_pk", default=None, type=int)
+        wishlist_only = request.args.get("wishlist_only", default="0") in ("1", "true", "yes")
+        cconn = _corpus_ro_conn()
+        if cconn is None:
+            abort(503, description="Database pack_corpus.db non disponibile")
+        try:
+            cconn.row_factory = sqlite3_row_factory()
+            has_table = (
+                cconn.execute(
+                    "SELECT 1 FROM sqlite_master WHERE type='table' AND name='bibliographic_citations'"
+                ).fetchone()
+                is not None
+            )
+            extracted: list[dict[str, Any]] = []
+            if has_table:
+                where = ["1=1"]
+                params: list[Any] = []
+                if book_pk is not None:
+                    where.append("bl.book_pk = ?")
+                    params.append(book_pk)
+                if wishlist_only:
+                    where.append("bc.resolved_book_pk IS NULL")
+                params.append(limit)
+                rows = cconn.execute(
+                    f"""
+                    SELECT
+                        bc.citation_pk, bc.source_block_pk, bc.verbatim_quote,
+                        bc.cited_author, bc.cited_work, bc.cited_year,
+                        bc.source_layer, bc.stance, bc.appraisal_note,
+                        bc.transmission_from, bc.resolved_book_pk,
+                        bl.book_pk AS source_book_pk, bl.page_start, bl.printed_page,
+                        bk.title AS source_book_title, bk.author AS source_book_author,
+                        rb.title AS resolved_book_title
+                    FROM bibliographic_citations bc
+                    JOIN blocks bl ON bl.block_pk = bc.source_block_pk
+                    JOIN books bk ON bk.book_pk = bl.book_pk
+                    LEFT JOIN books rb ON rb.book_pk = bc.resolved_book_pk
+                    WHERE {" AND ".join(where)}
+                    ORDER BY bc.citation_pk DESC
+                    LIMIT ?
+                    """,
+                    tuple(params),
+                ).fetchall()
+                for r in rows:
+                    d = dict(r)
+                    d["clean_source_book_title"] = _clean_book_title_for_citation(
+                        str(d.get("source_book_title") or ""), author=d.get("source_book_author")
+                    )
+                    if d.get("resolved_book_title"):
+                        d["clean_resolved_book_title"] = _clean_book_title_for_citation(
+                            str(d["resolved_book_title"])
+                        )
+                    extracted.append(d)
+
+            candidates = select_biblio_rich_blocks(
+                cconn,
+                book_pk=book_pk,
+                min_score=4,
+                limit=min(limit, 30),
+            )
+            for c in candidates:
+                c["clean_book_title"] = _clean_book_title_for_citation(
+                    str(c.get("book_title") or ""), author=c.get("book_author")
+                )
+            return jsonify(
+                {
+                    "extracted_count": len(extracted),
+                    "extracted": extracted,
+                    "candidate_count": len(candidates),
+                    "candidates": candidates,
+                }
+            )
+        finally:
+            cconn.close()
+
+    @app.get("/api/atlas/figures")
+    def api_atlas_figures():
+        limit = min(max(request.args.get("limit", default=48, type=int), 1), 150)
+        offset = max(request.args.get("offset", default=0, type=int), 0)
+        book_pk = request.args.get("book_pk", default=None, type=int)
+
+        if not DEFAULT_FIGURES_DIR.exists():
+            return jsonify({"total_count": 0, "offset": 0, "figures": []})
+
+        cconn = _corpus_ro_conn()
+        if cconn is None:
+            abort(503, description="Database pack_corpus.db non disponibile")
+        try:
+            cconn.row_factory = sqlite3_row_factory()
+            uid_filter: str | None = None
+            if book_pk is not None:
+                row = cconn.execute(
+                    "SELECT book_uid FROM books WHERE book_pk = ? AND is_active = 1", (book_pk,)
+                ).fetchone()
+                uid_filter = str(row["book_uid"]) if row else "__none__"
+
+            book_meta: dict[str, dict[str, Any]] = {}
+            for r in cconn.execute(
+                "SELECT book_pk, book_uid, title, author, surface_domain FROM books WHERE is_active = 1"
+            ).fetchall():
+                book_meta[str(r["book_uid"])] = {
+                    "book_pk": int(r["book_pk"]),
+                    "book_title": _clean_book_title_for_citation(str(r["title"]), author=r["author"]),
+                    "author": r["author"],
+                    "surface_domain": r["surface_domain"],
+                }
+
+            all_items: list[dict[str, Any]] = []
+            dirs = sorted(
+                d for d in DEFAULT_FIGURES_DIR.iterdir()
+                if d.is_dir() and (uid_filter is None or d.name == uid_filter)
+            )
+            for book_dir in dirs:
+                buid = book_dir.name
+                meta = book_meta.get(buid)
+                if not meta:
+                    continue
+                for img_path in sorted(book_dir.glob("*.jpg")):
+                    m_pg = re.match(r"page_(\d+)_", img_path.name)
+                    pg_num = int(m_pg.group(1)) if m_pg else None
+                    all_items.append(
+                        {
+                            "url": f"/corpus-figures/{buid}/{img_path.name}",
+                            "page": pg_num,
+                            "book_pk": meta["book_pk"],
+                            "book_title": meta["book_title"],
+                            "author": meta["author"],
+                            "surface_domain": meta["surface_domain"],
+                        }
+                    )
+
+            total_count = len(all_items)
+            page_items = all_items[offset : offset + limit]
+            # Collega il block_pk della pagina quando disponibile
+            for item in page_items:
+                if item["page"] is not None:
+                    brow = cconn.execute(
+                        """
+                        SELECT block_pk FROM blocks
+                        WHERE book_pk = ? AND is_active = 1 AND page_start <= ? AND page_end >= ?
+                        ORDER BY page_start ASC LIMIT 1
+                        """,
+                        (item["book_pk"], item["page"], item["page"]),
+                    ).fetchone()
+                    item["block_pk"] = int(brow["block_pk"]) if brow else None
+                else:
+                    item["block_pk"] = None
+
+            return jsonify({"total_count": total_count, "offset": offset, "figures": page_items})
         finally:
             cconn.close()
 

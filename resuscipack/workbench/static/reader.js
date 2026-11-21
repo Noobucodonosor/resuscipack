@@ -36,6 +36,16 @@ import {
   const prevChapterBtn = document.getElementById("prevChapterBtn");
   const nextChapterBtn = document.getElementById("nextChapterBtn");
 
+  const openManualProbeBtn = document.getElementById("openManualProbeBtn");
+  const probeDrawer = document.getElementById("probeDrawer");
+  const probeManualForm = document.getElementById("probeManualForm");
+  const probeQueryInput = document.getElementById("probeQueryInput");
+  const probeBridgeTags = document.getElementById("probeBridgeTags");
+  const probeResultsBox = document.getElementById("probeResultsBox");
+  const selectionProbeBar = document.getElementById("selectionProbeBar");
+  const selectionProbeBtn = document.getElementById("selectionProbeBtn");
+  let lastSelectedText = "";
+
   function renderTocInto(container) {
     if (!container) return;
     container.replaceChildren();
@@ -448,6 +458,155 @@ import {
   if (openTocBtn && tocDrawer) {
     openTocBtn.addEventListener("click", () => {
       tocDrawer.showModal();
+    });
+  }
+
+  function renderProbeGroup(title, items) {
+    const sec = document.createElement("section");
+    sec.className = "apparatus-group";
+    const h = document.createElement("h3");
+    h.textContent = `${title} (${items.length})`;
+    sec.appendChild(h);
+    if (!items.length) {
+      const empty = document.createElement("p");
+      empty.className = "t-small muted";
+      empty.textContent = "Nessun passaggio corrispondente in questa fascia.";
+      sec.appendChild(empty);
+      return sec;
+    }
+    const list = document.createElement("div");
+    list.className = "passage-list";
+    items.forEach((hit) => {
+      const card = document.createElement("article");
+      card.className = "passage-item";
+      const meta = document.createElement("div");
+      meta.className = "passage-item__meta";
+      const who = hit.actors && hit.actors.length ? hit.actors.join(", ") : (hit.author || "");
+      const parts = [hit.book_title];
+      if (who) parts.push(who);
+      if (hit.when) parts.push(hit.when);
+      meta.textContent = parts.join(" · ");
+
+      const stmt = document.createElement("p");
+      stmt.className = "passage-item__quote";
+      stmt.textContent = hit.stmt || "";
+
+      const quote = document.createElement("blockquote");
+      quote.className = "t-small muted";
+      quote.textContent = hit.verbatim_quote ? `«${hit.verbatim_quote}»` : "";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn btn--secondary";
+      btn.textContent = "Apri pagina originale";
+      btn.addEventListener("click", () => {
+        if (probeDrawer && probeDrawer.open) probeDrawer.close();
+        sourceDrawer.openBlock(hit.block_pk, hit.verbatim_quote || "");
+      });
+
+      card.appendChild(meta);
+      card.appendChild(stmt);
+      if (hit.verbatim_quote) card.appendChild(quote);
+      card.appendChild(btn);
+      list.appendChild(card);
+    });
+    sec.appendChild(list);
+    return sec;
+  }
+
+  async function runLiveProbe(queryText) {
+    const q = String(queryText || "").trim();
+    if (!probeDrawer || !probeResultsBox) return;
+    if (probeQueryInput) probeQueryInput.value = q;
+    if (!probeDrawer.open) probeDrawer.showModal();
+    if (!q) {
+      probeBridgeTags.replaceChildren();
+      probeResultsBox.textContent = "Scrivi o seleziona un sintagma o un'intera frase dal capitolo.";
+      return;
+    }
+    probeResultsBox.textContent = "Ricerca nei volumi della biblioteca…";
+    const resp = await fetch("/api/probe/selection", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: q,
+        chapter_context: headingEl ? headingEl.textContent || "" : "",
+        limit: 10,
+      }),
+    });
+    if (!resp.ok) {
+      probeResultsBox.textContent = "Impossibile interrogare la biblioteca in questo momento.";
+      return;
+    }
+    const data = await resp.json();
+    probeBridgeTags.replaceChildren();
+    (data.bridges || []).forEach((br) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "quick-pill";
+      b.textContent = `Ponte: ${br.concept}`;
+      b.addEventListener("click", () => runLiveProbe(br.concept));
+      probeBridgeTags.appendChild(b);
+    });
+
+    probeResultsBox.replaceChildren();
+    const summary = document.createElement("p");
+    summary.className = "t-small muted";
+    summary.textContent = data.mode === "proposition_trial"
+      ? `Confronto su proposizione · termini chiave: ${(data.terms || []).join(", ")}`
+      : `Sonda di sintagma · termini chiave: ${(data.terms || []).join(", ")}`;
+    probeResultsBox.appendChild(summary);
+    probeResultsBox.appendChild(renderProbeGroup("Conferme e definizioni", data.confirmations || []));
+    probeResultsBox.appendChild(renderProbeGroup("Tesi rivali e obiezioni", data.rivals || []));
+  }
+
+  function updateSelectionProbeBar() {
+    if (!selectionProbeBar || !proseEl) return;
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) {
+      selectionProbeBar.hidden = true;
+      return;
+    }
+    const text = sel.toString().trim();
+    if (text.length < 4 || text.length > 420) {
+      selectionProbeBar.hidden = true;
+      return;
+    }
+    const anchor = sel.anchorNode;
+    if (!anchor || !proseEl.contains(anchor)) {
+      selectionProbeBar.hidden = true;
+      return;
+    }
+    lastSelectedText = text;
+    selectionProbeBar.hidden = false;
+  }
+
+  if (proseEl) {
+    proseEl.addEventListener("mouseup", () => setTimeout(updateSelectionProbeBar, 10));
+    proseEl.addEventListener("keyup", () => setTimeout(updateSelectionProbeBar, 10));
+  }
+  document.addEventListener("selectionchange", () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) {
+      if (selectionProbeBar) selectionProbeBar.hidden = true;
+    }
+  });
+  if (selectionProbeBtn) {
+    selectionProbeBtn.addEventListener("click", () => {
+      if (selectionProbeBar) selectionProbeBar.hidden = true;
+      runLiveProbe(lastSelectedText);
+    });
+  }
+  if (openManualProbeBtn) {
+    openManualProbeBtn.addEventListener("click", () => {
+      const selText = (window.getSelection()?.toString() || "").trim();
+      runLiveProbe(selText || lastSelectedText);
+    });
+  }
+  if (probeManualForm) {
+    probeManualForm.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      runLiveProbe(probeQueryInput ? probeQueryInput.value : "");
     });
   }
 

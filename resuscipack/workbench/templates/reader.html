@@ -19,6 +19,7 @@
   <div class="wrap">
     <div class="book-toc-trigger-row">
       <button type="button" class="btn btn--secondary" id="openTocBtn">Indice dei capitoli</button>
+      <button type="button" class="btn btn--secondary" id="openManualProbeBtn">Interroga una frase nei libri</button>
       <a class="link" href="/atlante">Vai all'atlante</a>
     </div>
 
@@ -84,6 +85,40 @@
     <div class="toc-drawer__scroll" id="tocMobileContainer"></div>
   </div>
 </dialog>
+
+<dialog id="probeDrawer" class="source-drawer" closedby="any" aria-labelledby="probeDrawerTitle">
+  <div class="source-drawer__panel">
+    <header class="source-drawer__head">
+      <div>
+        <p class="source-drawer__kicker">Sonda viva nella biblioteca</p>
+        <h2 id="probeDrawerTitle" class="source-drawer__title">Confronto nei testi</h2>
+      </div>
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary" aria-label="Chiudi sonda">Chiudi</button>
+      </form>
+    </header>
+    <div class="source-drawer__tags" id="probeBridgeTags"></div>
+    <div class="source-drawer__scroll">
+      <form id="probeManualForm" class="probe-form">
+        <label for="probeQueryInput" class="t-small">Sintagma o proposizione da verificare</label>
+        <div class="probe-form__row">
+          <input type="search" id="probeQueryInput" class="atlas-input" placeholder="Seleziona un passo o scrivi una frase…">
+          <button type="submit" class="btn btn--primary">Verifica</button>
+        </div>
+      </form>
+      <div id="probeResultsBox" aria-live="polite"></div>
+    </div>
+    <footer class="source-drawer__foot">
+      <form method="dialog">
+        <button type="submit" class="btn btn--secondary">Torna al capitolo</button>
+      </form>
+    </footer>
+  </div>
+</dialog>
+
+<div id="selectionProbeBar" class="selection-probe-bar" hidden>
+  <button type="button" id="selectionProbeBtn" class="btn btn--primary">Interroga nei libri</button>
+</div>
 
 {% include '_source_drawer.html' %}
 

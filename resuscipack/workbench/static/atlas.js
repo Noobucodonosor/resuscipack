@@ -25,12 +25,29 @@ import {
     document.getElementById("tabCatalogBtn"),
     document.getElementById("tabMosaicBtn"),
     document.getElementById("tabSearchBtn"),
+    document.getElementById("tabSourcesBtn"),
+    document.getElementById("tabStudyFiguresBtn"),
   ];
   const panels = [
     document.getElementById("panelCatalog"),
     document.getElementById("panelMosaic"),
     document.getElementById("panelSearch"),
+    document.getElementById("panelSources"),
+    document.getElementById("panelStudyFigures"),
   ];
+  let sourcesLoaded = false;
+  let studyFiguresLoaded = false;
+  let figuresOffset = 0;
+  let figuresTotal = 0;
+  const FIGURES_BATCH = 24;
+
+  const sourcesBox = document.getElementById("sourcesResultBox");
+  const sourcesAllBtn = document.getElementById("sourcesAllBtn");
+  const sourcesGeymonatBtn = document.getElementById("sourcesGeymonatBtn");
+  const sourcesWishlistBtn = document.getElementById("sourcesWishlistBtn");
+  const studyPathBox = document.getElementById("studyPathBox");
+  const figuresGalleryBox = document.getElementById("figuresGalleryBox");
+  const figuresLoadMoreBtn = document.getElementById("figuresLoadMoreBtn");
 
   const searchInput = document.getElementById("atlasSearchInput");
   const primarySelect = document.getElementById("atlasPrimarySelect");
@@ -53,18 +70,246 @@ import {
   const modalFilterSelect = document.getElementById("conceptModalFilter");
   const conceptResultsBox = document.getElementById("conceptResultsBox");
 
-  function switchTab(idx) {
+  function switchTab(idx, focusTab = false) {
     withViewTransition(() => {
       tabBtns.forEach((b, i) => {
-        b.setAttribute("aria-selected", i === idx ? "true" : "false");
-        panels[i].hidden = i !== idx;
+        if (!b || !panels[i]) return;
+        const active = i === idx;
+        b.setAttribute("aria-selected", active ? "true" : "false");
+        b.setAttribute("tabindex", active ? "0" : "-1");
+        panels[i].hidden = !active;
       });
     }, null);
+    if (focusTab && tabBtns[idx]) {
+      tabBtns[idx].focus();
+    }
+    if (idx === 3 && !sourcesLoaded) {
+      sourcesLoaded = true;
+      loadSourcesPanel({});
+    }
+    if (idx === 4 && !studyFiguresLoaded) {
+      studyFiguresLoaded = true;
+      loadStudyPath();
+      loadCorpusFigures(true);
+    }
   }
 
   tabBtns.forEach((btn, idx) => {
-    btn.addEventListener("click", () => switchTab(idx));
+    if (!btn) return;
+    btn.addEventListener("click", () => switchTab(idx, false));
+    btn.addEventListener("keydown", (ev) => {
+      let nextIdx = null;
+      if (ev.key === "ArrowRight") nextIdx = (idx + 1) % tabBtns.length;
+      else if (ev.key === "ArrowLeft") nextIdx = (idx - 1 + tabBtns.length) % tabBtns.length;
+      else if (ev.key === "Home") nextIdx = 0;
+      else if (ev.key === "End") nextIdx = tabBtns.length - 1;
+      if (nextIdx !== null) {
+        ev.preventDefault();
+        switchTab(nextIdx, true);
+      }
+    });
   });
+
+  async function loadSourcesPanel({ bookPk = null, wishlistOnly = false } = {}) {
+    if (!sourcesBox) return;
+    sourcesBox.textContent = "Caricamento fonti e bibliografie ragionate…";
+    const params = new URLSearchParams({ limit: "30" });
+    if (bookPk) params.set("book_pk", String(bookPk));
+    if (wishlistOnly) params.set("wishlist_only", "1");
+    const resp = await fetch(`/api/atlas/bibliographic-citations?${params.toString()}`);
+    if (!resp.ok) {
+      sourcesBox.textContent = "Impossibile caricare le fonti in questo momento.";
+      return;
+    }
+    const data = await resp.json();
+    sourcesBox.replaceChildren();
+
+    if ((data.extracted || []).length > 0) {
+      const hExt = document.createElement("h2");
+      hExt.className = "study-section-title";
+      hExt.textContent = wishlistOnly ? "Opere citate non ancora presenti in biblioteca" : "Citazioni e giudizi sulle fonti";
+      sourcesBox.appendChild(hExt);
+
+      const listExt = document.createElement("div");
+      listExt.className = "passage-list";
+      data.extracted.forEach((cit) => {
+        const card = document.createElement("article");
+        card.className = "passage-item";
+        const meta = document.createElement("div");
+        meta.className = "passage-item__meta";
+        meta.textContent = `${cit.cited_author} — ${cit.cited_work}${cit.cited_year ? ` (${cit.cited_year})` : ""} · da ${cit.clean_source_book_title}`;
+        const note = document.createElement("p");
+        note.className = "passage-item__quote";
+        note.textContent = cit.appraisal_note || "";
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn--secondary";
+        btn.textContent = "Apri pagina originale";
+        btn.addEventListener("click", () => sourceDrawer.openBlock(cit.source_block_pk, cit.verbatim_quote || ""));
+        card.appendChild(meta);
+        card.appendChild(note);
+        card.appendChild(btn);
+        listExt.appendChild(card);
+      });
+      sourcesBox.appendChild(listExt);
+    }
+
+    const candList = data.candidates || [];
+    if (candList.length > 0 && !wishlistOnly) {
+      const hCand = document.createElement("h2");
+      hCand.className = "study-section-title";
+      hCand.style.marginTop = "var(--s-6)";
+      hCand.textContent = "Pagine ad alta densità di fonti e commenti critici";
+      sourcesBox.appendChild(hCand);
+
+      const list = document.createElement("div");
+      list.className = "passage-list";
+      candList.forEach((cand) => {
+        const card = document.createElement("article");
+        card.className = "passage-item";
+        const meta = document.createElement("div");
+        meta.className = "passage-item__meta";
+        const pg = cand.printed_page || cand.page_start;
+        meta.textContent = `${cand.clean_book_title}${cand.book_author ? ` · ${cand.book_author}` : ""}${pg ? ` · p. ${pg}` : ""}`;
+        const info = document.createElement("p");
+        info.className = "passage-item__quote";
+        info.textContent = cand.section_title
+          ? `${cand.section_title} — richiami a fonti antiche o edizioni critiche (${cand.ancient_mentions} autori classici, ${cand.author_years} riferimenti datati).`
+          : `Pagina con richiami a fonti critiche (${cand.ancient_mentions} autori classici, ${cand.author_years} riferimenti datati).`;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn--secondary";
+        btn.textContent = "Apri pagina originale";
+        btn.addEventListener("click", () => sourceDrawer.openBlock(cand.block_pk, ""));
+        card.appendChild(meta);
+        card.appendChild(info);
+        card.appendChild(btn);
+        list.appendChild(card);
+      });
+      sourcesBox.appendChild(list);
+    } else if ((data.extracted || []).length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "muted";
+      empty.textContent = "Nessuna voce bibliografica disponibile per il filtro selezionato.";
+      sourcesBox.appendChild(empty);
+    }
+  }
+
+  async function loadStudyPath() {
+    if (!studyPathBox) return;
+    studyPathBox.textContent = "Caricamento percorso di studio…";
+    const resp = await fetch("/api/overview");
+    if (!resp.ok) {
+      studyPathBox.textContent = "Percorso di studio non disponibile.";
+      return;
+    }
+    const ov = await resp.json();
+    studyPathBox.replaceChildren();
+    const frontierSet = new Set(ov.frontier_nodes || []);
+    const ready = ov.ofa_readiness || {};
+    const summary = document.createElement("p");
+    summary.className = "t-small muted";
+    summary.textContent = `Prontezza verifiche preliminari: ${ready.ready_count || 0} su ${ready.total_count || 0} argomenti consolidati.`;
+    studyPathBox.appendChild(summary);
+
+    const grid = document.createElement("div");
+    grid.className = "study-path-grid";
+    (ov.nodes || []).forEach((node) => {
+      const card = document.createElement("article");
+      card.className = "study-node-card";
+      if (frontierSet.has(node.id)) card.classList.add("study-node-card--frontier");
+      const title = document.createElement("h3");
+      title.textContent = node.title || "";
+      const meta = document.createElement("p");
+      meta.className = "t-small muted";
+      const statusMap = {
+        mastered: "Consolidato",
+        in_progress: "In corso",
+        failed: "Da riprendere",
+        not_started: frontierSet.has(node.id) ? "Prossimo passo consigliato" : "In programma",
+      };
+      meta.textContent = `${node.domain || "Fondamenti"} · ${statusMap[node.student_status] || "In programma"}`;
+      card.appendChild(title);
+      card.appendChild(meta);
+      if (node.book_link && node.book_link.volume_id && node.book_link.slug) {
+        const link = document.createElement("a");
+        link.className = "link";
+        link.href = `/libro/${encodeURIComponent(node.book_link.volume_id)}/${encodeURIComponent(node.book_link.slug)}`;
+        link.textContent = "Apri capitolo nel libro";
+        card.appendChild(link);
+      }
+      grid.appendChild(card);
+    });
+    studyPathBox.appendChild(grid);
+  }
+
+  async function loadCorpusFigures(reset) {
+    if (!figuresGalleryBox) return;
+    if (reset) {
+      figuresOffset = 0;
+      figuresGalleryBox.replaceChildren();
+    }
+    const resp = await fetch(`/api/atlas/figures?limit=${FIGURES_BATCH}&offset=${figuresOffset}`);
+    if (!resp.ok) return;
+    const data = await resp.json();
+    figuresTotal = data.total_count || 0;
+    const items = data.figures || [];
+    items.forEach((fig) => {
+      const card = document.createElement("article");
+      card.className = "figure-card";
+      const img = document.createElement("img");
+      img.src = fig.url;
+      img.loading = "lazy";
+      img.alt = `${fig.book_title}${fig.page ? `, pagina ${fig.page}` : ""}`;
+      const meta = document.createElement("p");
+      meta.className = "t-small muted";
+      meta.textContent = `${fig.book_title}${fig.page ? ` · p. ${fig.page}` : ""}`;
+      card.appendChild(img);
+      card.appendChild(meta);
+      if (fig.block_pk) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn--secondary";
+        btn.textContent = "Apri pagina originale";
+        btn.addEventListener("click", () => sourceDrawer.openBlock(fig.block_pk, ""));
+        card.appendChild(btn);
+      }
+      figuresGalleryBox.appendChild(card);
+    });
+    figuresOffset += items.length;
+    if (figuresLoadMoreBtn) {
+      figuresLoadMoreBtn.hidden = figuresOffset >= figuresTotal;
+      figuresLoadMoreBtn.textContent = `Carica altre tavole (${figuresOffset} di ${figuresTotal})`;
+    }
+  }
+
+  if (sourcesAllBtn) {
+    sourcesAllBtn.addEventListener("click", () => {
+      sourcesAllBtn.setAttribute("aria-pressed", "true");
+      sourcesGeymonatBtn.setAttribute("aria-pressed", "false");
+      sourcesWishlistBtn.setAttribute("aria-pressed", "false");
+      loadSourcesPanel({});
+    });
+  }
+  if (sourcesGeymonatBtn) {
+    sourcesGeymonatBtn.addEventListener("click", () => {
+      sourcesAllBtn.setAttribute("aria-pressed", "false");
+      sourcesGeymonatBtn.setAttribute("aria-pressed", "true");
+      sourcesWishlistBtn.setAttribute("aria-pressed", "false");
+      loadSourcesPanel({ bookPk: 992 });
+    });
+  }
+  if (sourcesWishlistBtn) {
+    sourcesWishlistBtn.addEventListener("click", () => {
+      sourcesAllBtn.setAttribute("aria-pressed", "false");
+      sourcesGeymonatBtn.setAttribute("aria-pressed", "false");
+      sourcesWishlistBtn.setAttribute("aria-pressed", "true");
+      loadSourcesPanel({ wishlistOnly: true });
+    });
+  }
+  if (figuresLoadMoreBtn) {
+    figuresLoadMoreBtn.addEventListener("click", () => loadCorpusFigures(false));
+  }
 
   function buildSpectrumBar(spectrumItems) {
     const bar = document.createElement("div");
