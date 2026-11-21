@@ -294,6 +294,29 @@ V22_SINGLE_METADATA_RESPONSE_SCHEMA: Mapping[str, Any] = {
 }
 
 
+def build_v22_compact_item_schema(max_units: int = 2) -> Dict[str, Any]:
+    """Restituisce lo schema compatto v2.2 con limite `maxItems` configurabile per `u`."""
+    capped = max(2, min(8, int(max_units)))
+    props = dict(V22_COMPACT_ITEM_SCHEMA["properties"])
+    u_schema = dict(props["u"])
+    u_schema["maxItems"] = capped
+    props["u"] = u_schema
+    return {
+        "type": "OBJECT",
+        "required": list(V22_COMPACT_ITEM_SCHEMA["required"]),
+        "properties": props,
+    }
+
+
+def build_v22_compact_response_schema(max_units: int = 2) -> Dict[str, Any]:
+    """Restituisce `V22_COMPACT_RESPONSE_SCHEMA` con limite `maxItems` configurabile per `u`."""
+    return {
+        "type": "OBJECT",
+        "required": ["items"],
+        "properties": {"items": {"type": "ARRAY", "items": build_v22_compact_item_schema(max_units)}},
+    }
+
+
 def build_multiblock_extraction_prompt(
     *,
     book_title: str,
@@ -301,6 +324,7 @@ def build_multiblock_extraction_prompt(
     rows: Sequence[Mapping[str, Any]],
     single_v22_only: bool = False,
     metadata_only: bool = False,
+    max_units: int = 2,
 ) -> str:
     """Costruisce il prompt compatto `BlockExtraction v2.2` (`responseSchema` JSON su 1..8 blocchi)."""
     blocks_section = []
@@ -328,13 +352,22 @@ def build_multiblock_extraction_prompt(
             f"LIBRO: {book_title!r} ({surface_domain})\n\n{joined_blocks}\n"
         )
 
+    unit_cap = max(2, min(8, int(max_units)))
+    unit_budget_note = (
+        f"fino a {unit_cap} unità epistemiche distinte su pagine dense (>=4.500 caratteri), 1..2 su brani ordinari"
+        if unit_cap > 2
+        else "1 sola asserzione centrale per brani ordinari, 2 solo se la pagina enuncia due definizioni/teoremi/esperimenti distinti"
+    )
+
     return (
         "Estrai in JSON compatto `BlockExtraction v2.2` secondo lo schema allegato.\n"
         f"{order_rule}"
-        "- Se indice/frontespizio/bibliografia/vuoto OPPURE sequenza illeggibile di simboli/numeri/codici font corrotti priva di frasi di senso compiuto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[],`u`=[],`s`=null.\n"
+        "- Se indice meccanico/frontespizio/vuoto OPPURE sequenza illeggibile di simboli/numeri/codici font corrotti priva di frasi di senso compiuto: `y`='low_or_paratext', `d`=[],`t`=[],`p`=[],`yr`=[],`u`=[],`s`=null. (NOTA: una bibliografia ragionata o rassegna critica di fonti in prosa NON è paratestuale: estraila).\n"
         "- Altrimenti: `d`=1..3 macro-discipline reali del brano; `t`=1..3 temi specifici in italiano; `p`=toponimi geografici reali nel brano; `yr`=anni/date esplicite.\n"
-        "- `u`: 1 sola asserzione centrale per brani ordinari, 2 solo se la pagina enuncia due definizioni/teoremi/esperimenti distinti (`st` 45..110 char con soggetto esplicito, vietati egli/esso/costui/ivi; "
+        f"- `u`: {unit_budget_note} (`st` 45..110 char con soggetto esplicito, vietati egli/esso/costui/ivi; "
+        "`k`='thm' SOLO per teoremi o leggi formali dimostrabili, NON per tesi storiche/filosofiche — per quelle usa 'claim' o 'dispute'; "
         "`q` citazione CONTIGUA ESATTA di 5..14 parole copiata carattere-per-carattere dal brano: NON correggere refusi OCR come 'ro'->'10', NON tradurre LaTeX greco in Unicode, VIETATO inserire '[...]' o ellissi; "
+        "`w` = nomi propri di persone, autori o scuole filosofiche/scientifiche citati nel passo (es. ['Euclide', 'Galileo']; usa [] se assenti; VIETATO inserire concetti o parole comuni come 'vettori', 'flogisto', 'economico'); "
         "`v` obbligatorio se `k`='dispute'; `c`=1..3 concetti; mai mettere 'narrates' dentro `k`).\n"
         "- `s`: null su esposizioni astratte/biografiche pure; valorizza solo per un meccanismo fisico, sperimentale o procedurale concreto "
         "(`mc` 80..165 char astratto dal dominio, senza meta-frasi 'Il testo descrive...' e senza sostantivi aneddotici di superficie).\n"
@@ -539,9 +572,15 @@ def select_pending_blocks(
     return interleaved
 
 
-def group_rows_into_book_windows(rows: Sequence[sqlite3.Row], pack_size: int = 5) -> List[List[sqlite3.Row]]:
-    """Raggruppa righe consecutive appartenenti allo stesso `book_pk` in finestre di lunghezza `<= pack_size`."""
+def group_rows_into_book_windows(
+    rows: Sequence[sqlite3.Row],
+    pack_size: int = 5,
+    overlap: int = 0,
+) -> List[List[sqlite3.Row]]:
+    """Raggruppa righe consecutive appartenenti allo stesso `book_pk` in finestre di lunghezza `<= pack_size`
+    con eventuale `overlap` (es. 1 pagina condivisa sul bordo della finestra)."""
     win_sz = max(1, int(pack_size))
+    ov = max(0, min(win_sz - 1, int(overlap))) if win_sz > 1 else 0
     if win_sz == 1:
         return [[r] for r in rows]
 
@@ -552,7 +591,10 @@ def group_rows_into_book_windows(rows: Sequence[sqlite3.Row], pack_size: int = 5
         bpk = int(r["book_pk"])
         if current and (bpk != current_book or len(current) >= win_sz):
             windows.append(current)
-            current = []
+            if ov > 0 and bpk == current_book:
+                current = list(current[-ov:])
+            else:
+                current = []
         current_book = bpk
         current.append(r)
     if current:
@@ -1435,6 +1477,8 @@ def export_multiblock_batch_jsonl(
     shard_size: Optional[int] = None,
     retry_notes: Optional[Mapping[int, str]] = None,
     thinking_budget: int = 0,
+    deep_blocks: bool = False,
+    window_overlap: int = 0,
 ) -> Dict[str, Any]:
     """Esporta le finestre multi-blocco nel formato nativo Vertex AI `batchPredictionJobs` (-50%,
     solo chiave radice `request` senza `custom_id`), opzionalmente suddiviso in shard JSONL."""
@@ -1447,7 +1491,7 @@ def export_multiblock_batch_jsonl(
         book_pk=book_pk,
         block_pks=block_pks,
     )
-    windows = group_rows_into_book_windows(pending, pack_size=pack_size)
+    windows = group_rows_into_book_windows(pending, pack_size=pack_size, overlap=window_overlap)
     out_path = Path(out_jsonl_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_map: Dict[str, List[int]] = {}
@@ -1464,12 +1508,15 @@ def export_multiblock_batch_jsonl(
             "existing_units_cnt" in r.keys() and int(r["existing_units_cnt"] or 0) > 0
             for r in wrows
         )
+        has_dense = deep_blocks and any(len(str(r["content"] or "")) >= 4500 for r in wrows)
+        eff_max_units = 6 if has_dense else 2
         prompt_core = build_multiblock_extraction_prompt(
             book_title=str(lead["book_title"] or ""),
             surface_domain=str(lead["surface_domain"] or ""),
             rows=wrows,
             single_v22_only=False,
             metadata_only=is_meta,
+            max_units=eff_max_units,
         )
         has_retry = False
         if retry_notes:
@@ -1498,7 +1545,11 @@ def export_multiblock_batch_jsonl(
                     "temperature": 0.25 if has_retry else 0.1,
                     "maxOutputTokens": 4096 if is_meta else 8192,
                     "responseMimeType": "application/json",
-                    "responseSchema": V22_METADATA_ONLY_RESPONSE_SCHEMA if is_meta else V22_COMPACT_RESPONSE_SCHEMA,
+                    "responseSchema": (
+                        V22_METADATA_ONLY_RESPONSE_SCHEMA
+                        if is_meta
+                        else build_v22_compact_response_schema(eff_max_units)
+                    ),
                     "thinkingConfig": {"thinkingBudget": max(0, int(thinking_budget))},
                 },
             }
@@ -1876,6 +1927,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--dry-run", action="store_true", help="Calcola volumi e costi reali senza chiamate API")
     parser.add_argument(
+        "--deep-blocks",
+        action="store_true",
+        help="Consente fino a 6 unità epistemiche su blocchi lunghi/densi (>=4.500 caratteri)",
+    )
+    parser.add_argument(
+        "--window-overlap",
+        type=int,
+        default=0,
+        help="Numero di pagine in overlap tra finestre consecutive dello stesso libro (0 o 1)",
+    )
+    parser.add_argument(
         "--seed-empirical",
         action="store_true",
         help="Inserisce i 3 ponti empirici verificati (Marconi, Galvani, Cartesio) in pack_corpus.db",
@@ -1900,6 +1962,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 pack_size=args.pack_size,
                 include_v21_backfill=args.backfill_v22,
                 book_pk=args.book_pk,
+                deep_blocks=args.deep_blocks,
+                window_overlap=args.window_overlap,
             )
         finally:
             conn.close()

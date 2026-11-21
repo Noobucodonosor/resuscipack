@@ -120,6 +120,9 @@ _MINISTERIAL_STOPWORDS = frozenset(
         "generali", "fondamento", "fondamenti", "pratica", "pratico", "teorica", "teorico",
         "relativo", "relativa", "relativi", "relative", "corretto", "corretta", "corretta",
         "adeguato", "adeguata", "specifica", "specifico", "principale", "secondario",
+        "economico", "economica", "economici", "economiche",
+        "classica", "classico", "classici", "classiche",
+        "teoria", "teorie", "culturale", "culturali",
     }
 )
 
@@ -216,10 +219,10 @@ def _build_fts_or_query(terms: Sequence[str], *, use_prefix: bool = False) -> st
 def _term_in_hay(term: str, hay_norm: str, hay_words: set[str]) -> bool:
     if term in hay_words:
         return True
-    if len(term) >= 6:
-        stem = term[: max(5, len(term) - 2)]
+    if len(term) >= 7 and not term.endswith(("ta", "zione", "zioni", "ismo", "logia")):
+        stem = term[: max(6, len(term) - 2)]
         for w in hay_words:
-            if len(w) >= 6 and w.startswith(stem):
+            if len(w) >= 7 and w.startswith(stem):
                 return True
     return False
 
