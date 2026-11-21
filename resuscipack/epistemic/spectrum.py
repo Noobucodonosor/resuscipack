@@ -208,31 +208,60 @@ _PARATEXT_HEADING_RE = re.compile(
     r")\s*:?\s*$",
     re.IGNORECASE,
 )
+_BIBLIO_HEADING_RE = re.compile(
+    r"^(?:#{1,4}\s*)?(?:bibliografia|riferimenti\s+bibliografici|references|bibliography"
+    r"|further\s+reading(?:\s+and\s+references)?|nota\s+bibliografica)\s*:?\s*$",
+    re.IGNORECASE,
+)
 _INLINE_CAPS_PARATEXT_RE = re.compile(
     r"(?:^|\n)\s*(?:SOMMARIO|INDICE\s+GENERALE|INDICE\s+ANALITICO|INDICE\s+DEI\s+NOMI|"
     r"TABLE\s+OF\s+CONTENTS|BIBLIOGRAFIA|BIBLIOGRAPHY|FURTHER\s+READING\s+AND\s+REFERENCES)\b"
+)
+_INLINE_CAPS_BIBLIO_RE = re.compile(
+    r"(?:^|\n)\s*(?:BIBLIOGRAFIA|BIBLIOGRAPHY|FURTHER\s+READING\s+AND\s+REFERENCES|NOTA\s+BIBLIOGRAFICA)\b"
 )
 _PAGE_MARKER_LINE_RE = re.compile(r"^#{1,4}\s*pagina\s+\d+\s*$", re.IGNORECASE)
 _DOTTED_TOC_LINE_RE = re.compile(r"\.{4,}\s*\d+\s*$")
 _INDEX_LOCATOR_LINE_RE = re.compile(r",\s*\d+(?:\s*[-–,]\s*\d+){2,}\.?\s*$")
 
 
+def _looks_like_reasoned_bibliography(content: str) -> bool:
+    """Riconosce bibliografie ragionate o note critiche con prosa discorsiva (non meri elenchi)."""
+    lines = [
+        ln.strip()
+        for ln in (content or "").splitlines()
+        if ln.strip() and not _PAGE_MARKER_LINE_RE.match(ln.strip())
+    ]
+    if not lines:
+        return False
+    if len(lines) >= 4:
+        dotted = sum(1 for ln in lines if _DOTTED_TOC_LINE_RE.search(ln))
+        indexed = sum(1 for ln in lines if _INDEX_LOCATOR_LINE_RE.search(ln))
+        if dotted / len(lines) >= 0.25 or indexed / len(lines) >= 0.25:
+            return False
+
+    body_text = " ".join(lines)
+    sentences = [s.strip() for s in re.split(r"(?<=[.;?!])\s+", body_text) if len(s.strip()) >= 75]
+    prose_sentences = [
+        s
+        for s in sentences
+        if len(re.findall(r"[A-Za-zÀ-ÿ]{2,}", s)) >= 12
+        and not _DOTTED_TOC_LINE_RE.search(s)
+        and not _INDEX_LOCATOR_LINE_RE.search(s)
+    ]
+    if len(prose_sentences) >= 2:
+        return True
+
+    alpha_chars = sum(1 for ch in body_text if ch.isalpha())
+    avg_len = sum(len(ln) for ln in lines) / len(lines)
+    return alpha_chars >= 600 and avg_len >= 48.0
+
+
 def is_residual_paratext_block(section_title: str, content: str) -> bool:
-    """Rileva blocchi residui di indice/sommario/bibliografia anche se marcati `body` in Wave 0."""
+    """Rileva blocchi residui di indice/sommario/bibliografia meccanica, preservando bibliografie ragionate."""
     sec = (section_title or "").strip()
-    if sec and _PARATEXT_HEADING_RE.match(sec):
-        return True
-
-    raw_head = (content or "")[:360]
-    if _INLINE_CAPS_PARATEXT_RE.search(raw_head):
-        return True
-
     lines = [ln.strip() for ln in (content or "").splitlines() if ln.strip()]
     if not lines:
-        return True
-
-    non_page_lines = [ln for ln in lines[:8] if not _PAGE_MARKER_LINE_RE.match(ln)]
-    if non_page_lines and _PARATEXT_HEADING_RE.match(non_page_lines[0]):
         return True
 
     if len(lines) >= 4:
@@ -240,6 +269,25 @@ def is_residual_paratext_block(section_title: str, content: str) -> bool:
         indexed = sum(1 for ln in lines if _INDEX_LOCATOR_LINE_RE.search(ln))
         if dotted / len(lines) >= 0.45 or indexed / len(lines) >= 0.45:
             return True
+
+    raw_head = (content or "")[:360]
+    non_page_lines = [ln for ln in lines[:8] if not _PAGE_MARKER_LINE_RE.match(ln)]
+    first_non_page = non_page_lines[0] if non_page_lines else ""
+
+    is_biblio = bool(
+        (sec and _BIBLIO_HEADING_RE.match(sec))
+        or _INLINE_CAPS_BIBLIO_RE.search(raw_head)
+        or (first_non_page and _BIBLIO_HEADING_RE.match(first_non_page))
+    )
+    if is_biblio and _looks_like_reasoned_bibliography(content):
+        return False
+
+    if sec and _PARATEXT_HEADING_RE.match(sec):
+        return True
+    if _INLINE_CAPS_PARATEXT_RE.search(raw_head):
+        return True
+    if first_non_page and _PARATEXT_HEADING_RE.match(first_non_page):
+        return True
 
     return False
 

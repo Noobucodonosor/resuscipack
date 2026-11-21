@@ -40,13 +40,18 @@ export function initDialogLightDismissFallback() {
 export function safeSetHTML(el, htmlString) {
   if (!el) return;
   const elements = [
-    "p", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "figure", "img",
-    "table", "tbody", "tr", "td", "th", "strong", "em", "code", "sup", "button",
-    "span", "mark", "br",
+    "p", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "figure", "figcaption", "img",
+    "table", "tbody", "thead", "tr", "td", "th", "strong", "em", "code", "pre", "sup",
+    "button", "span", "mark", "br", "hr", "div", "aside", "details", "summary", "a",
+    "svg", "g", "path", "rect", "circle", "line", "text", "polygon", "polyline",
+    "defs", "marker", "tspan",
   ];
   const attributes = [
-    "class", "src", "alt", "width", "height", "loading", "type", "title",
-    "aria-label", "data-note", "data-block-pk", "data-quote",
+    "class", "id", "src", "href", "alt", "width", "height", "loading", "type", "title",
+    "aria-label", "aria-hidden", "data-note", "data-block-pk", "data-quote",
+    "viewbox", "d", "x", "y", "x1", "y1", "x2", "y2", "cx", "cy", "r", "rx",
+    "fill", "stroke", "stroke-width", "stroke-dasharray", "text-anchor",
+    "font-size", "transform", "marker-end", "points",
   ];
   if ("setHTML" in Element.prototype) {
     try {
@@ -56,7 +61,43 @@ export function safeSetHTML(el, htmlString) {
       // fallback se la configurazione locale differisce dalle specifiche browser
     }
   }
-  el.innerHTML = htmlString;
+  const allowedTags = new Set(elements.map((t) => t.toUpperCase()));
+  const allowedAttrs = new Set(attributes.map((a) => a.toLowerCase()));
+  const parsed = new DOMParser().parseFromString(String(htmlString || ""), "text/html");
+  const cleanNode = (node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return document.createTextNode(node.textContent || "");
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return null;
+    }
+    const tag = node.tagName.toUpperCase();
+    if (!allowedTags.has(tag)) {
+      const frag = document.createDocumentFragment();
+      Array.from(node.childNodes).forEach((ch) => {
+        const cleaned = cleanNode(ch);
+        if (cleaned) frag.appendChild(cleaned);
+      });
+      return frag;
+    }
+    const out = document.createElement(node.tagName.toLowerCase());
+    Array.from(node.attributes).forEach((attr) => {
+      const name = attr.name.toLowerCase();
+      if (!allowedAttrs.has(name)) return;
+      if (name === "src" && /^\s*javascript:/i.test(attr.value)) return;
+      out.setAttribute(attr.name, attr.value);
+    });
+    Array.from(node.childNodes).forEach((ch) => {
+      const cleaned = cleanNode(ch);
+      if (cleaned) out.appendChild(cleaned);
+    });
+    return out;
+  };
+  el.replaceChildren();
+  Array.from(parsed.body.childNodes).forEach((ch) => {
+    const cleaned = cleanNode(ch);
+    if (cleaned) el.appendChild(cleaned);
+  });
 }
 
 export function withViewTransition(updateDomFn, focusElementId) {

@@ -23,9 +23,11 @@
     </header>
 
     <div class="atlas-tabs" role="tablist" aria-label="Viste dell'atlante">
-      <button type="button" class="atlas-tab" role="tab" id="tabCatalogBtn" aria-selected="true" aria-controls="panelCatalog">Catalogo e spettro dei volumi</button>
-      <button type="button" class="atlas-tab" role="tab" id="tabMosaicBtn" aria-selected="false" aria-controls="panelMosaic">Discipline dal basso</button>
-      <button type="button" class="atlas-tab" role="tab" id="tabSearchBtn" aria-selected="false" aria-controls="panelSearch">Ricerca e cronologia dei concetti</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabCatalogBtn" aria-selected="true" aria-controls="panelCatalog" tabindex="0">Catalogo e spettro dei volumi</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabMosaicBtn" aria-selected="false" aria-controls="panelMosaic" tabindex="-1">Discipline dal basso</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabSearchBtn" aria-selected="false" aria-controls="panelSearch" tabindex="-1">Ricerca e cronologia dei concetti</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabSourcesBtn" aria-selected="false" aria-controls="panelSources" tabindex="-1">Fonti e bibliografie</button>
+      <button type="button" class="atlas-tab" role="tab" id="tabStudyFiguresBtn" aria-selected="false" aria-controls="panelStudyFigures" tabindex="-1">Tavole originali e percorso</button>
     </div>
 
     <!-- PANNELLO 1: CATALOGO E SPETTRO PERCENTUALE -->
@@ -146,6 +148,31 @@
       </div>
 
       <div id="conceptResultsBox" aria-live="polite"></div>
+    </section>
+
+    <!-- PANNELLO 4: FONTI E BIBLIOGRAFIE RAGIONATE -->
+    <section id="panelSources" role="tabpanel" aria-labelledby="tabSourcesBtn" hidden>
+      <div class="pill-row">
+        <button type="button" class="quick-pill" id="sourcesAllBtn" aria-pressed="true">Pagine dense di fonti</button>
+        <button type="button" class="quick-pill" id="sourcesGeymonatBtn" aria-pressed="false">Geymonat — Storia dell'analisi</button>
+        <button type="button" class="quick-pill" id="sourcesWishlistBtn" aria-pressed="false">Desiderata bibliografica</button>
+      </div>
+      <div id="sourcesResultBox" aria-live="polite"></div>
+    </section>
+
+    <!-- PANNELLO 5: TAVOLE ORIGINALI & PERCORSO DI STUDIO -->
+    <section id="panelStudyFigures" role="tabpanel" aria-labelledby="tabStudyFiguresBtn" hidden>
+      <section aria-labelledby="studyPathHeading" class="study-path-section">
+        <h2 id="studyPathHeading" class="study-section-title">Percorso di studio verso la laurea</h2>
+        <div id="studyPathBox" aria-live="polite"></div>
+      </section>
+      <section aria-labelledby="figuresGalleryHeading" class="study-path-section">
+        <h2 id="figuresGalleryHeading" class="study-section-title">Tavole e diagrammi originali dai volumi</h2>
+        <div id="figuresGalleryBox" class="figure-grid" aria-live="polite"></div>
+        <div style="margin-top: var(--s-4);">
+          <button type="button" id="figuresLoadMoreBtn" class="btn btn--secondary" hidden>Carica altre tavole</button>
+        </div>
+      </section>
     </section>
   </div>
 </main>

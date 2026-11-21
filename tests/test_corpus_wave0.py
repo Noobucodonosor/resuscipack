@@ -212,6 +212,8 @@ def test_normalizer_splicing_and_epub_in_tempdir() -> None:
         assert "SHA-256" in ep_blocks[0]["content"]
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not DEFAULT_DB_PATH.exists(), reason="pack_corpus.db non presente")
 def test_wave0_real_db_counts_and_buchi_closed() -> None:
     """Verifica in sola lettura (`mode=ro`) i numeri reali del DB generato da Wave 0."""
     assert DEFAULT_DB_PATH.exists(), "pack_corpus.db mancante: eseguire wave0_ingest.py"
@@ -260,6 +262,8 @@ def test_wave0_real_db_counts_and_buchi_closed() -> None:
     conn.close()
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not DEFAULT_DB_PATH.exists(), reason="pack_corpus.db non presente")
 def test_wave0_marconi_galvani_cartesio_verbatim() -> None:
     """Verifica in `mode=ro` i 3 casi empirici 'Libro Sbagliato' (Marconi, Galvani, Cartesio)."""
     conn = connect_corpus_db(DEFAULT_DB_PATH, read_only=True)
@@ -313,6 +317,8 @@ def test_wave0_marconi_galvani_cartesio_verbatim() -> None:
     conn.close()
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not DEFAULT_DB_PATH.exists(), reason="pack_corpus.db non presente")
 def test_wave0_legacy_card_migration_100pct() -> None:
     """Verifica che tutti i 17 vecchi `rowid` delle 6 schede elementari siano migrati con match verbatim."""
     assert DEFAULT_MIGRATION_JSON.exists(), "legacy_card_migration.json mancante"

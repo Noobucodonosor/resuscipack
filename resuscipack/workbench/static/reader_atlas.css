@@ -249,6 +249,12 @@ mark.verbatim-highlight {
   line-height: 1.5;
   color: var(--p-muted, #6b6b6b);
 }
+.reader-head__actions {
+  margin-top: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .reader-prose {
   font-size: 1.0625rem;
   line-height: 1.72;
@@ -635,6 +641,78 @@ button.fn-trigger:hover {
   background: var(--p-action, #1a4be0);
   color: #ffffff;
   border-color: var(--p-action, #1a4be0);
+}
+
+/* Sonda contestuale nel Lettore & Tavole/Percorso nell'Atlante (ADR-0005) */
+.selection-probe-bar {
+  position: fixed;
+  right: var(--s-6);
+  bottom: var(--s-6);
+  z-index: 40;
+  padding: 6px;
+  border-radius: 99px;
+  background: var(--p-bg, #ffffff);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 12px 32px -12px rgba(17, 17, 17, 0.28);
+}
+.probe-form {
+  display: grid;
+  gap: 8px;
+  margin-bottom: var(--s-5);
+}
+.probe-form__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+.study-path-section {
+  margin-bottom: var(--s-8);
+}
+.study-section-title {
+  font-size: 1.25rem;
+  margin: 0 0 var(--s-4);
+}
+.study-path-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+.study-node-card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: var(--r-sm);
+  padding: var(--s-4);
+  display: grid;
+  gap: 6px;
+}
+.study-node-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.study-node-card--frontier {
+  border-color: var(--p-action, #1a4be0);
+  background: color-mix(in oklab, var(--p-action, #1a4be0) 5%, #ffffff);
+}
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-4);
+}
+.figure-card {
+  background: #ffffff;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: var(--r-sm);
+  padding: var(--s-3);
+  display: grid;
+  gap: 8px;
+}
+.figure-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #faf7f2;
+  border-radius: 4px;
 }
 
 /* Forced Colors Mode & Reduced Motion View Transitions */

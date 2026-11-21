@@ -113,7 +113,11 @@ _DECADE_WORDS: Dict[str, int] = {
 _SLASH_DATE_RE = re.compile(r"^\d{1,2}/\d{1,2}/\d{2,4}$")
 _CPP_NOISE_RE = re.compile(r"c\+\+", re.IGNORECASE)
 _BC_CENTURY_ROMAN_RE = re.compile(
-    r"^(?:~|circa\s+)?([ivx]+)\s*(?:sec(?:olo)?\.?)?\s*(?:a\.?\s*c\.?|b\.?\s*c\.?)$",
+    r"^(?:~|circa\s+)?(?:sec(?:olo)?\.?\s*)?([ivx]+)\s*(?:sec(?:olo)?\.?)?\s*(?:a\.?\s*c\.?|b\.?\s*c\.?)$",
+    re.IGNORECASE,
+)
+_DC_CENTURY_ROMAN_RE = re.compile(
+    r"^(?:~|circa\s+)?(?:sec(?:olo)?\.?\s*)?([ivx]+)\s*(?:sec(?:olo)?\.?)?\s*(?:d\.?\s*c\.?|a\.?\s*d\.?)$",
     re.IGNORECASE,
 )
 _BC_YEAR_RE = re.compile(
@@ -172,6 +176,13 @@ def parse_historical_year(raw: str) -> Optional[Tuple[int, str]]:
         if c is not None:
             mid = -((c - 1) * 100 + 50)
             return mid, f"{m_bc_cent.group(1).upper()} sec. a.C."
+
+    m_dc_cent = _DC_CENTURY_ROMAN_RE.match(s)
+    if m_dc_cent:
+        c = _roman_to_int(m_dc_cent.group(1))
+        if c is not None:
+            mid = (c - 1) * 100 + 50
+            return mid, f"{m_dc_cent.group(1).upper()} sec. d.C."
 
     m_bc = _BC_YEAR_RE.match(s)
     if m_bc:
@@ -410,10 +421,37 @@ class SynopticReport:
 _QUERY_STOPWORDS = frozenset(
     {
         "il", "lo", "la", "le", "gli", "un", "uno", "una", "del", "dello", "della",
-        "dei", "degli", "delle", "sul", "sulla", "nel", "nella", "con", "per", "tra",
-        "fra", "che", "chi", "come", "dove", "quando", "the", "and", "of", "in",
+        "dei", "degli", "delle", "sul", "sulla", "nel", "nella", "dall", "dell",
+        "nell", "sull", "all", "di", "da", "in", "su", "con", "per", "tra", "fra",
+        "che", "chi", "come", "dove", "quando", "the", "and", "of", "in", "a", "e", "o",
+        "ed", "ad", "al", "ai", "dal", "dai", "nei", "sui", "perche", "mentre", "quindi",
+        # Parole-guscio frequenti nei sintagmi/proposizioni editoriali
+        "atto", "passo", "passi", "idea", "modo", "verso", "primo", "prima", "secondo",
+        "base", "ruolo", "senso", "forma", "parte", "generale", "generali",
+        "fondamentale", "fondamentali", "rappresenta", "costituisce", "significa",
     }
 )
+
+
+_INVARIANT_ABSTRACT_SUFFIXES = ("tà", "ta", "zione", "zioni", "ismo", "ismi", "logia", "logie")
+
+
+def _safe_morph_variants(term: str) -> Tuple[str, ...]:
+    """Genera varianti flessive sicure senza troncamento cieco (`cardinalità` != `cardinal*`)."""
+    clean = re.sub(r"[^a-zà-öø-ÿ0-9]+", "", term.lower())
+    if not clean:
+        return ()
+    variants: List[str] = [clean]
+    if len(clean) < 6 or clean.endswith(_INVARIANT_ABSTRACT_SUFFIXES):
+        return tuple(variants)
+
+    if clean.endswith(("a", "e", "i", "o")) and len(clean) >= 6:
+        base = clean[:-1]
+        for suf in ("o", "a", "i", "e"):
+            cand = f"{base}{suf}"
+            if cand not in variants:
+                variants.append(cand)
+    return tuple(variants)
 
 
 def _extract_query_terms(concept_query: str) -> Tuple[str, ...]:
@@ -435,15 +473,14 @@ def _build_safe_fts_query(terms: Sequence[str]) -> str:
         return ""
     safe_clauses: List[str] = []
     for tok in terms[:6]:
-        clean = re.sub(r"[^a-zà-öø-ÿ0-9]+", "", tok)
-        if not clean:
+        variants = _safe_morph_variants(tok)
+        if not variants:
             continue
-        if len(clean) >= 6:
-            # Prefisso tollerante a singolare/plurale/aggettivi in FTS5 (es. infinitesim*)
-            stem = clean[: max(6, len(clean) - 2)]
-            safe_clauses.append(f'("{clean}" OR "{stem}"*)')
+        if len(variants) == 1:
+            safe_clauses.append(f'"{variants[0]}"')
         else:
-            safe_clauses.append(f'"{clean}"')
+            joined = " OR ".join(f'"{v}"' for v in variants)
+            safe_clauses.append(f"({joined})")
     if not safe_clauses:
         return ""
     if len(safe_clauses) == 1:
@@ -474,14 +511,9 @@ def _parse_json_tuple(raw: Optional[str]) -> Tuple[str, ...]:
 
 
 def _token_matches_hay(term: str, hay_norm: str, hay_words: set[str]) -> bool:
-    if re.search(rf"\b{re.escape(term)}\b", hay_norm):
-        return True
-    if len(term) >= 6:
-        stem = term[:-1] if len(term) == 6 else term[:-2]
-        stem = stem[: max(5, len(stem))]
-        for w in hay_words:
-            if len(w) >= 6 and w.startswith(stem):
-                return True
+    for v in _safe_morph_variants(term):
+        if v in hay_words or re.search(rf"\b{re.escape(v)}\b", hay_norm):
+            return True
     return False
 
 

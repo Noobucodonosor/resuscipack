@@ -14,8 +14,86 @@ import re
 from typing import Any
 
 import sympy as sp
+from sympy.parsing.sympy_parser import (
+    convert_xor,
+    implicit_multiplication_application,
+    parse_expr,
+    standard_transformations,
+)
 
 x_sym, y_sym, w_sym = sp.symbols("x y w", real=True)
+_SAFE_EXPR_RE = re.compile(r"^[0-9A-Za-z_+\-*/^().\s]+$")
+_SAFE_PARSE_TRANSFORMS = standard_transformations + (
+    implicit_multiplication_application,
+    convert_xor,
+)
+_MAX_EXPR_LEN = 256
+_MAX_EXPR_NODES = 80
+_MAX_ABS_EXPONENT = 100
+_MAX_ABS_NUMBER = 1e12
+
+
+def _safe_parse_math_expr(expr_str: str, local_dict: dict[str, Any]) -> sp.Expr:
+    """Parsa un'espressione matematica in modo sicuro senza `sympify`/`eval` arbitrario."""
+    s = str(expr_str or "").strip()
+    if not s or len(s) > _MAX_EXPR_LEN:
+        raise ValueError("Espressione vuota o troppo lunga")
+    if "__" in s or re.search(r"(?<!\d)\.(?!\d)", s):
+        raise ValueError("Sintassi non consentita")
+    if not _SAFE_EXPR_RE.fullmatch(s):
+        raise ValueError("Caratteri non consentiti nell'espressione")
+
+    safe_globals: dict[str, Any] = {
+        "__builtins__": {},
+        "Symbol": sp.Symbol,
+        "Integer": sp.Integer,
+        "Float": sp.Float,
+        "Rational": sp.Rational,
+        "Add": sp.Add,
+        "Mul": sp.Mul,
+        "Pow": sp.Pow,
+    }
+    expr = parse_expr(
+        s,
+        local_dict=local_dict,
+        global_dict=safe_globals,
+        transformations=_SAFE_PARSE_TRANSFORMS,
+        evaluate=False,
+    )
+    if not isinstance(expr, sp.Basic):
+        raise ValueError("Risultato non simbolico")
+
+    allowed_funcs = {sp.sqrt, sp.log, sp.sin, sp.cos, sp.exp}
+    node_count = 0
+    for node in sp.preorder_traversal(expr):
+        node_count += 1
+        if node_count > _MAX_EXPR_NODES:
+            raise ValueError("Espressione troppo complessa")
+        if isinstance(node, sp.Symbol) and node.name not in local_dict:
+            raise ValueError(f"Simbolo non consentito: {node.name}")
+        if isinstance(node, sp.Function) and node.func not in allowed_funcs:
+            raise ValueError(f"Funzione non consentita: {node.func}")
+        if isinstance(node, sp.Pow):
+            exp_val = node.exp
+            if exp_val.has(sp.Pow):
+                raise ValueError("Esponenziazione annidata non consentita")
+            if node.base.has(sp.Pow) and not node.base.free_symbols:
+                raise ValueError("Base esponenziale numerica annidata non consentita")
+            if getattr(exp_val, "is_Number", False) and exp_val not in (sp.oo, -sp.oo):
+                if abs(float(exp_val)) > _MAX_ABS_EXPONENT:
+                    raise ValueError("Esponente fuori limite")
+            elif not exp_val.free_symbols:
+                try:
+                    num_exp = abs(complex(exp_val.evalf()))
+                except Exception:
+                    raise ValueError("Esponente non valutabile")
+                if num_exp > _MAX_ABS_EXPONENT:
+                    raise ValueError("Esponente fuori limite")
+        if isinstance(node, sp.Number) and node not in (sp.oo, -sp.oo, sp.zoo, sp.nan):
+            if abs(float(node)) > _MAX_ABS_NUMBER:
+                raise ValueError("Valore numerico fuori limite")
+
+    return expr.doit()
 
 
 def _sympy_equivalent(student_raw: str, expected_raw: str) -> tuple[bool, str]:
@@ -76,8 +154,8 @@ def _sympy_scalar_eq(s_expr_str: str, e_expr_str: str) -> bool:
         "oo": sp.oo,
     }
     try:
-        s_expr = sp.sympify(s_expr_str, locals=local_dict, convert_xor=True)
-        e_expr = sp.sympify(e_expr_str, locals=local_dict, convert_xor=True)
+        s_expr = _safe_parse_math_expr(s_expr_str, local_dict)
+        e_expr = _safe_parse_math_expr(e_expr_str, local_dict)
     except Exception:
         return s_expr_str.strip().lower() == e_expr_str.strip().lower()
 
