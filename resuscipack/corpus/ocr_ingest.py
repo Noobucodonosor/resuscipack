@@ -252,53 +252,60 @@ def split_2up_pdf_pages_to_jpegs(
     ratio_threshold: float = 1.15,
 ) -> List[Tuple[int, str, bytes]]:
     """Renderizza pagine PDF landscape 2-up dividendole verticalmente in `(page_num, 'L'|'R'|'full', jpeg_bytes)`
-    esclusivamente dentro `TemporaryDirectory` (sorgente `STRICT READ-ONLY`)."""
+    tramite `pdftoppm -x -y -W -H` dentro `TemporaryDirectory` (sorgente `STRICT READ-ONLY`)."""
     if not doc_path.exists():
         raise FileNotFoundError(f"Documento PDF non trovato: {doc_path}")
     pdftoppm = _resolve_tool("pdftoppm", "/opt/homebrew/bin/pdftoppm")
-    sips = _resolve_tool("sips", "/usr/bin/sips")
     results: List[Tuple[int, str, bytes]] = []
 
     with tempfile.TemporaryDirectory(prefix="resuscipack_2up_") as tmp_str:
         tmpdir = Path(tmp_str)
         for pnum in page_numbers:
-            prefix = tmpdir / f"full_{pnum:04d}"
-            subprocess.run(
-                [pdftoppm, "-jpeg", "-r", str(dpi), "-f", str(pnum), "-l", str(pnum), str(doc_path), str(prefix)],
-                capture_output=True,
-                check=True,
-            )
-            generated = sorted(tmpdir.glob(f"full_{pnum:04d}*.jpg"))
-            if not generated:
-                raise RuntimeError(f"pdftoppm non ha prodotto JPEG per pagina {pnum} di {doc_path.name}")
-            full_img = generated[0]
-            w_px, h_px = _parse_sips_dimensions(full_img)
-            if not is_landscape_2up(float(w_px), float(h_px), ratio_threshold=ratio_threshold):
-                results.append((int(pnum), "full", full_img.read_bytes()))
+            w_pts, h_pts = get_pdf_page_dimensions(doc_path, page_num=pnum)
+            if not is_landscape_2up(w_pts, h_pts, ratio_threshold=ratio_threshold):
+                prefix = tmpdir / f"full_{pnum:04d}"
+                subprocess.run(
+                    [pdftoppm, "-jpeg", "-r", str(dpi), "-f", str(pnum), "-l", str(pnum), str(doc_path), str(prefix)],
+                    capture_output=True,
+                    check=True,
+                )
+                generated = sorted(tmpdir.glob(f"full_{pnum:04d}*.jpg"))
+                if not generated:
+                    raise RuntimeError(f"pdftoppm non ha prodotto JPEG per pagina {pnum} di {doc_path.name}")
+                results.append((int(pnum), "full", generated[0].read_bytes()))
                 continue
 
+            scale = dpi / 72.0
+            w_px = max(2, int(round(w_pts * scale)))
+            h_px = max(2, int(round(h_pts * scale)))
             half_w = w_px // 2
             left_w = min(w_px, half_w + max(0, int(overlap_px)))
             right_x = max(0, half_w - max(0, int(overlap_px)))
             right_w = w_px - right_x
 
-            left_img = tmpdir / f"left_{pnum:04d}.jpg"
-            right_img = tmpdir / f"right_{pnum:04d}.jpg"
-            shutil.copy2(full_img, left_img)
-            shutil.copy2(full_img, right_img)
-
-            subprocess.run(
-                [sips, "--cropOffset", "0", "0", "--cropToHeightWidth", str(h_px), str(left_w), str(left_img)],
-                capture_output=True,
-                check=True,
-            )
-            subprocess.run(
-                [sips, "--cropOffset", "0", str(right_x), "--cropToHeightWidth", str(h_px), str(right_w), str(right_img)],
-                capture_output=True,
-                check=True,
-            )
-            results.append((int(pnum), "L", left_img.read_bytes()))
-            results.append((int(pnum), "R", right_img.read_bytes()))
+            for side, x_off, crop_w in (("L", 0, left_w), ("R", right_x, right_w)):
+                prefix = tmpdir / f"{side}_{pnum:04d}"
+                subprocess.run(
+                    [
+                        pdftoppm,
+                        "-jpeg",
+                        "-r", str(dpi),
+                        "-f", str(pnum),
+                        "-l", str(pnum),
+                        "-x", str(x_off),
+                        "-y", "0",
+                        "-W", str(crop_w),
+                        "-H", str(h_px),
+                        str(doc_path),
+                        str(prefix),
+                    ],
+                    capture_output=True,
+                    check=True,
+                )
+                generated = sorted(tmpdir.glob(f"{side}_{pnum:04d}*.jpg"))
+                if not generated:
+                    raise RuntimeError(f"pdftoppm crop {side} fallito per pagina {pnum} di {doc_path.name}")
+                results.append((int(pnum), side, generated[0].read_bytes()))
 
     return results
 

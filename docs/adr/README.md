@@ -13,6 +13,7 @@ Questa cartella raccoglie gli **Architecture Decision Records (ADR)** e il **Mas
 | **[ADR-0003](./0003-secai-spine-and-study-workbench.md)** | Spina Dorsale Curricolare a 4 Strati, Fast-Forward `SymPy` e Tavolo di Studio SecAI v1 | Accettato (`Accepted`) | **P1 — Alta** | `@secai`, `@critic` |
 | **[ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md)** | *"Nuovi Libri"* Continui, Spettro Disciplinare Percentuale, Doppio *"Libro Sbagliato"* & UI Anti-Slop | Accettato (`Accepted`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
 | **[ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md)** | Hardening P0, Bonifica Epistemica, Grafo delle Fonti & Sonda Viva (`M5`) | Accettato (`Accepted`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
+| **[ADR-0006](./0006-lossless-pdf-to-markdown-pipeline.md)** | Standard di Conversione Lossless `PDF → Markdown` (`resuscipack-md v1`) & Cascata Baidu + Gate + Vision | Accettato (`Accepted`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
 
 ---
 
@@ -106,3 +107,13 @@ flowchart LR
 | 🟡 | **TASK-BIBLIO-01** (`#21`) | `M5` Fonti | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Tabella `bibliographic_citations` ed estrattore `biblio_extractor.py` (schema + selettore €0 pronti) | `resuscipack/corpus/schema.py`, `resuscipack/epistemic/biblio_extractor.py` | **P1 — Alta** |
 | ✅ | **TASK-PROBE-01** (`#22`) | `M5` Sonda Viva | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Indici `units_fts` (`139.458`) + `concept_edges` (`311.985`) e `phrase_analyzer.py` | `resuscipack/corpus/schema.py`, `resuscipack/epistemic/phrase_analyzer.py`, `app.py` | **P1 — Alta** |
 | ✅ | **TASK-UI-04** (`#23`) | `M5` UI Viva | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Sonda Viva in `/libro`, `corpus_figures`, Fonti e Percorso DAG/Fast-Forward | `resuscipack/workbench/` | **P1 — Alta** |
+
+---
+
+## Master Task Backlog — Conversione Lossless `PDF → Markdown` (`ADR-0006`)
+
+| Stato | Task ID | Milestone | ADR | Titolo Task | File Coinvolti | Priorità |
+| :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| ✅ | **TASK-PDFMD-01** | `M6` PDF → MD Lossless | [ADR-0006](./0006-lossless-pdf-to-markdown-pipeline.md) | Schema `resuscipack-md v1`, router di pagina, assembler canonico e Quality Gate | `resuscipack/corpus/pdf_md_pipeline.py`, `tests/test_pdf_md_pipeline.py` | **P0 — Critica** |
+| ✅ | **TASK-PDFMD-02** | `M6` PDF → MD Lossless | [ADR-0006](./0006-lossless-pdf-to-markdown-pipeline.md) | Pilota comparativo su 3 pagine reali (Geymonat 2-up, Horowitz & Hill, Cavalieri UTET) | `pilot_pdf_md_comparison.md` | **P1 — Alta** |
+| ⏳ | **TASK-PDFMD-03** | `M6` PDF → MD Lossless | [ADR-0006](./0006-lossless-pdf-to-markdown-pipeline.md) | Classificazione e bonifica selettiva dei `67` libri canonici 2-col/2-up (`supersede_block`) | `resuscipack/corpus/pdf_md_pipeline.py`, `ocr_ingest.py` | **P1 — Alta** |
