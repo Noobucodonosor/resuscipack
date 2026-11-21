@@ -19,7 +19,6 @@
   <div class="wrap">
     <div class="book-toc-trigger-row">
       <button type="button" class="btn btn--secondary" id="openTocBtn">Indice dei capitoli</button>
-      <button type="button" class="btn btn--secondary" id="openManualProbeBtn">Interroga una frase nei libri</button>
       <a class="link" href="/atlante">Vai all'atlante</a>
     </div>
 
@@ -34,6 +33,9 @@
             <p id="chapterVolumeLabel" class="reader-head__eyebrow">Caricamento volume…</p>
             <h1 id="chapterHeading" class="reader-head__title" tabindex="-1">Caricamento capitolo…</h1>
             <p id="chapterSubtitle" class="reader-head__subtitle"></p>
+            <div class="reader-head__actions">
+              <button type="button" class="btn btn--secondary" id="openManualProbeBtn">Interroga una frase nei libri</button>
+            </div>
           </header>
 
           <div id="chapterProse" class="reader-prose"></div>

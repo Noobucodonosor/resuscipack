@@ -219,7 +219,7 @@ import {
       card.className = "study-node-card";
       if (frontierSet.has(node.id)) card.classList.add("study-node-card--frontier");
       const title = document.createElement("h3");
-      title.textContent = node.title || "";
+      title.textContent = String(node.title || "").replace(/^(?:[GP]\d+(?:\.\d+)?)\s*[·:\-]\s*/i, "");
       const meta = document.createElement("p");
       meta.className = "t-small muted";
       const statusMap = {

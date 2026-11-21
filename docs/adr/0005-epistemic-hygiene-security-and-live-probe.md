@@ -57,7 +57,7 @@ L'audit forense post-`M4` su `pack_corpus.db` (`1.424` libri attivi, `124.796` b
 - [x] **TASK-QA-01** (`#17`): Portabilità `pytest` con fixture SQLite in `tmp_path` e marker `@pytest.mark.real_corpus` — **P0**
 - [x] **TASK-HYG-01** (`#18`): Fix prompt `w`/`thm`/`--deep-blocks`/overlap in `batch_cli.py` e 3 micro-bug (`decompressor.py`, `spectrum.py`, `curriculum_mapper.py`) — **P1**
 - [x] **TASK-HYG-02** (`#19`): Script `hygiene_cleanup.py` (`--dry-run` / `--apply`) per bonifica `actors_json` e `books.author` — **P1**
-- [ ] **TASK-PILOT-01** (`#20`): Split verticale 2-up in `ocr_ingest.py` per pilota Geymonat (`book_pk=992`) — *infrastruttura completata, ri-estrazione Vision opzionale su conferma utente* — **P1**
-- [ ] **TASK-BIBLIO-01** (`#21`): Tabella `bibliographic_citations` (`schema.py`) ed estrattore `biblio_extractor.py` — *schema + selettore €0 pronti, popolamento batch su conferma utente* — **P1**
+- [x] **TASK-PILOT-01** (`#20`): Split verticale 2-up in `ocr_ingest.py` + `remediate_2up_book_pilot` eseguito su Geymonat (`book_pk=992`: `366` pagine pulite, `172` superseded, `60835` preservato) — **P1**
+- [x] **TASK-BIBLIO-01** (`#21`): Tabella `bibliographic_citations` (`schema.py`) ed estrattore `biblio_extractor.py` verificato sul pilota Geymonat (`62` citazioni estratte, `0` rifiutate, catena `Proclo -> Gemino -> Eudemo`) — **P1**
 - [x] **TASK-PROBE-01** (`#22`): Indici `units_fts` + `concept_edges` e motore `phrase_analyzer.py` (`POST /api/probe/selection`) — **P1**
 - [x] **TASK-UI-04** (`#23`): Sonda Viva in `/libro`, emersione `corpus_figures`, Fonti e Percorso DAG/Fast-Forward secondo `design-taste-frontend` — **P1**

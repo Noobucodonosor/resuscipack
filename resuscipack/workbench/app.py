@@ -52,7 +52,10 @@ from resuscipack.curriculum.student_state import (
     record_drill_attempt,
     record_hero_artifact,
 )
-from resuscipack.epistemic.biblio_extractor import select_biblio_rich_blocks
+from resuscipack.epistemic.biblio_extractor import (
+    score_block_bibliographic_density,
+    select_biblio_rich_blocks,
+)
 from resuscipack.epistemic.bridge import get_bridges_for_node
 from resuscipack.epistemic.decompressor import decompress_concept
 from resuscipack.epistemic.discipline_reconstructor import reconstruct_discipline
@@ -1181,12 +1184,51 @@ def create_app(
                         )
                     extracted.append(d)
 
-            candidates = select_biblio_rich_blocks(
-                cconn,
-                book_pk=book_pk,
-                min_score=4,
-                limit=min(limit, 30),
-            )
+            if book_pk is not None:
+                candidates = select_biblio_rich_blocks(
+                    cconn,
+                    book_pk=book_pk,
+                    min_score=4,
+                    limit=min(limit, 30),
+                )
+            else:
+                # Ricerca veloce via FTS5 (<20 ms) invece di full-table scan su 124k blocchi
+                fts_rows = cconn.execute(
+                    """
+                    SELECT
+                        bl.block_pk, bl.block_uid, bl.book_pk,
+                        bk.title AS book_title, bk.author AS book_author,
+                        bl.page_start, bl.printed_page, bl.section_title,
+                        bl.content
+                    FROM passages_fts
+                    JOIN blocks bl ON bl.block_pk = passages_fts.rowid
+                    JOIN books bk ON bk.book_pk = bl.book_pk
+                    WHERE passages_fts MATCH '"bibliografia" OR "Proclo" OR "Eudemo" OR "edizione critica" OR "tramandato"'
+                      AND bl.is_active = 1 AND bk.is_active = 1 AND LENGTH(bl.content) >= 250
+                    LIMIT 250
+                    """
+                ).fetchall()
+                scored_cands: list[dict[str, Any]] = []
+                for cr in fts_rows:
+                    metrics = score_block_bibliographic_density(
+                        str(cr["section_title"] or ""), str(cr["content"] or "")
+                    )
+                    if metrics["is_biblio_rich"]:
+                        scored_cands.append(
+                            {
+                                "block_pk": int(cr["block_pk"]),
+                                "block_uid": cr["block_uid"],
+                                "book_pk": int(cr["book_pk"]),
+                                "book_title": cr["book_title"],
+                                "book_author": cr["book_author"],
+                                "page_start": cr["page_start"],
+                                "printed_page": cr["printed_page"],
+                                "section_title": cr["section_title"],
+                                **metrics,
+                            }
+                        )
+                scored_cands.sort(key=lambda item: (-item["score"], item["book_pk"], item["page_start"] or 0))
+                candidates = scored_cands[: min(limit, 30)]
             for c in candidates:
                 c["clean_book_title"] = _clean_book_title_for_citation(
                     str(c.get("book_title") or ""), author=c.get("book_author")

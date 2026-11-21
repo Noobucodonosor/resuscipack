@@ -9,17 +9,19 @@ Cascata a 4 stadi (`TemporaryDirectory` obbligatorio, sorgenti `STRICT READ-ONLY
 
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 import base64
 import json
 import os
 from pathlib import Path
 import re
 import subprocess
+import time
 import urllib.error
 import urllib.request
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
-from .normalizer import clean_ocr_markdown
+from .normalizer import clean_ocr_markdown, estimate_bpe_tokens, make_block_uid, normalize_for_match
 from .ocr_ingest import (
     DEFAULT_GCP_PROJECT,
     DEFAULT_VISION_MODEL,
@@ -27,9 +29,12 @@ from .ocr_ingest import (
     _repair_json_latex_escapes,
     _resolve_tool,
     _strip_json_fences,
+    count_document_pages,
     get_pdf_page_dimensions,
     is_landscape_2up,
+    split_2up_pdf_pages_to_jpegs,
 )
+from .schema import init_corpus_db, supersede_block
 
 RESUSCIPACK_MD_PAGE_SCHEMA: Mapping[str, Any] = {
     "type": "OBJECT",
@@ -467,3 +472,202 @@ def transcribe_page_structured_vision(
         "output_tokens": int(usage.get("candidatesTokenCount") or 0),
         "model": mdl,
     }
+
+
+def _transcribe_split_with_retry(
+    item: tuple[int, str, bytes],
+    *,
+    book_title: str,
+    project_id: str,
+    model: str,
+) -> Dict[str, Any]:
+    pnum, side, jpg = item
+    label = f"{pnum}{side}" if side in ("L", "R") else str(pnum)
+    last_exc: Optional[Exception] = None
+    for attempt in range(3):
+        try:
+            res = transcribe_page_structured_vision(
+                jpg,
+                page_label=label,
+                book_title=book_title,
+                project_id=project_id,
+                model=model,
+            )
+            gate = evaluate_page_quality_gate(
+                res["markdown"],
+                expected_figure_count=len(res["payload"].get("figures") or []),
+            )
+            return {"pdf_page": pnum, "side": side, "label": label, "res": res, "gate": gate}
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            last_exc = exc
+            time.sleep(2.0 * (attempt + 1))
+    raise RuntimeError(f"Trascrizione fallita su pagina {label}: {last_exc}")
+
+
+def remediate_2up_book_pilot(
+    db_path: Path,
+    book_pk: int,
+    pdf_path: Path,
+    *,
+    dpi: int = 220,
+    max_workers: int = 8,
+    model: str = DEFAULT_VISION_MODEL,
+) -> Dict[str, Any]:
+    """Bonifica un intero libro 2-up con split verticale + `resuscipack-md v1` + `supersede_block()`,
+    preservando `block_pk` citati in `legacy_rowid_map`."""
+    if not pdf_path.exists():
+        raise FileNotFoundError(f"PDF sorgente non trovato: {pdf_path}")
+
+    proj = _resolve_gcp_project(None)
+    conn = init_corpus_db(db_path)
+    try:
+        brow = conn.execute(
+            "SELECT book_pk, book_uid, title FROM books WHERE book_pk = ? AND is_active = 1",
+            (book_pk,),
+        ).fetchone()
+        if brow is None:
+            raise ValueError(f"book_pk={book_pk} non trovato o inattivo")
+        book_uid = str(brow["book_uid"])
+        book_title = str(brow["title"])
+
+        total_pages = count_document_pages(pdf_path)
+        splits = split_2up_pdf_pages_to_jpegs(pdf_path, list(range(1, total_pages + 1)), dpi=dpi)
+
+        results: List[Dict[str, Any]] = []
+        with ThreadPoolExecutor(max_workers=max(1, min(12, int(max_workers)))) as pool:
+            futs = [
+                pool.submit(
+                    _transcribe_split_with_retry,
+                    item,
+                    book_title=book_title,
+                    project_id=proj,
+                    model=model,
+                )
+                for item in splits
+            ]
+            for fut in futs:
+                results.append(fut.result())
+
+        side_rank = {"L": 0, "full": 0, "R": 1}
+        results.sort(key=lambda x: (x["pdf_page"], side_rank.get(x["side"], 0)))
+
+        legacy_protected = {
+            int(r[0]) for r in conn.execute("SELECT block_pk FROM legacy_rowid_map").fetchall()
+        }
+        old_active_pks = [
+            int(r[0])
+            for r in conn.execute(
+                """
+                SELECT block_pk FROM blocks
+                WHERE book_pk = ? AND is_active = 1
+                  AND COALESCE(source_origin, '') != 'adr0006_2up_vision'
+                """,
+                (book_pk,),
+            ).fetchall()
+        ]
+
+        inserted_pks: List[int] = []
+        skipped_blank = 0
+        gate_passed = 0
+        gate_failed = 0
+        total_in = 0
+        total_out = 0
+        seq_page = 1
+
+        for item in results:
+            res = item["res"]
+            gate = item["gate"]
+            payload = res["payload"]
+            total_in += res["input_tokens"]
+            total_out += res["output_tokens"]
+
+            body_raw = str(payload.get("body_markdown") or "").strip()
+            has_structured_extras = bool(
+                payload.get("footnotes") or payload.get("figures") or payload.get("tables_html")
+            )
+            if len(body_raw) < 25 and not has_structured_extras:
+                skipped_blank += 1
+                continue
+
+            if gate["passed"]:
+                gate_passed += 1
+            else:
+                gate_failed += 1
+
+            md = res["markdown"]
+            norm_c = normalize_for_match(md)
+            if not norm_c:
+                skipped_blank += 1
+                continue
+
+            raw_role = str(payload.get("block_role") or "body")
+            db_role = "paratext" if raw_role in {"paratext", "index"} else "body"
+            printed_page = str(payload.get("printed_page") or item["label"]).strip()
+            section_title = str(payload.get("section_title") or "").strip()
+            blk_uid = make_block_uid(book_uid, seq_page, seq_page, norm_c)
+
+            exists = conn.execute(
+                "SELECT block_pk FROM blocks WHERE block_uid = ?",
+                (blk_uid,),
+            ).fetchone()
+            if exists is not None:
+                inserted_pks.append(int(exists[0]))
+                seq_page += 1
+                continue
+
+            cur = conn.execute(
+                """
+                INSERT INTO blocks (
+                    block_uid, book_pk, book_title, is_active, block_role,
+                    page_start, page_end, printed_page, section_title,
+                    content, norm_content, char_count, est_tokens, source_origin
+                ) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'adr0006_2up_vision')
+                """,
+                (
+                    blk_uid,
+                    book_pk,
+                    book_title,
+                    db_role,
+                    seq_page,
+                    seq_page,
+                    printed_page,
+                    section_title,
+                    md,
+                    norm_c,
+                    len(md),
+                    estimate_bpe_tokens(md),
+                ),
+            )
+            inserted_pks.append(int(cur.lastrowid))
+            seq_page += 1
+
+        superseded_count = 0
+        legacy_preserved = 0
+        if inserted_pks and old_active_pks:
+            anchor_pk = inserted_pks[0]
+            for old_pk in old_active_pks:
+                if old_pk in legacy_protected:
+                    legacy_preserved += 1
+                    continue
+                if old_pk != anchor_pk:
+                    supersede_block(conn, old_pk, anchor_pk)
+                    superseded_count += 1
+
+        conn.commit()
+        usd = (total_in / 1e6) * 0.30 + (total_out / 1e6) * 2.50
+        return {
+            "book_pk": book_pk,
+            "pdf_pages": total_pages,
+            "split_halves": len(splits),
+            "skipped_blank": skipped_blank,
+            "inserted_blocks": len(inserted_pks),
+            "superseded_blocks": superseded_count,
+            "legacy_preserved": legacy_preserved,
+            "gate_passed": gate_passed,
+            "gate_failed": gate_failed,
+            "input_tokens": total_in,
+            "output_tokens": total_out,
+            "estimated_eur": round(usd * 0.92, 4),
+        }
+    finally:
+        conn.close()

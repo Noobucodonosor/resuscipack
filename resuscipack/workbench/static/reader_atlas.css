@@ -249,6 +249,12 @@ mark.verbatim-highlight {
   line-height: 1.5;
   color: var(--p-muted, #6b6b6b);
 }
+.reader-head__actions {
+  margin-top: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .reader-prose {
   font-size: 1.0625rem;
   line-height: 1.72;

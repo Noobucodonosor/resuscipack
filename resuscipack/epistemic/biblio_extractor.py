@@ -14,9 +14,17 @@ import json
 from pathlib import Path
 import re
 import sqlite3
+import urllib.request
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from resuscipack.corpus.normalizer import normalize_for_match
+from resuscipack.corpus.ocr_ingest import (
+    DEFAULT_VISION_MODEL,
+    _get_gcloud_token,
+    _repair_json_latex_escapes,
+    _strip_json_fences,
+)
+from resuscipack.corpus.pdf_md_pipeline import _resolve_gcp_project
 from resuscipack.corpus.schema import DEFAULT_DB_PATH, connect_corpus_db, init_corpus_db
 from resuscipack.epistemic.schema_v21 import quote_matches_block_ocr_tolerant
 
@@ -221,6 +229,157 @@ def validate_and_store_citations(
 
     conn.commit()
     return {"source_block_pk": source_block_pk, "inserted": inserted, "rejected": rejected}
+
+
+BIBLIO_EXTRACTION_RESPONSE_SCHEMA: Mapping[str, Any] = {
+    "type": "OBJECT",
+    "required": ["citations"],
+    "properties": {
+        "citations": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "required": [
+                    "verbatim_quote",
+                    "cited_author",
+                    "cited_work",
+                    "source_layer",
+                    "stance",
+                    "appraisal_note",
+                ],
+                "properties": {
+                    "verbatim_quote": {"type": "STRING"},
+                    "cited_author": {"type": "STRING"},
+                    "cited_work": {"type": "STRING"},
+                    "cited_year": {"type": "STRING"},
+                    "source_layer": {"type": "STRING", "enum": list(SOURCE_LAYERS)},
+                    "stance": {"type": "STRING", "enum": list(CITATION_STANCES)},
+                    "appraisal_note": {"type": "STRING"},
+                    "transmission_from": {"type": "STRING"},
+                },
+            },
+        }
+    },
+}
+
+
+def extract_citations_for_block_via_vertex(
+    block_content: str,
+    *,
+    book_title: str,
+    model: str = DEFAULT_VISION_MODEL,
+) -> Dict[str, Any]:
+    """Estrae tutte le fonti e i giudizi critici da un singolo blocco (senza tetto a 2 elementi)."""
+    proj = _resolve_gcp_project(None)
+    token = _get_gcloud_token()
+    mdl = (model or DEFAULT_VISION_MODEL).strip()
+
+    prompt = (
+        f"Analizza questo brano del libro {book_title!r} ed estrai OGNI riferimento bibliografico o fonte storica/scientifica citata "
+        "(fino a 25 citazioni: fonti antiche, commentatori, edizioni critiche, trattati storiografici o manuali).\n"
+        "REGOLE OBBLIGATORIE:\n"
+        "1. `verbatim_quote`: copia una frase/spezzone CONTIGUO ESATTO di 5..18 parole dal testo sotto.\n"
+        "2. `cited_author` e `cited_work`: autore e opera citata (o trattato/raccolta).\n"
+        "3. `appraisal_note`: sintetizza il giudizio critico dell'autore sulla fonte (es. affidabilità, traduzione, lacune).\n"
+        "4. `transmission_from`: catena di trasmissione se presente (es. 'Proclo -> Gemino -> Eudemo').\n\n"
+        f"TESTO DEL BLOCCO:\n{block_content}\n"
+    )
+    body = json.dumps(
+        {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0.0,
+                "maxOutputTokens": 4096,
+                "responseMimeType": "application/json",
+                "responseSchema": BIBLIO_EXTRACTION_RESPONSE_SCHEMA,
+                "thinkingConfig": {"thinkingBudget": 0},
+            },
+        }
+    ).encode("utf-8")
+
+    url = (
+        f"https://aiplatform.googleapis.com/v1/projects/{proj}"
+        f"/locations/global/publishers/google/models/{mdl}:generateContent"
+    )
+    req = urllib.request.Request(
+        url,
+        data=body,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+            "x-goog-user-project": proj,
+        },
+    )
+    with urllib.request.urlopen(req, timeout=90) as resp:
+        raw = json.loads(resp.read().decode("utf-8"))
+    txt = raw["candidates"][0]["content"]["parts"][0]["text"]
+    cleaned = _strip_json_fences(txt)
+    try:
+        parsed = json.loads(cleaned)
+    except json.JSONDecodeError:
+        parsed = json.loads(_repair_json_latex_escapes(cleaned))
+    usage = raw.get("usageMetadata") or {}
+    return {
+        "citations": parsed.get("citations") or [],
+        "input_tokens": int(usage.get("promptTokenCount") or 0),
+        "output_tokens": int(usage.get("candidatesTokenCount") or 0),
+    }
+
+
+def run_biblio_pilot_on_book(
+    db_path: Path | str,
+    book_pk: int,
+    *,
+    limit_blocks: int = 10,
+    min_score: int = 3,
+    model: str = DEFAULT_VISION_MODEL,
+) -> Dict[str, Any]:
+    """Esegue l'estrazione Grafo delle Fonti sui top blocchi di un singolo `book_pk`."""
+    conn = init_corpus_db(db_path)
+    try:
+        cands = select_biblio_rich_blocks(conn, book_pk=book_pk, min_score=min_score, limit=limit_blocks)
+        total_inserted = 0
+        total_rejected = 0
+        total_in = 0
+        total_out = 0
+        per_block: List[Dict[str, Any]] = []
+
+        for c in cands:
+            bpk = int(c["block_pk"])
+            row = conn.execute("SELECT content FROM blocks WHERE block_pk = ?", (bpk,)).fetchone()
+            if row is None:
+                continue
+            content = str(row["content"])
+            ext = extract_citations_for_block_via_vertex(
+                content,
+                book_title=str(c["book_title"] or ""),
+                model=model,
+            )
+            total_in += ext["input_tokens"]
+            total_out += ext["output_tokens"]
+            st = validate_and_store_citations(
+                conn,
+                source_block_pk=bpk,
+                block_content=content,
+                citations=ext["citations"],
+            )
+            total_inserted += st["inserted"]
+            total_rejected += len(st["rejected"])
+            per_block.append({"block_pk": bpk, "inserted": st["inserted"], "rejected": st["rejected"]})
+
+        usd = (total_in / 1e6) * 0.30 + (total_out / 1e6) * 2.50
+        return {
+            "book_pk": book_pk,
+            "blocks_processed": len(per_block),
+            "citations_inserted": total_inserted,
+            "citations_rejected": total_rejected,
+            "input_tokens": total_in,
+            "output_tokens": total_out,
+            "estimated_eur": round(usd * 0.92, 4),
+            "per_block": per_block,
+        }
+    finally:
+        conn.close()
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
