@@ -206,6 +206,166 @@ def render_pages_to_jpeg_bytes(
     return results
 
 
+def get_pdf_page_dimensions(doc_path: Path, page_num: int = 1) -> Tuple[float, float]:
+    """Legge le dimensioni `(width_pts, height_pts)` di una pagina PDF via `pdfinfo`."""
+    if not doc_path.exists():
+        raise FileNotFoundError(f"Documento PDF non trovato: {doc_path}")
+    pdfinfo = _resolve_tool("pdfinfo", "/opt/homebrew/bin/pdfinfo")
+    proc = subprocess.run(
+        [pdfinfo, "-f", str(page_num), "-l", str(page_num), str(doc_path)],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    m = re.search(r"Page(?:\s+\d+)?\s+size:\s*([0-9]+(?:\.[0-9]+)?)\s*x\s*([0-9]+(?:\.[0-9]+)?)", proc.stdout)
+    if not m:
+        raise RuntimeError(f"Dimensioni pagina non leggibili da pdfinfo per {doc_path.name} p.{page_num}")
+    return float(m.group(1)), float(m.group(2))
+
+
+def is_landscape_2up(width_pts: float, height_pts: float, ratio_threshold: float = 1.15) -> bool:
+    """Rileva scansioni/PDF landscape 2-up (`width > height * 1.15`)."""
+    return height_pts > 0 and width_pts > height_pts * ratio_threshold
+
+
+def _parse_sips_dimensions(img_path: Path) -> Tuple[int, int]:
+    sips = _resolve_tool("sips", "/usr/bin/sips")
+    proc = subprocess.run(
+        [sips, "-g", "pixelWidth", "-g", "pixelHeight", str(img_path)],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    mw = re.search(r"pixelWidth:\s*(\d+)", proc.stdout)
+    mh = re.search(r"pixelHeight:\s*(\d+)", proc.stdout)
+    if not mw or not mh:
+        raise RuntimeError(f"Dimensioni immagine non leggibili da sips: {img_path}")
+    return int(mw.group(1)), int(mh.group(1))
+
+
+def split_2up_pdf_pages_to_jpegs(
+    doc_path: Path,
+    page_numbers: Sequence[int],
+    *,
+    dpi: int = 150,
+    overlap_px: int = 16,
+    ratio_threshold: float = 1.15,
+) -> List[Tuple[int, str, bytes]]:
+    """Renderizza pagine PDF landscape 2-up dividendole verticalmente in `(page_num, 'L'|'R'|'full', jpeg_bytes)`
+    esclusivamente dentro `TemporaryDirectory` (sorgente `STRICT READ-ONLY`)."""
+    if not doc_path.exists():
+        raise FileNotFoundError(f"Documento PDF non trovato: {doc_path}")
+    pdftoppm = _resolve_tool("pdftoppm", "/opt/homebrew/bin/pdftoppm")
+    sips = _resolve_tool("sips", "/usr/bin/sips")
+    results: List[Tuple[int, str, bytes]] = []
+
+    with tempfile.TemporaryDirectory(prefix="resuscipack_2up_") as tmp_str:
+        tmpdir = Path(tmp_str)
+        for pnum in page_numbers:
+            prefix = tmpdir / f"full_{pnum:04d}"
+            subprocess.run(
+                [pdftoppm, "-jpeg", "-r", str(dpi), "-f", str(pnum), "-l", str(pnum), str(doc_path), str(prefix)],
+                capture_output=True,
+                check=True,
+            )
+            generated = sorted(tmpdir.glob(f"full_{pnum:04d}*.jpg"))
+            if not generated:
+                raise RuntimeError(f"pdftoppm non ha prodotto JPEG per pagina {pnum} di {doc_path.name}")
+            full_img = generated[0]
+            w_px, h_px = _parse_sips_dimensions(full_img)
+            if not is_landscape_2up(float(w_px), float(h_px), ratio_threshold=ratio_threshold):
+                results.append((int(pnum), "full", full_img.read_bytes()))
+                continue
+
+            half_w = w_px // 2
+            left_w = min(w_px, half_w + max(0, int(overlap_px)))
+            right_x = max(0, half_w - max(0, int(overlap_px)))
+            right_w = w_px - right_x
+
+            left_img = tmpdir / f"left_{pnum:04d}.jpg"
+            right_img = tmpdir / f"right_{pnum:04d}.jpg"
+            shutil.copy2(full_img, left_img)
+            shutil.copy2(full_img, right_img)
+
+            subprocess.run(
+                [sips, "--cropOffset", "0", "0", "--cropToHeightWidth", str(h_px), str(left_w), str(left_img)],
+                capture_output=True,
+                check=True,
+            )
+            subprocess.run(
+                [sips, "--cropOffset", "0", str(right_x), "--cropToHeightWidth", str(h_px), str(right_w), str(right_img)],
+                capture_output=True,
+                check=True,
+            )
+            results.append((int(pnum), "L", left_img.read_bytes()))
+            results.append((int(pnum), "R", right_img.read_bytes()))
+
+    return results
+
+
+def extract_2up_pdf_text_columns(
+    doc_path: Path,
+    page_numbers: Sequence[int],
+    *,
+    dpi: int = 72,
+    ratio_threshold: float = 1.15,
+) -> List[Dict[str, Any]]:
+    """Estrae testo a colonne separate (sinistra poi destra) da PDF nativi 2-up/2-colonne a €0 via `pdftotext`."""
+    if not doc_path.exists():
+        raise FileNotFoundError(f"Documento PDF non trovato: {doc_path}")
+    pdftotext = _resolve_tool("pdftotext", "/opt/homebrew/bin/pdftotext")
+    pages_out: List[Dict[str, Any]] = []
+    seq = 1
+    for pnum in page_numbers:
+        w_pts, h_pts = get_pdf_page_dimensions(doc_path, page_num=pnum)
+        scale = dpi / 72.0
+        w_px = max(1, int(round(w_pts * scale)))
+        h_px = max(1, int(round(h_pts * scale)))
+        if not is_landscape_2up(w_pts, h_pts, ratio_threshold=ratio_threshold):
+            proc = subprocess.run(
+                [pdftotext, "-f", str(pnum), "-l", str(pnum), str(doc_path), "-"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            txt = clean_ocr_markdown(proc.stdout or "")
+            pages_out.append({"pdf_page": seq, "source_pdf_page": int(pnum), "side": "full", "printed_page": str(pnum), "text": txt})
+            seq += 1
+            continue
+
+        half_w = w_px // 2
+        for side, x_off, cw in (("L", 0, half_w), ("R", half_w, w_px - half_w)):
+            proc = subprocess.run(
+                [
+                    pdftotext,
+                    "-f", str(pnum),
+                    "-l", str(pnum),
+                    "-r", str(dpi),
+                    "-x", str(x_off),
+                    "-y", "0",
+                    "-W", str(cw),
+                    "-H", str(h_px),
+                    str(doc_path),
+                    "-",
+                ],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            txt = clean_ocr_markdown(proc.stdout or "")
+            pages_out.append(
+                {
+                    "pdf_page": seq,
+                    "source_pdf_page": int(pnum),
+                    "side": side,
+                    "printed_page": f"{pnum}{side}",
+                    "text": txt,
+                }
+            )
+            seq += 1
+    return pages_out
+
+
 def _strip_json_fences(raw_text: str) -> str:
     txt = raw_text.strip()
     if txt.startswith("```"):

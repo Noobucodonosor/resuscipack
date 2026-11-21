@@ -218,6 +218,37 @@ CREATE TABLE IF NOT EXISTS objective_block_evidence (
     PRIMARY KEY (objective_uid, block_pk)
 );
 
+CREATE TABLE IF NOT EXISTS bibliographic_citations (
+    citation_pk INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_block_pk INTEGER NOT NULL REFERENCES blocks(block_pk),
+    verbatim_quote TEXT NOT NULL,
+    cited_author TEXT NOT NULL,
+    cited_work TEXT NOT NULL,
+    cited_year TEXT,
+    source_layer TEXT NOT NULL,
+    stance TEXT NOT NULL,
+    appraisal_note TEXT NOT NULL,
+    transmission_from TEXT,
+    resolved_book_pk INTEGER REFERENCES books(book_pk),
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS units_fts USING fts5(
+    stmt,
+    verbatim_quote,
+    concepts_json,
+    vs_dispute,
+    tokenize='unicode61'
+);
+
+CREATE TABLE IF NOT EXISTS concept_edges (
+    concept_a TEXT NOT NULL,
+    concept_b TEXT NOT NULL,
+    weight INTEGER NOT NULL DEFAULT 1,
+    sample_unit_pk INTEGER,
+    PRIMARY KEY (concept_a, concept_b)
+);
+
 CREATE INDEX IF NOT EXISTS idx_books_domain_active ON books(surface_domain, is_active);
 CREATE INDEX IF NOT EXISTS idx_blocks_book_seq ON blocks(book_pk, page_start, block_pk);
 CREATE INDEX IF NOT EXISTS idx_blocks_active_role ON blocks(is_active, block_role);
@@ -230,6 +261,11 @@ CREATE INDEX IF NOT EXISTS idx_book_spectrum_meta_tier ON book_spectrum_meta(qua
 CREATE INDEX IF NOT EXISTS idx_obj_corpus_status ON objective_corpus_map(coverage_status, cycle, target_macro_discipline);
 CREATE INDEX IF NOT EXISTS idx_obj_block_ev_block ON objective_block_evidence(block_pk);
 CREATE INDEX IF NOT EXISTS idx_obj_block_ev_book ON objective_block_evidence(book_pk, is_wrong_book);
+CREATE INDEX IF NOT EXISTS idx_biblio_source_block ON bibliographic_citations(source_block_pk);
+CREATE INDEX IF NOT EXISTS idx_biblio_author ON bibliographic_citations(cited_author);
+CREATE INDEX IF NOT EXISTS idx_biblio_resolved_book ON bibliographic_citations(resolved_book_pk);
+CREATE INDEX IF NOT EXISTS idx_concept_edges_a ON concept_edges(concept_a, weight DESC);
+CREATE INDEX IF NOT EXISTS idx_concept_edges_b ON concept_edges(concept_b, weight DESC);
 """
 
 
