@@ -12,6 +12,7 @@ Questa cartella raccoglie gli **Architecture Decision Records (ADR)** e il **Mas
 | **[ADR-0002](./0002-block-extraction-and-wrong-book-bridge.md)** | Schema `BlockExtraction v2.1`, 24 `op_tags`, Ponte *"Libro Sbagliato"* e Validatore a 6 Gate | Accettato (`Accepted`) | **P0 — Critica** | `@wrongbook`, `@critic` |
 | **[ADR-0003](./0003-secai-spine-and-study-workbench.md)** | Spina Dorsale Curricolare a 4 Strati, Fast-Forward `SymPy` e Tavolo di Studio SecAI v1 | Accettato (`Accepted`) | **P1 — Alta** | `@secai`, `@critic` |
 | **[ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md)** | *"Nuovi Libri"* Continui, Spettro Disciplinare Percentuale, Doppio *"Libro Sbagliato"* & UI Anti-Slop | Accettato (`Accepted`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
+| **[ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md)** | Hardening P0, Bonifica Epistemica, Grafo delle Fonti & Sonda Viva (`M5`) | Proposto (`Proposed`) | **P0 — Critica** | Daniele Bertuccio, `Orchestrator` |
 
 ---
 
@@ -89,3 +90,19 @@ flowchart LR
 | ✅ | **TASK-UI-01** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Rifondazione Design System Editoriale (`design-taste-frontend` + `modern-web-guidance`, zero codici interni, `GATE: PASS`, `0 FAIL` su `consistency`/`layout`/`perf`/`copy-lint`) | `public/assets/`, `resuscipack/workbench/`, `.gitignore` | **P0 — Critica** |
 | ✅ | **TASK-UI-02** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | Lettore continuo dei *Nuovi Libri* (`20` capitoli + KaTeX + SVG + `<dialog>` pagina originale + `SymPy` + `30` quesiti OFA reali) | `resuscipack/workbench/books_view.py`, `templates/`, `static/` | **P1 — Alta** |
 | ✅ | **TASK-UI-03** | `M4` UI Anti-Slop | [ADR-0004](./0004-new-books-disciplinary-spectrum-and-editorial-ui.md) | *Atlante dei 1.424 Volumi* (zero `.slice(`, Spettro cliccabile Marconi -> Geografia, *Discipline dal basso*, *Cronologia sinottica*, `51/51` pytest) | `resuscipack/workbench/app.py`, `atlas.html`, `atlas.js` | **P2 — Media** |
+
+---
+
+## Master Task Backlog — Hardening P0 & Milestone `M5`
+
+| Stato | Task ID | Milestone | ADR | Titolo Task | File Coinvolti | Priorità |
+| :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| ⏳ | **TASK-SEC-01** | `P0` Hardening | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Sostituzione `sp.sympify()` con parser AST sicuro e limiti anti-DoS | `resuscipack/curriculum/drills_sympy.py`, `tests/` | **P0 — Critica** |
+| ⏳ | **TASK-SEC-02** | `P0` Hardening | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Eliminazione Stored XSS su `/api/search` e fallback `innerHTML` | `resuscipack/workbench/app.py`, `atlas.js`, `editorial_shared.js`, `tests/` | **P0 — Critica** |
+| ⏳ | **TASK-QA-01** | `P0` Hardening | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Portabilità `pytest` con fixture SQLite e marker `@pytest.mark.real_corpus` | `tests/test_corpus_wave0.py`, `tests/test_workbench_secai.py`, `pyproject.toml` | **P0 — Critica** |
+| ⏳ | **TASK-HYG-01** | `M5` Bonifica | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Fix prompt `w`/`thm`/`--deep-blocks`/overlap in `batch_cli.py` e 3 micro-bug | `batch_cli.py`, `decompressor.py`, `spectrum.py`, `curriculum_mapper.py` | **P1 — Alta** |
+| ⏳ | **TASK-HYG-02** | `M5` Bonifica | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Script `hygiene_cleanup.py` (`--dry-run` / `--apply`) per `actors_json` e `books.author` | `resuscipack/epistemic/hygiene_cleanup.py`, `data/pack_corpus.db` | **P1 — Alta** |
+| ⏳ | **TASK-PILOT-01** | `M5` Pilota | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Split verticale 2-up in `ocr_ingest.py` per pilota Geymonat (`book_pk=992`) | `resuscipack/corpus/ocr_ingest.py` | **P1 — Alta** |
+| ⏳ | **TASK-BIBLIO-01** | `M5` Fonti | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Tabella `bibliographic_citations` ed estrattore `biblio_extractor.py` | `resuscipack/corpus/schema.py`, `resuscipack/epistemic/biblio_extractor.py` | **P1 — Alta** |
+| ⏳ | **TASK-PROBE-01** | `M5` Sonda Viva | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Indici `units_fts` + `concept_edges` e motore `phrase_analyzer.py` | `resuscipack/corpus/schema.py`, `resuscipack/epistemic/phrase_analyzer.py`, `app.py` | **P1 — Alta** |
+| ⏳ | **TASK-UI-04** | `M5` UI Viva | [ADR-0005](./0005-epistemic-hygiene-security-and-live-probe.md) | Sonda Viva in `/libro`, `corpus_figures`, Fonti e Percorso DAG/Fast-Forward | `resuscipack/workbench/` | **P1 — Alta** |

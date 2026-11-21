@@ -1076,7 +1076,7 @@ def create_app(
                     bl.page_start,
                     bl.printed_page,
                     bl.section_title,
-                    snippet(passages_fts, 2, '<mark>', '</mark>', ' … ', 32) AS snippet_html,
+                    snippet(passages_fts, 2, '__PACK_MARK_OPEN__', '__PACK_MARK_CLOSE__', ' … ', 32) AS snippet_html,
                     bm25(passages_fts, 2.0, 1.5, 1.0) AS score
                 FROM passages_fts
                 JOIN blocks bl ON bl.block_pk = passages_fts.rowid
@@ -1091,6 +1091,11 @@ def create_app(
             results: list[dict[str, Any]] = []
             for r in rows:
                 d = dict(r)
+                raw_snip = str(d.get("snippet_html", "") or "")
+                escaped_snip = html.escape(raw_snip, quote=True)
+                d["snippet_html"] = escaped_snip.replace(
+                    "__PACK_MARK_OPEN__", "<mark>"
+                ).replace("__PACK_MARK_CLOSE__", "</mark>")
                 d["clean_book_title"] = _clean_book_title_for_citation(
                     str(d.get("book_title", "")), author=d.get("author")
                 )

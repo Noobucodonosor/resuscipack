@@ -412,7 +412,24 @@ import {
         meta.textContent = `${hit.clean_book_title || hit.book_title}${hit.author ? ` · ${hit.author}` : ""}${pg ? ` · p. ${pg}` : ""}`;
         const snip = document.createElement("p");
         snip.className = "passage-item__quote";
-        safeSetHTML(snip, hit.snippet_html || "");
+        const rawSnip = String(hit.snippet_html || "");
+        const parts = rawSnip.split(/(<mark>|<\/mark>)/g);
+        let inMark = false;
+        parts.forEach((part) => {
+          if (part === "<mark>") {
+            inMark = true;
+          } else if (part === "</mark>") {
+            inMark = false;
+          } else if (part) {
+            if (inMark) {
+              const mk = document.createElement("mark");
+              mk.textContent = part;
+              snip.appendChild(mk);
+            } else {
+              snip.appendChild(document.createTextNode(part));
+            }
+          }
+        });
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn btn--secondary";

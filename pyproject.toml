@@ -1,0 +1,11 @@
+[project]
+name = "resuscipack"
+version = "0.5.0"
+description = "Pedagogical Agentic Curriculum Knowledge (P.A.C.K.)"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "real_corpus: test di integrazione che richiedono data/pack_corpus.db locale",
+]

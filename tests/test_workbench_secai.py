@@ -74,6 +74,8 @@ def test_dag_4_layers_acyclic_and_zero_dead_ends() -> None:
     assert {"P0.8", "P0.5"} <= reclassified_ids
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not CORPUS_DB.exists(), reason="pack_corpus.db non presente")
 def test_migrated_cards_pass_all_6_gates() -> None:
     card_ids = list_available_card_ids(CARDS_DIR)
     expected_cards = {
@@ -224,6 +226,8 @@ def test_student_state_fast_forward_and_2day_consolidation(tmp_path: Path) -> No
         conn.close()
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not CORPUS_DB.exists(), reason="pack_corpus.db non presente")
 def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
     import json
 
@@ -362,6 +366,8 @@ def test_workbench_flask_endpoints_and_true_book_reader(tmp_path: Path) -> None:
             assert ".slice(" not in src_file.read_text(encoding="utf-8")
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not CORPUS_DB.exists(), reason="pack_corpus.db non presente")
 def test_atlas_and_spectrum_endpoints(tmp_path: Path) -> None:
     app = create_app(
         corpus_db_path=CORPUS_DB,
