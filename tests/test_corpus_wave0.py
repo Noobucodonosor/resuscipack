@@ -345,6 +345,8 @@ def test_wave0_legacy_card_migration_100pct() -> None:
     conn.close()
 
 
+@pytest.mark.real_corpus
+@pytest.mark.skipif(not DEFAULT_OCR_MANIFEST_OUT.exists(), reason="ocr_wave_manifest.json non presente")
 def test_manifest_waves_and_cultura_in_ita5() -> None:
     """Verifica `data/ocr_wave_manifest.json` per Euclide, Galileo, Archimede, Apostol e i 7 DjVu."""
     assert DEFAULT_OCR_MANIFEST_OUT.exists(), "ocr_wave_manifest.json mancante"

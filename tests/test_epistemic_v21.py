@@ -847,8 +847,9 @@ def test_canonical_pack_corpus_db_has_verified_wrong_book_bridges_readonly() -> 
 
 
 @pytest.mark.skipif(
-    not (Path(__file__).resolve().parents[1] / "data" / "cards" / "numeri.quantita.md").exists(),
-    reason="Schede canoniche in data/cards non ancora migrate",
+    not (Path(__file__).resolve().parents[1] / "data" / "cards" / "numeri.quantita.md").exists()
+    or not (Path(__file__).resolve().parents[1] / "data" / "pack_corpus.db").exists(),
+    reason="Schede canoniche in data/cards o pack_corpus.db non presenti",
 )
 def test_canonical_cards_pass_all_6_gates_readonly() -> None:
     """Verifica in sola lettura che tutte le schede migrate in `data/cards/` superino i 6 Gate."""

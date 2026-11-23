@@ -170,6 +170,29 @@ def export_static_book(out_dir: Path) -> dict[str, Any]:
         encoding="utf-8",
     )
 
+    # 2b. Esporta Atlante pubblico dominio (15 opere storiche copyright-safe, TASK-RP-01)
+    public_domain_works = [
+        {"id": "euclide_elementi", "author": "Euclide", "title": "Elementi (Libri I–XIII)", "year": -300, "license": "public_domain", "spectrum": {"matematica": 78, "filosofia_scienze_umane": 22}},
+        {"id": "archimede_opere", "author": "Archimede di Siracusa", "title": "Sulla sfera e il cilindro · L'Arenario · Metodo", "year": -240, "license": "public_domain", "spectrum": {"matematica": 64, "fisica_ingegneria": 36}},
+        {"id": "fibonacci_liber_abaci", "author": "Leonardo Pisano (Fibonacci)", "title": "Liber Abaci", "year": 1202, "license": "public_domain", "spectrum": {"matematica": 72, "economia_diritto": 28}},
+        {"id": "cardano_ars_magna", "author": "Gerolamo Cardano", "title": "Artis Magnae, sive de Regulis Algebraicis", "year": 1545, "license": "public_domain", "spectrum": {"matematica": 85, "storia_della_scienza": 15}},
+        {"id": "galileo_dialogo", "author": "Galileo Galilei", "title": "Dialogo sopra i due massimi sistemi del mondo", "year": 1632, "license": "public_domain", "spectrum": {"fisica_ingegneria": 58, "storia_della_scienza": 26, "filosofia_scienze_umane": 16}},
+        {"id": "galileo_discorsi", "author": "Galileo Galilei", "title": "Discorsi e dimostrazioni matematiche intorno a due nuove scienze", "year": 1638, "license": "public_domain", "spectrum": {"fisica_ingegneria": 62, "matematica": 38}},
+        {"id": "cartesio_geometria", "author": "René Descartes", "title": "Discours de la méthode & La Géométrie", "year": 1637, "license": "public_domain", "spectrum": {"matematica": 54, "filosofia_scienze_umane": 46}},
+        {"id": "torricelli_opera", "author": "Evangelista Torricelli", "title": "Opera Geometrica & Esperienza dell'argento vivo", "year": 1644, "license": "public_domain", "spectrum": {"fisica_ingegneria": 55, "matematica": 45}},
+        {"id": "huygens_horologium", "author": "Christiaan Huygens", "title": "Horologium Oscillatorium", "year": 1673, "license": "public_domain", "spectrum": {"fisica_ingegneria": 60, "matematica": 40}},
+        {"id": "newton_principia", "author": "Isaac Newton", "title": "Philosophiae Naturalis Principia Mathematica", "year": 1687, "license": "public_domain", "spectrum": {"fisica_ingegneria": 56, "matematica": 44}},
+        {"id": "bernoulli_ars_conjectandi", "author": "Jakob Bernoulli", "title": "Ars Conjectandi", "year": 1713, "license": "public_domain", "spectrum": {"matematica": 82, "filosofia_scienze_umane": 18}},
+        {"id": "eulero_introductio", "author": "Leonhard Euler", "title": "Introductio in analysin infinitorum", "year": 1748, "license": "public_domain", "spectrum": {"matematica": 90, "fisica_ingegneria": 10}},
+        {"id": "galvani_commentarius", "author": "Luigi Galvani", "title": "De viribus electricitatis in motu musculari commentarius", "year": 1791, "license": "public_domain", "spectrum": {"medicina_biologia": 54, "fisica_ingegneria": 30, "storia_della_scienza": 16}},
+        {"id": "laplace_probabilites", "author": "Pierre-Simon Laplace", "title": "Essai philosophique sur les probabilités", "year": 1814, "license": "public_domain", "spectrum": {"matematica": 68, "filosofia_scienze_umane": 32}},
+        {"id": "boole_laws_of_thought", "author": "George Boole", "title": "An Investigation of the Laws of Thought", "year": 1854, "license": "public_domain", "spectrum": {"matematica": 52, "informatica": 28, "filosofia_scienze_umane": 20}},
+    ]
+    (data_dir / "public_domain_atlas.json").write_text(
+        json.dumps({"version": "1.0", "count": len(public_domain_works), "works": public_domain_works}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
     # 3. Renderizza index.html dal template ufficiale reader.html
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
@@ -189,6 +212,7 @@ def export_static_book(out_dir: Path) -> dict[str, Any]:
         "volumes": len(catalog.get("volumes", [])),
         "chapters": exported_chapters,
         "ofa_questions": ofa_data.get("count", 0),
+        "public_domain_works": len(public_domain_works),
         "svg_assets": len(list((out_dir / "books-assets").glob("*.svg"))),
     }
 
