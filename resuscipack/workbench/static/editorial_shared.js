@@ -144,7 +144,7 @@ export function createSourceDrawerController() {
   let currentPrevPk = null;
   let currentNextPk = null;
 
-  async function openBlock(blockPk, quoteText = "") {
+  async function openBlock(blockPk, quoteText = "", sourceLabel = "") {
     if (!dialog || !blockPk) return;
     if (!dialog.open) {
       dialog.showModal();
@@ -156,6 +156,27 @@ export function createSourceDrawerController() {
     figuresEl.replaceChildren();
     prevBtn.disabled = true;
     nextBtn.disabled = true;
+
+    const isStaticMode = document.body?.dataset?.staticMode === "true";
+    if (isStaticMode) {
+      titleEl.textContent = sourceLabel || "Fonte verificata del corpus";
+      metaEl.textContent = "Citazione verificata · Vista Libro pubblica (pagina integrale consultabile nel workbench locale)";
+      if (atlasLink) atlasLink.hidden = true;
+      bodyEl.replaceChildren();
+      const bq = document.createElement("blockquote");
+      bq.className = "verbatim-highlight";
+      bq.style.padding = "0.85rem 1rem";
+      bq.style.borderRadius = "8px";
+      bq.textContent = quoteText ? `«${quoteText}»` : "Citazione registrata nell'apparato del capitolo.";
+      bodyEl.appendChild(bq);
+      const note = document.createElement("p");
+      note.className = "t-small muted";
+      note.style.marginTop = "0.9rem";
+      note.textContent = "Nella distribuzione pubblica statica i volumi coperti da copyright non sono redistribuiti: ogni nota mostra l'estratto verificato e il riferimento bibliografico esatto.";
+      bodyEl.appendChild(note);
+      initMathRendering(bodyEl);
+      return;
+    }
 
     const qs = quoteText ? `?quote=${encodeURIComponent(quoteText)}` : "";
     const resp = await fetch(`/api/block/${encodeURIComponent(blockPk)}${qs}`);

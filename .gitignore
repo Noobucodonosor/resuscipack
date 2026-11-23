@@ -19,4 +19,5 @@ __pycache__/
 .DS_Store
 .taste-skill/
 shots/
+_site/
 data/ocr_wave_manifest.json

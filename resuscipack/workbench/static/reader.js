@@ -11,10 +11,43 @@ import {
   const sourceDrawer = createSourceDrawerController();
 
   const bodyEl = document.body;
-  let currentVolumeId = bodyEl.dataset.initialVolume || "vol1_ofa";
-  let currentSlug = bodyEl.dataset.initialSlug || "dall_ovvio_al_numero";
+  const isStaticMode = bodyEl.dataset.staticMode === "true";
+  const initialParams = new URLSearchParams(window.location.search);
+  let currentVolumeId =
+    (isStaticMode && initialParams.get("vol")) || bodyEl.dataset.initialVolume || "vol1_ofa";
+  let currentSlug =
+    (isStaticMode && initialParams.get("ch")) || bodyEl.dataset.initialSlug || "dall_ovvio_al_numero";
   let volumesCache = [];
+  let searchIndexCache = null;
   let ofaLoaded = false;
+
+  function normalizeMathAnswer(raw) {
+    return String(raw || "")
+      .trim()
+      .toLowerCase()
+      .replace(/−/g, "-")
+      .replace(/,/g, ".")
+      .replace(/\s+/g, "");
+  }
+
+  function evaluateStaticDrill(expectedRaw, answerRaw) {
+    const exp = normalizeMathAnswer(expectedRaw);
+    const ans = normalizeMathAnswer(answerRaw);
+    if (!exp || !ans) return false;
+    if (exp === ans) return true;
+    const parseFractionOrNum = (s) => {
+      if (/^-?\d+(\.\d+)?$/.test(s)) return Number(s);
+      const frac = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+      if (frac && Number(frac[2]) !== 0) return Number(frac[1]) / Number(frac[2]);
+      return null;
+    };
+    const eNum = parseFractionOrNum(exp);
+    const aNum = parseFractionOrNum(ans);
+    if (eNum !== null && aNum !== null && Math.abs(eNum - aNum) < 1e-6) {
+      return true;
+    }
+    return false;
+  }
 
   const tocDesktop = document.getElementById("tocDesktopContainer");
   const tocMobile = document.getElementById("tocMobileContainer");
@@ -111,7 +144,7 @@ import {
       btn.type = "button";
       btn.className = "btn btn--secondary footnote-open-btn";
       btn.textContent = `Apri pagina della fonte ${fn.num}`;
-      btn.addEventListener("click", () => sourceDrawer.openBlock(fn.block_pk, fn.quote));
+      btn.addEventListener("click", () => sourceDrawer.openBlock(fn.block_pk, fn.quote, fn.source_label));
       li.appendChild(quoteLine);
       li.appendChild(btn);
       list1.appendChild(li);
@@ -200,17 +233,30 @@ import {
         const ans = input.value.trim();
         if (!ans) return;
         status.textContent = "Verifica in corso…";
-        const resp = await fetch("/api/drill/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            node_id: drill.node_id,
-            drill_id: drill.drill_id,
-            expected: drill.expected,
-            student_answer: ans,
-          }),
-        });
-        const out = await resp.json();
+        let out;
+        if (isStaticMode) {
+          const ok = evaluateStaticDrill(drill.expected, ans);
+          out = {
+            grade: {
+              is_correct: ok,
+              feedback: ok
+                ? "risposta coerente con la soluzione attesa."
+                : "confronta forma semplificata o frazione e riprova.",
+            },
+          };
+        } else {
+          const resp = await fetch("/api/drill/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              node_id: drill.node_id,
+              drill_id: drill.drill_id,
+              expected: drill.expected,
+              student_answer: ans,
+            }),
+          });
+          out = await resp.json();
+        }
         if (out.grade && out.grade.is_correct) {
           status.className = "drill-feedback drill-feedback--ok";
           status.textContent = `✓ Corretto: ${out.grade.feedback || "espressione equivalente accettata."}`;
@@ -252,16 +298,33 @@ import {
 
       box.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const resp = await fetch("/api/hero/proof-check", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            node_id: pr.node_id,
-            rubric_id: pr.id,
-            proof_text: ta.value,
-          }),
-        });
-        const out = await resp.json();
+        let out;
+        if (isStaticMode && Array.isArray(pr.lemmas)) {
+          const txt = ta.value.toLowerCase();
+          const results = pr.lemmas.map((lem) => {
+            const kws = Array.isArray(lem.keywords) ? lem.keywords : [];
+            const present = kws.length === 0 || kws.some((k) => txt.includes(String(k).toLowerCase()));
+            return { label: lem.label, present, missing_hint: lem.missing_hint || "" };
+          });
+          const passedCount = results.filter((r) => r.present).length;
+          out = {
+            all_passed: passedCount === results.length,
+            passed_count: passedCount,
+            total_lemmas: results.length,
+            results,
+          };
+        } else {
+          const resp = await fetch("/api/hero/proof-check", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              node_id: pr.node_id,
+              rubric_id: pr.id,
+              proof_text: ta.value,
+            }),
+          });
+          out = await resp.json();
+        }
         resEl.replaceChildren();
         const summary = document.createElement("p");
         summary.className = out.all_passed ? "drill-feedback drill-feedback--ok" : "drill-feedback drill-feedback--err";
@@ -340,12 +403,32 @@ import {
         e.preventDefault();
         const fd = new FormData(gform);
         const answers = Object.fromEntries(fd.entries());
-        const resp = await fetch("/api/hero/graph-check", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ node_id: gi.node_id, spec_id: gi.id, answers }),
-        });
-        const out = await resp.json();
+        let out;
+        if (isStaticMode) {
+          const expected = {
+            domain_lower_bound: "2",
+            vertical_asymptote_x: "2",
+            cusp_x: "3",
+            cusp_y: "1",
+            probe_y_at_2_plus_e: "2",
+            left_branch: "decrescente",
+            right_branch: "crescente",
+          };
+          const keys = Object.keys(expected);
+          const passed = keys.filter((k) => normalizeMathAnswer(answers[k]) === expected[k]).length;
+          out = {
+            all_passed: passed === keys.length,
+            passed_count: passed,
+            total_checks: keys.length,
+          };
+        } else {
+          const resp = await fetch("/api/hero/graph-check", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ node_id: gi.node_id, spec_id: gi.id, answers }),
+          });
+          out = await resp.json();
+        }
         gStatus.className = out.all_passed ? "drill-feedback drill-feedback--ok" : "drill-feedback drill-feedback--err";
         gStatus.textContent = out.all_passed
           ? `✓ Tutti i ${out.passed_count} invarianti sono verificati.`
@@ -362,7 +445,7 @@ import {
     if (!ofaDetails) return;
     ofaDetails.hidden = !show;
     if (!show || ofaLoaded) return;
-    const resp = await fetch("/api/books/ofa-questions");
+    const resp = await fetch(isStaticMode ? "./data/ofa-questions.json" : "/api/books/ofa-questions");
     if (!resp.ok) return;
     const data = await resp.json();
     ofaLoaded = true;
@@ -381,8 +464,8 @@ import {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "btn btn--secondary";
-      btn.textContent = "Apri pagina d'esame";
-      btn.addEventListener("click", () => sourceDrawer.openBlock(q.block_pk, q.question_excerpt));
+      btn.textContent = isStaticMode ? "Apri scheda quesito" : "Apri pagina d'esame";
+      btn.addEventListener("click", () => sourceDrawer.openBlock(q.block_pk, q.question_excerpt, q.book_title));
       card.appendChild(meta);
       card.appendChild(txt);
       card.appendChild(btn);
@@ -393,7 +476,10 @@ import {
   }
 
   async function loadChapter(volumeId, slug) {
-    const resp = await fetch(`/api/books/${encodeURIComponent(volumeId)}/${encodeURIComponent(slug)}`);
+    const chapterUrl = isStaticMode
+      ? `./data/chapters/${encodeURIComponent(volumeId)}/${encodeURIComponent(slug)}.json`
+      : `/api/books/${encodeURIComponent(volumeId)}/${encodeURIComponent(slug)}`;
+    const resp = await fetch(chapterUrl);
     if (!resp.ok) {
       headingEl.textContent = "Capitolo non trovato";
       return;
@@ -412,7 +498,11 @@ import {
 
       proseEl.querySelectorAll("button.fn-trigger").forEach((btn) => {
         btn.addEventListener("click", () => {
-          sourceDrawer.openBlock(btn.dataset.blockPk, btn.dataset.quote || "");
+          sourceDrawer.openBlock(
+            btn.dataset.blockPk,
+            btn.dataset.quote || "",
+            btn.getAttribute("title") || "",
+          );
         });
       });
 
@@ -441,8 +531,10 @@ import {
   }
 
   function navigateToChapter(volumeId, slug, pushHistory) {
-    const nextUrl = `/libro/${encodeURIComponent(volumeId)}/${encodeURIComponent(slug)}`;
-    if (pushHistory && window.location.pathname !== nextUrl) {
+    const nextUrl = isStaticMode
+      ? `?vol=${encodeURIComponent(volumeId)}&ch=${encodeURIComponent(slug)}`
+      : `/libro/${encodeURIComponent(volumeId)}/${encodeURIComponent(slug)}`;
+    if (pushHistory && (isStaticMode ? window.location.search !== nextUrl : window.location.pathname !== nextUrl)) {
       window.history.pushState({ volumeId, slug }, "", nextUrl);
     }
     window.scrollTo({ top: 0 });
@@ -525,6 +617,115 @@ import {
       return;
     }
     probeResultsBox.textContent = "Ricerca nei volumi della biblioteca…";
+    if (isStaticMode) {
+      if (!searchIndexCache) {
+        const idxResp = await fetch("./data/search-index.json");
+        if (idxResp.ok) {
+          searchIndexCache = await idxResp.json();
+        }
+      }
+      const terms = q
+        .toLowerCase()
+        .split(/[^0-9a-zà-ÿ]+/i)
+        .filter((t) => t.length >= 3);
+      const chapters = (searchIndexCache && searchIndexCache.chapters) || [];
+      const chapterHits = [];
+      const footnoteHits = [];
+      chapters.forEach((ch) => {
+        const hay = `${ch.title} ${ch.subtitle} ${ch.excerpt}`.toLowerCase();
+        const score = terms.reduce((acc, t) => acc + (hay.includes(t) ? 1 : 0), 0);
+        if (score > 0 || hay.includes(q.toLowerCase())) {
+          chapterHits.push({ ch, score });
+        }
+        (ch.footnotes || []).forEach((fn) => {
+          const fhay = `${fn.quote} ${fn.source_label}`.toLowerCase();
+          const fscore = terms.reduce((acc, t) => acc + (fhay.includes(t) ? 1 : 0), 0);
+          if (fscore > 0 || fhay.includes(q.toLowerCase())) {
+            footnoteHits.push({ ch, fn, score: fscore });
+          }
+        });
+      });
+      chapterHits.sort((a, b) => b.score - a.score);
+      footnoteHits.sort((a, b) => b.score - a.score);
+
+      probeBridgeTags.replaceChildren();
+      probeResultsBox.replaceChildren();
+      const summary = document.createElement("p");
+      summary.className = "t-small muted";
+      summary.textContent = `Ricerca nei 20 capitoli e nelle fonti verificate · ${chapterHits.length} capitoli, ${footnoteHits.length} citazioni`;
+      probeResultsBox.appendChild(summary);
+
+      const secCh = document.createElement("section");
+      secCh.className = "apparatus-group";
+      const hCh = document.createElement("h3");
+      hCh.textContent = `Capitoli pertinenti (${Math.min(chapterHits.length, 6)})`;
+      secCh.appendChild(hCh);
+      const listCh = document.createElement("div");
+      listCh.className = "passage-list";
+      chapterHits.slice(0, 6).forEach(({ ch }) => {
+        const card = document.createElement("article");
+        card.className = "passage-item";
+        const meta = document.createElement("div");
+        meta.className = "passage-item__meta";
+        meta.textContent = `${ch.volume_short_title} · Cap. ${ch.chapter_number}`;
+        const pTitle = document.createElement("p");
+        pTitle.className = "passage-item__quote";
+        pTitle.textContent = `${ch.title}${ch.subtitle ? ` — ${ch.subtitle}` : ""}`;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn--secondary";
+        btn.textContent = "Apri capitolo";
+        btn.addEventListener("click", () => {
+          if (probeDrawer && probeDrawer.open) probeDrawer.close();
+          navigateToChapter(ch.volume_id, ch.slug, true);
+        });
+        card.append(meta, pTitle, btn);
+        listCh.appendChild(card);
+      });
+      if (!chapterHits.length) {
+        const empty = document.createElement("p");
+        empty.className = "t-small muted";
+        empty.textContent = "Nessun capitolo corrispondente alla frase cercata.";
+        secCh.appendChild(empty);
+      } else {
+        secCh.appendChild(listCh);
+      }
+      probeResultsBox.appendChild(secCh);
+
+      if (footnoteHits.length) {
+        const secFn = document.createElement("section");
+        secFn.className = "apparatus-group";
+        const hFn = document.createElement("h3");
+        hFn.textContent = `Citazioni verificate (${Math.min(footnoteHits.length, 6)})`;
+        secFn.appendChild(hFn);
+        const listFn = document.createElement("div");
+        listFn.className = "passage-list";
+        footnoteHits.slice(0, 6).forEach(({ ch, fn }) => {
+          const card = document.createElement("article");
+          card.className = "passage-item";
+          const meta = document.createElement("div");
+          meta.className = "passage-item__meta";
+          meta.textContent = `${fn.source_label} · ${ch.volume_short_title} Cap. ${ch.chapter_number}`;
+          const bq = document.createElement("blockquote");
+          bq.className = "t-small muted";
+          bq.textContent = `«${fn.quote}»`;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn--secondary";
+          btn.textContent = "Apri nota";
+          btn.addEventListener("click", () => {
+            if (probeDrawer && probeDrawer.open) probeDrawer.close();
+            sourceDrawer.openBlock(fn.block_pk, fn.quote, fn.source_label);
+          });
+          card.append(meta, bq, btn);
+          listFn.appendChild(card);
+        });
+        secFn.appendChild(listFn);
+        probeResultsBox.appendChild(secFn);
+      }
+      return;
+    }
+
     const resp = await fetch("/api/probe/selection", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -611,7 +812,7 @@ import {
   }
 
   async function bootstrap() {
-    const resp = await fetch("/api/books");
+    const resp = await fetch(isStaticMode ? "./data/catalog.json" : "/api/books");
     if (resp.ok) {
       const catalog = await resp.json();
       volumesCache = catalog.volumes || [];

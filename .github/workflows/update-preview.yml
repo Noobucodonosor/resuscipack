@@ -2,7 +2,7 @@ name: Update Social Preview
 
 on:
   push:
-    branches: [main, gh-pages]
+    branches: [main]
     paths-ignore:
       - 'docs/preview/**'
   workflow_dispatch:
@@ -23,11 +23,16 @@ jobs:
         with:
           ref: main
 
-      - name: Checkout gh-pages site
-        uses: actions/checkout@v4
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
         with:
-          ref: gh-pages
-          path: _site
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python dependencies & build Vista Libro
+        run: |
+          pip install -r requirements.txt
+          python3 scripts/export_static_book.py --out _site
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,10 +49,10 @@ jobs:
           NODE_PATH: /tmp/pw-runner/node_modules
           PREVIEW_TARGET_URL: http://127.0.0.1:8765
           PREVIEW_OUT_DIR: docs/preview
-          PREVIEW_BADGE: "LIVE PREVIEW · GITHUB PAGES"
+          PREVIEW_BADGE: "VISTA LIBRO · LIVE"
           PREVIEW_TITLE: "resuscipack"
-          PREVIEW_DESC: "Motore Python/SQLite FTS5 e atlante disciplinare su oltre 1.400 volumi: spettro percentuale, citazioni verificabili e workbench editoriale."
-          PREVIEW_TAGS: "Python 3,SQLite FTS5,Flask,SymPy,ADR-Driven"
+          PREVIEW_DESC: "Due volumi continui in 20 capitoli con formule KaTeX, diagrammi SVG, citazioni verificate su oltre 1.400 testi ed esercizi simbolici."
+          PREVIEW_TAGS: "Vista Libro,20 Capitoli,KaTeX & SVG,Fonti Verificate,Python"
           PREVIEW_REPO: "github.com/Noobucodonosor/resuscipack"
           PREVIEW_LIVE_URL: "https://noobucodonosor.github.io/resuscipack"
           PREVIEW_THEME: "blue"
